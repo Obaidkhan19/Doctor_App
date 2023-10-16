@@ -17,6 +17,7 @@ class CustomFormField2 extends StatefulWidget {
   Function(String?)? onchange;
   final bool? focusnode;
   final FocusNode? focusNode;
+  final TextInputType? keyboardType;
   CustomFormField2(
       {super.key,
       this.hintText,
@@ -29,7 +30,8 @@ class CustomFormField2 extends StatefulWidget {
       this.obscureText,
       this.onchange,
       this.focusnode,
-      this.focusNode});
+      this.focusNode,
+      this.keyboardType});
 
   @override
   State<CustomFormField2> createState() => _CustomFormField2State();
@@ -48,6 +50,7 @@ class _CustomFormField2State extends State<CustomFormField2> {
       validator: widget.validator,
       controller: widget.controller,
       autofocus: widget.focusnode ?? false,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
           errorStyle: Theme.of(context)
               .textTheme

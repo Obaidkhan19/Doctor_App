@@ -735,6 +735,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                     color: ColorManager.kWhiteColor,
                                   ),
                                   child: CustomFormField2(
+                                    keyboardType: TextInputType.number,
                                     focusNode: controller.qtyfocus,
                                     controller: controller.qtyController,
                                   ),
