@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
@@ -14,6 +15,8 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/DialogBoxes/language_dialog.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
@@ -70,306 +73,406 @@ class _MenuScreenState extends State<MenuScreen> {
       backgroundColor: ColorManager.kPrimaryColor,
       body: SafeArea(
         minimum: const EdgeInsets.all(AppPadding.p20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: Get.height * 0.14,
-            ),
-            InkWell(
-              onTap: () {
-                //Get.;
-                ZoomDrawer.of(context)!.close();
-              },
-              child: Image.asset(
-                AppImages.back,
-                color: ColorManager.kWhiteColor,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: Get.height * 0.14,
               ),
-            ),
-            SizedBox(
-              height: Get.height * 0.04,
-            ),
-            CircleAvatar(
-              backgroundColor: Colors.transparent,
-              radius: 30,
-              child: ClipOval(
-                child: path == '' || path == 'null'
-                    ? Image.asset(AppImages.doctorlogo)
-                    : Image.network(imagepath),
+              InkWell(
+                onTap: () {
+                  //Get.;
+                  ZoomDrawer.of(context)!.close();
+                },
+                child: Image.asset(
+                  AppImages.back,
+                  color: ColorManager.kWhiteColor,
+                ),
               ),
-            ),
-
-            SizedBox(
-              height: Get.height * 0.01,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: Get.width * 0.5,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      // suffixIcon: InkWell(
-                      //   onTap: () {
-                      //     Get.to(const EditProfile());
-                      //   },
-                      //   child: Image.asset(
-                      //     Images.edit,
-                      //     color: ColorManager.kWhiteColor,
-                      //   ),
-                      // ),
-                      disabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: ColorManager.kWhiteColor, width: 3.0),
+              SizedBox(
+                height: Get.height * 0.04,
+              ),
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                radius: 30,
+                child: ClipOval(
+                  child: path == '' || path == 'null'
+                      ? Image.asset(AppImages.doctorlogo)
+                      : Image.network(imagepath),
+                ),
+              ),
+        
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: Get.width * 0.45,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        // suffixIcon: InkWell(
+                        //   onTap: () {
+                        //     Get.to(const EditProfile());
+                        //   },
+                        //   child: Image.asset(
+                        //     Images.edit,
+                        //     color: ColorManager.kWhiteColor,
+                        //   ),
+                        // ),
+                        disabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: ColorManager.kWhiteColor, width: 3.0),
+                        ),
+                        enabled: false,
+                        hintText: UserName,
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(
+                                fontSize: 15,
+                                color: ColorManager.kWhiteColor,
+                                fontWeight: FontWeight.bold),
                       ),
-                      enabled: false,
-                      hintText: UserName,
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(
-                              fontSize: 15,
-                              color: ColorManager.kWhiteColor,
-                              fontWeight: FontWeight.bold),
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.to(() => EditProfile(
-                          firstName: profile.selectedbasicInfo?.firstName,
-                          dob: profile.selectedbasicInfo?.dateofBirth,
-                          cellNumber: profile.selectedbasicInfo?.contactPublic,
-                          email: profile.selectedbasicInfo?.email,
-                          country: profile.selectedbasicInfo?.countryName,
-                          province: profile.selectedbasicInfo?.stateName,
-                          city: profile.selectedbasicInfo?.cityName,
-                          address: profile.selectedbasicInfo?.address,
-                          cityid: profile.selectedbasicInfo?.cityId,
-                          countryid: profile.selectedbasicInfo?.countryId,
-                          provinceid:
-                              profile.selectedbasicInfo?.stateOrProvinceId,
-                        ));
-                  },
-                  child: Image.asset(
-                    Images.edit,
-                    color: ColorManager.kWhiteColor,
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => EditProfile(
+                            firstName: profile.selectedbasicInfo?.firstName,
+                            dob: profile.selectedbasicInfo?.dateofBirth,
+                            cellNumber: profile.selectedbasicInfo?.contactPublic,
+                            email: profile.selectedbasicInfo?.email,
+                            country: profile.selectedbasicInfo?.countryName,
+                            province: profile.selectedbasicInfo?.stateName,
+                            city: profile.selectedbasicInfo?.cityName,
+                            address: profile.selectedbasicInfo?.address,
+                            cityid: profile.selectedbasicInfo?.cityId,
+                            countryid: profile.selectedbasicInfo?.countryId,
+                            provinceid:
+                                profile.selectedbasicInfo?.stateOrProvinceId,
+                          ));
+                    },
+                    child: Image.asset(
+                      Images.edit,
+                      color: ColorManager.kWhiteColor,
+                    ),
+                  ),
+                ],
+              ),
+        
+              // customListTile(context, onTap: () {
+              //   Get.to(() => const NoDataFound());
+              // }, imagePath: Images.family, title: 'Family Members'),
+              // customListTile(context, onTap: () {
+              //   Get.to(() => const NoDataFound());
+              // }, imagePath: Images.location, title: 'Location'),
+              // customListTile(context, onTap: () {
+              //   Get.to(() => const NoDataFound());
+              // }, imagePath: Images.wallet, title: 'Wallet'),
+              // customListTile(context, onTap: () {
+              //   Get.to(() => const NoDataFound());
+              // }, imagePath: Images.wifi, title: 'Forgot Password'),
+        
+              // customListTile(context, onTap: () {
+              //   Get.to(() => const NoDataFound());
+              // },
+              //     imagePath: Images.fingerprint,
+              //     title: 'Finger Print',
+              //     togglebutton: true),
+        
+              // const Divider(
+              //   height: 1,
+              //   thickness: 3,
+              //   color: ColorManager.kWhiteColor,
+              // ),
+              // customListTile(context,
+              // onTap: () {
+              //   Get.to(()=> const  RegisterScreen());
+              // },
+              //     imagePath: Images.family, title: 'Sign Up'),
+        
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              ListTile(
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(AppImages.vector),
+                title: Text(
+                  'patienthistory'.tr,
+                  style: GoogleFonts.raleway(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
                 ),
-              ],
-            ),
-
-            // customListTile(context, onTap: () {
-            //   Get.to(() => const NoDataFound());
-            // }, imagePath: Images.family, title: 'Family Members'),
-            // customListTile(context, onTap: () {
-            //   Get.to(() => const NoDataFound());
-            // }, imagePath: Images.location, title: 'Location'),
-            // customListTile(context, onTap: () {
-            //   Get.to(() => const NoDataFound());
-            // }, imagePath: Images.wallet, title: 'Wallet'),
-            // customListTile(context, onTap: () {
-            //   Get.to(() => const NoDataFound());
-            // }, imagePath: Images.wifi, title: 'Forgot Password'),
-
-            // customListTile(context, onTap: () {
-            //   Get.to(() => const NoDataFound());
-            // },
-            //     imagePath: Images.fingerprint,
-            //     title: 'Finger Print',
-            //     togglebutton: true),
-
-            // const Divider(
-            //   height: 1,
-            //   thickness: 3,
-            //   color: ColorManager.kWhiteColor,
-            // ),
-            // customListTile(context,
-            // onTap: () {
-            //   Get.to(()=> const  RegisterScreen());
-            // },
-            //     imagePath: Images.family, title: 'Sign Up'),
-
-            SizedBox(
-              height: Get.height * 0.01,
-            ),
-            ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              leading: Image.asset(AppImages.vector),
-              title: Text(
-                'patienthistory'.tr,
-                style: GoogleFonts.raleway(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15, color: ColorManager.kWhiteColor),
-                ),
+                onTap: () {
+                  //Navigator.pop(context);
+                  Get.to(() => const PatientHistory());
+                },
               ),
-              onTap: () {
-                //Navigator.pop(context);
-                Get.to(() => const PatientHistory());
-              },
-            ),
+        
+              ListTile(
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(AppImages.wallet),
+                title: Text(
+                  'wallet'.tr,
+                  style: GoogleFonts.raleway(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  ),
+                ),
+                onTap: () {
+                  //Navigator.pop(context);
+                  Get.to(() => WalletScreen(
+                        index: 1,
+                      ));
+                },
+              ),
+              ListTile(
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(AppImages.forgetpassword),
+                title: Text(
+                  'changePassword'.tr,
+                  style: GoogleFonts.raleway(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  ),
+                ),
+                onTap: () {
+                  Get.to(() => const ChangePasswordScreen());
+                },
+              ),
+              ListTile(
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(AppImages.biometric),
+                trailing: Transform.scale(
+                  scale: 0.55,
+                  child: Switch(
+                    value: isBiometric,
+                    activeColor: ColorManager.kWhiteColor,
+                    onChanged: (value) async {
+                      if (value) {
+                          authentication = await _authenticate();
+                          if (authentication) {
+                            if (EditProfileController.i.name== null) {
+                              fingerprint = authentication;
+                            } else {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text( "You are already Logged in")));
+                              // Utils().toastmessage("You are already Logged in");
+                              fingerprint = true;
+                            }
 
-            ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              leading: Image.asset(AppImages.wallet),
-              title: Text(
-                'wallet'.tr,
-                style: GoogleFonts.raleway(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15, color: ColorManager.kWhiteColor),
-                ),
-              ),
-              onTap: () {
-                //Navigator.pop(context);
-                Get.to(() => WalletScreen(
-                      index: 1,
-                    ));
-              },
-            ),
-            ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              leading: Image.asset(AppImages.forgetpassword),
-              title: Text(
-                'changePassword'.tr,
-                style: GoogleFonts.raleway(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15, color: ColorManager.kWhiteColor),
-                ),
-              ),
-              onTap: () {
-                Get.to(() => const ChangePasswordScreen());
-              },
-            ),
-            ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              leading: Image.asset(AppImages.biometric),
-              trailing: Transform.scale(
-                scale: 0.55,
-                child: Switch(
-                  value: isBiometric,
-                  activeColor: ColorManager.kWhiteColor,
-                  onChanged: (value) {
-                    setState(() {
-                      isBiometric = value;
-                    });
-                  },
-                ),
-              ),
-              title: Text(
-                'biometric'.tr,
-                style: GoogleFonts.raleway(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15, color: ColorManager.kWhiteColor),
-                ),
-              ),
-              onTap: () {
-                //Navigator.pop(context);
-              },
-            ),
+                            setState(() {});
+                          } else {
+                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text( "You declined the biometric login.")));
+                               
+                          }
 
-            ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              leading: Image.asset(AppImages.language),
-              title: Text(
-                'languages'.tr,
-                style: GoogleFonts.raleway(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15, color: ColorManager.kWhiteColor),
-                ),
-              ),
-              onTap: () async {
-                await languageSelector(context, AppConstants.languages);
-              },
-            ),
-            SizedBox(
-              height: Get.height * 0.02,
-            ),
-            Divider(
-              thickness: Get.height * 0.005,
-            ),
-            SizedBox(
-              height: Get.height * 0.1,
-            ),
+                          if (fingerprint) {
+                            if (authentication) {
+                              // String? num = prefs!.getString('customernumber');
 
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              leading: Image.asset(AppImages.logout),
-              title: Text(
-                'logout'.tr,
-                style: GoogleFonts.raleway(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15, color: ColorManager.kWhiteColor),
+                              if (num != null) {
+                                // profile = await api.getcustomerprofile(num);
+                                // if (profile.name != null) {
+                                //   // prefs!.setString(
+                                //   //     'customerid', profile.customerId);
+                                //   setState(() {
+                                //     fingerprint = true;
+                                //   });
+                                // }
+                                setState(() {
+                                  profile;
+                                });
+                              } else {
+                                setState(() {
+                                  fingerprint = false;
+                                });
+                                                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text( "Use login for first time.")));
+                           
+                                // Utils()
+                                //     .toastmessage("Use login for first time.");
+                              }
+                            } else {
+                              setState(() {
+                                fingerprint = true;
+                              });
+                            }
+                          // LocalDb.set ('fingerprint', !fingerprint);
+                          }
+                          // setState(() {
+                          //   fingerprint = value;
+                          // });
+                        } else {
+                          // prefs!.setBool('fingerprint', !fingerprint);
+                          setState(() {
+                            fingerprint = false;
+                            // authentication = !fingerprint;
+                          });
+                        }
+                    },
+                  ),
                 ),
+                title: Text(
+                  'biometric'.tr,
+                  style: GoogleFonts.raleway(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  ),
+                ),
+                onTap: () {
+                  //Navigator.pop(context);
+                },
               ),
-              onTap: () async {
-                String? id = await LocalDb().getDoctorId();
-                String? token = await LocalDb().getToken();
-                bool? loginStatus = await LocalDb().getLoginStatus();
-                String? DeviceToken = await LocalDb().getDeviceToken();
-                if (loginStatus == true) {
-                  AuthRepo.logout(
-                      DoctorId: id,
-                      token: token,
-                      DeviceToken: DeviceToken,
-                      IsLogOffAllDevice: 'true');
-                } else {
-                  showSnackbar(context, 'You are not Logged in');
-                }
-                //Navigator.pop(context);
-              },
-            ),
-
-            // customListTile(
-            //   context,
-            //   imagePath: Images.logout,
-            //   title: 'Logout',
-            //   onTap: () async {
-            //     String? id = await LocalDb().getDoctorId();
-            //     String? token = await LocalDb().getToken();
-            //     bool? loginStatus = await LocalDb().getLoginStatus();
-            //     String? DeviceToken = await LocalDb().getDeviceToken();
-            //     if (loginStatus == true) {
-            //       // Get.offAll(() => const LoginScreen());
-            //       AuthRepo.logout(
-            //           DoctorId: id,
-            //           token: token,
-            //           DeviceToken: DeviceToken,
-            //           IsLogOffAllDevice: 'true');
-            //     } else {
-            //       showSnackbar(context, 'You are not Logged in');
-            //     }
-            //     // Get.off(() => const LoginScreen());
-            //   },
-            // ),
-            // customListTile(context, onTap: () async {
-            //   String? id = await LocalDb().getDoctorId();
-            //   String? token = await LocalDb().getToken();
-            //   bool? loginStatus = await LocalDb().getLoginStatus();
-            //   if (loginStatus == true) {
-            //     AuthRepo.deleteAccount(patientId: id, token: token);
-            //   } else {
-            //     showSnackbar(context, 'You are not Logged in');
-            //   }
-            // },
-            //     imagePath: Images.family,
-            //     title: 'Delete Account',
-            //     isIcon: true,
-            //     textColor: ColorManager.kRedColor),
-          ],
+        
+              ListTile(
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(AppImages.language),
+                title: Text(
+                  'languages'.tr,
+                  style: GoogleFonts.raleway(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  ),
+                ),
+                onTap: () async {
+                  await languageSelector(context, AppConstants.languages);
+                },
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Divider(
+                thickness: Get.height * 0.005,
+              ),
+              SizedBox(
+                height: Get.height * 0.1,
+              ),
+        
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(AppImages.logout),
+                title: Text(
+                  'logout'.tr,
+                  style: GoogleFonts.raleway(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  ),
+                ),
+                onTap: () async {
+                  String? id = await LocalDb().getDoctorId();
+                  String? token = await LocalDb().getToken();
+                  bool? loginStatus = await LocalDb().getLoginStatus();
+                  String? DeviceToken = await LocalDb().getDeviceToken();
+                  if (loginStatus == true) {
+                    AuthRepo.logout(
+                        DoctorId: id,
+                        token: token,
+                        DeviceToken: DeviceToken,
+                        IsLogOffAllDevice: 'true');
+                  } else {
+                    showSnackbar(context, 'You are not Logged in');
+                  }
+                  //Navigator.pop(context);
+                },
+              ),
+        
+              // customListTile(
+              //   context,
+              //   imagePath: Images.logout,
+              //   title: 'Logout',
+              //   onTap: () async {
+              //     String? id = await LocalDb().getDoctorId();
+              //     String? token = await LocalDb().getToken();
+              //     bool? loginStatus = await LocalDb().getLoginStatus();
+              //     String? DeviceToken = await LocalDb().getDeviceToken();
+              //     if (loginStatus == true) {
+              //       // Get.offAll(() => const LoginScreen());
+              //       AuthRepo.logout(
+              //           DoctorId: id,
+              //           token: token,
+              //           DeviceToken: DeviceToken,
+              //           IsLogOffAllDevice: 'true');
+              //     } else {
+              //       showSnackbar(context, 'You are not Logged in');
+              //     }
+              //     // Get.off(() => const LoginScreen());
+              //   },
+              // ),
+              // customListTile(context, onTap: () async {
+              //   String? id = await LocalDb().getDoctorId();
+              //   String? token = await LocalDb().getToken();
+              //   bool? loginStatus = await LocalDb().getLoginStatus();
+              //   if (loginStatus == true) {
+              //     AuthRepo.deleteAccount(patientId: id, token: token);
+              //   } else {
+              //     showSnackbar(context, 'You are not Logged in');
+              //   }
+              // },
+              //     imagePath: Images.family,
+              //     title: 'Delete Account',
+              //     isIcon: true,
+              //     textColor: ColorManager.kRedColor),
+            ],
+          ),
         ),
       ),
     );
   }
+
+final LocalAuthentication auth = LocalAuthentication();
+  List<BiometricType>? _availableBiometrics;
+  String _authorized = 'Not Authorized';
+  bool _isAuthenticating = false;
+  bool authentication = false;
+
+
+Future<bool> _authenticate() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _isAuthenticating = true;
+        _authorized = 'Authenticating';
+      });
+      authenticated = await auth.authenticate(
+        localizedReason: 'Let OS determine authentication method',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+        ),
+      );
+      setState(() {
+        _isAuthenticating = false;
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = 'Error - ${e.message}';
+      });
+      return authenticated;
+    }
+    if (!mounted) {
+      return authenticated;
+    }
+
+    setState(
+        () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
+    return authenticated;
+  }
+
+
+bool fingerprint=false;
 
   customListTile(BuildContext context,
       {String? title,

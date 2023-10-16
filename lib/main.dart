@@ -2,24 +2,7 @@ import 'package:doctormobileapplication/data/controller/language_controller.dart
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/helpers/theme_manager.dart';
 import 'package:doctormobileapplication/models/language_model.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/History_eRX.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/doctor_review.dart';
-import 'package:doctormobileapplication/screens/ManageAppointments/DailyViewAppointment.dart';
-import 'package:doctormobileapplication/screens/auth_screens/forget_password.dart';
-import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:doctormobileapplication/screens/auth_screens/main_registration_screen.dart';
-import 'package:doctormobileapplication/screens/auth_screens/register_screen.dart';
-import 'package:doctormobileapplication/screens/auth_screens/register_screens.dart';
-import 'package:doctormobileapplication/screens/auth_screens/sucessfull_registration.dart';
-import 'package:doctormobileapplication/screens/health_summary/health_summary.dart';
-import 'package:doctormobileapplication/screens/health_summary/health_summary_Screen.dart';
-import 'package:doctormobileapplication/screens/health_summary/patient_history.dart';
-import 'package:doctormobileapplication/screens/consulted_vault/appointment_history.dart';
-import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointments.dart';
-import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
-import 'package:doctormobileapplication/screens/profile/profile.dart';
 import 'package:doctormobileapplication/screens/splash_screen/splash_screen.dart';
-import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/init/init.dart';
 import 'package:doctormobileapplication/utils/languages.dart';
@@ -27,7 +10,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import 'data/repositories/notification_repo/notifications_repo.dart';
 
 Future<void> main() async {
