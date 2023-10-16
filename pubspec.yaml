@@ -66,6 +66,7 @@ dependencies:
   syncfusion_flutter_calendar: ^23.1.36
   open_app_file: ^4.0.2
   flutter_otp_text_field: ^1.1.1
+  local_auth: ^2.1.7
 
   #Above Two Packages for Notification from firebase
 
