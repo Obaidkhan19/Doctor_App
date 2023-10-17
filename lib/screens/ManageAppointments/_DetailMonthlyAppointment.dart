@@ -1,3 +1,4 @@
+import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';
@@ -65,125 +66,155 @@ class DetailMonthlyAppointment extends StatefulWidget {
 }
 
 class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
+
+
+  @override
+  void initState() { 
+    call();
+    super.initState();
+  }
+
+  call() async{
+    ManageAppointmentController.i.getmonthlyoctorAppointment(DateTime.now().toString().split(' ')[0]);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.03, right: Get.width * 0.03),
-        child: Stack(
-          children: [
-            // const BackgroundLogoimage(),
-            Column(
+      body: GetBuilder<ManageAppointmentController>(
+        builder: (context) {
+          return Padding(
+            padding:
+                EdgeInsets.only(left: Get.width * 0.03, right: Get.width * 0.03),
+            child: Stack(
               children: [
-                SizedBox(
-                  height: Get.height * 0.03,
-                ),
-
-                // CALENDER CODE
-                SfCalendar(
-                  cellBorderColor: Colors.transparent,
-                  view: CalendarView.month,
-                  dataSource: MeetingDataSource(_getDataSource()),
-                  firstDayOfWeek: 1,
-                  showNavigationArrow: true,
-                  showDatePickerButton: true,
-                  todayHighlightColor: ColorManager.kPrimaryColor,
-                  backgroundColor: Colors.transparent,
-                  selectionDecoration: null,
-                  headerStyle: const CalendarHeaderStyle(
-                    textAlign: TextAlign.center,
-                  ),
-                  monthViewSettings: const MonthViewSettings(
-                    numberOfWeeksInView: 4,
-                    appointmentDisplayCount: 2,
-                    appointmentDisplayMode:
-                        MonthAppointmentDisplayMode.appointment,
-                    showAgenda: false,
-                    navigationDirection: MonthNavigationDirection.horizontal,
-                  ),
-                  appointmentBuilder: (BuildContext context,
-                      CalendarAppointmentDetails details) {
-                    return SizedBox(
-                      height: Get.height * 0.05,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Get.width * 0.04,
-                            decoration: const BoxDecoration(
-                              color: Colors.green,
-                            ),
-                            child: const Center(
-                              child: Text(
-                                '2',
-                                style: TextStyle(
-                                    color: ColorManager.kWhiteColor,
-                                    fontSize: 8),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: Get.width * 0.04,
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
-                            ),
-                            child: const Center(
-                              child: Text(
-                                '0',
-                                style: TextStyle(
-                                    color: ColorManager.kWhiteColor,
-                                    fontSize: 8),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  onTap: (CalendarTapDetails details) async {},
-                ),
-
-                SizedBox(
-                  height: Get.height * 0.04,
-                ),
-                Row(
+                // const BackgroundLogoimage(),
+                Column(
                   children: [
-                    Container(
-                      width: Get.width * 0.08,
-                      height: Get.height * 0.04,
-                      color: ColorManager.KgreenColor,
-                    ),
                     SizedBox(
-                      width: Get.width * 0.01,
+                      height: Get.height * 0.03,
                     ),
-                    Text(
-                      'Paid Appointments | ' '2',
-                      style: GoogleFonts.poppins(
-                        fontSize: 9,
+
+                    // CALENDER CODE
+                    SfCalendar(
+                      cellBorderColor: Colors.transparent,
+                      view: CalendarView.month,
+                      dataSource: MeetingDataSource(_getDataSource()),
+                      firstDayOfWeek: 1,
+                      showNavigationArrow: true,
+                      showDatePickerButton: true,
+                      todayHighlightColor: ColorManager.kPrimaryColor,
+                      backgroundColor: Colors.transparent,
+                      selectionDecoration: null,
+                      headerStyle: const CalendarHeaderStyle(
+                        textAlign: TextAlign.center,
                       ),
+                      monthViewSettings: const MonthViewSettings(
+                        numberOfWeeksInView: 4,
+                        appointmentDisplayCount: 2,
+                        appointmentDisplayMode:
+                            MonthAppointmentDisplayMode.appointment,
+                        showAgenda: false,
+                        navigationDirection: MonthNavigationDirection.horizontal,
+                      ),
+                      appointmentBuilder: (BuildContext context,
+                          CalendarAppointmentDetails details) {
+                        return SizedBox(
+                          height: Get.height * 0.05,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GetBuilder<ManageAppointmentController>(
+                                builder: (context) {
+                                  return Container(
+                                    width: Get.width * 0.04,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                    ),
+                                    child:  Center(
+                                      child: Text(
+                                        ManageAppointmentController.i.paid.toString(),
+                                        style: TextStyle(
+                                            color: ColorManager.kWhiteColor,
+                                            fontSize: 8),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              ),
+                              Container(
+                                width: Get.width * 0.04,
+                                decoration: const BoxDecoration(
+                                  color: Colors.black,
+                                ),
+                                child:  Center(
+                                  child: Text(
+                                    ManageAppointmentController.i.unpaid.toString(),
+                                    style: TextStyle(
+                                        color: ColorManager.kWhiteColor,
+                                        fontSize: 8),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      onTap: (CalendarTapDetails details) async {
+                        ManageAppointmentController.i.getmonthlyoctorAppointment(details.date.toString().split(' ')[0]);
+                      },
                     ),
-                    const Spacer(),
-                    Container(
-                      width: Get.width * 0.08,
-                      height: Get.height * 0.04,
-                      color: ColorManager.kblackColor,
-                    ),
+
                     SizedBox(
-                      width: Get.width * 0.01,
+                      height: Get.height * 0.04,
                     ),
-                    Text(
-                      'UnPaid Appointments | ' '0',
-                      style: GoogleFonts.poppins(
-                        fontSize: 9,
-                      ),
-                    )
+                    Row(
+                      children: [
+                        Container(
+                          width: Get.width * 0.08,
+                          height: Get.height * 0.04,
+                          color: ColorManager.kRedColor,
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.01,
+                        ),
+                        GetBuilder<ManageAppointmentController>(
+                          builder: (context) {
+                            return Text(
+                              'Paid Appointments | ' '${ManageAppointmentController.i.paid}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 9,
+                              ),
+                            );
+                          }
+                        ),
+                        const Spacer(),
+                        Container(
+                          width: Get.width * 0.08,
+                          height: Get.height * 0.04,
+                          color: ColorManager.kblackColor,
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.01,
+                        ),
+                        GetBuilder<ManageAppointmentController>(
+                          builder: (context) {
+                            return Text(
+                              'UnPaid Appointments | ' '${ManageAppointmentController.i.unpaid}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 9,
+                              ),
+                            );
+                          }
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ],
             ),
-          ],
-        ),
+          );
+        }
       ),
     );
   }

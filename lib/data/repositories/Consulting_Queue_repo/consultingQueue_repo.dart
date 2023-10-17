@@ -51,38 +51,38 @@ class ConsultingQueueRepo {
     }
   }
 
-  static getpatientconsultingqueue(consultingqueuepatients consult) async {
-    ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
+  // static getpatientconsultingqueue(consultingqueuepatients consult) async {
+  //   ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
 
-    var body = consult.toJson();
-    print(body);
-    var headers = {'Content-Type': 'application/json'};
-    try {
-      var response = await http.post(
-          Uri.parse(AppConstants.consultingqueuepatient),
-          headers: headers,
-          body: jsonEncode(body));
-      // print(body);
-      if (response.statusCode == 200) {
-        var result = jsonDecode(response.body);
-        if (result['Status'] == 1) {
-          Iterable lst = result['Consultations'];
-          List<consultingqueuereponse> rep =
-              lst.map((e) => consultingqueuereponse.fromJson(e)).toList();
-          log('${rep.toString()} ConsultingQueue');
-          ConsultingQueueController.i.updateconsultinglist(rep);
-          //   print(ConsultingQueue);
+  //   var body = consult.toJson();
+  //   print(body);
+  //   var headers = {'Content-Type': 'application/json'};
+  //   try {
+  //     var response = await http.post(
+  //         Uri.parse(AppConstants.consultingqueuepatient),
+  //         headers: headers,
+  //         body: jsonEncode(body));
+  //     // print(body);
+  //     if (response.statusCode == 200) {
+  //       var result = jsonDecode(response.body);
+  //       if (result['Status'] == 1) {
+  //         Iterable lst = result['Consultations'];
+  //         List<consultingqueuereponse> rep =
+  //             lst.map((e) => consultingqueuereponse.fromJson(e)).toList();
+  //         log('${rep.toString()} ConsultingQueue');
+  //         ConsultingQueueController.i.updateconsultinglist(rep);
+  //         //   print(ConsultingQueue);
           
-        }
+  //       }
         
-      } else {
-        log(response.statusCode.toString());
+  //     } else {
+  //       log(response.statusCode.toString());
         
-      }
-    } catch (e) {
-      log('$e exception caught');
-    }
-  }
+  //     }
+  //   } catch (e) {
+  //     log('$e exception caught');
+  //   }
+  // }
 
 
 static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
@@ -109,6 +109,9 @@ static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
               }
               else  if(consult.status=="2"){
                 ConsultingQueueController.i.updateconsultingqueuehold(rep);
+              }
+              else  if(consult.status=="3"){
+                ConsultingQueueController.i.updateconsultinglist(rep);
               }
           log('${rep.toString()} ConsultingQueue');
           //   print(ConsultingQueue);

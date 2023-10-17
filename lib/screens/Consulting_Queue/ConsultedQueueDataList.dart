@@ -38,22 +38,23 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
     ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     super.dispose();
   }
+  int length=10;
 
-  callback() async {
-    ConsultingQueueRepo.getpatientconsultingqueue(consultingqueuepatients(
-        branchId: "",
-        doctorId: await LocalDb().getDoctorId(),
-        search: "",
-        workLocationId: "",
-        status: "1",
-        fromDate: DateTime.now().toString().split(' ')[0],
-        toDate: DateTime.now().toString().split(' ')[0],
-        isOnline: "false",
-        token: "",
-        start: "0",
-        length: "10",
-        orderColumn: "0",
-        orderDir: "desc"));
+callback() async {
+        ConsultingQueueRepo.getpatientconsultingqueue(consultingqueuepatients(
+            branchId: "",
+            doctorId: await LocalDb().getDoctorId(),
+            search: "",
+            workLocationId: "",
+            status: "1",
+            fromDate: DateTime.now().toString().split(' ')[0],
+            toDate: DateTime.now().toString().split(' ')[0],
+            isOnline: "false",
+            token: "",
+            start: "0",
+            length: "10",
+            orderColumn: "0",
+            orderDir: "desc"));
   }
 
   @override
@@ -74,8 +75,8 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         var isCallToFetchData =
             ConsultingQueueController.i.SetStartToFetchNextData();
         if (isCallToFetchData) {
-          ConsultingQueueController.i.getConsultingQueueData(
-              SearchFieldController.text, widget.Status.toString());
+          length=length+10;
+         callback();
         }
       }
     });
@@ -112,44 +113,83 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
             ),
             child: SafeArea(
               minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      prefixIcon: const Icon(
-                        Icons.search_outlined,
-                        color: ColorManager.kPrimaryColor,
-                        size: 35,
-                      ),
-                      controller: SearchFieldController,
-                      hintText: 'Search',
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: CustomFormField(
+                            focusnode: false,
+                            onchange: (val) {
+                              if (val!.isEmpty) {
+                                ConsultingQueueController.i
+                                    .clearAllLists(widget.Status.toString());
+                                ConsultingQueueController.i
+                                    .getConsultingQueueData(
+                                        '', widget.Status.toString());
+                              }
+                            },
+                            key: SearchFieldControllerKey,
+                            controller: SearchFieldController,
+                            hintText: 'Search',
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            ConsultingQueueController.i
+                                .clearAllLists(widget.Status.toString());
+                            ConsultingQueueController.i.getConsultingQueueData(
+                                SearchFieldController.text.toString(),
+                                widget.Status.toString());
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              decoration: BoxDecoration(
+                                color: const Color(0xfff1272d3),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Center(
+                                  child: Icon(
+                                Icons.search,
+                                color: ColorManager.kWhiteColor,
+                                size: MediaQuery.of(context).size.height * 0.04,
+                              ))),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: Get.height * 0.015,
-                    ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.62,
-                        child: (ConsultingQueueController
-                                    .i.ConsultedDataList.queue !=
-                                null)
-                            ? ListView.builder(
-                                controller: _scrollController,
-                                physics: const BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: ((ConsultingQueueController
-                                            .i.ConsultedDataList.queue !=
-                                        null)
-                                    ? ConsultingQueueController
-                                        .i.ConsultedDataList.queue?.length
-                                    : 0),
-                                itemBuilder: (context, index) {
-                                  final manageAppointment =
-                                      (ConsultingQueueController
-                                                  .i.ConsultedDataList.queue !=
-                                              null)
-                                          ? ConsultingQueueController
-                                              .i.ConsultedDataList.queue![index]
-                                          : null;
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.015,
+                  ),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.62,
+                      child: (ConsultingQueueController
+                                  .i.ConsultedDataList.queue !=
+                              null)
+                          ? ListView.builder(
+                              controller: _scrollController,
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: ((ConsultingQueueController
+                                          .i.ConsultedDataList.queue !=
+                                      null)
+                                  ? ConsultingQueueController
+                                      .i.ConsultedDataList.queue?.length
+                                  : 0),
+                              itemBuilder: (context, index) {
+                                final manageAppointment =
+                                    (ConsultingQueueController
+                                                .i.ConsultedDataList.queue !=
+                                            null)
+                                        ? ConsultingQueueController
+                                            .i.ConsultedDataList.queue![index]
+                                        : null;
 
                                   // FILTER CODE
                                   // if (ConsultingQueueController.i.date
@@ -383,6 +423,6 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
               ),
             ),
           ),
-        ));
+        ))
   }
 }
