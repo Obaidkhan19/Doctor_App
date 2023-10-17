@@ -42,12 +42,13 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
   int length = 10;
 
   callback() async {
+    ConsultingQueueRepo.GetConsultingQueuewaitinghold(
     consultingqueuepatients(
         branchId: "",
         doctorId: await LocalDb().getDoctorId(),
         search: "",
         workLocationId: "",
-        status: "1",
+        status: "3",
         fromDate: DateTime.now().toString().split(' ')[0],
         toDate: DateTime.now().toString().split(' ')[0],
         isOnline: "false",
@@ -55,7 +56,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         start: "0",
         length: "10",
         orderColumn: "0",
-        orderDir: "desc");
+        orderDir: "desc"));
   }
 
   @override
@@ -171,25 +172,21 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                 SizedBox(
                     height: MediaQuery.of(context).size.height * 0.62,
                     child: (ConsultingQueueController
-                                .i.ConsultedDataList.queue !=
-                            null)
+                                .i.response.isNotEmpty)
                         ? ListView.builder(
                             controller: _scrollController,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: ((ConsultingQueueController
-                                        .i.ConsultedDataList.queue !=
-                                    null)
+                                .i.response.isNotEmpty)
                                 ? ConsultingQueueController
-                                    .i.ConsultedDataList.queue?.length
-                                : 0),
+                                    .i.response.length                                : 0),
                             itemBuilder: (context, index) {
                               final manageAppointment =
                                   (ConsultingQueueController
-                                              .i.ConsultedDataList.queue !=
-                                          null)
+                                .i.response.isNotEmpty)
                                       ? ConsultingQueueController
-                                          .i.ConsultedDataList.queue![index]
+                                .i.response[index]
                                       : null;
 
                               // FILTER CODE
