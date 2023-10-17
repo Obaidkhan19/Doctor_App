@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:get/get.dart';
 
 import '../../components/snackbar.dart';
@@ -11,9 +12,15 @@ import '../repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 class ConsultingQueueController extends GetxController implements GetxService {
   int _index = 0;
   int get index => _index;
+  List<consultingqueuereponse> response = [];
 
   getPageIndexofAll() {
     return _index;
+  }
+
+  updateconsultinglist(List<consultingqueuereponse> data) {
+    response = data;
+    update();
   }
 
   setPageIndexofDayAll(int ind) {

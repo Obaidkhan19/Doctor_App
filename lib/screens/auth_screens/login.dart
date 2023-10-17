@@ -10,6 +10,7 @@ import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/forget_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/main_registration_screen.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -44,143 +45,157 @@ class _LoginScreenState extends State<LoginScreen> {
         dismissible: false,
         opacity: 0.4,
         color: Theme.of(context).scaffoldBackgroundColor,
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Form(
-              key: _formKey,
-              child: SafeArea(
-                child: Stack(
-                  children: [
-                    const BackgroundLogoimage(),
-                    Container(
-                      // alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(AppPadding.p20),
-                      height: Get.height,
-                      width: Get.width,
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: Get.height * 0.1,
-                              child: Center(
-                                child: Image.asset(
-                                  Images.logo,
-                                  height: Get.height * 0.08,
+        child: GetBuilder<AuthController>(builder: (cnt) {
+          return Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Form(
+                key: _formKey,
+                child: SafeArea(
+                  child: Stack(
+                    children: [
+                      const BackgroundLogoimage(),
+                      Container(
+                        // alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.all(AppPadding.p20),
+                        height: Get.height,
+                        width: Get.width,
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: Get.height * 0.1,
+                                child: Center(
+                                  child: Image.asset(
+                                    Images.logo,
+                                    height: Get.height * 0.08,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.14,
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.6,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'welcometo'.tr,
-                                    style: GoogleFonts.raleway(
-                                      textStyle: GoogleFonts.poppins(
-                                          fontSize: 30,
-                                          color: ColorManager.kPrimaryColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Text(
-                                    AppConstants.appName,
-                                    style: GoogleFonts.raleway(
-                                      textStyle: GoogleFonts.poppins(
-                                          fontSize: 25,
-                                          color: ColorManager.kPrimaryColor,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.04,
-                                  ),
-                                  AuthTextField(
-                                    // formatters: [Masks().maskFormatter],
-                                    controller: login.emailController,
-                                    hintText: 'username'.tr,
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.02,
-                                  ),
-                                  AuthTextField(
-                                    controller: login.passwordController,
-                                    hintText: 'password'.tr,
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.02,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: Get.width * 0.55),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Get.to(() => const ForgetPassword());
-                                      },
-                                      child: Text(
-                                        'forgotPassword'.tr,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
+                              SizedBox(
+                                height: Get.height * 0.14,
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.6,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'welcometo'.tr,
+                                      style: GoogleFonts.poppins(
+                                        textStyle: GoogleFonts.poppins(
+                                            fontSize: 30,
                                             color: ColorManager.kPrimaryColor,
-                                            fontWeight: FontWeight.w600),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.02,
-                                  ),
-                                  PrimaryButton(
-                                      title: 'login'.tr,
-                                      onPressed: () async {
-                                        FocusScope.of(context).unfocus();
-                                        setState(() {
-                                          isLoading = true;
-                                        });
-                                        try {
-                                          await AuthRepo.login(
-                                              cnic: login.emailController.text,
-                                              password: login
-                                                  .passwordController.text);
+                                    Text(
+                                      AppConstants.appName,
+                                      style: GoogleFonts.poppins(
+                                        textStyle: GoogleFonts.poppins(
+                                            fontSize: 25,
+                                            color: ColorManager.kPrimaryColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.04,
+                                    ),
+                                    AuthTextField(
+                                      // formatters: [Masks().maskFormatter],
+                                      controller: login.emailController,
+                                      hintText: 'username'.tr,
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.02,
+                                    ),
+                                    AuthTextField(
+                                      obscureText: login.obsecure,
+                                      suffixIcon: InkWell(
+                                        onTap: () {
+                                          login.updateobsecurepassword(
+                                              !login.obsecure);
+                                        },
+                                        child: login.obsecure
+                                            ? const Icon(CupertinoIcons.eye)
+                                            : const Icon(
+                                                CupertinoIcons.eye_slash),
+                                      ),
+                                      controller: login.passwordController,
+                                      hintText: 'password'.tr,
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.02,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.55),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(() => const ForgetPassword());
+                                        },
+                                        child: Text(
+                                          'forgotPassword'.tr,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              color: ColorManager.kPrimaryColor,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.02,
+                                    ),
+                                    PrimaryButton(
+                                        title: 'login'.tr,
+                                        onPressed: () async {
+                                          FocusScope.of(context).unfocus();
+                                          setState(() {
+                                            isLoading = true;
+                                          });
+                                          try {
+                                            await AuthRepo.login(
+                                                cnic:
+                                                    login.emailController.text,
+                                                password: login
+                                                    .passwordController.text);
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                          } catch (e) {
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                          }
                                           setState(() {
                                             isLoading = false;
                                           });
-                                        } catch (e) {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                        }
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                      },
-                                      color: ColorManager.kPrimaryColor,
-                                      textcolor: ColorManager.kWhiteColor),
-                                ],
+                                        },
+                                        color: ColorManager.kPrimaryColor,
+                                        textcolor: ColorManager.kWhiteColor),
+                                  ],
+                                ),
                               ),
-                            ),
-                            SignupOrLoginText(
-                              pre: 'donthaveanAccount'.tr,
-                              suffix: 'register'.tr,
-                              onTap: () {
-                                //Get.to(() => const RegisterScreens());
-                                AuthController.i.disposefields();
-                                Get.to(const MainRegistrationScreen());
-                              },
-                            )
-                          ],
+                              SignupOrLoginText(
+                                pre: 'donthaveanAccount'.tr,
+                                suffix: 'register'.tr,
+                                onTap: () {
+                                  //Get.to(() => const RegisterScreens());
+                                  AuthController.i.disposefields();
+                                  Get.to(const MainRegistrationScreen());
+                                },
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )));
+              ));
+        }));
   }
 }
 
@@ -286,12 +301,14 @@ class AuthTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         hintText: hintText,
+
         hintStyle:
             const TextStyle(color: ColorManager.kGreyColor, fontSize: 12),
         // const TextStyle(
         //     color: Color(0xfff000000),
         //     fontSize: 16,
         //     fontWeight: FontWeight.w600),
+
         disabledBorder: const OutlineInputBorder(),
         errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: ColorManager.kRedColor)),

@@ -18,6 +18,12 @@ import '../../models/cities_model.dart';
 class AuthController extends GetxController implements GetxService {
   bool _isotpLoading = false;
   bool get isotpLoading => _isotpLoading;
+  bool obsecure = true;
+
+  updateobsecurepassword(bool ob) {
+    obsecure = !obsecure;
+    update();
+  }
 
   updateIsotploading(bool value) {
     _isotpLoading = value;
@@ -33,6 +39,18 @@ class AuthController extends GetxController implements GetxService {
   String verificationcode = '';
   updateverificationcode(c) {
     verificationcode = c;
+    update();
+  }
+
+  String otpemail = '';
+  updatotpemail(c) {
+    otpemail = c;
+    update();
+  }
+
+  String otpusername = '';
+  updateusername(c) {
+    otpusername = c;
     update();
   }
 

@@ -13,6 +13,7 @@ class AppImages {
   static String search_image = 'assets/images/search.png';
   static String vector = 'assets/images/Vector.png';
   static String wallet = 'assets/images/wallet.png';
+  static String walletimg = 'assets/images/walletimg.png';
   static String forgetpassword = 'assets/images/lock.png';
   static String biometric = 'assets/images/fingerprint.png';
   static String language = 'assets/images/language.png';

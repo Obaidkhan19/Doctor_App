@@ -47,6 +47,19 @@ class RegistrationController extends GetxController implements GetxService {
     update();
   }
 
+  bool securitypassword = true;
+  bool securityconfirmpassword = true;
+
+  updatesecuritypassword() {
+    securitypassword = !securitypassword;
+    update();
+  }
+
+  updateconfirmpassword() {
+    securityconfirmpassword = !securityconfirmpassword;
+    update();
+  }
+
   String countryfullnumber = '';
   updatecountryfullno(no) {
     countryfullnumber = no;

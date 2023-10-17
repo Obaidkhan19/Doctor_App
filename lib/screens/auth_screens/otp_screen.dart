@@ -113,9 +113,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   enabledBorderColor: ColorManager.kblackColor,
                   focusedBorderColor: ColorManager.kPrimaryColor,
                   showFieldAsBox: true,
-                  onCodeChanged: (String code) {
-                    print(code);
-                  },
+                  onCodeChanged: (String code) {},
                   onSubmit: (String verificationCode) {
                     AuthController.i.updatecode(verificationCode);
                   },

@@ -8,6 +8,7 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/profil
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 
 import 'package:doctormobileapplication/screens/book_your_appointment/book_your_appointment.dart';
@@ -84,7 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ZoomDrawer.of(context)!.open();
               }
             },
-            child: Image.asset(Images.menuIcon)),
+            child: Image.asset(
+              height: Get.height * 0.035,
+              Images.menuIcon,
+            )),
         title: Center(
           child:
               SizedBox(width: 150, height: 80, child: Image.asset(Images.logo)),
@@ -99,7 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           Title: 'Notification',
                         ));
                   },
-                  child: Image.asset(Images.notification)),
+                  child: Image.asset(
+                    Images.notification,
+                    height: Get.height * 0.035,
+                  )),
               const SizedBox(
                 width: AppPadding.p24,
               ),
@@ -186,8 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Get.width * 0.45,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Get.to(() => ConsultingQueue());
-                          Get.to(const ConsultingQueueScreen());
+                          Get.to(() => const ConsultingQueue());
+                          // Get.to(const ConsultingQueueScreen());
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
