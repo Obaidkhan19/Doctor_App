@@ -5,6 +5,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/localDB/local_db.dart';
 import '../../utils/constants.dart';
@@ -36,21 +37,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 20,
             ),
             Center(
-              child: Text(
-                'Welcome to ${AppConstants.appName}',
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 30, fontWeight: FontWeight.w900),
-              ),
+              child: Text('Welcome to ',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.raleway(
+                    fontSize: 30,
+                    color: ColorManager.kblackColor,
+                  )),
+            ),
+            Center(
+              child: Text('${AppConstants.appName}.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      fontSize: 32,
+                      color: ColorManager.kPrimaryColor,
+                      fontWeight: FontWeight.bold)),
             ),
             SizedBox(
               height: Get.height * 0.02,
-            ),
-            Image.asset(
-              Images.bestOnlineText,
-              height: Get.height * 0.08,
             ),
             const Spacer(),
             const GetStartedButton()

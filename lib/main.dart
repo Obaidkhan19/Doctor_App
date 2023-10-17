@@ -8,6 +8,7 @@ import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/auth_screens/sucessfull_registration.dart';
 import 'package:doctormobileapplication/screens/dashboard/home.dart';
 import 'package:doctormobileapplication/screens/splash_screen/splash_screen.dart';
+import 'package:doctormobileapplication/screens/welcome_screen/welcome_screen.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/init/init.dart';
 import 'package:doctormobileapplication/utils/languages.dart';
@@ -74,7 +75,7 @@ class _MyAppState extends State<MyApp> {
       locale: const Locale('en', 'US'),
       theme: Styles.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const WelcomeScreen(),
       initialBinding: AppBindings(),
     );
   }
