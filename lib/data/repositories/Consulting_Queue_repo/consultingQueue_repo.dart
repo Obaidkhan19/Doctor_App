@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
+import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,16 +42,12 @@ class ConsultingQueueRepo {
               ConsultingQueueModel.fromJson(jsonDecode(response.body));
           log('${ConsultingQueue.toString()} ConsultingQueue');
           //   print(ConsultingQueue);
-          return ConsultingQueue;
         }
-        return ConsultingQueue;
       } else {
         log(response.statusCode.toString());
-        return ConsultingQueue;
       }
     } catch (e) {
       log('$e exception caught');
-      return ConsultingQueue;
     }
   }
 
@@ -71,17 +70,56 @@ class ConsultingQueueRepo {
           List<consultingqueuereponse> rep =
               lst.map((e) => consultingqueuereponse.fromJson(e)).toList();
           log('${rep.toString()} ConsultingQueue');
+          ConsultingQueueController.i.updateconsultinglist(rep);
           //   print(ConsultingQueue);
-          return ConsultingQueue;
+          
         }
-        return ConsultingQueue;
+        
       } else {
         log(response.statusCode.toString());
-        return ConsultingQueue;
+        
       }
     } catch (e) {
       log('$e exception caught');
-      return ConsultingQueue;
     }
   }
+
+
+static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
+    ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
+
+    var body = consult.toJson();
+    print(body);
+    var headers = {'Content-Type': 'application/json'};
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.consultingqueuewait),
+          headers: headers,
+          body: jsonEncode(body));
+      // print(body);
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+        if (result['Status'] == 1) {
+          Iterable lst = result['Queue'];
+          List<consultingqueuewaitholdresponse> rep =
+              lst.map((e) => consultingqueuewaitholdresponse.fromJson(e)).toList();
+              if(consult.status=="1")
+              {
+                ConsultingQueueController.i.updateconsultingqueuewait(rep);
+              }
+              else  if(consult.status=="2"){
+                ConsultingQueueController.i.updateconsultingqueuehold(rep);
+              }
+          log('${rep.toString()} ConsultingQueue');
+          //   print(ConsultingQueue);
+        }
+      } else {
+        log(response.statusCode.toString());
+      }
+    } catch (e) {
+      log('$e exception caught');
+    }
+  }
+
+
 }

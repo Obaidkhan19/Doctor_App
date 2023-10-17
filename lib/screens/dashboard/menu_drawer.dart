@@ -16,6 +16,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Widget build(BuildContext context) {
     return const ZoomDrawer(
         dragOffset: 40,
+        
         showShadow: true,
         shadowLayer2Color: Color(0xFF2157B2),
         menuBackgroundColor: ColorManager.kPrimaryColor,

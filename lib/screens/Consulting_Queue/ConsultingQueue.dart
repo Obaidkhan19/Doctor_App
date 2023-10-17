@@ -30,27 +30,11 @@ class _ConsultingQueueState extends State<ConsultingQueue>
   @override
   void initState() {
     ConsultingQueueController.i.updatedate(DateTime.now());
-    callback();
+
     super.initState();
   }
 
-  callback() async {
-    ConsultingQueueController.i.updateconsultinglist(
-        ConsultingQueueRepo.getpatientconsultingqueue(consultingqueuepatients(
-            branchId: "",
-            doctorId: await LocalDb().getDoctorId(),
-            search: "",
-            workLocationId: "",
-            status: "1",
-            fromDate: DateTime.now().toString().split(' ')[0],
-            toDate: DateTime.now().toString().split(' ')[0],
-            isOnline: "false",
-            token: "",
-            start: "0",
-            length: "10",
-            orderColumn: "0",
-            orderDir: "desc")));
-  }
+  
 
   String? SelectedDate;
 

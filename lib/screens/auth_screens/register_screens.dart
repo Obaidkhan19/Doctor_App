@@ -137,10 +137,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                   child: Column(
                     children: [
                       RegisterCustomTextField(
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedpersonalTitle = null;
+                        onTap: () async {
+                          controller.selectedpersonalTitle = null;
                               PTitle generic = await searchabledropdown(
                                   context, controller.personalTitleList ?? []);
                               controller.selectedpersonalTitle = null;
@@ -152,7 +150,13 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                     (generic == '')
                                         ? null
                                         : controller.selectedpersonalTitle;
-                              }
+                           
+                        }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedpersonalTitle == null
@@ -188,10 +192,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         height: Get.height * 0.02,
                       ),
                       RegisterCustomTextField(
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedgender = null;
+                        onTap: () async {controller.selectedgender = null;
                               GendersData generic = await searchabledropdown(
                                   context, controller.genderList ?? []);
                               controller.selectedgender = null;
@@ -202,7 +203,11 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                 controller.selectedgender = (generic == '')
                                     ? null
                                     : controller.selectedgender;
-                              }
+                              }},
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedgender == null
@@ -210,10 +215,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             : controller.selectedgender!.name.toString(),
                       ),
                       RegisterCustomTextField(
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedmaritalStatus = null;
+                        onTap: () async {
+                           controller.selectedmaritalStatus = null;
                               MSData generic = await searchabledropdown(
                                   context, controller.maritalStatusList ?? []);
                               controller.selectedmaritalStatus = null;
@@ -226,6 +229,11 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                         ? null
                                         : controller.selectedmaritalStatus;
                               }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                             
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedmaritalStatus == null
@@ -324,10 +332,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         height: Get.height * 0.02,
                       ),
                       RegisterCustomTextField(
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedspecialities = null;
+                        onTap: () async {
+                            controller.selectedspecialities = null;
                               Specialities1 generic = await searchabledropdown(
                                   context, controller.specialitiesList ?? []);
                               controller.selectedspecialities = null;
@@ -344,6 +350,11 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               setState(() {
                                 _getSubSpeciality(generic.id);
                               });
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                            
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedspecialities == null
@@ -356,10 +367,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
 
                       // SUB
                       RegisterCustomTextField(
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedsubspecialities = null;
+                        onTap: () async {
+                           controller.selectedsubspecialities = null;
                               Specialities1 generic = await searchabledropdown(
                                   context,
                                   controller.subspecialitiesList ?? []);
@@ -373,6 +382,11 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                         ? null
                                         : controller.selectedsubspecialities;
                               }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                             
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedsubspecialities == null
@@ -499,10 +513,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           }
                           return null;
                         },
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedcountry = null;
+                        onTap: () async {
+                           controller.selectedcountry = null;
                               controller.selectedcity = null;
                               controller.citiesList.clear();
                               controller.selectedprovince = null;
@@ -524,6 +536,11 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               setState(() {
                                 _getProvinces(cid);
                               });
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                             
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedcountry == null
@@ -538,9 +555,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           return null;
                         },
                         readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedprovince = null;
+                        onTap: () async {
+                          controller.selectedprovince = null;
                               controller.selectedcity = null;
                               Provinces generic = await searchabledropdown(
                                   context, controller.provinceList ?? []);
@@ -559,6 +575,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               setState(() {
                                 _getCities(cid);
                               });
+                        },
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedprovince == null
@@ -573,9 +593,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           return null;
                         },
                         readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              controller.selectedcity = null;
+                        onTap: () async {
+                          controller.selectedcity = null;
                               Cities generic = await searchabledropdown(
                                   context, controller.citiesList ?? []);
                               controller.selectedcity = null;
@@ -588,6 +607,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                     : controller.selectedcity;
                               }
                               setState(() {});
+                        },
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedcity == null
@@ -675,6 +698,9 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           Get.to(() => const LoginScreen());
                         },
                       ),
+                      SizedBox(
+                        height: Get.height*0.04,
+                      )
                     ],
                   ),
                 ),

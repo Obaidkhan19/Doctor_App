@@ -99,13 +99,25 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   }
 
   bottomAppbar(BuildContext context) {
-    return BottomAppBar(
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color(
+                int.parse('#1E1E1E'.substring(1, 7), radix: 16) + 0xFF000000),
+            blurRadius: 6.0,
+            spreadRadius: 0.4,
+            // offset: const Offset(0.0, 6.0),
+          )
+        ],
+        color: Colors.white,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
       // shadowColor: Colors.red,
       height: Get.height * 0.13,
-      elevation: 5,
-      color: Colors.white,
-      notchMargin: 10.0,
-      shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,

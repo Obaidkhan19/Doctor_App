@@ -1,5 +1,9 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
+import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointment_listtile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -33,13 +37,34 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
     super.dispose();
   }
 
+
+  int length=10;
+callback() async
+{
+      ConsultingQueueRepo.GetConsultingQueuewaitinghold(
+        consultingqueuepatients(
+           branchId: "",
+            doctorId: await LocalDb().getDoctorId(),
+            search: "",
+            workLocationId: "",
+            status: "2",
+            fromDate: DateTime.now().toString().split(' ')[0],
+            toDate: DateTime.now().toString().split(' ')[0],
+            isOnline: "false",
+            token: "",
+            start: "0",
+            length: length.toString(),
+            orderColumn: "0",
+            orderDir: "desc"));
+}
+
   @override
   void initState() {
-    ConsultingQueueController.i.clearAllLists(widget.Status.toString());
-    ConsultingQueueController.i
-        .getConsultingQueueData('', widget.Status.toString());
+    // ConsultingQueueController.i.clearAllLists(widget.Status.toString());
+    // ConsultingQueueController.i
+    //     .getConsultingQueueData('', widget.Status.toString());
     SearchFieldController.clear();
-
+callback();
     //when scroll page
     _scrollController.addListener(() {
       // var nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
@@ -49,8 +74,10 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
         var isCallToFetchData =
             ConsultingQueueController.i.SetStartToFetchNextData();
         if (isCallToFetchData) {
-          ConsultingQueueController.i.getConsultingQueueData(
-              SearchFieldController.text, widget.Status.toString());
+          length=length+10;
+         callback();
+          // ConsultingQueueController.i.getConsultingQueueData(
+          //     SearchFieldController.text, widget.Status.toString());
         }
       }
     });
@@ -149,37 +176,22 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                           //       SizedBox(
                           //         height: Get.height * 0.015,
                           //       ),
-                          (ConsultingQueueController.i.HoldDataList.queue !=
-                                  null)
+                          ConsultingQueueController.i.consultingqueuehold.isNotEmpty
                               ? ListView.builder(
                                   controller: _scrollController,
                                   physics: const BouncingScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: ((ConsultingQueueController
-                                              .i.HoldDataList.queue !=
-                                          null)
-                                      ? ConsultingQueueController
-                                          .i.HoldDataList.queue?.length
-                                      : 0),
+                                  itemCount: ConsultingQueueController.i.consultingqueuehold.isNotEmpty
+                                      ? ConsultingQueueController.i.consultingqueuehold.length
+                                      : 0,
                                   itemBuilder: (context, index) {
                                     final manageAppointment =
                                         (ConsultingQueueController
-                                                    .i.HoldDataList.queue !=
-                                                null)
+                                                    .i.consultingqueuehold.isNotEmpty)
                                             ? ConsultingQueueController
-                                                .i.HoldDataList.queue![index]
+                                                .i.consultingqueuehold[index]
                                             : null;
-                                    // FILTER CODE
-                                    // if (ConsultingQueueController.i.date
-                                    //         .toString()
-                                    //         .split(' ')[0] ==
-                                    //     ConsultingQueueController
-                                    //         .i
-                                    //         .ClinicalPracticeDataList
-                                    //         .queue?[index]
-                                    //         .visitTime
-                                    //         .toString()
-                                    //         .split('T')[0])
+                                 
                                     {
                                       return ((manageAppointment != null &&
                                               (manageAppointment

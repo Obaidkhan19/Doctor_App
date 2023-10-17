@@ -521,10 +521,18 @@ class AuthRepo {
   Future<List<Specialities1>> getSubSpecialities(subspeciality) async {
     String url = AppConstants.getSubSpecialities;
     Uri uri = Uri.parse(url);
-    var body = {"SubSpecialities": subspeciality};
-    var response = await http.post(uri,
-        body: body,
-        headers: <String, String>{'Content-Type': 'application/json'});
+    var body = {
+      "SpecialityIds": [
+        subspeciality,
+      ]
+    };
+    print(body);
+    var response = await http.post(
+      uri,
+      body: jsonEncode(body),
+    // );
+    headers: <String, String>{'Content-Type': 'application/json'});
+       print(jsonEncode(body));
     if (response.statusCode == 200) {
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['SubSpecialities']; //Data
