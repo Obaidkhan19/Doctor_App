@@ -42,31 +42,7 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
     var contr =
         Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
-        // appBar: AppBar(
-        //   leading: InkWell(
-        //     onTap: () {
-        //       Navigator.pop(context);
-        //     },
-        //     child: Image.asset(
-        //       AppImages.back,
-        //     ),
-        //   ),
-        //   title: Center(
-        //     child: Text(
-        //       'Day View Appointments',
-        //       style: GoogleFonts.raleway(
-        //         textStyle: GoogleFonts.poppins(
-        //             fontSize: 17,
-        //             fontWeight: FontWeight.bold,
-        //             color: Colors.black),
-        //       ),
-        //     ),
-        //   ),
-        //   actions: [],
-        //   automaticallyImplyLeading: true,
-        //   elevation: 0,
-        //   backgroundColor: Colors.transparent,
-        // ),
+      
         body: GetBuilder<ManageAppointmentController>(builder: (cont) {
       return /*  SpecialitiesController.i.isLoading == false ?*/
           SingleChildScrollView(

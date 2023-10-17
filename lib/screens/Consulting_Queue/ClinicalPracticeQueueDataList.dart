@@ -34,7 +34,7 @@ class _ClinicalPracticeQueueDataListState
     extends State<ClinicalPracticeQueueDataList> {
   TextEditingController SearchFieldController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-
+ 
   final GlobalKey<_ClinicalPracticeQueueDataListState>
       SearchFieldControllerKey = GlobalKey();
   @override

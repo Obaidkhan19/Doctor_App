@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
+import 'package:doctormobileapplication/models/monthlyappointmentbody.dart';
+import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,16 +50,71 @@ class ManageAppointmentRepo {
     }
   }
 
+  static GetmonthlyDoctorAppointment(String date) async {
+    ManageAppointmentController.i.paid=ManageAppointmentController.i.unpaid=0;
+    String? Date = date;
+
+    String? userId = await LocalDb().getDoctorId();
+    String? userToken = await LocalDb().getToken();
+
+//     {
+//     "DoctorId":"e02f9e89-e261-4906-9b33-f49802ddea5f",
+//     "MonthAndYear": "2023-10-17",
+//     "WorkLocationId":"49576ED4-49C9-EB11-80C2-F8BC123A0405",
+//     "IsOnline":"false"
+
+// }
+
+    var body = {
+      "MonthAndYear": Date,
+      "DoctorId": "$userId",
+      "49576ED4-49C9-EB11-80C2-F8BC123A0405": "$userToken",
+      "IsOnline": "false"
+    };
+    var headers = {'Content-Type': 'application/json'};
+    print("$body  a");
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.GetMonthlyAppointment),
+          headers: headers,
+          body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+
+        if (result['Status'] == 1) {
+          Iterable data = result['Appointments'];
+          List<monthlyappointresponse> monthlyDoctorAppointment = data
+              .map((e) =>
+                  monthlyappointresponse.fromJson(e))
+              .toList();
+              
+          log('${monthlyDoctorAppointment.toString()} DailyDoctorAppointment');
+          ManageAppointmentController.i.monthlyappintment=monthlyDoctorAppointment;
+          for(int i=0;i<monthlyDoctorAppointment.length;i++)
+          {
+ if (monthlyDoctorAppointment[i].paid == 1) {
+              ManageAppointmentController.i.paid++;
+            } else if (monthlyDoctorAppointment[i].unPaid == 1) {
+              ManageAppointmentController.i.unpaid++;
+            }
+          }
+          ManageAppointmentController.i.updatemonthlyappointment(monthlyDoctorAppointment);
+          return monthlyDoctorAppointment;
+        }
+      } else {
+        log(response.statusCode.toString());
+      }
+    } catch (e) {
+      log('$e exception caught');
+    }
+  }
+
   static getDailyDoctorAppointmentSlots(
       String Date, String IsOnline, String WorkLocationId) async {
     String? userId = await LocalDb().getDoctorId();
-    String? userToken = await LocalDb().getToken();
     var body = {
       "Date": Date,
       "DoctorId": "$userId",
-      "Token": "$userToken",
-      "WorkLocationId": WorkLocationId,
-      "IsOnline": IsOnline,
     };
     print("$body  b");
     var headers = {'Content-Type': 'application/json'};

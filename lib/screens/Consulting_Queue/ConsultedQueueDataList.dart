@@ -37,22 +37,25 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
     ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     super.dispose();
   }
+  int length=10;
 
 callback() async {
-        ConsultingQueueRepo.getpatientconsultingqueue(consultingqueuepatients(
-            branchId: "",
+       ConsultingQueueRepo.GetConsultingQueuewaitinghold(
+        consultingqueuepatients(
+           branchId: "",
             doctorId: await LocalDb().getDoctorId(),
             search: "",
             workLocationId: "",
-            status: "1",
+            status: "3",
             fromDate: DateTime.now().toString().split(' ')[0],
             toDate: DateTime.now().toString().split(' ')[0],
             isOnline: "false",
             token: "",
             start: "0",
-            length: "10",
+            length: length.toString(),
             orderColumn: "0",
             orderDir: "desc"));
+            print(ConsultingQueueController.i.consultingqueuewait.toString());
   }
 
 
@@ -74,8 +77,8 @@ callback() async {
         var isCallToFetchData =
             ConsultingQueueController.i.SetStartToFetchNextData();
         if (isCallToFetchData) {
-          ConsultingQueueController.i.getConsultingQueueData(
-              SearchFieldController.text, widget.Status.toString());
+          length=length+10;
+         callback();
         }
       }
     });
@@ -169,25 +172,22 @@ callback() async {
                   SizedBox(
                       height: MediaQuery.of(context).size.height * 0.62,
                       child: (ConsultingQueueController
-                                  .i.ConsultedDataList.queue !=
-                              null)
+                                  .i.response.isNotEmpty)
                           ? ListView.builder(
                               controller: _scrollController,
                               physics: const BouncingScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: ((ConsultingQueueController
-                                          .i.ConsultedDataList.queue !=
-                                      null)
+                                  .i.response.isNotEmpty)
                                   ? ConsultingQueueController
-                                      .i.ConsultedDataList.queue?.length
+                                  .i.response.length
                                   : 0),
                               itemBuilder: (context, index) {
                                 final manageAppointment =
                                     (ConsultingQueueController
-                                                .i.ConsultedDataList.queue !=
-                                            null)
-                                        ? ConsultingQueueController
-                                            .i.ConsultedDataList.queue![index]
+                                  .i.response.isNotEmpty)
+                                        ?ConsultingQueueController
+                                  .i.response[index]
                                         : null;
 
                                 // FILTER CODE

@@ -13,7 +13,7 @@ import '../repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 class ConsultingQueueController extends GetxController implements GetxService {
   int _index = 0;
   int get index => _index;
-  List<consultingqueuereponse> response = [];
+  List<consultingqueuewaitholdresponse> response = [];
   List<consultingqueuewaitholdresponse> consultingqueuewait =[];
   List<consultingqueuewaitholdresponse> consultingqueuehold =[];
 
@@ -34,7 +34,7 @@ updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
     return _index;
   }
 
-  updateconsultinglist(List<consultingqueuereponse> data) {
+  updateconsultinglist(List<consultingqueuewaitholdresponse> data) {
     response = data;
     update();
   }

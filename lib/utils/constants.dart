@@ -99,6 +99,8 @@ class AppConstants {
   static const String logoutApi = '$baseURL/api/doctor/Logoff';
   static const String GetDailyAppointment =
       '$baseURL/api/doctor/GetDailyAppointment';
+        static const String GetMonthlyAppointment =
+      '$baseURL/api/doctor/GetMonthlyAppointment';
   static const String GetDayAppointment =
       '$baseURL/api/doctor/GetDayAppointment';
   static const String RescheduleApi = '$baseURL/api/doctor/Reschedule';

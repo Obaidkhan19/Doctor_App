@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
             child: Image.asset(
-              height: Get.height * 0.01,
+              height: 3,
               Images.menuIcon,
             )),
         title: Center(

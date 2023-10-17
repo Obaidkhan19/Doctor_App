@@ -1,3 +1,5 @@
+import 'package:doctormobileapplication/models/monthlyappointmentbody.dart';
+import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:get/get.dart';
 
 import '../../models/DayViewAppointmentModel.dart';
@@ -7,6 +9,12 @@ import '../repositories/ManageAppointment_repo/manageAppointment_repo.dart';
 
 class ManageAppointmentController extends GetxController
     implements GetxService {
+  List<monthlyappointresponse> monthlyappintment = [];
+  int unpaid=0;
+  int paid=0;
+  static ManageAppointmentController get i => Get.put(ManageAppointmentController());
+
+
   DailyDoctorAppointmentsModel _dailyDoctorAppointmentsModel =
       DailyDoctorAppointmentsModel();
   DailyDoctorAppointmentsModel get dailyDoctorAppointmentsModel =>
@@ -26,6 +34,23 @@ class ManageAppointmentController extends GetxController
   DayViewAppointmentSlotModel get dayViewAppointmentSlotModel =>
       _dayViewAppointmentSlotModel;
 
+updatemonthlyappointment(List<monthlyappointresponse> app)async{
+  monthlyappintment=app;
+  update();
+}
+
+  getmonthlyoctorAppointment(date) async {
+    try {
+      monthlyappintment =
+          await ManageAppointmentRepo.GetmonthlyDoctorAppointment(date);
+      isLoadingDailyDoctorAppointment = false;
+      update();
+    } catch (e) {
+      isLoadingDailyDoctorAppointment = false;
+      update();
+    }
+  }
+
   getPageIndexofDayViewAppointment() {
     return _index;
   }
@@ -38,7 +63,7 @@ class ManageAppointmentController extends GetxController
   getDailyDoctorAppointment() async {
     isLoadingDailyDoctorAppointment = true;
     _dailyDoctorAppointmentsModel = DailyDoctorAppointmentsModel();
-  
+
     try {
       _dailyDoctorAppointmentsModel =
           await ManageAppointmentRepo.GetDailyDoctorAppointment();
@@ -228,6 +253,5 @@ class ManageAppointmentController extends GetxController
     }
   }
 
-  static ManageAppointmentController get i =>
-      Get.put(ManageAppointmentController());
+
 }
