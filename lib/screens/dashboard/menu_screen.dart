@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -81,15 +83,14 @@ class _MenuScreenState extends State<MenuScreen> {
                 height: Get.height * 0.14,
               ),
               InkWell(
-                onTap: () {
-                  //Get.;
-                  ZoomDrawer.of(context)!.close();
-                },
-                child: Image.asset(
-                  AppImages.back,
-                  color: ColorManager.kWhiteColor,
-                ),
-              ),
+                  onTap: () {
+                    //Get.;
+                    ZoomDrawer.of(context)!.close();
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  )),
               SizedBox(
                 height: Get.height * 0.04,
               ),
@@ -102,7 +103,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       : Image.network(imagepath),
                 ),
               ),
-        
+
               SizedBox(
                 height: Get.height * 0.01,
               ),
@@ -142,7 +143,8 @@ class _MenuScreenState extends State<MenuScreen> {
                       Get.to(() => EditProfile(
                             firstName: profile.selectedbasicInfo?.firstName,
                             dob: profile.selectedbasicInfo?.dateofBirth,
-                            cellNumber: profile.selectedbasicInfo?.contactPublic,
+                            cellNumber:
+                                profile.selectedbasicInfo?.contactPublic,
                             email: profile.selectedbasicInfo?.email,
                             country: profile.selectedbasicInfo?.countryName,
                             province: profile.selectedbasicInfo?.stateName,
@@ -156,12 +158,13 @@ class _MenuScreenState extends State<MenuScreen> {
                     },
                     child: Image.asset(
                       Images.edit,
+                      height: Get.height * 0.035,
                       color: ColorManager.kWhiteColor,
                     ),
                   ),
                 ],
               ),
-        
+
               // customListTile(context, onTap: () {
               //   Get.to(() => const NoDataFound());
               // }, imagePath: Images.family, title: 'Family Members'),
@@ -174,14 +177,14 @@ class _MenuScreenState extends State<MenuScreen> {
               // customListTile(context, onTap: () {
               //   Get.to(() => const NoDataFound());
               // }, imagePath: Images.wifi, title: 'Forgot Password'),
-        
+
               // customListTile(context, onTap: () {
               //   Get.to(() => const NoDataFound());
               // },
               //     imagePath: Images.fingerprint,
               //     title: 'Finger Print',
               //     togglebutton: true),
-        
+
               // const Divider(
               //   height: 1,
               //   thickness: 3,
@@ -192,36 +195,39 @@ class _MenuScreenState extends State<MenuScreen> {
               //   Get.to(()=> const  RegisterScreen());
               // },
               //     imagePath: Images.family, title: 'Sign Up'),
-        
+
               SizedBox(
                 height: Get.height * 0.01,
               ),
+              // ListTile(
+              //   visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              //   contentPadding:
+              //       const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              //   leading: Image.asset(AppImages.vector),
+              //   title: Text(
+              //     'patienthistory'.tr,
+              //     style: GoogleFonts.poppins(
+              //       textStyle: GoogleFonts.poppins(
+              //           fontSize: 15, color: ColorManager.kWhiteColor),
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     //Navigator.pop(context);
+              //     Get.to(() => const PatientHistory());
+              //   },
+              // ),
+
               ListTile(
                 visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(AppImages.vector),
-                title: Text(
-                  'patienthistory'.tr,
-                  style: GoogleFonts.raleway(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
-                  ),
+                leading: Image.asset(
+                  AppImages.walletimg,
+                  height: Get.height * 0.035,
                 ),
-                onTap: () {
-                  //Navigator.pop(context);
-                  Get.to(() => const PatientHistory());
-                },
-              ),
-        
-              ListTile(
-                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(AppImages.wallet),
                 title: Text(
                   'wallet'.tr,
-                  style: GoogleFonts.raleway(
+                  style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
@@ -237,10 +243,13 @@ class _MenuScreenState extends State<MenuScreen> {
                 visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(AppImages.forgetpassword),
+                leading: Image.asset(
+                  AppImages.forgetpassword,
+                  height: Get.height * 0.035,
+                ),
                 title: Text(
                   'changePassword'.tr,
-                  style: GoogleFonts.raleway(
+                  style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
@@ -253,78 +262,76 @@ class _MenuScreenState extends State<MenuScreen> {
                 visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(AppImages.biometric),
+                leading: Image.asset(
+                  AppImages.biometric,
+                  height: Get.height * 0.035,
+                ),
                 trailing: Transform.scale(
                   scale: 0.55,
                   child: Switch(
                     value: isBiometric,
                     activeColor: ColorManager.kWhiteColor,
                     onChanged: (value) async {
+                      // print('namename');
+                      // print(EditProfileController.i.name);
                       if (value) {
-                          authentication = await _authenticate();
-                          if (authentication) {
-                            if (EditProfileController.i.name== null) {
-                              fingerprint = authentication;
-                            } else {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text( "You are already Logged in")));
-                              // Utils().toastmessage("You are already Logged in");
-                              fingerprint = true;
-                            }
-
-                            setState(() {});
+                        authentication = await _authenticate();
+                        if (authentication) {
+                          if (EditProfileController.i.name == null) {
+                            fingerprint = authentication;
                           } else {
-                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text( "You declined the biometric login.")));
-                               
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("You are already Logged in")));
+                            // Utils().toastmessage("You are already Logged in");
+                            fingerprint = true;
                           }
+                          setState(() {});
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "You declined the biometric login.")));
+                        }
 
-                          if (fingerprint) {
-                            if (authentication) {
-                              // String? num = prefs!.getString('customernumber');
-
-                              if (num != null) {
-                                // profile = await api.getcustomerprofile(num);
-                                // if (profile.name != null) {
-                                //   // prefs!.setString(
-                                //   //     'customerid', profile.customerId);
-                                //   setState(() {
-                                //     fingerprint = true;
-                                //   });
-                                // }
-                                setState(() {
-                                  profile;
-                                });
-                              } else {
-                                setState(() {
-                                  fingerprint = false;
-                                });
-                                                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text( "Use login for first time.")));
-                           
-                                // Utils()
-                                //     .toastmessage("Use login for first time.");
-                              }
-                            } else {
+                        if (fingerprint) {
+                          if (authentication) {
+                            if (EditProfileController.i.name != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("You are already Logged in")));
                               setState(() {
                                 fingerprint = true;
                               });
                             }
-                          // LocalDb.set ('fingerprint', !fingerprint);
+                            setState(() {
+                              profile;
+                            });
+                          } else {
+                            setState(() {
+                              fingerprint = true;
+                            });
                           }
-                          // setState(() {
-                          //   fingerprint = value;
-                          // });
-                        } else {
-                          // prefs!.setBool('fingerprint', !fingerprint);
-                          setState(() {
-                            fingerprint = false;
-                            // authentication = !fingerprint;
-                          });
+                          // LocalDb.set ('fingerprint', !fingerprint);
                         }
+                        // setState(() {
+                        //   fingerprint = value;
+                        // });
+                      } else {
+                        // prefs!.setBool('fingerprint', !fingerprint);
+                        setState(() {
+                          fingerprint = false;
+                          // authentication = !fingerprint;
+                        });
+                      }
                     },
                   ),
                 ),
                 title: Text(
                   'biometric'.tr,
-                  style: GoogleFonts.raleway(
+                  style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
@@ -333,15 +340,18 @@ class _MenuScreenState extends State<MenuScreen> {
                   //Navigator.pop(context);
                 },
               ),
-        
+
               ListTile(
                 visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(AppImages.language),
+                leading: Image.asset(
+                  AppImages.language,
+                  height: Get.height * 0.035,
+                ),
                 title: Text(
                   'languages'.tr,
-                  style: GoogleFonts.raleway(
+                  style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
@@ -359,14 +369,17 @@ class _MenuScreenState extends State<MenuScreen> {
               SizedBox(
                 height: Get.height * 0.1,
               ),
-        
+
               ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(AppImages.logout),
+                leading: Image.asset(
+                  AppImages.logout,
+                  height: Get.height * 0.035,
+                ),
                 title: Text(
                   'logout'.tr,
-                  style: GoogleFonts.raleway(
+                  style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
@@ -388,7 +401,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   //Navigator.pop(context);
                 },
               ),
-        
+
               // customListTile(
               //   context,
               //   imagePath: Images.logout,
@@ -432,14 +445,13 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-final LocalAuthentication auth = LocalAuthentication();
+  final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType>? _availableBiometrics;
   String _authorized = 'Not Authorized';
   bool _isAuthenticating = false;
   bool authentication = false;
 
-
-Future<bool> _authenticate() async {
+  Future<bool> _authenticate() async {
     bool authenticated = false;
     try {
       setState(() {
@@ -459,6 +471,7 @@ Future<bool> _authenticate() async {
       setState(() {
         _isAuthenticating = false;
         _authorized = 'Error - ${e.message}';
+        print(e.message.toString());
       });
       return authenticated;
     }
@@ -471,8 +484,7 @@ Future<bool> _authenticate() async {
     return authenticated;
   }
 
-
-bool fingerprint=false;
+  bool fingerprint = false;
 
   customListTile(BuildContext context,
       {String? title,

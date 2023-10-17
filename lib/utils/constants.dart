@@ -49,6 +49,7 @@ class AppConstants {
 
   static const String changePassword = "$baseURL/api/doctor/ChangePassword";
   static const String forgetPassword = "$baseURL/api/doctor/ForgetPassword";
+  static const String newPassword = "$baseURL/api/doctor/ResetPassword";
 // eRX APIS
   static const String getPatientDetailForPrescription =
       "http://58.65.158.107:64/api/patient/GetPatientDetailForPrescription";
@@ -104,6 +105,8 @@ class AppConstants {
   static const String RescheduleApi = '$baseURL/api/doctor/Reschedule';
   static const String ApproveApi = '$baseURL/api/doctor/Approved';
   static const String WaitingQueueApi = '$baseURL/api/doctor/WaitingQueue';
+  static const String consultingqueuepatient =
+      '$baseURL/api/doctor/GetConsultations';
   static const int maximumDataTobeFetched = 25;
   static int myrownumber = 0;
 

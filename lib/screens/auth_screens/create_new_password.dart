@@ -1,6 +1,7 @@
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/create_new_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/forget_password.dart';
@@ -111,9 +112,16 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                   ),
                   Center(
                     child: InkWell(
-                      onTap: () {
+                      onTap: () async {
                         if (_formKey.currentState!.validate()) {
                           // CALL API HERE
+                          AuthRepo ar = AuthRepo();
+                          ar.newPassword(
+                              passwordController.text,
+                              confirmPasswordController.text,
+                              AuthController.i.otpusername,
+                              AuthController.i.otpemail,
+                              AuthController.i.verificationcode);
                         }
                       },
                       child: Container(

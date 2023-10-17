@@ -11,6 +11,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/auth_screens/register_screens.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -52,42 +53,66 @@ class _SecurityScreenState extends State<SecurityScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  AuthTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'enteryourfullname'.tr;
-                      }
-                      return null;
-                    },
-                    controller: controller.username,
-                    hintText: 'username'.tr,
-                  ),
+                  GetBuilder<RegistrationController>(builder: (context) {
+                    return AuthTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'enteryourfullname'.tr;
+                        }
+                        return null;
+                      },
+                      controller: controller.username,
+                      hintText: 'username'.tr,
+                    );
+                  }),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
-                  AuthTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'enteryourpassword'.tr;
-                      }
-                      return null;
-                    },
-                    controller: controller.password,
-                    hintText: 'password'.tr,
-                  ),
+                  GetBuilder<RegistrationController>(builder: (context) {
+                    return AuthTextField(
+                      obscureText: controller.securitypassword,
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          controller.updatesecuritypassword();
+                        },
+                        child: controller.securitypassword
+                            ? const Icon(CupertinoIcons.eye)
+                            : const Icon(CupertinoIcons.eye_slash),
+                      ),
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'enteryourpassword'.tr;
+                        }
+                        return null;
+                      },
+                      controller: controller.password,
+                      hintText: 'password'.tr,
+                    );
+                  }),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
-                  AuthTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'enteryourconfirmationpassword'.tr;
-                      }
-                      return null;
-                    },
-                    controller: controller.retypePassword,
-                    hintText: 'confirmationpassword'.tr,
-                  ),
+                  GetBuilder<RegistrationController>(builder: (context) {
+                    return AuthTextField(
+                      obscureText: controller.securityconfirmpassword,
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          controller.updateconfirmpassword();
+                        },
+                        child: controller.securityconfirmpassword
+                            ? const Icon(CupertinoIcons.eye)
+                            : const Icon(CupertinoIcons.eye_slash),
+                      ),
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'enteryourconfirmationpassword'.tr;
+                        }
+                        return null;
+                      },
+                      controller: controller.retypePassword,
+                      hintText: 'confirmationpassword'.tr,
+                    );
+                  }),
                   SizedBox(
                     height: Get.height * 0.13,
                   ),

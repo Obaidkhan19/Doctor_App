@@ -164,6 +164,7 @@ class AuthRepo {
     };
     String token = await LocalDb().getDeviceToken();
     var body = {
+      "IsVerify": 0,
       "FirstName": RegistrationController.i.firstname.text,
       "LastName": RegistrationController.i.lastname.text,
       "GenderId": RegistrationController.i.selectedgender!.id,
@@ -227,6 +228,7 @@ class AuthRepo {
     };
     String token = await LocalDb().getDeviceToken();
     var body = {
+      "IsVerify": 0,
       "FirstName": RegistrationController.i.firstname.text,
       "LastName": RegistrationController.i.lastname.text,
       "GenderId": RegistrationController.i.selectedgender!.id,
@@ -548,6 +550,7 @@ class AuthRepo {
       "OldPassword": oldpassword,
       "Token": token
     };
+
     try {
       var response = await http.post(
         Uri.parse(AppConstants.changePassword),
@@ -562,6 +565,48 @@ class AuthRepo {
 
         if (status == 1) {
           if (errormsg == 'Password Changed Sucessfully') {
+            Get.to(() => const LoginScreen());
+          }
+        } else {
+          showSnackbar(Get.context!, errormsg);
+          return errormsg;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> newPassword(
+      password, confirmpassword, username, email, verificationcode) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var body = {
+      "UserName": username,
+      "Email": email,
+      "Password": password,
+      "ConfirmPassword": confirmpassword,
+      "VerificationCode": verificationcode
+    };
+
+    try {
+      var response = await http.post(
+        Uri.parse(AppConstants.newPassword),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var errormsg = responseData['ErrorMessage'];
+
+        if (status == 1) {
+          if (errormsg == 'Your password has been updated successfully.') {
             Get.to(() => const LoginScreen());
           }
         } else {
@@ -595,9 +640,14 @@ class AuthRepo {
         var status = responseData['Status'];
         var errormsg = responseData['ErrorMessage'];
         var verificationCode = responseData['VerificationCode'];
-
+        var username = responseData['Username'];
+        var email = responseData['Email'];
+        print("verificationCodeverificationCodeverificationCode");
+        print(verificationCode);
         if (status == 1) {
           AuthController.i.updateverificationcode(verificationCode);
+          AuthController.i.updateusername(username);
+          AuthController.i.updatotpemail(email);
           AuthController.i.updateIsotploading(false);
           Get.to(() => const OtpScreen());
         } else if (status == -5) {

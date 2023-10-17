@@ -247,7 +247,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomRadioTile(
-                              title: 'identityno'.tr,
+                              title: 'nationalid'.tr,
                               value: 'idno',
                               groupValue: controller.selectedRadioValue,
                               onChanged: (value) {
