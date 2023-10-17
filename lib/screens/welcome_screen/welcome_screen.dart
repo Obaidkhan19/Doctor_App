@@ -45,11 +45,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     .copyWith(fontSize: 30, fontWeight: FontWeight.w900),
               ),
             ),
-            // Image.asset(
-            //   Images.welcomeText,
-            //   height: Get.height * 0.08,
-            // ),
-
             SizedBox(
               height: Get.height * 0.02,
             ),

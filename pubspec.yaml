@@ -67,6 +67,7 @@ dependencies:
   open_app_file: ^4.0.2
   flutter_otp_text_field: ^1.1.1
   local_auth: ^2.1.7
+  url_launcher: ^6.1.14
 
   #Above Two Packages for Notification from firebase
 

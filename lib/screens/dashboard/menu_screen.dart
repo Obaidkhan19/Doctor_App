@@ -366,8 +366,25 @@ class _MenuScreenState extends State<MenuScreen> {
               Divider(
                 thickness: Get.height * 0.005,
               ),
+
               SizedBox(
-                height: Get.height * 0.1,
+                height: Get.height * 0.08,
+              ),
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                leading: Image.asset(
+                  AppImages.bin,
+                  height: Get.height * 0.035,
+                ),
+                title: Text(
+                  'deleteAccount'.tr,
+                  style: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  ),
+                ),
+                onTap: () async {},
               ),
 
               ListTile(
@@ -401,43 +418,6 @@ class _MenuScreenState extends State<MenuScreen> {
                   //Navigator.pop(context);
                 },
               ),
-
-              // customListTile(
-              //   context,
-              //   imagePath: Images.logout,
-              //   title: 'Logout',
-              //   onTap: () async {
-              //     String? id = await LocalDb().getDoctorId();
-              //     String? token = await LocalDb().getToken();
-              //     bool? loginStatus = await LocalDb().getLoginStatus();
-              //     String? DeviceToken = await LocalDb().getDeviceToken();
-              //     if (loginStatus == true) {
-              //       // Get.offAll(() => const LoginScreen());
-              //       AuthRepo.logout(
-              //           DoctorId: id,
-              //           token: token,
-              //           DeviceToken: DeviceToken,
-              //           IsLogOffAllDevice: 'true');
-              //     } else {
-              //       showSnackbar(context, 'You are not Logged in');
-              //     }
-              //     // Get.off(() => const LoginScreen());
-              //   },
-              // ),
-              // customListTile(context, onTap: () async {
-              //   String? id = await LocalDb().getDoctorId();
-              //   String? token = await LocalDb().getToken();
-              //   bool? loginStatus = await LocalDb().getLoginStatus();
-              //   if (loginStatus == true) {
-              //     AuthRepo.deleteAccount(patientId: id, token: token);
-              //   } else {
-              //     showSnackbar(context, 'You are not Logged in');
-              //   }
-              // },
-              //     imagePath: Images.family,
-              //     title: 'Delete Account',
-              //     isIcon: true,
-              //     textColor: ColorManager.kRedColor),
             ],
           ),
         ),

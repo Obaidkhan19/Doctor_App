@@ -1,6 +1,7 @@
 class AppImages {
   static String doctorlogo = 'assets/images/doctor_logo.jpg';
   static String arrowback = 'assets/images/Arrow.png';
+  static String bin = 'assets/images/bin.png';
   static String back = 'assets/images/back.png';
   static String online = 'assets/images/online.png';
   static String locations = 'assets/images/locations.png';

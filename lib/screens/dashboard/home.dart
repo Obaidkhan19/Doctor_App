@@ -12,6 +12,7 @@ import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 
 import 'package:doctormobileapplication/screens/book_your_appointment/book_your_appointment.dart';
+import 'package:doctormobileapplication/screens/consulted_vault/past_consultations.dart';
 import 'package:doctormobileapplication/screens/health_summary/health_summary_Screen.dart';
 import 'package:doctormobileapplication/screens/consulted_vault/appointment_history.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointments.dart';
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
             child: Image.asset(
-              height: Get.height * 0.035,
+              height: Get.height * 0.01,
               Images.menuIcon,
             )),
         title: Center(
@@ -136,15 +137,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    CircleAvatar(
-                backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                radius: 30,
-                child: ClipOval(
-                  child: path == '' || path == 'null'
-                      ? Image.asset(AppImages.doctorlogo)
-                      : Image.network(imagepath),
-                ),
-              ),
+                      CircleAvatar(
+                        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                        radius: 30,
+                        child: ClipOval(
+                          child: path == '' || path == 'null'
+                              ? Image.asset(AppImages.doctorlogo)
+                              : Image.network(imagepath),
+                        ),
+                      ),
                       SizedBox(
                         width: Get.width * 0.04,
                       ),
@@ -390,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           //       Title: 'Consulted Vault',
                           //     ));
 
-                          //  Get.to(() => PastConsultation());
+                          //  Get.to(() => const PastConsultation());
                           Get.to(const AppointmentHistoryscreen());
                         },
                         child: Padding(

@@ -120,7 +120,7 @@ class _EditProfileState extends State<EditProfile> {
     _getCountries();
     _getProvinces(widget.countryid);
     _getCities(widget.provinceid);
-  _getimagepath();
+    _getimagepath();
     super.initState();
   }
 
@@ -151,8 +151,8 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 children: [
                   InkWell(
-                    onTap: (){
-                         edit.pickImage();
+                    onTap: () {
+                      edit.pickImage();
                     },
                     child: Container(
                       height: 80,
@@ -160,8 +160,7 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: edit.file != null
-                            ?
-                             DecorationImage(
+                            ? DecorationImage(
                                 image: FileImage(File(edit.file!.path)),
                                 fit: BoxFit.cover,
                               )
@@ -208,7 +207,10 @@ class _EditProfileState extends State<EditProfile> {
                               EditProfileController.arrival,
                               edit.formatearrival);
                         },
-                        icon: Image.asset(Images.schedule)),
+                        icon: Image.asset(
+                          Images.schedule,
+                          height: Get.height * 0.03,
+                        )),
                     hintText: EditProfileController.i.formatearrival.toString(),
                   ),
                   EditProfileNumberCustomTextField(

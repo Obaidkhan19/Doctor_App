@@ -28,8 +28,6 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
 
   bool isLoadingData = false;
 
-  //  final AppointmentHistoryController controller = Get.put(AppointmentHistoryController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,13 +43,13 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
             ),
           ),
           title: Text(
-            'appointmentshistory'.tr,
+            'pastconsultation'.tr,
             textAlign: TextAlign.center,
             style: GoogleFonts.raleway(
               fontSize: 15,
               fontWeight: FontWeight.w700,
               height: 1.175,
-              color: ColorManager.kblackColor,
+              color: ColorManager.kPrimaryColor,
             ),
           ),
           actions: [
@@ -87,126 +85,126 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Card(
-                      elevation: 2,
-                      child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: ColorManager.kWhiteColor,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                            color: CupertinoColors.white,
-                          ),
-                          // color: ColorManager.kWhiteColor,
-                          width: MediaQuery.of(context).size.width / 3.7,
-                          child: CupertinoTextField(
-                            readOnly: true,
-                            controller: TextEditingController(
-                              text: dateFormat.format(dateTime),
-                            ),
-                            prefix: Padding(
-                              padding: EdgeInsets.only(left: Get.width * 0.02),
-                              child: const Icon(
-                                Icons.calendar_month,
-                                color: CupertinoColors.black,
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: CupertinoColors.black,
-                            ),
-                            onTap: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (BuildContext context) => Center(
-                                  child: SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    child: CupertinoDatePicker(
-                                      backgroundColor: Colors.white,
-                                      initialDateTime: dateTime,
-                                      onDateTimeChanged: (DateTime newTime) {
-                                        setState(() => dateTime = newTime);
-                                      },
-                                      use24hFormat: true,
-                                      mode: CupertinoDatePickerMode.date,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          )),
-                    ),
-                    Text(
-                      'to'.tr,
-                      style: GoogleFonts.poppins(
-                          fontSize: 10, fontWeight: FontWeight.bold),
-                    ),
-                    Card(
-                      elevation: 2,
-                      child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: ColorManager.kWhiteColor,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                            color: CupertinoColors.white,
-                          ),
-                          // color: ColorManager.kWhiteColor,
-                          width: MediaQuery.of(context).size.width / 3.7,
-                          child: CupertinoTextField(
-                            readOnly: true,
-                            controller: TextEditingController(
-                              text: dateFormat.format(dateTime2),
-                            ),
-                            prefix: Padding(
-                              padding: EdgeInsets.only(left: Get.width * 0.02),
-                              child: const Icon(
-                                Icons.calendar_month,
-                                color: CupertinoColors.black,
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: CupertinoColors.black,
-                            ),
-                            onTap: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (BuildContext context) => Center(
-                                  child: SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    child: CupertinoDatePicker(
-                                      backgroundColor: Colors.white,
-                                      initialDateTime: dateTime2,
-                                      onDateTimeChanged: (DateTime newTime) {
-                                        setState(() => dateTime2 = newTime);
-                                      },
-                                      use24hFormat: true,
-                                      mode: CupertinoDatePickerMode.date,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () async {},
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: Image.asset(
-                          AppImages.search_image,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Card(
+                //       elevation: 2,
+                //       child: Container(
+                //           decoration: BoxDecoration(
+                //             border: Border.all(
+                //               color: ColorManager.kWhiteColor,
+                //             ),
+                //             borderRadius: BorderRadius.circular(10),
+                //             color: CupertinoColors.white,
+                //           ),
+                //           // color: ColorManager.kWhiteColor,
+                //           width: MediaQuery.of(context).size.width / 3.7,
+                //           child: CupertinoTextField(
+                //             readOnly: true,
+                //             controller: TextEditingController(
+                //               text: dateFormat.format(dateTime),
+                //             ),
+                //             prefix: Padding(
+                //               padding: EdgeInsets.only(left: Get.width * 0.02),
+                //               child: const Icon(
+                //                 Icons.calendar_month,
+                //                 color: CupertinoColors.black,
+                //               ),
+                //             ),
+                //             style: const TextStyle(
+                //               fontSize: 10,
+                //               color: CupertinoColors.black,
+                //             ),
+                //             onTap: () {
+                //               showCupertinoModalPopup(
+                //                 context: context,
+                //                 builder: (BuildContext context) => Center(
+                //                   child: SizedBox(
+                //                     height: MediaQuery.of(context).size.height *
+                //                         0.3,
+                //                     child: CupertinoDatePicker(
+                //                       backgroundColor: Colors.white,
+                //                       initialDateTime: dateTime,
+                //                       onDateTimeChanged: (DateTime newTime) {
+                //                         setState(() => dateTime = newTime);
+                //                       },
+                //                       use24hFormat: true,
+                //                       mode: CupertinoDatePickerMode.date,
+                //                     ),
+                //                   ),
+                //                 ),
+                //               );
+                //             },
+                //           )),
+                //     ),
+                //     Text(
+                //       'to'.tr,
+                //       style: GoogleFonts.poppins(
+                //           fontSize: 10, fontWeight: FontWeight.bold),
+                //     ),
+                //     Card(
+                //       elevation: 2,
+                //       child: Container(
+                //           decoration: BoxDecoration(
+                //             border: Border.all(
+                //               color: ColorManager.kWhiteColor,
+                //             ),
+                //             borderRadius: BorderRadius.circular(10),
+                //             color: CupertinoColors.white,
+                //           ),
+                //           // color: ColorManager.kWhiteColor,
+                //           width: MediaQuery.of(context).size.width / 3.7,
+                //           child: CupertinoTextField(
+                //             readOnly: true,
+                //             controller: TextEditingController(
+                //               text: dateFormat.format(dateTime2),
+                //             ),
+                //             prefix: Padding(
+                //               padding: EdgeInsets.only(left: Get.width * 0.02),
+                //               child: const Icon(
+                //                 Icons.calendar_month,
+                //                 color: CupertinoColors.black,
+                //               ),
+                //             ),
+                //             style: const TextStyle(
+                //               fontSize: 10,
+                //               color: CupertinoColors.black,
+                //             ),
+                //             onTap: () {
+                //               showCupertinoModalPopup(
+                //                 context: context,
+                //                 builder: (BuildContext context) => Center(
+                //                   child: SizedBox(
+                //                     height: MediaQuery.of(context).size.height *
+                //                         0.3,
+                //                     child: CupertinoDatePicker(
+                //                       backgroundColor: Colors.white,
+                //                       initialDateTime: dateTime2,
+                //                       onDateTimeChanged: (DateTime newTime) {
+                //                         setState(() => dateTime2 = newTime);
+                //                       },
+                //                       use24hFormat: true,
+                //                       mode: CupertinoDatePickerMode.date,
+                //                     ),
+                //                   ),
+                //                 ),
+                //               );
+                //             },
+                //           )),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () async {},
+                //       child: SizedBox(
+                //         width: MediaQuery.of(context).size.width * 0.1,
+                //         height: MediaQuery.of(context).size.height * 0.1,
+                //         child: Image.asset(
+                //           AppImages.search_image,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Expanded(
                   child: ListView.builder(
                       shrinkWrap: true,
@@ -346,7 +344,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                           width: Get.width * 0.10,
                         ),
                         Text(
-                          "appointmentshistory".tr,
+                          "searchconsultancy".tr,
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

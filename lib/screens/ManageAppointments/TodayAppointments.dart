@@ -44,12 +44,12 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
           ),
           title: Center(
             child: Text(
-              'Today Appointments',
+              'todayappointment'.tr,
               style: GoogleFonts.raleway(
                 textStyle: GoogleFonts.poppins(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    color: ColorManager.kPrimaryColor),
               ),
             ),
           ),

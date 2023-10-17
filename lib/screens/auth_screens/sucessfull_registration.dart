@@ -62,7 +62,7 @@ class _SucessfullRegistrationScreenState
                   style: GoogleFonts.poppins(
                       fontSize: 15,
                       color: ColorManager.kblackColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(

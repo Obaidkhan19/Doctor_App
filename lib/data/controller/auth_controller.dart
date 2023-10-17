@@ -19,9 +19,39 @@ class AuthController extends GetxController implements GetxService {
   bool _isotpLoading = false;
   bool get isotpLoading => _isotpLoading;
   bool obsecure = true;
+  bool changepassword = true;
+  bool changeconfirmpassword = true;
+  bool oldpassword = true;
+  bool newpassword = true;
+  bool newconfirmpassword = true;
 
   updateobsecurepassword(bool ob) {
     obsecure = !obsecure;
+    update();
+  }
+
+  updatechangepassword(bool ob) {
+    changepassword = !changepassword;
+    update();
+  }
+
+  updatechangeconfirmpassword(bool ob) {
+    changeconfirmpassword = !changeconfirmpassword;
+    update();
+  }
+
+  updateoldpassword(bool ob) {
+    oldpassword = !oldpassword;
+    update();
+  }
+
+  updatenewpassword(bool ob) {
+    newpassword = !newpassword;
+    update();
+  }
+
+  updatenewconfirmpassword(bool ob) {
+    newconfirmpassword = !newconfirmpassword;
     update();
   }
 

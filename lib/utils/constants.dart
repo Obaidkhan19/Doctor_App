@@ -63,7 +63,7 @@ class AppConstants {
       "http://58.65.158.107:64/api/doctor/GetSecondaryDiagnosis";
 
   static const String getInvestigations =
-      "http://58.65.158.107:64/api/doctor/GetInvestigations";
+      "$baseURL/api/doctor/GetInvestigations";
 
   static const String getProcedures =
       "http://58.65.158.107:64/api/doctor/GetProcedures";
@@ -74,8 +74,7 @@ class AppConstants {
   static const String getFollowup =
       "http://58.65.158.107:64/api/doctor/GetFollowUps";
 
-  static const String getDiagnostics =
-      "http://58.65.158.107:64/api/doctor/GetDiagnostics";
+  static const String getDiagnostics = "$baseURL/api/doctor/GetDiagnostics";
 
   static const String getMedicines =
       "http://58.65.158.107:64/api/doctor/GetMedicineList";

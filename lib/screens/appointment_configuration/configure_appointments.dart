@@ -77,7 +77,7 @@ class _ConfigureAppointmentScreenState
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 height: 1.175,
-                color: ColorManager.kblackColor,
+                color: ColorManager.kPrimaryColor,
               ),
             ),
           ),

@@ -35,7 +35,7 @@ class Images {
   static const String edit = '$path/edit.png';
   static const String family = '$path/family.png';
   static const String location = '$path/location.png';
-  static const String wallet = '$path/wallet.png';
+  static const String wallet = '$path/help.png';
   static const String wifi = '$path/wifi.png';
   static const String lock = '$path/lock.png';
   static const String fingerprint = '$path/fingerprint.png';

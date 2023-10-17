@@ -78,7 +78,7 @@ class SlideTransitions extends StatefulWidget {
 class _SlideTransitionsState extends State<SlideTransitions>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 30),
     vsync: this,
   )..repeat(reverse: true);
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(

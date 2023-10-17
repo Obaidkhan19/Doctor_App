@@ -375,7 +375,7 @@ class AuthRepo {
           body: jsonEncode(body), headers: headers);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-
+        print(result);
         if (result['Status'] == 1) {
           Get.offAll(() => const DrawerScreen());
           LocalDb().saveLoginDataObject(result);

@@ -7,6 +7,7 @@ import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/auth_screens/register_screens.dart';
 import 'package:doctormobileapplication/screens/auth_screens/security_screens.dart';
+import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,9 +66,9 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                           height: Get.height * 0.01,
                         ),
                         InkWell(
-                           onTap: (){
-                         controller.pickImage();
-                    },
+                          onTap: () {
+                            controller.pickImage();
+                          },
                           child: Container(
                             height: 100,
                             width: 100,
@@ -78,8 +79,8 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                         image: FileImage(
                                             File(controller.file!.path)),
                                         fit: BoxFit.cover)
-                                    : const DecorationImage(
-                                        image: AssetImage(Images.profile),
+                                    : DecorationImage(
+                                        image: AssetImage(AppImages.doctorlogo),
                                         fit: BoxFit.cover)),
                             child: Align(
                                 alignment: Alignment.bottomRight,

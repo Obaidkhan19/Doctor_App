@@ -76,12 +76,12 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
               ),
             ),
             title: Text(
-              'prescribemedicinetests'.tr,
+              'erx'.tr,
               style: GoogleFonts.raleway(
                 textStyle: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    color: ColorManager.kPrimaryColor),
               ),
             ),
           ),
@@ -90,14 +90,119 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(),
             child: SafeArea(
-                child: Padding(
-              padding: EdgeInsets.only(
-                left: Get.width * 0.03,
-                right: Get.width * 0.03,
-              ),
-              child: SingleChildScrollView(
+                child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.03,
+                  right: Get.width * 0.03,
+                ),
                 child: Column(
                   children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Smoker  ',
+                          style: GoogleFonts.raleway(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Obx(
+                          () => Radio(
+                            fillColor: MaterialStateColor.resolveWith(
+                                (states) => ColorManager.kPrimaryColor),
+                            value: true,
+                            groupValue: controller.smokeryesSelected.value,
+                            onChanged: (value) =>
+                                controller.smokerupdateYes(value!),
+                          ),
+                        ),
+                        Text(
+                          'Yes',
+                          style: GoogleFonts.raleway(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Obx(
+                          () => Radio(
+                            fillColor: MaterialStateColor.resolveWith(
+                                (states) => ColorManager.kPrimaryColor),
+                            value: true,
+                            groupValue: controller.smokernoSelected.value,
+                            onChanged: (value) =>
+                                controller.smokerupdateNo(value!),
+                          ),
+                        ),
+                        Text(
+                          'No',
+                          style: GoogleFonts.raleway(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // diabetic
+                    Row(
+                      children: [
+                        Text(
+                          'Diabetic',
+                          style: GoogleFonts.raleway(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Obx(
+                          () => Radio(
+                            fillColor: MaterialStateColor.resolveWith(
+                                (states) => ColorManager.kPrimaryColor),
+                            value: true,
+                            groupValue: controller.diabeticyesSelected.value,
+                            onChanged: (value) =>
+                                controller.diabeticupdateYes(value!),
+                          ),
+                        ),
+                        Text(
+                          'Yes',
+                          style: GoogleFonts.raleway(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Obx(
+                          () => Radio(
+                            fillColor: MaterialStateColor.resolveWith(
+                                (states) => ColorManager.kPrimaryColor),
+                            value: true,
+                            groupValue: controller.diabeticnoSelected.value,
+                            onChanged: (value) =>
+                                controller.diabeticupdateNo(value!),
+                          ),
+                        ),
+                        Text(
+                          'No',
+                          style: GoogleFonts.raleway(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+
                     Card(
                       elevation: 1,
                       surfaceTintColor: ColorManager.kWhiteColor,
@@ -1224,107 +1329,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                             SizedBox(
                               height: Get.height * 0.01,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: Get.width * 0.6,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[350],
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(width: 0),
-                                  ),
-                                  child: CustomFormField1(
-                                    focusNode: controller.findingfocus,
-                                    controller: controller.findingsController,
-                                  ),
-                                ),
-                                ImageContainer(
-                                  onpressed: () async {
-                                    Finding f = Finding();
-                                    String idd = DateTime.now()
-                                        .millisecondsSinceEpoch
-                                        .toString();
-                                    f.id = idd;
-                                    f.name = controller.findingsController.text;
-                                    controller.updatefindingList(f);
-                                  },
-                                  imagePath: Images.add,
-                                  isSvg: false,
-                                  color: ColorManager.kWhiteColor,
-                                  backgroundColor: ColorManager.kPrimaryColor,
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            GetBuilder<ERXController>(
-                              builder: (contr) => Visibility(
-                                visible: controller.findingList.isNotEmpty,
-                                child: Column(
-                                  children: <Widget>[
-                                    Wrap(
-                                      direction: Axis
-                                          .horizontal, // Make sure items are laid out horizontally
-                                      runSpacing: 8.0,
-                                      children: <Widget>[
-                                        for (int index = 0;
-                                            index <
-                                                controller.findingList.length;
-                                            index++)
-                                          InkWell(
-                                            onTap: () {
-                                              String cid = controller
-                                                  .findingList[index].id!;
-                                              deleteSelected(
-                                                  context,
-                                                  controller.findingList,
-                                                  cid,
-                                                  "finding");
-                                            },
-                                            child: Card(
-                                              elevation: 1,
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: Get.width * 0.01,
-                                                    right: Get.width * 0.01),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                          .findingList[index]
-                                                          .name
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kblackColor,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: Get.width * 0.01,
-                                                    ),
-                                                    SizedBox(
-                                                      height: Get.height * 0.03,
-                                                      width: Get.width * 0.03,
-                                                      child: Image.asset(
-                                                          AppImages.cross),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            CustomFormFieldNotes(
+                              focusNode: controller.findingfocus,
+                              controller: controller.findingsController,
+                              lines: 3,
+                              hintText: 'finding'.tr,
                             ),
                           ],
                         ),
@@ -1334,7 +1343,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                       height: Get.height * 0.015,
                     ),
                     Text(
-                      'notes'.tr,
+                      'advice'.tr,
                       style: GoogleFonts.raleway(
                         textStyle: GoogleFonts.poppins(
                           fontSize: 12,
@@ -1349,22 +1358,38 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                     CustomFormFieldNotes(
                       focusNode: controller.notesfocus,
                       controller: controller.noteController,
-                      lines: 5,
-                      hintText: 'writenotes'.tr,
+                      lines: 3,
+                      hintText: 'advice'.tr,
                     ),
                     SizedBox(
                       height: Get.height * 0.03,
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: Get.width * 0.1),
-                      child: PrimaryButton(
-                          title: 'prescribe'.tr,
-                          onPressed: () async {
-                            Get.to(const DoctorReviewScreen());
-                          },
-                          color: ColorManager.kPrimaryColor,
-                          textcolor: ColorManager.kWhiteColor),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.45,
+                          child: PrimaryButton(
+                              title: 'hold'.tr,
+                              onPressed: () async {
+                                //Get.to(const DoctorReviewScreen());
+                              },
+                              fontSize: 15,
+                              color: ColorManager.kPrimaryColor,
+                              textcolor: ColorManager.kWhiteColor),
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.45,
+                          child: PrimaryButton(
+                              title: 'consult'.tr,
+                              onPressed: () async {
+                                // Get.to(const DoctorReviewScreen());
+                              },
+                              fontSize: 15,
+                              color: ColorManager.kPrimaryColor,
+                              textcolor: ColorManager.kWhiteColor),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: Get.height * 0.01,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../data/localDB/local_db.dart';
 import '../auth_screens/login.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
@@ -18,6 +21,28 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
+  _launchWhatsApp() async {
+    const contact = "+923418495820";
+    const androidUrl =
+        "whatsapp://send?phone=$contact&text=Hi, I need some help";
+    const iosUrl = "https://wa.me/$contact?text=Hi,%20I%20need%20some%20help";
+
+    try {
+      if (Platform.isIOS) {
+        await launchUrl(Uri.parse(iosUrl));
+      } else {
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("WhatsApp is not installed on your device."),
+        ),
+      );
+    }
+    navigateToPage(0);
+  }
+
   bool isKeyboardVisible = false;
   final List<Widget> pages = [
     const HomeScreen(),
@@ -51,7 +76,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
       if ((isLoggedin ?? false) == false) {
         Get.off(() => const LoginScreen());
       } else {
-        //  _launchWhatsApp();
+        _launchWhatsApp();
       }
       // Call the method to launch WhatsApp
     }
@@ -88,7 +113,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
           buildBottomNavItem(Images.homeIcon, "home".tr, 0, isSvg: true),
           buildBottomNavItem(Images.user, "profile".tr, 1, isSvg: false),
           buildBottomNavItem(Images.schedule, "schedule".tr, 2, isSvg: false),
-          buildBottomNavItem(Images.wallet, 'wallet'.tr, 3, isSvg: false),
+          buildBottomNavItem(Images.wallet, 'help'.tr, 3, isSvg: false),
         ],
       ),
     );
