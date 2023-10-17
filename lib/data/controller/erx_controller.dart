@@ -172,6 +172,14 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
+  addPrimaryDiagnosis(PrimaryDiagnosis1 c, ctx) {
+    if (selectedprimarydiagnosisList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedprimarydiagnosisList.add(c);
+    update();
+  }
+
   updateselectedPrimarydiagnosislist(List<PrimaryDiagnosis1> pdlist) {
     selectedprimarydiagnosisList = pdlist;
     update();
@@ -202,6 +210,14 @@ class ERXController extends GetxController implements GetxService {
   List<SecondaryDiagnosis1> selectedsecondaryDiagnosisList = [];
   updateSecondarydiagnosislist(List<SecondaryDiagnosis1> sdlist) {
     secondaryDiagnosisList = sdlist;
+    update();
+  }
+
+  addsecondaryDiagnosis(SecondaryDiagnosis1 c, ctx) {
+    if (selectedsecondaryDiagnosisList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedsecondaryDiagnosisList.add(c);
     update();
   }
 
@@ -268,6 +284,14 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
+  addprocedures(Procedures1 c, ctx) {
+    if (selectedproceduresList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedproceduresList.add(c);
+    update();
+  }
+
   updateselectedProceduresList(List<Procedures1> plist) {
     selectedproceduresList = plist;
     update();
@@ -286,6 +310,14 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
+  addinstructions(Instructions1 c, ctx) {
+    if (selectedinstructionList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedinstructionList.add(c);
+    update();
+  }
+
   updateselectedInstructionList(List<Instructions1> ilist) {
     selectedinstructionList = ilist;
     update();
@@ -299,8 +331,19 @@ class ERXController extends GetxController implements GetxService {
   // FOLLOW UP DATA
   List<FollowUps1> followupList = [];
   String selectedfollowup = "";
+  FollowUps1? selectedfup;
   updateFollowuplist(List<FollowUps1> fuplist) {
     followupList = fuplist;
+    update();
+  }
+
+  deletefollowup() {
+    selectedfup = FollowUps1();
+    update();
+  }
+
+  addfollowup(FollowUps1 f) {
+    selectedfup = f;
     update();
   }
 
@@ -352,8 +395,15 @@ class ERXController extends GetxController implements GetxService {
   List<Medicines1> medicineList = [];
   List<Medicines1> selectedmedicineList = [];
   updateMedicinelist(List<Medicines1> mlist) {
-    // medicineList.clear();
     medicineList = mlist;
+    update();
+  }
+
+  addmedicines(Medicines1 c, ctx) {
+    if (selectedmedicineList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedmedicineList.add(c);
     update();
   }
 

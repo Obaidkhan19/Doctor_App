@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
+import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
@@ -36,7 +37,7 @@ class _ClinicalPracticeQueueDataListState
     extends State<ClinicalPracticeQueueDataList> {
   TextEditingController SearchFieldController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
- 
+
   final GlobalKey<_ClinicalPracticeQueueDataListState>
       SearchFieldControllerKey = GlobalKey();
   @override
@@ -253,11 +254,13 @@ class _ClinicalPracticeQueueDataListState
                                                   padding: EdgeInsets.only(
                                                       left: Get.width * 0.08,
                                                       right: Get.width * 0.06),
-                                                  child: const Divider(
-                                                    thickness: 1,
+                                                  child: const MySeparator(
                                                     color: ColorManager
                                                         .kblackColor,
                                                   ),
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.01,
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsets.only(

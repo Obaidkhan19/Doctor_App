@@ -1,5 +1,6 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
+import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
@@ -239,11 +240,13 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                         left: Get.width * 0.08,
                                                         right:
                                                             Get.width * 0.06),
-                                                    child: const Divider(
-                                                      thickness: 1,
+                                                    child: const MySeparator(
                                                       color: ColorManager
                                                           .kblackColor,
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(

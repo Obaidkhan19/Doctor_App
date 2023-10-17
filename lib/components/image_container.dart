@@ -10,15 +10,16 @@ class ImageContainer extends StatelessWidget {
   final Color? color;
   final Color? backgroundColor;
   final String? imagePath;
-  const ImageContainer({
-    super.key,
-    this.imagePath,
-    this.color,
-    this.backgroundColor,
-    this.isSvg = true,
-    this.onpressed,
-    this.isNetworkImage,
-  });
+  final dynamic imageheight;
+  const ImageContainer(
+      {super.key,
+      this.imagePath,
+      this.color,
+      this.backgroundColor,
+      this.isSvg = true,
+      this.onpressed,
+      this.isNetworkImage,
+      this.imageheight});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,6 +39,7 @@ class ImageContainer extends StatelessWidget {
                     )
                   : Image.asset(
                       imagePath ?? Images.addicon,
+                      height: imageheight,
                       color: color ?? ColorManager.kPrimaryColor,
                     ),
         ));

@@ -1,5 +1,6 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
+import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
@@ -7,6 +8,7 @@ import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medic
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../components/CustomFormField.dart';
 import '../../components/images.dart';
@@ -42,8 +44,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
   int length = 10;
 
   callback() async {
-    ConsultingQueueRepo.GetConsultingQueuewaitinghold(
-    consultingqueuepatients(
+    ConsultingQueueRepo.GetConsultingQueuewaitinghold(consultingqueuepatients(
         branchId: "",
         doctorId: await LocalDb().getDoctorId(),
         search: "",
@@ -171,211 +172,149 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                 ),
                 SizedBox(
                     height: MediaQuery.of(context).size.height * 0.62,
-                    child: (ConsultingQueueController
-                                .i.response.isNotEmpty)
+                    child: (ConsultingQueueController.i.response.isNotEmpty)
                         ? ListView.builder(
                             controller: _scrollController,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: ((ConsultingQueueController
-                                .i.response.isNotEmpty)
-                                ? ConsultingQueueController
-                                    .i.response.length                                : 0),
+                                    .i.response.isNotEmpty)
+                                ? ConsultingQueueController.i.response.length
+                                : 0),
                             itemBuilder: (context, index) {
                               final manageAppointment =
                                   (ConsultingQueueController
-                                .i.response.isNotEmpty)
+                                          .i.response.isNotEmpty)
                                       ? ConsultingQueueController
-                                .i.response[index]
+                                          .i.response[index]
                                       : null;
 
-                              // FILTER CODE
-                              // if (ConsultingQueueController.i.date
-                              //         .toString()
-                              //         .split(' ')[0] ==
-                              //     ConsultingQueueController
-                              //         .i
-                              //         .ClinicalPracticeDataList
-                              //         .queue?[index]
-                              //         .visitTime
-                              //         .toString()
-                              //         .split('T')[0])
                               {
                                 return ((manageAppointment != null &&
                                         (manageAppointment.patientStatusValue
                                                 .toString() ==
                                             widget.Status.toString()))
-                                    ? Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors
-                                                .white, // Set the background color of the container
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(
-                                                    0.2), // Shadow color
-                                                spreadRadius:
-                                                    2, // Spread radius of the shadow
-                                                blurRadius:
-                                                    2, // Blur radius of the shadow
-                                                offset: const Offset(0,
-                                                    0), // Offset of the shadow
+                                    ? Card(
+                                        elevation: 4,
+                                        surfaceTintColor:
+                                            ColorManager.kWhiteColor,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: Get.height * 0.02,
+                                              bottom: Get.height * 0.02),
+                                          child: Column(
+                                            children: [
+                                              ListTile(
+                                                leading: const SizedBox(
+                                                  height: 380,
+                                                  width: 71,
+                                                  child: CircleAvatar(
+                                                    backgroundImage: AssetImage(
+                                                        Images.avator),
+                                                  ),
+                                                ),
+                                                title: Transform.translate(
+                                                  offset: const Offset(-0, 0),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        manageAppointment
+                                                                .patientName ??
+                                                            "",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 13,
+                                                          color: ColorManager
+                                                              .kPrimaryColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        manageAppointment
+                                                                .mRNO ??
+                                                            "",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kPrimaryColor,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                trailing: InkWell(
+                                                  onTap: () {
+                                                    Get.to(() =>
+                                                        //  HistoryeRXConsultingQueue());
+
+                                                        const PrescribeMedicineScreen());
+                                                  },
+                                                  child: Image.asset(
+                                                    Images.rxedit,
+                                                    color: ColorManager
+                                                        .kPrimaryColor,
+                                                    width: Get.width * 0.09,
+                                                    height: Get.height * 0.1,
+                                                  ),
+                                                ),
                                               ),
-                                            ],
-                                          ),
-                                          child: ListTile(
-                                            // onTap: () {},
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                            leading: Image.asset(
-                                              Images.avator,
-                                              alignment: Alignment.centerLeft,
-                                            ),
-                                            title: Text(
-                                              manageAppointment.patientName ??
-                                                  "",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      color: const Color(
-                                                          0xfff1272d3),
-                                                      fontWeight:
-                                                          FontWeightManager
-                                                              .bold),
-                                            ),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  manageAppointment.mRNO ?? "",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                          color: const Color(
-                                                              0xfff1272d3),
-                                                          fontWeight:
-                                                              FontWeightManager
-                                                                  .light,
-                                                          fontSize: 12),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: Get.width * 0.08,
+                                                    right: Get.width * 0.06),
+                                                child: const MySeparator(
+                                                  color:
+                                                      ColorManager.kblackColor,
                                                 ),
-                                                Text(
-                                                  'Visit No: ${manageAppointment.visitNo ?? ""}',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium!
-                                                      .copyWith(
-                                                          color: const Color(
-                                                              0xfff1272d3),
-                                                          fontWeight:
-                                                              FontWeightManager
-                                                                  .light,
-                                                          fontSize: 12),
-                                                ),
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.035,
-                                                ),
-                                                const Divider(
-                                                  thickness: 1,
-                                                  color: Colors.grey,
-                                                ),
-                                                Row(
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.01,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: Get.width * 0.08,
+                                                    right: Get.width * 0.06),
+                                                child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Flexible(
-                                                      child: Text(
-                                                        'Waiting Since   ${manageAppointment.waitingTime ?? ""}',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .copyWith(
-                                                                color: const Color(
-                                                                    0xfff1272d3),
-                                                                fontWeight:
-                                                                    FontWeightManager
-                                                                        .light,
-                                                                fontSize: 12),
+                                                    Text(
+                                                      'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kblackColor,
                                                       ),
                                                     ),
-                                                    Flexible(
-                                                      child: Text(
-                                                        manageAppointment
-                                                                .status ??
-                                                            "",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyMedium!
-                                                            .copyWith(
-                                                                color: const Color(
-                                                                    0xfff1272d3),
-                                                                fontWeight:
-                                                                    FontWeightManager
-                                                                        .light,
-                                                                fontSize: 12),
+                                                    Text(
+                                                      '${manageAppointment.status ?? ""}',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kblackColor,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ],
-                                            ),
-                                            trailing: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Visibility(
-                                                  visible: true,
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Get.to(
-                                                        () =>
-                                                            const PrescribeMedicineScreen(),
-                                                        // HistoryeRXConsultingQueue(
-                                                        //   patientId:
-                                                        //       manageAppointment
-                                                        //               .patientId ??
-                                                        //           "",
-                                                        //   doctorId:
-                                                        //       manageAppointment
-                                                        //               .doctorId ??
-                                                        //           "",
-                                                        //   visitNo:
-                                                        //       manageAppointment
-                                                        //               .visitNo ??
-                                                        //           "",
-                                                        //   branchId:
-                                                        //       manageAppointment
-                                                        //               .branchId ??
-                                                        //           "",
-                                                        // )
-                                                      );
-                                                    },
-                                                    child: Image.asset(
-                                                      AppImages
-                                                          .editPrescription_logo,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.1,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       )
