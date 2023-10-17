@@ -235,13 +235,13 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       SizedBox(
                         height: Get.height * 0.02,
                       ),
-                      Text(
-                        'prescribedby'.tr,
-                        style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: ColorManager.kPrimaryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    //  Text(
+                      //   'prescribedby'.tr,
+                      //   style: GoogleFonts.poppins(
+                      //       fontSize: 15,
+                      //       color: ColorManager.kPrimaryColor,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -438,12 +438,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       SizedBox(
                         height: Get.height * 0.02,
                       ),
-                      RegisterCustomTextField(
-                        readonly: true,
-                        hintText: controller.userage == ''
-                            ? 'age'.tr
-                            : controller.userage,
-                      ),
+                      // RegisterCustomTextField(
+                      //   readonly: true,
+                      //   hintText: controller.userage == ''
+                      //       ? 'age'.tr
+                      //       : controller.userage,
+                      // ),
 
                       CustomIntlPhoneField(
                         onChanged: (phone) {

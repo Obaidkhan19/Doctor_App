@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String path = '';
 
   _getimagepath() async {
-    await LocalDb().getDoctorUserImagePath();
+    path = (await LocalDb().getDoctorUserImagePath())!;
     String baseurl = AppConstants.baseURL;
     imagepath = baseurl + path;
   }
@@ -129,15 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 30,
-                        child: ClipOval(
-                          child: path == '' || path == 'null'
-                              ? Image.asset(AppImages.doctorlogo)
-                              : Image.network(imagepath),
-                        ),
-                      ),
+                    CircleAvatar(
+                backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                radius: 30,
+                child: ClipOval(
+                  child: path == '' || path == 'null'
+                      ? Image.asset(AppImages.doctorlogo)
+                      : Image.network(imagepath),
+                ),
+              ),
                       SizedBox(
                         width: Get.width * 0.04,
                       ),
@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            ProfileController.i.selectedbasicInfo?.firstName ??
+                            ProfileController.i.selectedbasicInfo?.fullName ??
                                 "",
                             style: const TextStyle(
                               color: ColorManager.kWhiteColor,

@@ -84,17 +84,17 @@ class _ProfileState extends State<Profile> {
                   height: Get.height * 0.07,
                 ),
                 ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 30,
-                    child: ClipOval(
-                      child: path == '' || path == 'null'
-                          ? Image.asset(AppImages.doctorlogo)
-                          : Image.network(imagepath),
-                    ),
-                  ),
+                  leading:     CircleAvatar(
+                backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                radius: 30,
+                child: ClipOval(
+                  child: path == '' || path == 'null'
+                      ? Image.asset(AppImages.doctorlogo)
+                      : Image.network(imagepath),
+                ),
+              ),
                   title: Text(
-                    profile.selectedbasicInfo?.firstName ?? "",
+                    profile.selectedbasicInfo?.fullName ?? "",
                     style: GoogleFonts.poppins(
                       fontSize: 25,
                       color: ColorManager.kPrimaryColor,
@@ -125,7 +125,7 @@ class _ProfileState extends State<Profile> {
                             //     ProfileController.i.selectedbasicInfo?.fullName ??
                             //         "",
                             // name: EditProfileController.i.name),
-                            name: profile.selectedbasicInfo?.firstName ?? ""),
+                            name: profile.selectedbasicInfo?.fullName ?? ""),
                         SizedBox(
                           height: Get.height * 0.01,
                         ),

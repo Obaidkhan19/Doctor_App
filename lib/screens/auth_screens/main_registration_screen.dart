@@ -64,33 +64,38 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                         SizedBox(
                           height: Get.height * 0.01,
                         ),
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: controller.file != null
-                                  ? DecorationImage(
-                                      image: FileImage(
-                                          File(controller.file!.path)),
-                                      fit: BoxFit.cover)
-                                  : const DecorationImage(
-                                      image: AssetImage(Images.profile),
-                                      fit: BoxFit.cover)),
-                          child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: CircleAvatar(
-                                radius: 15,
-                                backgroundColor: Colors.green,
-                                child: IconButton(
-                                    onPressed: () {
-                                      controller.pickImage();
-                                    },
-                                    icon: const Icon(
-                                      Icons.camera_alt_outlined,
-                                      size: 15,
-                                    )),
-                              )),
+                        InkWell(
+                           onTap: (){
+                         controller.pickImage();
+                    },
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: controller.file != null
+                                    ? DecorationImage(
+                                        image: FileImage(
+                                            File(controller.file!.path)),
+                                        fit: BoxFit.cover)
+                                    : const DecorationImage(
+                                        image: AssetImage(Images.profile),
+                                        fit: BoxFit.cover)),
+                            child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.green,
+                                  child: IconButton(
+                                      onPressed: () {
+                                        controller.pickImage();
+                                      },
+                                      icon: const Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 15,
+                                      )),
+                                )),
+                          ),
                         ),
                         SizedBox(
                           height: Get.height * 0.01,

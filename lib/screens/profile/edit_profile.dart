@@ -14,6 +14,7 @@ import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -119,8 +120,17 @@ class _EditProfileState extends State<EditProfile> {
     _getCountries();
     _getProvinces(widget.countryid);
     _getCities(widget.provinceid);
-
+  _getimagepath();
     super.initState();
+  }
+
+  String imagepath = '';
+  String path = '';
+
+  _getimagepath() async {
+    path = (await LocalDb().getDoctorUserImagePath())!;
+    String baseurl = AppConstants.baseURL;
+    imagepath = baseurl + path;
   }
 
   @override
@@ -140,35 +150,41 @@ class _EditProfileState extends State<EditProfile> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: edit.file != null
-                          ? DecorationImage(
-                              image: FileImage(File(edit.file!.path)),
-                              fit: BoxFit.cover,
-                            )
-                          : DecorationImage(
-                              image: AssetImage(AppImages.doctorlogo),
-                              fit: BoxFit.cover,
-                            ),
+                  InkWell(
+                    onTap: (){
+                         edit.pickImage();
+                    },
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: edit.file != null
+                            ?
+                             DecorationImage(
+                                image: FileImage(File(edit.file!.path)),
+                                fit: BoxFit.cover,
+                              )
+                            : DecorationImage(
+                                image: AssetImage(AppImages.doctorlogo),
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                      child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Colors.green,
+                            child: IconButton(
+                                onPressed: () {
+                                  edit.pickImage();
+                                },
+                                icon: const Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 15,
+                                )),
+                          )),
                     ),
-                    child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: Colors.green,
-                          child: IconButton(
-                              onPressed: () {
-                                edit.pickImage();
-                              },
-                              icon: const Icon(
-                                Icons.camera_alt_outlined,
-                                size: 15,
-                              )),
-                        )),
                   ),
                   SizedBox(
                     height: Get.height * 0.02,
