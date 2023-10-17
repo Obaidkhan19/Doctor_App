@@ -1,6 +1,10 @@
 import 'package:doctormobileapplication/components/dropdown_data_widget.dart';
+import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/controller/appointment_history.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/dropdown.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/dropdown_alert.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -27,6 +31,18 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
   DateTime dateTime2 = DateTime.now();
 
   bool isLoadingData = false;
+  callback() async {
+    ConsultingQueueController.i.getpastconsultation();
+  }
+
+  @override
+  void initState() {
+    callback();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  DateFormat format = DateFormat.yMMMMd();
 
   @override
   Widget build(BuildContext context) {
@@ -85,228 +101,210 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
             ),
             child: Column(
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Card(
-                //       elevation: 2,
-                //       child: Container(
-                //           decoration: BoxDecoration(
-                //             border: Border.all(
-                //               color: ColorManager.kWhiteColor,
-                //             ),
-                //             borderRadius: BorderRadius.circular(10),
-                //             color: CupertinoColors.white,
-                //           ),
-                //           // color: ColorManager.kWhiteColor,
-                //           width: MediaQuery.of(context).size.width / 3.7,
-                //           child: CupertinoTextField(
-                //             readOnly: true,
-                //             controller: TextEditingController(
-                //               text: dateFormat.format(dateTime),
-                //             ),
-                //             prefix: Padding(
-                //               padding: EdgeInsets.only(left: Get.width * 0.02),
-                //               child: const Icon(
-                //                 Icons.calendar_month,
-                //                 color: CupertinoColors.black,
-                //               ),
-                //             ),
-                //             style: const TextStyle(
-                //               fontSize: 10,
-                //               color: CupertinoColors.black,
-                //             ),
-                //             onTap: () {
-                //               showCupertinoModalPopup(
-                //                 context: context,
-                //                 builder: (BuildContext context) => Center(
-                //                   child: SizedBox(
-                //                     height: MediaQuery.of(context).size.height *
-                //                         0.3,
-                //                     child: CupertinoDatePicker(
-                //                       backgroundColor: Colors.white,
-                //                       initialDateTime: dateTime,
-                //                       onDateTimeChanged: (DateTime newTime) {
-                //                         setState(() => dateTime = newTime);
-                //                       },
-                //                       use24hFormat: true,
-                //                       mode: CupertinoDatePickerMode.date,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               );
-                //             },
-                //           )),
-                //     ),
-                //     Text(
-                //       'to'.tr,
-                //       style: GoogleFonts.poppins(
-                //           fontSize: 10, fontWeight: FontWeight.bold),
-                //     ),
-                //     Card(
-                //       elevation: 2,
-                //       child: Container(
-                //           decoration: BoxDecoration(
-                //             border: Border.all(
-                //               color: ColorManager.kWhiteColor,
-                //             ),
-                //             borderRadius: BorderRadius.circular(10),
-                //             color: CupertinoColors.white,
-                //           ),
-                //           // color: ColorManager.kWhiteColor,
-                //           width: MediaQuery.of(context).size.width / 3.7,
-                //           child: CupertinoTextField(
-                //             readOnly: true,
-                //             controller: TextEditingController(
-                //               text: dateFormat.format(dateTime2),
-                //             ),
-                //             prefix: Padding(
-                //               padding: EdgeInsets.only(left: Get.width * 0.02),
-                //               child: const Icon(
-                //                 Icons.calendar_month,
-                //                 color: CupertinoColors.black,
-                //               ),
-                //             ),
-                //             style: const TextStyle(
-                //               fontSize: 10,
-                //               color: CupertinoColors.black,
-                //             ),
-                //             onTap: () {
-                //               showCupertinoModalPopup(
-                //                 context: context,
-                //                 builder: (BuildContext context) => Center(
-                //                   child: SizedBox(
-                //                     height: MediaQuery.of(context).size.height *
-                //                         0.3,
-                //                     child: CupertinoDatePicker(
-                //                       backgroundColor: Colors.white,
-                //                       initialDateTime: dateTime2,
-                //                       onDateTimeChanged: (DateTime newTime) {
-                //                         setState(() => dateTime2 = newTime);
-                //                       },
-                //                       use24hFormat: true,
-                //                       mode: CupertinoDatePickerMode.date,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               );
-                //             },
-                //           )),
-                //     ),
-                //     GestureDetector(
-                //       onTap: () async {},
-                //       child: SizedBox(
-                //         width: MediaQuery.of(context).size.width * 0.1,
-                //         height: MediaQuery.of(context).size.height * 0.1,
-                //         child: Image.asset(
-                //           AppImages.search_image,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 7,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: Get.height * 0.01,
-                          ),
-                          child: Card(
-                              color: ColorManager.kPrimaryColor,
-                              elevation: 0,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0)),
+                  child: ConsultingQueueController.i.pastconsultation.isNotEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: ConsultingQueueController
+                              .i.pastconsultation.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                top: Get.height * 0.01,
                               ),
-                              child: ListTile(
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                              child: Card(
+                                  color: ColorManager.kPrimaryColor,
+                                  elevation: 0,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15.0)),
+                                  ),
+                                  child: ListTile(
+                                    title: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
-                                          "Date",
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: ColorManager.kWhiteColor,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset('assets/images/consuledlocation.png',fit: BoxFit.fill,
+                                                height: Get.height*0.03,),
+                                                const Text(" | "),
+                                                 Text(
+                                              ConsultingQueueController
+                                                      .i
+                                                      .pastconsultation[index]
+                                                      .locationName ??
+                                                  "",
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                color: ColorManager.kWhiteColor,
+                                              ),
+                                            ),
+                                              ],
+                                            ),
+                                           
+                                            Row(
+                                              children: [
+                                               
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      DateFormat.yMMMM().format(DateTime.parse("${ConsultingQueueController
+                                                                  .i
+                                                                  .pastconsultation[
+                                                                      index]
+                                                                  .consultationDetails![
+                                                                      0]
+                                                                  .consultedTime
+                                                                  .toString()
+                                                                  .split('T')[0]} ${ConsultingQueueController
+                                                                  .i
+                                                                  .pastconsultation[
+                                                                      index]
+                                                                  .consultationDetails![
+                                                                      0]
+                                                                  .consultedTime
+                                                                  .toString()
+                                                                  .split('T')[1]}")) ??
+                                                          "",
+                                                      style: const TextStyle(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kWhiteColor,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      " | ${ConsultingQueueController
+                                                              .i
+                                                              .pastconsultation[
+                                                                  index]
+                                                              .consultationDetails![
+                                                                  0]
+                                                              .consultedTime
+                                                              .toString()
+                                                              .split('T')[1]
+                                                              .toString()
+                                                              .split(':')[0]}:${ConsultingQueueController
+                                                              .i
+                                                              .pastconsultation[
+                                                                  index]
+                                                              .consultationDetails![
+                                                                  0]
+                                                              .consultedTime
+                                                              .toString()
+                                                              .split('T')[1]
+                                                              .toString()
+                                                              .split(':')[1]}",
+                                                      style: const TextStyle(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kWhiteColor,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          "${'mrno'.tr}${123123}",
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 10,
-                                            color: ColorManager.kWhiteColor,
+                                        SizedBox(
+                                          height: Get.height * 0.03,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  ConsultingQueueController
+                                                          .i
+                                                          .pastconsultation[
+                                                              index]
+                                                          .patientName ??
+                                                      "",
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      color: ColorManager
+                                                          .kWhiteColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  "${'mrno'.tr}${ConsultingQueueController.i.pastconsultation[index].mRNo}",
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 10,
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  "${'visitno'.tr}",
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ' ${ConsultingQueueController.i.pastconsultation[index].consultationDetails?[0].visitNo}',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.01,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  ColorManager.kWhiteColor,
+                                              fixedSize: const Size(380, 4),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    15), // Set the border radius here
+                                              ),
+                                            ),
+                                            child: Text(
+                                              'erx'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorManager
+                                                      .kPrimaryColor),
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Text(
-                                      "Muhammad Obaid",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 15,
-                                          color: ColorManager.kWhiteColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '${'visitno'.tr} ${123}',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor,
-                                      ),
-                                    ),
-                                    Text.rich(
-                                      TextSpan(
-                                        text: 'address|'.tr,
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            color: ColorManager.kWhiteColor,
-                                            fontWeight: FontWeight.bold),
-                                        children: [
-                                          TextSpan(
-                                              text: "Range road",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                  fontWeight:
-                                                      FontWeight.normal)),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.01,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: ElevatedButton(
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              ColorManager.kWhiteColor,
-                                          fixedSize: const Size(380, 4),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                15), // Set the border radius here
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'erx'.tr,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  ColorManager.kPrimaryColor),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        );
-                      }),
+                                  )),
+                            );
+                          })
+                      : Text(
+                          "No Record Found",
+                          style: GoogleFonts.poppins(fontSize: 16),
+                        ),
                 ),
               ],
             ),

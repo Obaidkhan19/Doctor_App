@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
       locale: const Locale('en', 'US'),
       theme: Styles.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: const WelcomeScreen(),
+      home: const SplashScreen(),
       initialBinding: AppBindings(),
     );
   }

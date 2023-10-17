@@ -134,9 +134,7 @@ class _ClinicalPracticeQueueDataListState
                       controller: SearchFieldController,
                       hintText: 'Search',
                     ),
-                    SizedBox(
-                      height: Get.height * 0.015,
-                    ),
+                   
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.62,
                       child: ConsultingQueueController
