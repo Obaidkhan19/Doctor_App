@@ -1,6 +1,7 @@
 class Images {
   static const String path = 'assets/images';
   static const String logo = '$path/logo.png';
+    static const String erx = '$path/erx.png';
   static const String addicon = '$path/add_icon.svg';
   static const String addressLocation = '$path/address_location_icon.svg';
   static const String bloodBank = '$path/blood_bank.svg';

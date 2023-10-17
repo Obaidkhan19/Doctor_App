@@ -44,6 +44,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
+            centerTitle: true,
             leading: InkWell(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -54,15 +55,13 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                 AppImages.back,
               ),
             ),
-            title: Center(
-              child: Text(
-                'waitingqueue'.tr,
-                style: GoogleFonts.poppins(
-                  textStyle: GoogleFonts.poppins(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: ColorManager.kPrimaryColor),
-                ),
+            title: Text(
+              'waitingqueue'.tr,
+              style: GoogleFonts.poppins(
+                textStyle: GoogleFonts.poppins(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: ColorManager.kPrimaryColor),
               ),
             ),
             // actions: const [],

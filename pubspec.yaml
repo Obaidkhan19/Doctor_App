@@ -68,6 +68,7 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   local_auth: ^2.1.7
   url_launcher: ^6.1.14
+  syncfusion_flutter_pdfviewer: ^23.1.41
 
   #Above Two Packages for Notification from firebase
 

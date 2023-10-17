@@ -14,6 +14,7 @@ class ConsultingQueueController extends GetxController implements GetxService {
   int _index = 0;
   int get index => _index;
   List<consultingqueuewaitholdresponse> response = [];
+  List<consultingqueuereponse> pastconsultation=[];
   List<consultingqueuewaitholdresponse> consultingqueuewait =[];
   List<consultingqueuewaitholdresponse> consultingqueuehold =[];
 
@@ -36,6 +37,11 @@ updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
 
   updateconsultinglist(List<consultingqueuewaitholdresponse> data) {
     response = data;
+    update();
+  }
+
+   updatepastconsultinglist(List<consultingqueuereponse> data) {
+    pastconsultation = data;
     update();
   }
 
@@ -96,65 +102,72 @@ updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
     }
   }
 
-  getConsultingQueueData(String? Search, String? Status) async {
-    if (startIndexToFetchData == 0) {
-      isLoadingDataClinicalPracticeDataList = true;
-    } else {
-      isLoadingDataClinicalPracticeDataListmore = true;
-      update();
-    }
-    _consultingQueueList = ConsultingQueueModel();
-    //update(); //don't remove commented lines from it if u remove it call never send to repository for data getting
-    try {
-      _consultingQueueList = await ConsultingQueueRepo.GetConsultingQueue(
-          Search, Status, startIndexToFetchData);
 
-      TotalRecordsData = (_consultingQueueList.totalRecord != null)
-          ? _consultingQueueList.totalRecord!.toInt()
-          : TotalRecordsData;
+getpastconsultation() async
+{
+  await ConsultingQueueRepo.GetConsultingQueue();
+}
 
-      if (Status.toString() == "1") {
-        if (_consultingQueueList.queue != null) {
-          _ClinicalPracticeDataList.queue ??= [];
-          for (var element in _consultingQueueList.queue!) {
-            _ClinicalPracticeDataList.queue!.add(element);
-          }
-        }
-        //  _ClinicalPracticeDataList = ConsultingQueueModel();
-        // _ClinicalPracticeDataList = _consultingQueueList;
-      } else if (Status.toString() == "2") {
-        if (_consultingQueueList.queue != null) {
-          _HoldDataList.queue ??= [];
-          for (var element in _consultingQueueList.queue!) {
-            _HoldDataList.queue!.add(element);
-          }
-        }
-        //   _HoldDataList = ConsultingQueueModel();
-        //_HoldDataList = _consultingQueueList;
-      } else if (Status.toString() == "3") {
-        if (_consultingQueueList.queue != null) {
-          _ConsultedDataList.queue ??= [];
-          for (var element in _consultingQueueList.queue!) {
-            _ConsultedDataList.queue!.add(element);
-          }
-        }
 
-        //   _ConsultedDataList = ConsultingQueueModel();
-        // _ConsultedDataList = _consultingQueueList;
-      }
+  // getConsultingQueueData(String? Search, String? Status) async {
+  //   if (startIndexToFetchData == 0) {
+  //     isLoadingDataClinicalPracticeDataList = true;
+  //   } else {
+  //     isLoadingDataClinicalPracticeDataListmore = true;
+  //     update();
+  //   }
+  //   _consultingQueueList = ConsultingQueueModel();
+  //   //update(); //don't remove commented lines from it if u remove it call never send to repository for data getting
+  //   try {
+  //     _consultingQueueList = await ConsultingQueueRepo.GetConsultingQueue(
+  //         Search, Status, startIndexToFetchData);
 
-      isLoadingDataClinicalPracticeDataList = false;
-      isLoadingDataClinicalPracticeDataListmore = false;
-      update();
-    } catch (e) {
-      isLoadingDataClinicalPracticeDataList = false;
-      isLoadingDataClinicalPracticeDataListmore = false;
-      update();
-    }
-    isLoadingDataClinicalPracticeDataList = false;
-    isLoadingDataClinicalPracticeDataListmore = false;
-    update();
-  }
+  //     TotalRecordsData = (_consultingQueueList.totalRecord != null)
+  //         ? _consultingQueueList.totalRecord!.toInt()
+  //         : TotalRecordsData;
+
+  //     if (Status.toString() == "1") {
+  //       if (_consultingQueueList.queue != null) {
+  //         _ClinicalPracticeDataList.queue ??= [];
+  //         for (var element in _consultingQueueList.queue!) {
+  //           _ClinicalPracticeDataList.queue!.add(element);
+  //         }
+  //       }
+  //       //  _ClinicalPracticeDataList = ConsultingQueueModel();
+  //       // _ClinicalPracticeDataList = _consultingQueueList;
+  //     } else if (Status.toString() == "2") {
+  //       if (_consultingQueueList.queue != null) {
+  //         _HoldDataList.queue ??= [];
+  //         for (var element in _consultingQueueList.queue!) {
+  //           _HoldDataList.queue!.add(element);
+  //         }
+  //       }
+  //       //   _HoldDataList = ConsultingQueueModel();
+  //       //_HoldDataList = _consultingQueueList;
+  //     } else if (Status.toString() == "3") {
+  //       if (_consultingQueueList.queue != null) {
+  //         _ConsultedDataList.queue ??= [];
+  //         for (var element in _consultingQueueList.queue!) {
+  //           _ConsultedDataList.queue!.add(element);
+  //         }
+  //       }
+
+  //       //   _ConsultedDataList = ConsultingQueueModel();
+  //       // _ConsultedDataList = _consultingQueueList;
+  //     }
+
+  //     isLoadingDataClinicalPracticeDataList = false;
+  //     isLoadingDataClinicalPracticeDataListmore = false;
+  //     update();
+  //   } catch (e) {
+  //     isLoadingDataClinicalPracticeDataList = false;
+  //     isLoadingDataClinicalPracticeDataListmore = false;
+  //     update();
+  //   }
+  //   isLoadingDataClinicalPracticeDataList = false;
+  //   isLoadingDataClinicalPracticeDataListmore = false;
+  //   update();
+  // }
 
 // filter
   updatedate(DateTime datetime) {

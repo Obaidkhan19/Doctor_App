@@ -51,7 +51,8 @@ class ManageAppointmentRepo {
   }
 
   static GetmonthlyDoctorAppointment(String date) async {
-    ManageAppointmentController.i.paid=ManageAppointmentController.i.unpaid=0;
+    ManageAppointmentController.i.paid =
+        ManageAppointmentController.i.unpaid = 0;
     String? Date = date;
 
     String? userId = await LocalDb().getDoctorId();
@@ -83,22 +84,21 @@ class ManageAppointmentRepo {
 
         if (result['Status'] == 1) {
           Iterable data = result['Appointments'];
-          List<monthlyappointresponse> monthlyDoctorAppointment = data
-              .map((e) =>
-                  monthlyappointresponse.fromJson(e))
-              .toList();
-              
+          List<monthlyappointresponse> monthlyDoctorAppointment =
+              data.map((e) => monthlyappointresponse.fromJson(e)).toList();
+
           log('${monthlyDoctorAppointment.toString()} DailyDoctorAppointment');
-          ManageAppointmentController.i.monthlyappintment=monthlyDoctorAppointment;
-          for(int i=0;i<monthlyDoctorAppointment.length;i++)
-          {
- if (monthlyDoctorAppointment[i].paid == 1) {
+          ManageAppointmentController.i.monthlyappintment =
+              monthlyDoctorAppointment;
+          for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
+            if (monthlyDoctorAppointment[i].paid == 1) {
               ManageAppointmentController.i.paid++;
             } else if (monthlyDoctorAppointment[i].unPaid == 1) {
               ManageAppointmentController.i.unpaid++;
             }
           }
-          ManageAppointmentController.i.updatemonthlyappointment(monthlyDoctorAppointment);
+          ManageAppointmentController.i
+              .updatemonthlyappointment(monthlyDoctorAppointment);
           return monthlyDoctorAppointment;
         }
       } else {

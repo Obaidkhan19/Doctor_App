@@ -13,34 +13,40 @@ import '../../../models/ConsultingQueue.dart';
 import '../../localDB/local_db.dart';
 
 class ConsultingQueueRepo {
-  static GetConsultingQueue(String? Search, String? Status, int length) async {
+  static GetConsultingQueue() async {
     ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
     String? userId = await LocalDb().getDoctorId();
     String? userToken = await LocalDb().getToken();
     String? branchId = await LocalDb().getBranchId();
     var body = {
-      "DoctorId": "$userId",
-      "Length": AppConstants.maximumDataTobeFetched.toString(),
-      "OrderColumn": "0",
-      "Start": "$length",
-      "OrderDir": "desc",
-      "Search": "$Search",
-      "Status": "$Status",
-      "Token": "$userToken",
-      "BranchId": "$branchId"
-    };
+    "DoctorId":userId,
+    "Search": "",
+    "BranchId":"",
+    "WorkLocationId":"",
+    "Status":"",
+    "FromDate":DateTime.now().toString().split(' ')[0],
+    "ToDate":DateTime.now().toString().split(' ')[0],
+    "IsOnline":"false",
+    "Token":"",
+    "Start":"0",
+    "Length":"10",
+    "OrderColumn":"0",
+    "OrderDir":"desc"
+};
     print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
-      var response = await http.post(Uri.parse(AppConstants.WaitingQueueApi),
+      var response = await http.post(Uri.parse(AppConstants.consultingqueuepatient),
           headers: headers, body: jsonEncode(body));
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
-          ConsultingQueue =
-              ConsultingQueueModel.fromJson(jsonDecode(response.body));
-          log('${ConsultingQueue.toString()} ConsultingQueue');
+          Iterable lst = result['Consultations'];
+          List<consultingqueuereponse> rep =
+              lst.map((e) => consultingqueuereponse.fromJson(e)).toList();
+          log('${rep.toString()} ConsultingQueue');
+          ConsultingQueueController.i.updatepastconsultinglist(rep);
           //   print(ConsultingQueue);
         }
       } else {
