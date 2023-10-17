@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
+import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:get/get.dart';
 
 import '../../components/snackbar.dart';
@@ -13,6 +14,21 @@ class ConsultingQueueController extends GetxController implements GetxService {
   int _index = 0;
   int get index => _index;
   List<consultingqueuereponse> response = [];
+  List<consultingqueuewaitholdresponse> consultingqueuewait =[];
+  List<consultingqueuewaitholdresponse> consultingqueuehold =[];
+
+updateconsultingqueuewait(List<consultingqueuewaitholdresponse> wait)
+{
+  consultingqueuewait=wait;
+  update();
+}
+
+updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
+{
+  consultingqueuehold=wait;
+  update();
+}
+
 
   getPageIndexofAll() {
     return _index;

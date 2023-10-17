@@ -107,6 +107,10 @@ class AppConstants {
   static const String WaitingQueueApi = '$baseURL/api/doctor/WaitingQueue';
   static const String consultingqueuepatient =
       '$baseURL/api/doctor/GetConsultations';
+      
+      static const String consultingqueuewait =
+      '$baseURL/api/doctor/WaitingQueue';
+      
   static const int maximumDataTobeFetched = 25;
   static int myrownumber = 0;
 

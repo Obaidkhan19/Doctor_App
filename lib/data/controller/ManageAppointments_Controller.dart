@@ -38,7 +38,7 @@ class ManageAppointmentController extends GetxController
   getDailyDoctorAppointment() async {
     isLoadingDailyDoctorAppointment = true;
     _dailyDoctorAppointmentsModel = DailyDoctorAppointmentsModel();
-    update();
+  
     try {
       _dailyDoctorAppointmentsModel =
           await ManageAppointmentRepo.GetDailyDoctorAppointment();

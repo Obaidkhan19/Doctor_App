@@ -37,6 +37,12 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
     var controller = Get.put<RegistrationController>(RegistrationController());
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         automaticallyImplyLeading: false,
         toolbarHeight: 50,
         title: Image.asset(
@@ -65,9 +71,9 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                           height: Get.height * 0.01,
                         ),
                         InkWell(
-                           onTap: (){
-                         controller.pickImage();
-                    },
+                          onTap: () {
+                            controller.pickImage();
+                          },
                           child: Container(
                             height: 100,
                             width: 100,

@@ -1,4 +1,7 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
+import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/Prescribe_Medicine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -35,11 +38,31 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
     super.dispose();
   }
 
+callback() async {
+        ConsultingQueueRepo.getpatientconsultingqueue(consultingqueuepatients(
+            branchId: "",
+            doctorId: await LocalDb().getDoctorId(),
+            search: "",
+            workLocationId: "",
+            status: "1",
+            fromDate: DateTime.now().toString().split(' ')[0],
+            toDate: DateTime.now().toString().split(' ')[0],
+            isOnline: "false",
+            token: "",
+            start: "0",
+            length: "10",
+            orderColumn: "0",
+            orderDir: "desc"));
+  }
+
+
   @override
   void initState() {
+    callback();
     ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     ConsultingQueueController.i
         .getConsultingQueueData('', widget.Status.toString());
+        
     SearchFieldController.clear();
 
     //when scroll page

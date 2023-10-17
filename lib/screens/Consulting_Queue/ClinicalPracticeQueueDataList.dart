@@ -1,4 +1,12 @@
+import 'dart:math';
+
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
+import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
+import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/Prescribe_Medicine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -35,13 +43,35 @@ class _ClinicalPracticeQueueDataListState
     ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     super.dispose();
   }
-
+  int length=10;
+callback() async
+{
+    
+      ConsultingQueueRepo.GetConsultingQueuewaitinghold(
+        consultingqueuepatients(
+           branchId: "",
+            doctorId: await LocalDb().getDoctorId(),
+            search: "",
+            workLocationId: "",
+            status: "1",
+            fromDate: DateTime.now().toString().split(' ')[0],
+            toDate: DateTime.now().toString().split(' ')[0],
+            isOnline: "false",
+            token: "",
+            start: "0",
+            length: length.toString(),
+            orderColumn: "0",
+            orderDir: "desc"));
+            print(ConsultingQueueController.i.consultingqueuewait.toString());
+}
   @override
-  void initState() {
-    ConsultingQueueController.i.clearAllLists(widget.Status.toString());
-    ConsultingQueueController.i
-        .getConsultingQueueData('', widget.Status.toString());
-    SearchFieldController.clear();
+  void initState() { 
+  callback();
+
+    // ConsultingQueueController.i.clearAllLists(widget.Status.toString());
+    // ConsultingQueueController.i
+    //     .getConsultingQueueData('', widget.Status.toString());
+    // SearchFieldController.clear();
 
     //when scroll page
     _scrollController.addListener(() {
@@ -51,8 +81,10 @@ class _ClinicalPracticeQueueDataListState
         var isCallToFetchData =
             ConsultingQueueController.i.SetStartToFetchNextData();
         if (isCallToFetchData) {
-          ConsultingQueueController.i.getConsultingQueueData(
-              SearchFieldController.text, widget.Status.toString());
+          length=length+10;
+         callback();
+          // ConsultingQueueController.i.getConsultingQueueData(
+          //     SearchFieldController.text, widget.Status.toString());
         }
       }
     });
@@ -145,28 +177,21 @@ class _ClinicalPracticeQueueDataListState
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.62,
-                    child: (ConsultingQueueController
-                                .i.ClinicalPracticeDataList.queue !=
-                            null)
+                    child: ConsultingQueueController
+                                        .i.consultingqueuewait.isNotEmpty
                         ? ListView.builder(
                             controller: _scrollController,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: ((ConsultingQueueController
-                                        .i.ClinicalPracticeDataList.queue !=
-                                    null)
-                                ? ConsultingQueueController
-                                    .i.ClinicalPracticeDataList.queue?.length
-                                : 0),
+                            itemCount: ConsultingQueueController
+                                        .i.consultingqueuewait.length
+                                  ,
                             itemBuilder: (context, index) {
                               final manageAppointment =
-                                  (ConsultingQueueController.i
-                                              .ClinicalPracticeDataList.queue !=
-                                          null)
+                                  ConsultingQueueController
+                                        .i.consultingqueuewait.isNotEmpty
                                       ? ConsultingQueueController
-                                          .i
-                                          .ClinicalPracticeDataList
-                                          .queue![index]
+                                        .i.consultingqueuewait[index]
                                       : null;
                               // FILTER CODE
                               // if (ConsultingQueueController.i.date
@@ -376,7 +401,6 @@ class _ClinicalPracticeQueueDataListState
                                     : Container());
                               }
 
-                              return null;
                             })
                         : (((ConsultingQueueController
                                                 .i.ClinicalPracticeDataList !=

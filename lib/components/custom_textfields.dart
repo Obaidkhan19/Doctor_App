@@ -141,7 +141,7 @@ class RegisterCustomTextField extends StatelessWidget {
           controller: controller,
           onChanged: onchanged,
           validator: validator,
-          onTap: () {},
+          onTap: onTap??(){},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
           style: TextStyle(color: ColorManager.kblackColor, fontSize: 12),

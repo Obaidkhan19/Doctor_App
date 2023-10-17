@@ -22,8 +22,13 @@ class TodayAppointments extends StatefulWidget {
 class _TodayAppointmentsState extends State<TodayAppointments> {
   @override
   void initState() {
-    ManageAppointmentController.i.getDailyDoctorAppointment();
+    call();
     super.initState();
+  }
+
+  call() async
+  {
+    ManageAppointmentController.i.getDailyDoctorAppointment();
   }
 
   @override
@@ -76,7 +81,6 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                   child: SafeArea(
                 minimum: const EdgeInsets.all(AppPadding.p22).copyWith(top: 0),
                 child: Column(children: [
-                  const Text("data"),
                   (ManageAppointmentController.i.dailyDoctorAppointmentsModel
                               .onlineAppointmentStatistics !=
                           null)
