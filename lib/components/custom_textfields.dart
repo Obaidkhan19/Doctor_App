@@ -50,15 +50,15 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           onChanged: onchanged,
           validator: validator,
-          onTap: () {},
+          onTap: onTap ?? () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
           style: const TextStyle(
-              color: ColorManager.kPrimaryColor, fontWeight: FontWeight.w900),
+            color: ColorManager.kPrimaryColor,
+          ),
           decoration: InputDecoration(
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: const TextStyle(
-                fontWeight: FontWeight.w900, color: ColorManager.kPrimaryColor),
+            hintStyle: const TextStyle(color: ColorManager.kPrimaryColor),
             hintText: hintText,
             filled: true,
             disabledBorder:
@@ -141,7 +141,7 @@ class RegisterCustomTextField extends StatelessWidget {
           controller: controller,
           onChanged: onchanged,
           validator: validator,
-          onTap: onTap??(){},
+          onTap: onTap ?? () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
           style: TextStyle(color: ColorManager.kblackColor, fontSize: 12),

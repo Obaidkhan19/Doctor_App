@@ -76,15 +76,7 @@ List<Item> items = [
 ];
 
 class HistoryeRXConsultingQueue extends StatefulWidget {
-  String doctorId;
-  String patientId;
-  String visitNo;
-  String branchId;
-  HistoryeRXConsultingQueue({
-    required this.doctorId,
-    required this.patientId,
-    required this.visitNo,
-    required this.branchId,
+  const HistoryeRXConsultingQueue({
     super.key,
   });
 
@@ -96,19 +88,19 @@ class HistoryeRXConsultingQueue extends StatefulWidget {
 class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
   final controller = Get.put(ERXController());
 
-  _getPatientDetail() async {
-    PatientDetail1 pd = PatientDetail1();
-    controller.updatepatientdata(await pd.getPatientDetailForPrescription(
-        widget.doctorId, widget.visitNo, widget.patientId, widget.branchId));
-    if (controller.patientList.isNotEmpty) {
-      bool isSmoker = controller.patientList[0].smoker == 1;
-      controller.smokeryesSelected.value = isSmoker;
-      controller.smokernoSelected.value = !isSmoker;
-      bool isDiabetic = controller.patientList[0].diabetic == 1;
-      controller.diabeticyesSelected.value = isDiabetic;
-      controller.diabeticnoSelected.value = !isDiabetic;
-    }
-  }
+  // _getPatientDetail() async {
+  //   PatientDetail1 pd = PatientDetail1();
+  //   controller.updatepatientdata(await pd.getPatientDetailForPrescription(
+  //       widget.doctorId, widget.visitNo, widget.patientId, widget.branchId));
+  //   if (controller.patientList.isNotEmpty) {
+  //     bool isSmoker = controller.patientList[0].smoker == 1;
+  //     controller.smokeryesSelected.value = isSmoker;
+  //     controller.smokernoSelected.value = !isSmoker;
+  //     bool isDiabetic = controller.patientList[0].diabetic == 1;
+  //     controller.diabeticyesSelected.value = isDiabetic;
+  //     controller.diabeticnoSelected.value = !isDiabetic;
+  //   }
+  // }
 
   _getComplaints() async {
     // LocalDb localDB = LocalDb();
@@ -319,7 +311,7 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
   @override
   void initState() {
     super.initState();
-    _getPatientDetail();
+    //   _getPatientDetail();
     _getComplaints();
     _getPrimaryDiagnosis();
     _getSecondaryDiagnosis();

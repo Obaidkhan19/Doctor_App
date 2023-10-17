@@ -1,5 +1,6 @@
 import 'package:doctormobileapplication/components/CustomFormField.dart';
 import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
+import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
@@ -26,7 +27,14 @@ class PrescribeMedicineScreen extends StatefulWidget {
 }
 
 class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
-  final ERXController controller = Get.put(ERXController());
+  _getComplaints() async {
+    PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+    controller.updatecomplaintdata(
+      await pmr.getComplaints(),
+    );
+
+    print(controller.complaintList.length);
+  }
 
   _getInvestigations() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
@@ -45,6 +53,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
   @override
   void initState() {
     super.initState();
+    _getComplaints();
     _getInvestigations();
     _getDiagnostics();
   }
@@ -57,6 +66,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ERXController controller = Get.put(ERXController());
     return GestureDetector(
       onTap: () {
         controller.unfocus();
@@ -228,47 +238,37 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                             SizedBox(
                               height: Get.height * 0.01,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: Get.width * 0.6,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[350],
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(width: 0),
-                                  ),
-                                  child: CustomFormField1(
-                                    focusNode: controller.mycomplaintfocus,
-                                    controller: controller.complaintController,
-                                  ),
-                                ),
-                                ImageContainer(
-                                  onpressed: () {
-                                    Complaints1 c = Complaints1();
-                                    String idd = DateTime.now()
-                                        .millisecondsSinceEpoch
-                                        .toString();
-                                    c.id = idd;
-                                    c.name =
-                                        controller.complaintController.text;
-                                    controller.updateComplaintList(c);
+                            GetBuilder<ERXController>(
+                              builder: (cont) => Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.06,
+                                    right: Get.width * 0.06),
+                                child: CustomTextField(
+                                  readonly: true,
+                                  onTap: () async {
+                                    Complaints1 generic =
+                                        await searchabledropdown(context,
+                                            controller.complaintsList ?? []);
+                                    await controller.addCompaint(
+                                        generic, BuildContext);
+                                    setState(() {});
                                   },
-                                  imagePath: Images.add,
-                                  isSvg: false,
-                                  color: ColorManager.kWhiteColor,
-                                  backgroundColor: ColorManager.kPrimaryColor,
-                                )
-                              ],
+                                  prefixIcon: const Icon(
+                                    Icons.search_outlined,
+                                    color: ColorManager.kPrimaryColor,
+                                    size: 35,
+                                  ),
+                                  hintText: 'Search',
+                                ),
+                              ),
                             ),
                             SizedBox(
                               height: Get.height * 0.01,
                             ),
                             GetBuilder<ERXController>(
                               builder: (contr) => Visibility(
-                                visible: controller.complaintList.isNotEmpty,
+                                visible: controller
+                                    .selectedComplaintsList.isNotEmpty,
                                 child: Column(
                                   children: <Widget>[
                                     Wrap(
@@ -278,17 +278,21 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       children: <Widget>[
                                         for (int index = 0;
                                             index <
-                                                controller.complaintList.length;
+                                                controller
+                                                    .selectedComplaintsList
+                                                    .length;
                                             index++)
                                           InkWell(
                                             onTap: () {
                                               String cid = controller
-                                                  .complaintList[index].id!;
+                                                  .selectedComplaintsList[index]
+                                                  .id!;
                                               deleteSelected(
                                                   context,
-                                                  controller.complaintList,
+                                                  controller
+                                                      .selectedComplaintsList,
                                                   cid,
-                                                  "complaint");
+                                                  "complaints");
                                             },
                                             child: Card(
                                               elevation: 1,
@@ -300,9 +304,19 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: [
+                                                    SizedBox(
+                                                      height: Get.height * 0.03,
+                                                      width: Get.width * 0.03,
+                                                      child: Image.asset(
+                                                          AppImages.cross),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.01,
+                                                    ),
                                                     Text(
                                                       controller
-                                                          .complaintList[index]
+                                                          .selectedComplaintsList[
+                                                              index]
                                                           .name
                                                           .toString(),
                                                       style: const TextStyle(
@@ -311,14 +325,136 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                             .kblackColor,
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      width: Get.width * 0.01,
-                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Primary Diagnosis
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
+                    Card(
+                      elevation: 1,
+                      surfaceTintColor: ColorManager.kWhiteColor,
+                      child: SizedBox(
+                        // height: Get.height * 0.09,
+                        width: Get.width * 0.9,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Text(
+                              'Primary Diagnosis',
+                              style: GoogleFonts.raleway(
+                                textStyle: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            GetBuilder<ERXController>(
+                              builder: (cont) => Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.06,
+                                    right: Get.width * 0.06),
+                                child: CustomTextField(
+                                  readonly: true,
+                                  onTap: () async {
+                                    Complaints1 generic =
+                                        await searchabledropdown(context,
+                                            controller.complaintsList ?? []);
+                                    await controller.addCompaint(
+                                        generic, BuildContext);
+                                    setState(() {});
+                                  },
+                                  prefixIcon: const Icon(
+                                    Icons.search_outlined,
+                                    color: ColorManager.kPrimaryColor,
+                                    size: 35,
+                                  ),
+                                  hintText: 'Search',
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            GetBuilder<ERXController>(
+                              builder: (contr) => Visibility(
+                                visible: controller
+                                    .selectedComplaintsList.isNotEmpty,
+                                child: Column(
+                                  children: <Widget>[
+                                    Wrap(
+                                      direction: Axis
+                                          .horizontal, // Make sure items are laid out horizontally
+                                      runSpacing: 8.0,
+                                      children: <Widget>[
+                                        for (int index = 0;
+                                            index <
+                                                controller
+                                                    .selectedComplaintsList
+                                                    .length;
+                                            index++)
+                                          InkWell(
+                                            onTap: () {
+                                              String cid = controller
+                                                  .selectedComplaintsList[index]
+                                                  .id!;
+                                              deleteSelected(
+                                                  context,
+                                                  controller
+                                                      .selectedComplaintsList,
+                                                  cid,
+                                                  "complaints");
+                                            },
+                                            child: Card(
+                                              elevation: 1,
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: Get.width * 0.01,
+                                                    right: Get.width * 0.01),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
                                                     SizedBox(
                                                       height: Get.height * 0.03,
                                                       width: Get.width * 0.03,
                                                       child: Image.asset(
                                                           AppImages.cross),
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.01,
+                                                    ),
+                                                    Text(
+                                                      controller
+                                                          .selectedComplaintsList[
+                                                              index]
+                                                          .name
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),

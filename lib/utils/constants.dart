@@ -53,26 +53,21 @@ class AppConstants {
 // eRX APIS
   static const String getPatientDetailForPrescription =
       "http://58.65.158.107:64/api/patient/GetPatientDetailForPrescription";
-  static const String getComplaints =
-      "http://58.65.158.107:64/api/doctor/GetComplaints";
+  static const String getComplaints = "$baseURL/api/doctor/GetComplaints";
 
-  static const String getPrimaryDiagnosis =
-      "http://58.65.158.107:64/api/doctor/GetDiagnosis";
+  static const String getPrimaryDiagnosis = "$baseURL/api/doctor/GetDiagnosis";
 
   static const String getSecondaryDiagnosis =
-      "http://58.65.158.107:64/api/doctor/GetSecondaryDiagnosis";
+      "$baseURL/api/doctor/GetSecondaryDiagnosis";
 
   static const String getInvestigations =
       "$baseURL/api/doctor/GetInvestigations";
 
-  static const String getProcedures =
-      "http://58.65.158.107:64/api/doctor/GetProcedures";
+  static const String getProcedures = "$baseURL/api/doctor/GetProcedures";
 
-  static const String getInstruction =
-      "http://58.65.158.107:64/api/doctor/GetInstructions";
+  static const String getInstruction = "$baseURL/api/doctor/GetInstructions";
 
-  static const String getFollowup =
-      "http://58.65.158.107:64/api/doctor/GetFollowUps";
+  static const String getFollowup = "$baseURL/api/doctor/GetFollowUps";
 
   static const String getDiagnostics = "$baseURL/api/doctor/GetDiagnostics";
 
@@ -106,10 +101,9 @@ class AppConstants {
   static const String WaitingQueueApi = '$baseURL/api/doctor/WaitingQueue';
   static const String consultingqueuepatient =
       '$baseURL/api/doctor/GetConsultations';
-      
-      static const String consultingqueuewait =
-      '$baseURL/api/doctor/WaitingQueue';
-      
+
+  static const String consultingqueuewait = '$baseURL/api/doctor/WaitingQueue';
+
   static const int maximumDataTobeFetched = 25;
   static int myrownumber = 0;
 

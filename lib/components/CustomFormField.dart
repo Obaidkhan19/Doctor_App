@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
+import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -265,6 +266,79 @@ class _CustomFormField1State extends State<CustomFormField1> {
           hintText: widget.hintText,
           hintStyle: const TextStyle(
               color: ColorManager.kPrimaryLightColor, fontSize: 12),
+          disabledBorder: const OutlineInputBorder(),
+          errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: ColorManager.kRedColor)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide:
+                  const BorderSide(color: ColorManager.kPrimaryLightColor)),
+          border: const OutlineInputBorder(
+              borderSide: BorderSide(color: ColorManager.kPrimaryLightColor))),
+    );
+  }
+}
+
+class CustomFormFieldqueue extends StatefulWidget {
+  final bool? obscureText;
+  final List<TextInputFormatter>? formatters;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final Widget? suffixIcon;
+  final Widget? prefix;
+  final String? hintText;
+  final bool? readOnly;
+  Function(String?)? onchange;
+  final bool? focusnode;
+  final FocusNode? focusNode;
+  CustomFormFieldqueue({
+    super.key,
+    this.hintText,
+    this.suffixIcon,
+    this.controller,
+    this.validator,
+    this.readOnly,
+    this.formatters,
+    this.obscureText,
+    this.onchange,
+    this.focusnode,
+    this.focusNode,
+    this.prefix,
+  });
+
+  @override
+  State<CustomFormFieldqueue> createState() => _CustomFormFieldqueueState();
+}
+
+class _CustomFormFieldqueueState extends State<CustomFormFieldqueue> {
+  @override
+  final ERXController controller = Get.put(ERXController());
+
+  @override
+  Widget build(BuildContext context) {
+    //  String focuse = widget.focus1!;
+    return TextFormField(
+      focusNode: widget.focusNode,
+      onChanged: widget.onchange,
+      obscureText: widget.obscureText ?? false,
+      inputFormatters: widget.formatters,
+      readOnly: widget.readOnly ?? false,
+      validator: widget.validator,
+      controller: widget.controller,
+      autofocus: widget.focusnode ?? false,
+      decoration: InputDecoration(
+          filled: true,
+          fillColor: ColorManager.kPrimaryLightColor,
+          errorStyle: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+          suffixIcon: widget.suffixIcon,
+          prefix: widget.prefix,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          hintText: widget.hintText,
+          hintStyle:
+              const TextStyle(color: ColorManager.kPrimaryColor, fontSize: 12),
           disabledBorder: const OutlineInputBorder(),
           errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorManager.kRedColor)),

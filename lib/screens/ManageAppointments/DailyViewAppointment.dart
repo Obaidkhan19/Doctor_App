@@ -65,12 +65,12 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
             builder: (con) {
               return Text(
                 contr.index == 0
-                    ? 'Day View Appointments'
-                    : 'Monthly View Appointments',
-                style: GoogleFonts.raleway(
+                    ? 'dayviewappointments'.tr
+                    : 'monthlyviewappointments'.tr,
+                style: GoogleFonts.poppins(
                   textStyle: GoogleFonts.poppins(
-                    fontSize: 17,
-                    color: Colors.black,
+                    fontSize: 15,
+                    color: ColorManager.kPrimaryColor,
                   ),
                 ),
               );
@@ -139,7 +139,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                                 0.08,
                                         child: Center(
                                             child: Text(
-                                          'Daily Detail',
+                                          'daily'.tr,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -150,7 +150,8 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                                           .kWhiteColor,
                                                   //     color: ColorManager.kWhiteColor,
                                                   fontWeight:
-                                                      FontWeightManager.bold),
+                                                      FontWeightManager.bold,
+                                                  fontSize: 15),
                                         )),
                                       ),
                                     ),
@@ -198,7 +199,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                         // ),
                                         child: Center(
                                             child: Text(
-                                          'Detail Monthly',
+                                          'monthly'.tr,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -208,7 +209,8 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                                       : ColorManager
                                                           .kWhiteColor,
                                                   fontWeight:
-                                                      FontWeightManager.bold),
+                                                      FontWeightManager.bold,
+                                                  fontSize: 15),
                                         )),
                                       ),
                                     ),

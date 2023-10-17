@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ERXController extends GetxController implements GetxService {
+  static ERXController get i => Get.put(ERXController());
   FocusNode mycomplaintfocus = FocusNode();
   FocusNode findingfocus = FocusNode();
   FocusNode qtyfocus = FocusNode();
@@ -77,34 +78,6 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
-  // String radiosearchtitle = "";
-
-  // updateradiosearchtitle(value) {
-  //   radiosearchtitle = value;
-  //   update();
-  // }
-
-  // void handleRadioSearchTitleChange(String newValue) {
-  //   updateradiosearchtitle(newValue);
-  // }
-
-  // String radioselectedValue = "";
-  // updateradiosearchvalue(value) {
-  //   radioselectedValue = value;
-  //   update();
-  // }
-
-  // handleRadioSelectedValue(String newValue) {
-  //   updateradiosearchvalue(newValue);
-  // }
-
-  // TextEditingController medController = TextEditingController();
-  // String medtitle = "";
-  // void updatemedtitle(String value) {
-  //   medtitle = value;
-  //   update();
-  // }
-
   RxBool smokeryesSelected = false.obs;
   RxBool smokernoSelected = false.obs;
 
@@ -129,31 +102,6 @@ class ERXController extends GetxController implements GetxService {
   void diabeticupdateNo(bool value) {
     diabeticnoSelected.value = value;
     diabeticyesSelected.value = !value;
-  }
-
-  List<LabTests>? labtests = [];
-
-  List<LabTests>? selectedLabTests = [];
-  LabTests? selectedLabtest;
-  addLabTest() {
-    if (selectedLabTests!.contains(selectedLabtest)) {
-      showSnackbar(Get.context!, 'Lab Test Already Added');
-    } else {
-      selectedLabTests!.add(selectedLabtest!);
-    }
-    update();
-  }
-
-  double totalSum = 0;
-
-  updateLabTest(LabTests labTest) {
-    selectedLabtest = labTest;
-    update();
-  }
-
-  updateService(LabTests labTest) {
-    selectedLabtest = labTest;
-    update();
   }
 
 // CLEAR LISTS
@@ -190,8 +138,17 @@ class ERXController extends GetxController implements GetxService {
   // COMPLAINT DATA
   List<Complaints1> complaintsList = [];
   List<Complaints1> selectedComplaintsList = [];
+
   updatecomplaintdata(List<Complaints1> clist) {
     complaintsList = clist;
+    update();
+  }
+
+  addCompaint(Complaints1 c, ctx) {
+    if (selectedComplaintsList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedComplaintsList.add(c);
     update();
   }
 
@@ -267,6 +224,8 @@ class ERXController extends GetxController implements GetxService {
     trailingtextController.clear();
     update();
   }
+
+  // COMPLAINTS
 
   // INVESTIGATION DATA
   List<Investigations1> investigationList = [];

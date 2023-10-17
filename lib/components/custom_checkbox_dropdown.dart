@@ -538,6 +538,8 @@ deleteSelected(
                       controller.deleteComplaintList(id);
                     } else if (name == 'finding') {
                       controller.deleteFindingList(id);
+                    } else if (name == 'complaints') {
+                      controller.deleteSelectedComplaintsList(id);
                     }
 
                     Get.back();

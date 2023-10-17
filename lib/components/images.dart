@@ -15,6 +15,7 @@ class Images {
   static const String microScope = '$path/microscope.svg';
   static const String microScope2 = '$path/microScope2.svg';
   static const String profile = '$path/profile.png';
+  static const String rxedit = '$path/rxeditIcon.png';
   static const String settings = '$path/settings.svg';
   static const String walletIcon = '$path/wallet_icon.svg';
   static const String welcomeText = '$path/welcome_text.png';

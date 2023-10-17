@@ -1,4 +1,5 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -26,8 +27,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
     super.initState();
   }
 
-  call() async
-  {
+  call() async {
     ManageAppointmentController.i.getDailyDoctorAppointment();
   }
 
@@ -41,7 +41,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () {
-              Navigator.pop(context);
+              Get.to(() => const DrawerScreen());
             },
             child: Image.asset(
               AppImages.back,
@@ -136,29 +136,27 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         ?.location
                                         .toString() ??
                                     "",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                        color: ColorManager.kWhiteColor,
-                                        fontWeight: FontWeightManager.bold),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 11,
+                                  color: ColorManager.kWhiteColor,
+                                ),
                               ),
-                              subtitle: Text(
-                                ManageAppointmentController
-                                        .i
-                                        .dailyDoctorAppointmentsModel
-                                        .onlineAppointmentStatistics
-                                        ?.address
-                                        .toString() ??
-                                    "",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                        color: ColorManager.kWhiteColor,
-                                        fontWeight: FontWeightManager.light,
-                                        fontSize: 12),
-                              ),
+                              // subtitle: Text(
+                              //   ManageAppointmentController
+                              //           .i
+                              //           .dailyDoctorAppointmentsModel
+                              //           .onlineAppointmentStatistics
+                              //           ?.address
+                              //           .toString() ??
+                              //       "",
+                              //   style: Theme.of(context)
+                              //       .textTheme
+                              //       .bodyMedium!
+                              //       .copyWith(
+                              //           color: ColorManager.kWhiteColor,
+                              //           fontWeight: FontWeightManager.light,
+                              //           fontSize: 12),
+                              // ),
                               trailing: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
@@ -282,25 +280,21 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         ),
                                         title: Text(
                                           manageAppointment.location ?? "",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  color:
-                                                      ColorManager.kblackColor,
-                                                  fontWeight:
-                                                      FontWeightManager.bold),
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 11,
+                                            color: ColorManager.kPrimaryColor,
+                                          ),
                                         ),
-                                        subtitle: Text(
-                                          manageAppointment.address ?? "",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  fontWeight:
-                                                      FontWeightManager.light,
-                                                  fontSize: 12),
-                                        ),
+                                        // subtitle: Text(
+                                        //   manageAppointment.address ?? "",
+                                        //   style: Theme.of(context)
+                                        //       .textTheme
+                                        //       .bodyMedium!
+                                        //       .copyWith(
+                                        //           fontWeight:
+                                        //               FontWeightManager.light,
+                                        //           fontSize: 12),
+                                        // ),
                                         trailing: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
@@ -333,7 +327,18 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                           })
                       : Container(
                           child: const Text('No Data'),
-                        )
+                        ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'Appointments Time Overview'.tr,
+                    style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: ColorManager.kPrimaryColor,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
                 ]),
               )));
         }));

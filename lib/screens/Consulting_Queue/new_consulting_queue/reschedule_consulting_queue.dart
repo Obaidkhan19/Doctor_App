@@ -1,7 +1,7 @@
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/screens/health_summary/user_detail_health_summary.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';

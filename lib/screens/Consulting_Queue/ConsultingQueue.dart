@@ -34,8 +34,6 @@ class _ConsultingQueueState extends State<ConsultingQueue>
     super.initState();
   }
 
-  
-
   String? SelectedDate;
 
   @override
@@ -58,12 +56,12 @@ class _ConsultingQueueState extends State<ConsultingQueue>
             ),
             title: Center(
               child: Text(
-                'Consulting Queue',
-                style: GoogleFonts.raleway(
+                'waitingqueue'.tr,
+                style: GoogleFonts.poppins(
                   textStyle: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: ColorManager.kPrimaryColor),
                 ),
               ),
             ),
@@ -95,53 +93,6 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                       ).copyWith(top: 0),
                       child: Column(
                         children: [
-                          // here add Date
-                          // Container(
-                          //   height: Get.height * 0.13,
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8),
-                          //       color: ColorManager.kPrimaryLightColor),
-                          //   child: DatePicker(
-                          //     DateTime.now(),
-                          //     dateTextStyle: Theme.of(context)
-                          //         .textTheme
-                          //         .bodyMedium!
-                          //         .copyWith(
-                          //             color: ColorManager.kPrimaryColor,
-                          //             fontWeight: FontWeight.w700),
-                          //     dayTextStyle: Theme.of(context)
-                          //         .textTheme
-                          //         .bodyMedium!
-                          //         .copyWith(
-                          //             color: ColorManager.kPrimaryColor,
-                          //             fontWeight: FontWeight.w100),
-                          //     monthTextStyle: Theme.of(context)
-                          //         .textTheme
-                          //         .bodyMedium!
-                          //         .copyWith(
-                          //             color: ColorManager.kPrimaryColor,
-                          //             fontWeight: FontWeight.w100),
-                          //     deactivatedColor: ColorManager.kPrimaryLightColor,
-                          //     height: Get.height * 0.15,
-                          //     initialSelectedDate: DateTime.now(),
-                          //     selectionColor: ColorManager.kPrimaryColor,
-                          //     selectedTextColor: Colors.white,
-                          //     onDateChange: (date) {
-                          //       String Date =
-                          //           DateFormat('yyyy-MM-dd').format(date);
-                          //       ConsultingQueueController.i.updatedate(date);
-                          //       SelectedDate = Date;
-                          //       // ManageAppointmentController.i
-                          //       //     .getDailyDoctorAppointmentSlots(
-                          //       //         Date.toString(),
-                          //       //         widget.IsOnline.toString(),
-                          //       //         widget.WorkLocationId.toString());
-                          //     },
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: Get.height * 0.02,
-                          // ),
                           TabBar(
                             padding: const EdgeInsets.all(0),
                             labelPadding:
@@ -155,7 +106,6 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                             indicatorSize: TabBarIndicatorSize.tab,
                             onTap: (index) {
                               FocusScope.of(context).unfocus();
-                              print(index);
                             },
                             tabs: [
                               Tab(
@@ -196,19 +146,11 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                               ),
                             ],
                           ),
-                          // SizedBox(
-                          //   height: Get.height * 0.01,
-                          // ),
-                          // const Divider(
-                          //   height: 1.5,
-                          //   color: ColorManager.kDarkBlue,
-                          // ),
                         ],
                       ),
                     ),
                     SizedBox(
                       height: Get.height * 0.72,
-                      // width: double.infinity,
                       child: TabBarView(
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
