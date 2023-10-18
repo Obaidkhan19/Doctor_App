@@ -671,13 +671,13 @@ addMedicine(
   Completer<dynamic> completer = Completer<dynamic>();
   controller.medicineList.sort((a, b) => a.name!.compareTo(b.name!));
 
-  String selectedgroup = 'Select';
-  List<String> groupList = [
-    'Select',
-    'Med 1',
-  ];
+  // String selectedgroup = 'Select';
+  // List<String> groupList = [
+  //   'Select',
+  //   'Med 1',
+  // ];
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -690,56 +690,12 @@ addMedicine(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(width: Get.width * 0.05),
-                      Text(
-                        'Search',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.raleway(
-                          textStyle: GoogleFonts.poppins(
-                            fontSize: 10,
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.close_outlined,
-                          size: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.03,
-                  ),
-                  Text(
-                    'Group',
-                    style: GoogleFonts.raleway(
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  ConsultingQueueDropDownWidget(
-                    list: groupList,
-                    selected: selectedgroup,
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.02,
-                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 20),
-                      hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w900,
-                          color: ColorManager.kPrimaryColor),
+                      hintStyle:
+                          const TextStyle(color: ColorManager.kPrimaryColor),
                       hintText: 'Search',
                       filled: true,
                       disabledBorder: OutlineInputBorder(
@@ -777,15 +733,6 @@ addMedicine(
                   SizedBox(
                     height: Get.height * 0.009,
                   ),
-                  Text(
-                    'Select Medicines',
-                    style: GoogleFonts.raleway(
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                   GetBuilder<ERXController>(builder: (context) {
                     return SizedBox(
                       height: Get.height * 0.15,
@@ -820,8 +767,11 @@ addMedicine(
                                     : ColorManager.kWhiteColor,
                                 child: Text(
                                   medicine.name ?? "",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 10,
+                                    color: isSelected
+                                        ? ColorManager.kWhiteColor
+                                        : ColorManager.kblackColor,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 4,
@@ -843,58 +793,80 @@ addMedicine(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
                           Text(
                             '  Routes',
                             style: GoogleFonts.raleway(
                               textStyle: GoogleFonts.poppins(
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                          Container(
-                            height: Get.height * 0.05,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: ColorManager.kGreyColor,
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showRoutes(context);
+                            },
+                            child: Container(
+                              height: Get.height * 0.05,
+                              width: Get.width * 0.5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: ColorManager.kGreyColor,
+                                ),
                               ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'external use',
-                                style: TextStyle(
-                                  color: ColorManager.kPrimaryColor,
-                                  fontSize: 10,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: Get.height * 0.013,
+                                    left: Get.width * 0.01),
+                                child: const Text(
+                                  'external use',
+                                  style: TextStyle(
+                                    color: ColorManager.kblackColor,
+                                    fontSize: 10,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: Get.height * 0.009,
+                            height: Get.height * 0.01,
                           ),
                           Text(
                             '  Duration',
                             style: GoogleFonts.raleway(
                               textStyle: GoogleFonts.poppins(
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
                           Container(
                             height: Get.height * 0.05,
+                            width: Get.width * 0.5,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(5),
                               border: Border.all(
                                 color: ColorManager.kGreyColor,
                               ),
                             ),
-                            child: const Center(
-                              child: Text(
-                                '11 weeks',
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: Get.height * 0.013,
+                                  left: Get.width * 0.01),
+                              child: const Text(
+                                '2 Week',
                                 style: TextStyle(
-                                  color: ColorManager.kPrimaryColor,
+                                  color: ColorManager.kblackColor,
                                   fontSize: 10,
                                 ),
                               ),
@@ -910,58 +882,75 @@ addMedicine(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
                           Text(
                             '  Frequency',
                             style: GoogleFonts.raleway(
                               textStyle: GoogleFonts.poppins(
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
                           Container(
                             height: Get.height * 0.05,
+                            width: Get.width * 0.5,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(5),
                               border: Border.all(
                                 color: ColorManager.kGreyColor,
                               ),
                             ),
-                            child: const Center(
-                              child: Text(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: Get.height * 0.013,
+                                  left: Get.width * 0.01),
+                              child: const Text(
                                 '1',
                                 style: TextStyle(
-                                  color: ColorManager.kPrimaryColor,
+                                  color: ColorManager.kblackColor,
                                   fontSize: 10,
                                 ),
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: Get.height * 0.009,
+                            height: Get.height * 0.01,
                           ),
                           Text(
                             '  Dosage',
                             style: GoogleFonts.raleway(
                               textStyle: GoogleFonts.poppins(
                                 fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
                           Container(
                             height: Get.height * 0.05,
+                            width: Get.width * 0.5,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(5),
                               border: Border.all(
                                 color: ColorManager.kGreyColor,
                               ),
                             ),
-                            child: const Center(
-                              child: Text(
-                                'Q.M',
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: Get.height * 0.013,
+                                  left: Get.width * 0.01),
+                              child: const Text(
+                                'OD',
                                 style: TextStyle(
-                                  color: ColorManager.kPrimaryColor,
+                                  color: ColorManager.kblackColor,
                                   fontSize: 10,
                                 ),
                               ),
@@ -977,7 +966,6 @@ addMedicine(
                       title: 'Save',
                       fontSize: 14,
                       height: Get.height * 0.06,
-                      width: Get.width * 0.5,
                       onPressed: () {
                         Get.back();
                         completer.complete(selectedMedicine);
@@ -995,6 +983,75 @@ addMedicine(
     },
   );
   return completer.future;
+}
+
+showRoutes(
+  BuildContext context,
+) async {
+  await showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Wrap(
+                    direction: Axis
+                        .horizontal, // Make sure items are laid out horizontally
+                    runSpacing: 8.0,
+                    children: <Widget>[
+                      for (int index = 0;
+                          index <
+                              ERXController
+                                  .i.medicedata!.medicineRoutes!.length;
+                          index++)
+                        InkWell(
+                          onTap: () {
+                            // select route
+                          },
+                          child: Card(
+                            elevation: 4,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: Get.width * 0.01,
+                                  right: Get.width * 0.01),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    ERXController
+                                            .i
+                                            .medicedata!
+                                            .medicineRoutes![index]
+                                            .englishDefinition ??
+                                        "",
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: ColorManager.kblackColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
 }
 
 // 4 alert dialog to select for each medicine

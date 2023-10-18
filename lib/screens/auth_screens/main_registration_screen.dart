@@ -38,12 +38,12 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
     var controller = Get.put<RegistrationController>(RegistrationController());
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            Get.back();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new),
+        //   onPressed: () {
+        //     Get.back();
+        //   },
+        // ),
         automaticallyImplyLeading: false,
         toolbarHeight: 50,
         title: Image.asset(
@@ -63,10 +63,10 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                       children: [
                         Text(
                           'registerNow'.tr,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.raleway(
                               fontSize: 30,
                               color: ColorManager.kPrimaryColor,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.w900),
                         ),
                         SizedBox(
                           height: Get.height * 0.01,

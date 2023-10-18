@@ -71,8 +71,10 @@ class AppConstants {
 
   static const String getDiagnostics = "$baseURL/api/doctor/GetDiagnostics";
 
-  static const String getMedicines =
-      "http://58.65.158.107:64/api/doctor/GetMedicineList";
+  static const String getMedicines = "$baseURL/api/doctor/GetMedicineList";
+
+  static const String getMedicinesMatrix =
+      "$baseURL/api/doctor/GetMedicineMatrix";
 
   static const String getMedicinesByGroupId =
       "http://58.65.158.107:64/api/doctor/GetMedicinesByGroupId";
@@ -94,7 +96,7 @@ class AppConstants {
   static const String logoutApi = '$baseURL/api/doctor/Logoff';
   static const String GetDailyAppointment =
       '$baseURL/api/doctor/GetDailyAppointment';
-        static const String GetMonthlyAppointment =
+  static const String GetMonthlyAppointment =
       '$baseURL/api/doctor/GetMonthlyAppointment';
   static const String GetDayAppointment =
       '$baseURL/api/doctor/GetDayAppointment';

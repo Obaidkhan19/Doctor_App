@@ -21,51 +21,51 @@ class _CustomDropDownWidgetState extends State<ConsultingQueueDropDownWidget> {
   bool isExpanded = false;
 
   final controller = Get.put(ERXController());
-  _getMedicinesByGroupId() async {
-    // LocalDb localDB = LocalDb();
-    // String? doctorId = await localDB.getDoctorId();
-    // String? branchId = await localDB.getBranchId();
-    // String? token = await localDB.getToken();
-    Medicines1 m = Medicines1();
-    controller.updateMedicinelist(
-      await m.getMedicinesByGroupId(
-        // doctorId,
-        // branchId,
-        // '850b74cd-6808-401c-bf48-b4bef57d1b7d',
-        // token,
-        "956315e6-4a1e-4eaa-8a40-f0e9a04609f2",
-        "5bd60354-fefd-4bcc-a58d-b8e27d802e85",
-        '850b74cd-6808-401c-bf48-b4bef57d1b7d',
-        "8990de83-baed-4e26-a66e-df9f492de8e1",
-      ),
-    );
-  }
+  // _getMedicinesByGroupId() async {
+  //   // LocalDb localDB = LocalDb();
+  //   // String? doctorId = await localDB.getDoctorId();
+  //   // String? branchId = await localDB.getBranchId();
+  //   // String? token = await localDB.getToken();
+  //   Medicines1 m = Medicines1();
+  //   controller.updateMedicinelist(
+  //     await m.getMedicinesByGroupId(
+  //       // doctorId,
+  //       // branchId,
+  //       // '850b74cd-6808-401c-bf48-b4bef57d1b7d',
+  //       // token,
+  //       "956315e6-4a1e-4eaa-8a40-f0e9a04609f2",
+  //       "5bd60354-fefd-4bcc-a58d-b8e27d802e85",
+  //       '850b74cd-6808-401c-bf48-b4bef57d1b7d',
+  //       "8990de83-baed-4e26-a66e-df9f492de8e1",
+  //     ),
+  //   );
+  // }
 
-  _getMedicines() async {
-    // LocalDb localDB = LocalDb();
-    // String? doctorId = await localDB.getDoctorId();
-    // String? branchId = await localDB.getBranchId();
-    // String? token = await localDB.getToken();
-    Medicines1 m = Medicines1();
-    controller.updateMedicinelist(
-      await m.getMedicines(
-        // "150",
-        // doctorId,
-        // '',
-        // '',
-        // branchId,
-        // '',
-        // token,
-        "150",
-        "956315e6-4a1e-4eaa-8a40-f0e9a04609f2",
-        '',
-        '',
-        "5bd60354-fefd-4bcc-a58d-b8e27d802e85",
-        '',
-        "8f3609d2-0325-4c95-9af3-a872e5176497",
-      ),
-    );
-  }
+  // _getMedicines() async {
+  //   // LocalDb localDB = LocalDb();
+  //   // String? doctorId = await localDB.getDoctorId();
+  //   // String? branchId = await localDB.getBranchId();
+  //   // String? token = await localDB.getToken();
+  //   Medicines1 m = Medicines1();
+  //   controller.updateMedicinelist(
+  //     await m.getMedicines(
+  //       // "150",
+  //       // doctorId,
+  //       // '',
+  //       // '',
+  //       // branchId,
+  //       // '',
+  //       // token,
+  //       "150",
+  //       "956315e6-4a1e-4eaa-8a40-f0e9a04609f2",
+  //       '',
+  //       '',
+  //       "5bd60354-fefd-4bcc-a58d-b8e27d802e85",
+  //       '',
+  //       "8f3609d2-0325-4c95-9af3-a872e5176497",
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -118,17 +118,17 @@ class _CustomDropDownWidgetState extends State<ConsultingQueueDropDownWidget> {
             children: widget.list
                 .map((e) => InkWell(
                       onTap: () {
-                        isExpanded = false;
-                        widget.selected = e;
-                        if (widget.selected == "Med 1") {
-                          _getMedicinesByGroupId();
-                          controller.medicineList.length;
-                        }
-                        if (widget.selected == "Select") {
-                          _getMedicines();
-                          controller.medicineList.length;
-                        }
-                        setState(() {});
+                        // isExpanded = false;
+                        // widget.selected = e;
+                        // if (widget.selected == "Med 1") {
+                        //   _getMedicinesByGroupId();
+                        //   controller.medicineList.length;
+                        // }
+                        // if (widget.selected == "Select") {
+                        //   _getMedicines();
+                        //   controller.medicineList.length;
+                        // }
+                        // setState(() {});
                       },
                       child: Container(
                           height: 40,

@@ -282,31 +282,31 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
     );
   }
 
-  _getMedicines() async {
-    // LocalDb localDB = LocalDb();
-    // String? doctorId = await localDB.getDoctorId();
-    // String? branchId = await localDB.getBranchId();
-    // String? token = await localDB.getToken();
-    Medicines1 m = Medicines1();
-    controller.updateMedicinelist(
-      await m.getMedicines(
-        // "150",
-        // doctorId,
-        // '',
-        // '',
-        // branchId,
-        // '',
-        // token,
-        "150",
-        "956315e6-4a1e-4eaa-8a40-f0e9a04609f2",
-        '',
-        '',
-        "5bd60354-fefd-4bcc-a58d-b8e27d802e85",
-        '',
-        "8f3609d2-0325-4c95-9af3-a872e5176497",
-      ),
-    );
-  }
+  // _getMedicines() async {
+  //   // LocalDb localDB = LocalDb();
+  //   // String? doctorId = await localDB.getDoctorId();
+  //   // String? branchId = await localDB.getBranchId();
+  //   // String? token = await localDB.getToken();
+  //   Medicines1 m = Medicines1();
+  //   controller.updateMedicinelist(
+  //     await m.getMedicines(
+  //       // "150",
+  //       // doctorId,
+  //       // '',
+  //       // '',
+  //       // branchId,
+  //       // '',
+  //       // token,
+  //       "150",
+  //       "956315e6-4a1e-4eaa-8a40-f0e9a04609f2",
+  //       '',
+  //       '',
+  //       "5bd60354-fefd-4bcc-a58d-b8e27d802e85",
+  //       '',
+  //       "8f3609d2-0325-4c95-9af3-a872e5176497",
+  //     ),
+  //   );
+  // }
 
   @override
   void initState() {
@@ -320,7 +320,7 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
     _getInstruction();
     _getFollowup();
     _getDiagnostics();
-    _getMedicines();
+    // _getMedicines();
   }
 
   @override
@@ -1370,13 +1370,13 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                       ),
                       InkWell(
                         onTap: () async {
-                          String result = await addMedicine(
-                            context,
-                            controller.medicineList,
-                            controller.selectedmedicineList,
-                            controller.selectedmedicine,
-                          );
-                          controller.updateselectedmedicine(result);
+                          // String result = await addMedicine(
+                          //   context,
+                          //   controller.medicineList,
+                          //   controller.selectedmedicineList,
+                          //   controller.selectedmedicine,
+                          // );
+                          // controller.updateselectedmedicine(result);
                         },
                         child: Container(
                           height: Get.height * 0.06,
@@ -1431,18 +1431,18 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                                       index++)
                                     InkWell(
                                       onTap: () {
-                                        // String cid = controller
-                                        //     .selectedmedicineList[index].id!;
-                                        // deleteSelected(
-                                        //     context,
-                                        //     controller.selectedmedicineList,
-                                        //     cid,
-                                        //     "medicines");
+                                        String cid = controller
+                                            .selectedmedicineList[index].id!;
+                                        deleteSelected(
+                                            context,
+                                            controller.selectedmedicineList,
+                                            cid,
+                                            "medicines");
 
                                         // MAKE OBJECT OF MEDICINE AND SEND IT TO DELETEMEDICINE ALERT NEW
-                                        // Medicines1 mobj = controller
-                                        //     .selectedmedicineList[index];
-                                        //  deleteSelectedMedicine(context, mobj);
+                                        Medicines1 mobj = controller
+                                            .selectedmedicineList[index];
+                                        deleteSelectedMedicine(context, mobj);
                                       },
                                       child: Container(
                                         margin: const EdgeInsets.all(8.0),

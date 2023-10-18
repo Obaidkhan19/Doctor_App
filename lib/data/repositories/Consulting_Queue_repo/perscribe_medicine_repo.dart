@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
@@ -7,11 +8,14 @@ import 'package:doctormobileapplication/models/diagnostics.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
+import 'package:doctormobileapplication/models/medicine_matrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class PrescribeMedicinRepo {
@@ -254,6 +258,34 @@ class PrescribeMedicinRepo {
       List<Medicines1> medicinesList =
           data.map((json) => Medicines1.fromJson(json)).toList();
       return medicinesList;
+    } else {
+      throw Exception('Failed to fetch medicines details');
+    }
+  }
+
+  static Future<medicineMatrix> getMedicinesMatrix() async {
+    String branchid = await LocalDb().getBranchId() ?? "";
+
+    String url = AppConstants.getMedicinesMatrix;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "BranchId": branchid,
+    });
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+
+      if (status == 1) {
+        medicineMatrix mm = medicineMatrix.fromJson(responseData);
+        return mm;
+      } else {
+        showSnackbar(Get.context!, 'Failed to update');
+        return medicineMatrix();
+      }
     } else {
       throw Exception('Failed to fetch medicines details');
     }

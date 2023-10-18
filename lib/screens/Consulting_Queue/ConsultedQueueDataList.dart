@@ -83,7 +83,18 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         }
       }
     });
+    _getimagepath();
+
     super.initState();
+  }
+
+  String imagepath = '';
+  String path = '';
+
+  _getimagepath() async {
+    path = (await LocalDb().getDoctorUserImagePath())!;
+    String baseurl = AppConstants.baseURL;
+    imagepath = baseurl + path;
   }
 
 //ConsultedDataList
@@ -93,8 +104,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
     //ConsultedDataList
     //ConsultingQueueController.i.getConsultingQueueData('',widget.Status.toString());
     return BlurryModalProgressHUD(
-      inAsyncCall:
-          ConsultingQueueController.i.isLoadingDataClinicalPracticeDataList,
+      inAsyncCall: ConsultingQueueController.i.isclinicLoading,
       blurEffectIntensity: 4,
       progressIndicator: const SpinKitSpinningLines(
         color: Color(0xfff1272d3),
@@ -129,7 +139,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                     hintText: 'Search',
                   ),
                   SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.62,
+                      height: MediaQuery.of(context).size.height * 0.66,
                       child: (ConsultingQueueController.i.response.isNotEmpty)
                           ? ListView.builder(
                               controller: _scrollController,
@@ -163,13 +173,22 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                             child: Column(
                                               children: [
                                                 ListTile(
-                                                  leading: const SizedBox(
+                                                  leading: SizedBox(
                                                     height: 380,
                                                     width: 71,
                                                     child: CircleAvatar(
-                                                      backgroundImage:
-                                                          AssetImage(
-                                                              Images.avator),
+                                                      backgroundColor:
+                                                          const Color.fromRGBO(
+                                                              0, 0, 0, 0),
+                                                      radius: 30,
+                                                      child: ClipOval(
+                                                        child: path == '' ||
+                                                                path == 'null'
+                                                            ? Image.asset(
+                                                                Images.avator)
+                                                            : Image.network(
+                                                                imagepath),
+                                                      ),
                                                     ),
                                                   ),
                                                   title: Transform.translate(
@@ -215,7 +234,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                       ],
                                                     ),
                                                   ),
-                                                  trailing: Container(
+                                                  trailing: SizedBox(
                                                     width: 70,
                                                     child: Row(
                                                       mainAxisAlignment:
@@ -253,29 +272,27 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                               context: context,
                                                               builder:
                                                                   (context) {
-                                                              
                                                                 return StatefulBuilder(
                                                                   builder: (context,
                                                                       setState) {
                                                                     return AlertDialog(
                                                                       content:
                                                                           SizedBox(
-                                                                        height:
-                                                                            Get.height*0.8,
-                                                                        width:
-                                                                            Get.width*0.8,
+                                                                        height: Get.height *
+                                                                            0.8,
+                                                                        width: Get.width *
+                                                                            0.8,
                                                                         child: SfPdfViewer.network(AppConstants.baseURL +
                                                                             manageAppointment.reportURL),
                                                                       ),
                                                                       actions: <Widget>[
-                                                                        
                                                                         TextButton(
                                                                           onPressed:
                                                                               () {
                                                                             Get.back();
                                                                           },
                                                                           child:
-                                                                              Text("Okay"),
+                                                                              const Text("Okay"),
                                                                         ),
                                                                       ],
                                                                     );

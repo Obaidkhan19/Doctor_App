@@ -64,7 +64,20 @@ class _ClinicalPracticeQueueDataListState
         length: length.toString(),
         orderColumn: "0",
         orderDir: "desc"));
-    print(ConsultingQueueController.i.consultingqueuewait.toString());
+
+    _getimagepath();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        var isCallToFetchData =
+            ConsultingQueueController.i.SetStartToFetchNextData();
+        if (isCallToFetchData) {
+          length = length + 10;
+          callback();
+        }
+      }
+    });
   }
 
   String imagepath = '';
@@ -79,167 +92,207 @@ class _ClinicalPracticeQueueDataListState
   @override
   void initState() {
     callback();
-    _getimagepath();
-    // ConsultingQueueController.i.clearAllLists(widget.Status.toString());
-    // ConsultingQueueController.i
-    //     .getConsultingQueueData('', widget.Status.toString());
-    // SearchFieldController.clear();
-
-    //when scroll page
-    _scrollController.addListener(() {
-      // var nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        var isCallToFetchData =
-            ConsultingQueueController.i.SetStartToFetchNextData();
-        if (isCallToFetchData) {
-          length = length + 10;
-          callback();
-          // ConsultingQueueController.i.getConsultingQueueData(
-          //     SearchFieldController.text, widget.Status.toString());
-        }
-      }
-    });
 
     super.initState();
   }
 
-  //bool isNotNull = true;
-
   @override
   Widget build(BuildContext context) {
     var contr = Get.put<ConsultingQueueController>(ConsultingQueueController());
-
-    //ConsultingQueueController.i.getConsultingQueueData('',widget.Status.toString());
-    return BlurryModalProgressHUD(
-        inAsyncCall:
-            ConsultingQueueController.i.isLoadingDataClinicalPracticeDataList,
-        blurEffectIntensity: 4,
-        progressIndicator: const SpinKitSpinningLines(
-          color: Color(0xfff1272d3),
-          size: 60,
-        ),
-        dismissible: false,
-        opacity: 0.4,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppImages.helpful_background_logo),
-                alignment: Alignment.centerLeft,
+    return GetBuilder<ConsultingQueueController>(
+      builder: (cont) => BlurryModalProgressHUD(
+          inAsyncCall: ConsultingQueueController.i.isclinicLoading,
+          blurEffectIntensity: 4,
+          progressIndicator: const SpinKitSpinningLines(
+            color: Color(0xfff1272d3),
+            size: 60,
+          ),
+          dismissible: false,
+          opacity: 0.4,
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(AppImages.helpful_background_logo),
+                  alignment: Alignment.centerLeft,
+                ),
               ),
-            ),
-            child: SafeArea(
-              minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      prefixIcon: const Icon(
-                        Icons.search_outlined,
-                        color: ColorManager.kPrimaryColor,
-                        size: 35,
+              child: SafeArea(
+                minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        prefixIcon: const Icon(
+                          Icons.search_outlined,
+                          color: ColorManager.kPrimaryColor,
+                          size: 35,
+                        ),
+                        controller: SearchFieldController,
+                        hintText: 'Search',
                       ),
-                      controller: SearchFieldController,
-                      hintText: 'Search',
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.62,
-                      child: ConsultingQueueController
-                              .i.consultingqueuewait.isNotEmpty
-                          ? ListView.builder(
-                              controller: _scrollController,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: ConsultingQueueController
-                                  .i.consultingqueuewait.length,
-                              itemBuilder: (context, index) {
-                                final manageAppointment =
-                                    ConsultingQueueController
-                                            .i.consultingqueuewait.isNotEmpty
-                                        ? ConsultingQueueController
-                                            .i.consultingqueuewait[index]
-                                        : null;
-                                // FILTER CODE
-                                // if (ConsultingQueueController.i.date
-                                //         .toString()
-                                //         .split(' ')[0] ==
-                                //     ConsultingQueueController
-                                //         .i
-                                //         .ClinicalPracticeDataList
-                                //         .queue?[index]
-                                //         .visitTime
-                                //         .toString()
-                                //         .split('T')[0])
-                                {
-                                  return ((manageAppointment != null &&
-                                          (manageAppointment.patientStatusValue
-                                                  .toString() ==
-                                              widget.Status.toString()))
-                                      ? Card(
-                                          elevation: 4,
-                                          surfaceTintColor:
-                                              ColorManager.kWhiteColor,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: Get.height * 0.02,
-                                                bottom: Get.height * 0.02),
-                                            child: Column(
-                                              children: [
-                                                ListTile(
-                                                  leading: SizedBox(
-                                                    height: 380,
-                                                    width: 71,
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          const Color.fromRGBO(
-                                                              0, 0, 0, 0),
-                                                      radius: 30,
-                                                      child: ClipOval(
-                                                        child: path == '' ||
-                                                                path == 'null'
-                                                            ? Image.asset(
-                                                                Images.avator)
-                                                            : Image.network(
-                                                                imagepath),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.66,
+                        child: ConsultingQueueController
+                                .i.consultingqueuewait.isNotEmpty
+                            ? ListView.builder(
+                                controller: _scrollController,
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: ConsultingQueueController
+                                    .i.consultingqueuewait.length,
+                                itemBuilder: (context, index) {
+                                  final manageAppointment =
+                                      ConsultingQueueController
+                                              .i.consultingqueuewait.isNotEmpty
+                                          ? ConsultingQueueController
+                                              .i.consultingqueuewait[index]
+                                          : null;
+                                  // FILTER CODE
+                                  // if (ConsultingQueueController.i.date
+                                  //         .toString()
+                                  //         .split(' ')[0] ==
+                                  //     ConsultingQueueController
+                                  //         .i
+                                  //         .ClinicalPracticeDataList
+                                  //         .queue?[index]
+                                  //         .visitTime
+                                  //         .toString()
+                                  //         .split('T')[0])
+                                  {
+                                    return ((manageAppointment != null &&
+                                            (manageAppointment
+                                                    .patientStatusValue
+                                                    .toString() ==
+                                                widget.Status.toString()))
+                                        ? Card(
+                                            elevation: 4,
+                                            surfaceTintColor:
+                                                ColorManager.kWhiteColor,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: Get.height * 0.02,
+                                                  bottom: Get.height * 0.02),
+                                              child: Column(
+                                                children: [
+                                                  ListTile(
+                                                    leading: SizedBox(
+                                                      height: 380,
+                                                      width: 71,
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromRGBO(
+                                                                0, 0, 0, 0),
+                                                        radius: 30,
+                                                        child: ClipOval(
+                                                          child: path == '' ||
+                                                                  path == 'null'
+                                                              ? Image.asset(
+                                                                  Images.avator)
+                                                              : Image.network(
+                                                                  imagepath),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    title: Transform.translate(
+                                                      offset:
+                                                          const Offset(-0, 0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            manageAppointment
+                                                                    .patientName ??
+                                                                "",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 13,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            manageAppointment
+                                                                    .mRNO ??
+                                                                "",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    trailing: InkWell(
+                                                      onTap: () {
+                                                        Get.to(() =>
+                                                            //  HistoryeRXConsultingQueue());
+
+                                                            const PrescribeMedicineScreen());
+                                                      },
+                                                      child: Image.asset(
+                                                        Images.rxedit,
+                                                        color: ColorManager
+                                                            .kPrimaryColor,
+                                                        width: Get.width * 0.09,
+                                                        height:
+                                                            Get.height * 0.1,
                                                       ),
                                                     ),
                                                   ),
-                                                  title: Transform.translate(
-                                                    offset: const Offset(-0, 0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.08,
+                                                        right:
+                                                            Get.width * 0.06),
+                                                    child: const MySeparator(
+                                                      color: ColorManager
+                                                          .kblackColor,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.08,
+                                                        right:
+                                                            Get.width * 0.06),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          manageAppointment
-                                                                  .patientName ??
-                                                              "",
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 13,
-                                                            color: ColorManager
-                                                                .kPrimaryColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          manageAppointment
-                                                                  .mRNO ??
-                                                              "",
+                                                          'Waiting Since ${manageAppointment.waitingTime ?? ""}',
                                                           style: GoogleFonts
                                                               .poppins(
                                                             fontSize: 10,
                                                             color: ColorManager
-                                                                .kPrimaryColor,
+                                                                .kblackColor,
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                          '${manageAppointment.status ?? ""}',
                                                           style: GoogleFonts
                                                               .poppins(
                                                             fontSize: 10,
@@ -250,100 +303,43 @@ class _ClinicalPracticeQueueDataListState
                                                       ],
                                                     ),
                                                   ),
-                                                  trailing: InkWell(
-                                                    onTap: () {
-                                                      Get.to(() =>
-                                                          //  HistoryeRXConsultingQueue());
-
-                                                          const PrescribeMedicineScreen());
-                                                    },
-                                                    child: Image.asset(
-                                                      Images.rxedit,
-                                                      color: ColorManager
-                                                          .kPrimaryColor,
-                                                      width: Get.width * 0.09,
-                                                      height: Get.height * 0.1,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.08,
-                                                      right: Get.width * 0.06),
-                                                  child: const MySeparator(
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: Get.height * 0.01,
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.08,
-                                                      right: Get.width * 0.06),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        '${manageAppointment.status ?? ""}',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      : Container());
-                                }
-                              })
-                          : (((ConsultingQueueController
-                                                  .i.ClinicalPracticeDataList !=
-                                              null) &&
-                                          (ConsultingQueueController
-                                                  .i
-                                                  .ClinicalPracticeDataList
-                                                  .queue !=
-                                              null))
-                                      ? ConsultingQueueController
-                                          .i
-                                          .ClinicalPracticeDataList
-                                          .queue
-                                          ?.length
-                                      : 0) ==
-                                  0
-                              ? SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                  child: const Center(
-                                    child: Text('No Record Found!'),
-                                  ),
-                                )
-                              : Container(),
-                    ),
-                  ],
+                                          )
+                                        : Container());
+                                  }
+                                })
+                            : (((ConsultingQueueController.i
+                                                    .ClinicalPracticeDataList !=
+                                                null) &&
+                                            (ConsultingQueueController
+                                                    .i
+                                                    .ClinicalPracticeDataList
+                                                    .queue !=
+                                                null))
+                                        ? ConsultingQueueController
+                                            .i
+                                            .ClinicalPracticeDataList
+                                            .queue
+                                            ?.length
+                                        : 0) ==
+                                    0
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: const Center(
+                                      child: Text('No Record Found!'),
+                                    ),
+                                  )
+                                : Container(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
