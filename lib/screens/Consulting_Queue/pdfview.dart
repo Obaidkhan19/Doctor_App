@@ -6,19 +6,27 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class pdfviewconsulted extends StatelessWidget {
   final String url;
-  pdfviewconsulted({super.key, required this.url});
+  const pdfviewconsulted({super.key, required this.url});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: IconButton(onPressed: (){},icon: Icon(Icons.arrow_back_ios_new),),
-        body: Center(
-          child: Container(
-              height: Get.height * 0.8,
-              width: Get.width * 1,
-              child: SfPdfViewer.network(AppConstants.baseURL + url),
-            ),
+        backgroundColor: Colors.white,
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        floatingActionButton: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
+        body: Container(
+          height: Get.height * 1,
+          decoration: const BoxDecoration(color: Colors.white),
+          child: SizedBox(
+            height: Get.height * 1,
+            width: Get.width * 1,
+            child: SfPdfViewer.network(AppConstants.baseURL + url),
+          ),
         ));
   }
 }

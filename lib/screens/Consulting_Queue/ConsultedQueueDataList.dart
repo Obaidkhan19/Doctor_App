@@ -244,10 +244,11 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                       children: [
                                                         InkWell(
                                                           onTap: () {
-                                                            // Get.to(() =>
-                                                            //     //  HistoryeRXConsultingQueue());
-
-                                                            //     const PrescribeMedicineScreen());
+                                                            Get.to(
+                                                              () => pdfviewconsulted(
+                                                                  url: manageAppointment
+                                                                      .reportURL),
+                                                            );
                                                           },
                                                           child: Container(
                                                             child: Image.asset(
@@ -265,48 +266,16 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                         ),
                                                         InkWell(
                                                           onTap: () async {
+                                                            Get.to(() =>
+                                                                //  HistoryeRXConsultingQueue());
+
+                                                                const PrescribeMedicineScreen());
 // print(AppConstants.baseURL+
 //               manageAppointment.reportURL);
                                                             // Get.to(() =>
                                                             //  HistoryeRXConsultingQueue());
-                                                            await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return StatefulBuilder(
-                                                                  builder: (context,
-                                                                      setState) {
-                                                                    return AlertDialog(
-                                                                      content:
-                                                                          SizedBox(
-                                                                        height: Get.height *
-                                                                            0.8,
-                                                                        width: Get.width *
-                                                                            0.8,
-                                                                        child: SfPdfViewer.network(AppConstants.baseURL +
-                                                                            manageAppointment.reportURL),
-                                                                      ),
-                                                                      actions: <Widget>[
-                                                                        TextButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            Get.back();
-                                                                          },
-                                                                          child:
-                                                                              const Text("Okay"),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                              },
-                                                            );
+
                                                             // const PrescribeMedicineScreen());
-                                                            Get.to(
-                                                              () => pdfviewconsulted(
-                                                                  url: manageAppointment
-                                                                      .reportURL),
-                                                            );
                                                           },
                                                           child: Container(
                                                             child: Image.asset(
