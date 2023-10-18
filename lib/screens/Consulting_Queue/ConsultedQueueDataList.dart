@@ -131,9 +131,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                             if (val!.isEmpty) {
                               ConsultingQueueController.i
                                   .clearAllLists(widget.Status.toString());
-                              ConsultingQueueController.i
-                                  .getConsultingQueueData(
-                                      '', widget.Status.toString());
+                              // ConsultingQueueController.i
+                              //     .getConsultingQueueData(
+                              //         '', widget.Status.toString());
                             }
                           },
                           key: SearchFieldControllerKey,
@@ -146,9 +146,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                           FocusScope.of(context).unfocus();
                           ConsultingQueueController.i
                               .clearAllLists(widget.Status.toString());
-                          ConsultingQueueController.i.getConsultingQueueData(
-                              SearchFieldController.text.toString(),
-                              widget.Status.toString());
+                          // ConsultingQueueController.i.getConsultingQueueData(
+                          //     SearchFieldController.text.toString(),
+                          //     widget.Status.toString());
                         },
                         child: Container(
                             width: MediaQuery.of(context).size.width * 0.2,
