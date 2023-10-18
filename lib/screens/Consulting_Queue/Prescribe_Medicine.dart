@@ -1,7 +1,9 @@
 import 'dart:ffi';
 
 import 'package:doctormobileapplication/components/CustomFormField.dart';
+import 'package:doctormobileapplication/components/MyCustomExpansionTile.dart';
 import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
+import 'package:doctormobileapplication/components/custom_expension_listtile.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
@@ -24,6 +26,59 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+class Item {
+  final String name;
+  final int age;
+  final String className;
+  final String section;
+  final String country;
+  bool isExpanded;
+
+  Item({
+    required this.name,
+    required this.age,
+    required this.className,
+    required this.section,
+    required this.country,
+    this.isExpanded = false,
+  });
+}
+
+// Define your list of items
+List<Item> items = [
+  Item(
+      name: "John",
+      age: 25,
+      className: "Class A",
+      section: "Section 1",
+      country: "USA"),
+  Item(
+      name: "Alice",
+      age: 22,
+      className: "Class B",
+      section: "Section 2",
+      country: "Canada"),
+  Item(
+      name: "Bob",
+      age: 23,
+      className: "Class A",
+      section: "Section 1",
+      country: "UK"),
+  Item(
+      name: "Eve",
+      age: 24,
+      className: "Class C",
+      section: "Section 3",
+      country: "Australia"),
+  Item(
+      name: "Charlie",
+      age: 26,
+      className: "Class B",
+      section: "Section 2",
+      country: "USA"),
+  // Add more items as needed
+];
 
 class PrescribeMedicineScreen extends StatefulWidget {
   const PrescribeMedicineScreen({super.key});
@@ -128,14 +183,17 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
           resizeToAvoidBottomInset: true,
           appBar: AppBar(
             titleSpacing: 0,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset(
-                AppImages.back,
+            leading: Padding(
+              padding: EdgeInsets.only(left: Get.width * 0.04),
+              child: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Image.asset(
+                  AppImages.back,
+                ),
               ),
             ),
             title: Text(
@@ -161,53 +219,225 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                 ),
                 child: Column(
                   children: [
-                    Card(
-                        elevation: 4,
-                        surfaceTintColor: ColorManager.kWhiteColor,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Get.width * 0.03,
-                          ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: Get.width * 0.04),
                           child: SizedBox(
-                            width: Get.width * 0.85,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Complaints:"),
-                                    const Text("Diagnosis"),
-                                    const Text("Procedures:"),
-                                    const Text("Diagnostics:"),
-                                    const Text("Investigations:"),
-                                    SizedBox(
-                                      height: Get.height * 0.02,
-                                    ),
-                                    const Text("Vitals:"),
-                                  ],
-                                ),
-                                Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          decoration: const BoxDecoration(
-                                              color: Colors.black),
-                                          height: 2,
-                                          child: const Text("--------------"),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
+                            height: Get.height * 0.05,
+                            width: Get.width * 0.1,
+                            child: ImageContainer(
+                              imagePath: AppImages.recycle,
+                              imageheight: Get.height * 0.05,
+                              isSvg: false,
+                              color: ColorManager.kWhiteColor,
+                              backgroundColor: ColorManager.kPrimaryColor,
                             ),
                           ),
-                        )),
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.27,
+                        ),
+                        Text(
+                          'History',
+                          style: GoogleFonts.poppins(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        final item = items.first;
+                        return Card(
+                          elevation: 4,
+                          surfaceTintColor: ColorManager.kWhiteColor,
+                          child: MyCustomTile(
+                            title: Padding(
+                              padding: EdgeInsets.only(left: Get.width * 0.04),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Complaints:",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorManager.kblackColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        item.name,
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: Get.height * 0.01,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Diagnosis:",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorManager.kblackColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        item.age.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: Get.height * 0.01,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: Get.width * 0.27),
+                                    child: InkWell(
+                                      onTap: () {
+                                        initiallyExpanded:
+                                        false;
+                                        onExpansionChanged:
+                                        (expanded) {
+                                          setState(() {
+                                            item.isExpanded = expanded;
+                                          });
+                                        };
+                                      },
+                                      child: Container(
+                                        width: Get.width * 0.3,
+                                        height: Get.height * 0.006,
+                                        decoration: BoxDecoration(
+                                          color: ColorManager.kblackColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            initiallyExpanded: false,
+                            onExpansionChanged: (expanded) {
+                              setState(() {
+                                item.isExpanded = expanded;
+                              });
+                            },
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: Get.width * 0.04),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Procedures:",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorManager.kblackColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          item.className,
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Diagnostics:",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorManager.kblackColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          item.section,
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Investigations:",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorManager.kblackColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          item.country,
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.03,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Vitals:",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorManager.kblackColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          item.country,
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                         left: Get.width * 0.03,

@@ -10,6 +10,7 @@ import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -66,10 +67,19 @@ class _ClinicalPracticeQueueDataListState
     print(ConsultingQueueController.i.consultingqueuewait.toString());
   }
 
+  String imagepath = '';
+  String path = '';
+
+  _getimagepath() async {
+    path = (await LocalDb().getDoctorUserImagePath())!;
+    String baseurl = AppConstants.baseURL;
+    imagepath = baseurl + path;
+  }
+
   @override
   void initState() {
     callback();
-
+    _getimagepath();
     // ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     // ConsultingQueueController.i
     //     .getConsultingQueueData('', widget.Status.toString());
@@ -135,7 +145,6 @@ class _ClinicalPracticeQueueDataListState
                       controller: SearchFieldController,
                       hintText: 'Search',
                     ),
-                   
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.62,
                       child: ConsultingQueueController
@@ -180,13 +189,22 @@ class _ClinicalPracticeQueueDataListState
                                             child: Column(
                                               children: [
                                                 ListTile(
-                                                  leading: const SizedBox(
+                                                  leading: SizedBox(
                                                     height: 380,
                                                     width: 71,
                                                     child: CircleAvatar(
-                                                      backgroundImage:
-                                                          AssetImage(
-                                                              Images.avator),
+                                                      backgroundColor:
+                                                          const Color.fromRGBO(
+                                                              0, 0, 0, 0),
+                                                      radius: 30,
+                                                      child: ClipOval(
+                                                        child: path == '' ||
+                                                                path == 'null'
+                                                            ? Image.asset(
+                                                                Images.avator)
+                                                            : Image.network(
+                                                                imagepath),
+                                                      ),
                                                     ),
                                                   ),
                                                   title: Transform.translate(
