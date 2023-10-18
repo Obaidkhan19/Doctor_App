@@ -11,25 +11,43 @@ import '../../utils/constants.dart';
 import '../repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 
 class ConsultingQueueController extends GetxController implements GetxService {
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  int tabindex = 0;
+
+  updateselectedindex(int ind) {
+    tabindex = ind;
+    update();
+  }
+
+  updateIsloading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
+  bool _isclinicLoading = false;
+  bool get isclinicLoading => _isclinicLoading;
+  updateIsclinicloading(bool value) {
+    _isclinicLoading = value;
+    update();
+  }
+
   int _index = 0;
   int get index => _index;
   List<consultingqueuewaitholdresponse> response = [];
-  List<consultingqueuereponse> pastconsultation=[];
-  List<consultingqueuewaitholdresponse> consultingqueuewait =[];
-  List<consultingqueuewaitholdresponse> consultingqueuehold =[];
+  List<consultingqueuereponse> pastconsultation = [];
+  List<consultingqueuewaitholdresponse> consultingqueuewait = [];
+  List<consultingqueuewaitholdresponse> consultingqueuehold = [];
 
-updateconsultingqueuewait(List<consultingqueuewaitholdresponse> wait)
-{
-  consultingqueuewait=wait;
-  update();
-}
+  updateconsultingqueuewait(List<consultingqueuewaitholdresponse> wait) {
+    consultingqueuewait = wait;
+    update();
+  }
 
-updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
-{
-  consultingqueuehold=wait;
-  update();
-}
-
+  updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait) {
+    consultingqueuehold = wait;
+    update();
+  }
 
   getPageIndexofAll() {
     return _index;
@@ -40,7 +58,7 @@ updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
     update();
   }
 
-   updatepastconsultinglist(List<consultingqueuereponse> data) {
+  updatepastconsultinglist(List<consultingqueuereponse> data) {
     pastconsultation = data;
     update();
   }
@@ -50,7 +68,7 @@ updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
     update();
   }
 
-  ConsultingQueueModel _consultingQueueList = ConsultingQueueModel();
+  final ConsultingQueueModel _consultingQueueList = ConsultingQueueModel();
   ConsultingQueueModel get consultingQueueList => _consultingQueueList;
   DateTime? date; // filter
 
@@ -102,12 +120,9 @@ updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait)
     }
   }
 
-
-getpastconsultation() async
-{
-  await ConsultingQueueRepo.GetConsultingQueue();
-}
-
+  getpastconsultation() async {
+    await ConsultingQueueRepo.GetConsultingQueue();
+  }
 
   // getConsultingQueueData(String? Search, String? Status) async {
   //   if (startIndexToFetchData == 0) {

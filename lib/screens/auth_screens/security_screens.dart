@@ -119,6 +119,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
                   PrimaryButton(
                       title: 'register'.tr,
                       onPressed: () async {
+                        controller.updateIsSavingPath(true);
+
                         AuthRepo ar = AuthRepo();
 
                         String response = "";
@@ -136,9 +138,18 @@ class _SecurityScreenState extends State<SecurityScreen> {
                             controller.imagepath == null) {
                           showSnackbar(context, "pleasesavepersonaldetails".tr);
                         }
+
+                        String path = await ar.uploadPicture(controller.file!);
+
+                        String filepath =
+                            await ar.uploadFile(controller.pmcfile!);
+                        controller.updatefilepath(filepath);
+                        controller.updateimagepath(path);
+
                         if (controller.selectedRadioValue == "idno") {
                           if (_formKey.currentState!.validate()) {
                             response = await ar.signupPersonalcnic();
+                            controller.updateIsSavingPath(false);
                           } else {
                             showSnackbar(context, response.toString());
                           }
@@ -146,9 +157,10 @@ class _SecurityScreenState extends State<SecurityScreen> {
                             "passport") {
                           if (_formKey.currentState!.validate()) {
                             response = await ar.signupPersonalpassport();
-
+                            controller.updateIsSavingPath(false);
                             showSnackbar(context, response.toString());
                           } else {
+                            controller.updateIsSavingPath(false);
                             showSnackbar(context, response.toString());
                           }
                         }

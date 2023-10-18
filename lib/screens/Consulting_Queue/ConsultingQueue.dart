@@ -104,6 +104,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                                 insets: EdgeInsets.only(left: 0, right: 8)),
                             indicatorSize: TabBarIndicatorSize.tab,
                             onTap: (index) {
+                              cont.updateselectedindex(index);
                               FocusScope.of(context).unfocus();
                             },
                             tabs: [
@@ -114,7 +115,9 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                                       .textTheme
                                       .titleLarge
                                       ?.copyWith(
-                                          color: ColorManager.kblackColor,
+                                          color: cont.tabindex == 0
+                                              ? ColorManager.kPrimaryColor
+                                              : ColorManager.kblackColor,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12),
                                 ),
@@ -126,7 +129,9 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                                       .textTheme
                                       .titleLarge
                                       ?.copyWith(
-                                          color: ColorManager.kblackColor,
+                                          color: cont.tabindex == 1
+                                              ? ColorManager.kPrimaryColor
+                                              : ColorManager.kblackColor,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12),
                                 ),
@@ -138,7 +143,9 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                                       .textTheme
                                       .titleLarge
                                       ?.copyWith(
-                                          color: ColorManager.kblackColor,
+                                          color: cont.tabindex == 2
+                                              ? ColorManager.kPrimaryColor
+                                              : ColorManager.kblackColor,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12),
                                 ),

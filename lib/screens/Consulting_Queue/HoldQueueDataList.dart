@@ -61,16 +61,11 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
 
   @override
   void initState() {
-    // ConsultingQueueController.i.clearAllLists(widget.Status.toString());
-    // ConsultingQueueController.i
-    //     .getConsultingQueueData('', widget.Status.toString());
     _getimagepath();
     SearchFieldController.clear();
     callback();
     //when scroll page
     _scrollController.addListener(() {
-      // var nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
-      // if (_scrollController.position.pixels > nextPageTrigger) {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         var isCallToFetchData =
@@ -78,8 +73,6 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
         if (isCallToFetchData) {
           length = length + 10;
           callback();
-          // ConsultingQueueController.i.getConsultingQueueData(
-          //     SearchFieldController.text, widget.Status.toString());
         }
       }
     });
@@ -101,8 +94,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
     //HoldDataList
     //ConsultingQueueController.i.getConsultingQueueData('',widget.Status.toString());
     return BlurryModalProgressHUD(
-        inAsyncCall:
-            ConsultingQueueController.i.isLoadingDataClinicalPracticeDataList,
+        inAsyncCall: ConsultingQueueController.i.isclinicLoading,
         blurEffectIntensity: 4,
         progressIndicator: const SpinKitSpinningLines(
           color: Color(0xfff1272d3),
@@ -137,7 +129,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                       hintText: 'Search',
                     ),
                     SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.62,
+                        height: MediaQuery.of(context).size.height * 0.66,
                         child: ConsultingQueueController
                                 .i.consultingqueuehold.isNotEmpty
                             ? ListView.builder(

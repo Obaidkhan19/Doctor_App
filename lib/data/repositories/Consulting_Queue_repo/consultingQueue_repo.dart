@@ -19,28 +19,32 @@ class ConsultingQueueRepo {
     String? userToken = await LocalDb().getToken();
     String? branchId = await LocalDb().getBranchId();
     var body = {
-    "DoctorId":userId,
-    "Search": "",
-    "BranchId":"",
-    "WorkLocationId":"",
-    "Status":"",
-    "FromDate":DateTime.now().toString().split(' ')[0],
-    "ToDate":DateTime.now().toString().split(' ')[0],
-    "IsOnline":"false",
-    "Token":"",
-    "Start":"0",
-    "Length":"10",
-    "OrderColumn":"0",
-    "OrderDir":"desc"
-};
-    print(body);
+      "DoctorId": userId,
+      "Search": "",
+      "BranchId": "",
+      "WorkLocationId": "",
+      "Status": "",
+      "FromDate": DateTime.now().toString().split(' ')[0],
+      "ToDate": DateTime.now().toString().split(' ')[0],
+      "IsOnline": "false",
+      "Token": "",
+      "Start": "0",
+      "Length": "10",
+      "OrderColumn": "0",
+      "OrderDir": "desc"
+    };
+
     var headers = {'Content-Type': 'application/json'};
     try {
-      var response = await http.post(Uri.parse(AppConstants.consultingqueuepatient),
-          headers: headers, body: jsonEncode(body));
+      var response = await http.post(
+          Uri.parse(AppConstants.consultingqueuepatient),
+          headers: headers,
+          body: jsonEncode(body));
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
+        print('consultingqueueresult');
+        print(result);
         if (result['Status'] == 1) {
           Iterable lst = result['Consultations'];
           List<consultingqueuereponse> rep =
@@ -78,26 +82,26 @@ class ConsultingQueueRepo {
   //         log('${rep.toString()} ConsultingQueue');
   //         ConsultingQueueController.i.updateconsultinglist(rep);
   //         //   print(ConsultingQueue);
-          
+
   //       }
-        
+
   //     } else {
   //       log(response.statusCode.toString());
-        
+
   //     }
   //   } catch (e) {
   //     log('$e exception caught');
   //   }
   // }
 
-
-static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
+  static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
     ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
 
     var body = consult.toJson();
     print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
+      ConsultingQueueController.i.updateIsclinicloading(true);
       var response = await http.post(
           Uri.parse(AppConstants.consultingqueuewait),
           headers: headers,
@@ -107,19 +111,18 @@ static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
           Iterable lst = result['Queue'];
-          List<consultingqueuewaitholdresponse> rep =
-              lst.map((e) => consultingqueuewaitholdresponse.fromJson(e)).toList();
-              if(consult.status=="1")
-              {
-                ConsultingQueueController.i.updateconsultingqueuewait(rep);
-              }
-              else  if(consult.status=="2"){
-                ConsultingQueueController.i.updateconsultingqueuehold(rep);
-              }
-              else  if(consult.status=="3"){
-                ConsultingQueueController.i.updateconsultinglist(rep);
-              }
+          List<consultingqueuewaitholdresponse> rep = lst
+              .map((e) => consultingqueuewaitholdresponse.fromJson(e))
+              .toList();
+          if (consult.status == "1") {
+            ConsultingQueueController.i.updateconsultingqueuewait(rep);
+          } else if (consult.status == "2") {
+            ConsultingQueueController.i.updateconsultingqueuehold(rep);
+          } else if (consult.status == "3") {
+            ConsultingQueueController.i.updateconsultinglist(rep);
+          }
           log('${rep.toString()} ConsultingQueue');
+          ConsultingQueueController.i.updateIsclinicloading(false);
           //   print(ConsultingQueue);
         }
       } else {
@@ -129,6 +132,4 @@ static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
       log('$e exception caught');
     }
   }
-
-
 }

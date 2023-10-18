@@ -84,20 +84,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: [
                                     Text(
                                       'welcometo'.tr,
-                                      style: GoogleFonts.poppins(
+                                      style: GoogleFonts.raleway(
                                         textStyle: GoogleFonts.poppins(
-                                            fontSize: 30,
+                                            fontSize: 40,
                                             color: ColorManager.kPrimaryColor,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.w900),
                                       ),
                                     ),
                                     Text(
-                                      AppConstants.appName,
-                                      style: GoogleFonts.poppins(
+                                      '${AppConstants.appName}.',
+                                      style: GoogleFonts.raleway(
                                         textStyle: GoogleFonts.poppins(
                                             fontSize: 25,
                                             color: ColorManager.kPrimaryColor,
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     SizedBox(

@@ -139,6 +139,22 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       RegisterCustomTextField(
                         onTap: () async {
                           controller.selectedpersonalTitle = null;
+                          PTitle generic = await searchabledropdown(
+                              context, controller.personalTitleList ?? []);
+                          controller.selectedpersonalTitle = null;
+                          controller.updateselectedpersonalTitle(generic);
+
+                          if (generic != '') {
+                            controller.selectedpersonalTitle = generic;
+                            controller.selectedpersonalTitle = (generic == '')
+                                ? null
+                                : controller.selectedpersonalTitle;
+                          }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedpersonalTitle = null;
                               PTitle generic = await searchabledropdown(
                                   context, controller.personalTitleList ?? []);
                               controller.selectedpersonalTitle = null;
@@ -150,13 +166,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                     (generic == '')
                                         ? null
                                         : controller.selectedpersonalTitle;
-                           
-                        }
-                        },
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              
+                              }
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedpersonalTitle == null
@@ -192,7 +202,24 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         height: Get.height * 0.02,
                       ),
                       RegisterCustomTextField(
-                        onTap: () async {controller.selectedgender = null;
+                        onTap: () async {
+                          controller.selectedgender = null;
+                          GendersData generic = await searchabledropdown(
+                              context, controller.genderList ?? []);
+                          controller.selectedgender = null;
+                          controller.updateselectedgender(generic);
+
+                          if (generic != '') {
+                            controller.selectedgender = generic;
+                            controller.selectedgender = (generic == '')
+                                ? null
+                                : controller.selectedgender;
+                          }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedgender = null;
                               GendersData generic = await searchabledropdown(
                                   context, controller.genderList ?? []);
                               controller.selectedgender = null;
@@ -203,11 +230,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                 controller.selectedgender = (generic == '')
                                     ? null
                                     : controller.selectedgender;
-                              }},
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              
+                              }
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedgender == null
@@ -216,7 +239,23 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       ),
                       RegisterCustomTextField(
                         onTap: () async {
-                           controller.selectedmaritalStatus = null;
+                          controller.selectedmaritalStatus = null;
+                          MSData generic = await searchabledropdown(
+                              context, controller.maritalStatusList ?? []);
+                          controller.selectedmaritalStatus = null;
+                          controller.updateselectedmaritalStatus(generic);
+
+                          if (generic != '') {
+                            controller.selectedmaritalStatus = generic;
+                            controller.selectedmaritalStatus = (generic == '')
+                                ? null
+                                : controller.selectedmaritalStatus;
+                          }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedmaritalStatus = null;
                               MSData generic = await searchabledropdown(
                                   context, controller.maritalStatusList ?? []);
                               controller.selectedmaritalStatus = null;
@@ -229,11 +268,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                         ? null
                                         : controller.selectedmaritalStatus;
                               }
-                        },
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                             
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedmaritalStatus == null
@@ -243,7 +277,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       SizedBox(
                         height: Get.height * 0.02,
                       ),
-                    //  Text(
+                      //  Text(
                       //   'prescribedby'.tr,
                       //   style: GoogleFonts.poppins(
                       //       fontSize: 15,
@@ -317,10 +351,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             color: ColorManager.kPrimaryColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
-                              'addpmccertificate'.tr,
-                              style: const TextStyle(
+                              'Add LMPC',
+                              style: TextStyle(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 15,
                               ),
@@ -333,7 +367,27 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       ),
                       RegisterCustomTextField(
                         onTap: () async {
-                            controller.selectedspecialities = null;
+                          controller.selectedspecialities = null;
+                          Specialities1 generic = await searchabledropdown(
+                              context, controller.specialitiesList ?? []);
+                          controller.selectedspecialities = null;
+                          controller.updateselectedspeciality(generic);
+
+                          if (generic != '') {
+                            controller.selectedspecialities = generic;
+                            controller.selectedspecialities = (generic == '')
+                                ? null
+                                : controller.selectedspecialities;
+                          }
+
+                          setState(() {
+                            _getSubSpeciality(generic.id);
+                          });
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedspecialities = null;
                               Specialities1 generic = await searchabledropdown(
                                   context, controller.specialitiesList ?? []);
                               controller.selectedspecialities = null;
@@ -350,11 +404,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               setState(() {
                                 _getSubSpeciality(generic.id);
                               });
-                        },
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                            
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedspecialities == null
@@ -368,7 +417,23 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       // SUB
                       RegisterCustomTextField(
                         onTap: () async {
-                           controller.selectedsubspecialities = null;
+                          controller.selectedsubspecialities = null;
+                          Specialities1 generic = await searchabledropdown(
+                              context, controller.subspecialitiesList ?? []);
+                          controller.selectedsubspecialities = null;
+                          controller.updateselectedspeciality(generic);
+
+                          if (generic != '') {
+                            controller.selectedsubspecialities = generic;
+                            controller.selectedsubspecialities = (generic == '')
+                                ? null
+                                : controller.selectedsubspecialities;
+                          }
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedsubspecialities = null;
                               Specialities1 generic = await searchabledropdown(
                                   context,
                                   controller.subspecialitiesList ?? []);
@@ -382,11 +447,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                         ? null
                                         : controller.selectedsubspecialities;
                               }
-                        },
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                             
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedsubspecialities == null
@@ -442,7 +502,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                         RegistrationController.arrival,
                                         controller.formatearrival);
                                   },
-                                  icon: Image.asset(AppImages.schedule),
+                                  icon: Image.asset(
+                                    AppImages.schedule,
+                                    height: 25,
+                                  ),
                                 ),
                               ],
                             ),
@@ -514,7 +577,33 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           return null;
                         },
                         onTap: () async {
-                           controller.selectedcountry = null;
+                          controller.selectedcountry = null;
+                          controller.selectedcity = null;
+                          controller.citiesList.clear();
+                          controller.selectedprovince = null;
+
+                          Countries generic = await searchabledropdown(
+                              context, controller.countriesList ?? []);
+                          controller.selectedcountry = null;
+                          controller.updateselectedCountry(generic);
+
+                          if (generic != '') {
+                            controller.selectedcountry = generic;
+                            controller.selectedcountry = (generic == '')
+                                ? null
+                                : controller.selectedcountry;
+                          }
+                          String cid = RegistrationController
+                              .i.selectedcountry!.id
+                              .toString();
+                          setState(() {
+                            _getProvinces(cid);
+                          });
+                        },
+                        readonly: true,
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedcountry = null;
                               controller.selectedcity = null;
                               controller.citiesList.clear();
                               controller.selectedprovince = null;
@@ -536,11 +625,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               setState(() {
                                 _getProvinces(cid);
                               });
-                        },
-                        readonly: true,
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                             
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedcountry == null
@@ -557,6 +641,28 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         readonly: true,
                         onTap: () async {
                           controller.selectedprovince = null;
+                          controller.selectedcity = null;
+                          Provinces generic = await searchabledropdown(
+                              context, controller.provinceList ?? []);
+                          controller.selectedprovince = null;
+                          controller.updateselectedprovince(generic);
+
+                          if (generic != '') {
+                            controller.selectedprovince = generic;
+                            controller.selectedprovince = (generic == '')
+                                ? null
+                                : controller.selectedprovince;
+                          }
+                          String cid = RegistrationController
+                              .i.selectedprovince!.id
+                              .toString();
+                          setState(() {
+                            _getCities(cid);
+                          });
+                        },
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedprovince = null;
                               controller.selectedcity = null;
                               Provinces generic = await searchabledropdown(
                                   context, controller.provinceList ?? []);
@@ -575,10 +681,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               setState(() {
                                 _getCities(cid);
                               });
-                        },
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedprovince == null
@@ -595,6 +697,22 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         readonly: true,
                         onTap: () async {
                           controller.selectedcity = null;
+                          Cities generic = await searchabledropdown(
+                              context, controller.citiesList ?? []);
+                          controller.selectedcity = null;
+                          controller.updateselectedcity(generic);
+
+                          if (generic != '') {
+                            controller.selectedcity = generic;
+                            controller.selectedcity = (generic == '')
+                                ? null
+                                : controller.selectedcity;
+                          }
+                          setState(() {});
+                        },
+                        suffixIcon: IconButton(
+                            onPressed: () async {
+                              controller.selectedcity = null;
                               Cities generic = await searchabledropdown(
                                   context, controller.citiesList ?? []);
                               controller.selectedcity = null;
@@ -607,10 +725,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                     : controller.selectedcity;
                               }
                               setState(() {});
-                        },
-                        suffixIcon: IconButton(
-                            onPressed: () async {
-                              
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedcity == null
@@ -644,25 +758,25 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                     controller.selectedgender?.id != null &&
                                     controller.selectedmaritalStatus?.id !=
                                         null)) {
-                              controller.updateIsSavingPath(true);
-                              AuthRepo ar = AuthRepo();
+                              // controller.updateIsSavingPath(true);
+                              // AuthRepo ar = AuthRepo();
 
-                              String path =
-                                  await ar.uploadPicture(controller.file!);
+                              // String path =
+                              //     await ar.uploadPicture(controller.file!);
 
-                              String filepath =
-                                  await ar.uploadFile(controller.pmcfile!);
-                              controller.updatefilepath(filepath);
-                              controller.updateimagepath(path);
+                              // String filepath =
+                              //     await ar.uploadFile(controller.pmcfile!);
+                              // controller.updatefilepath(filepath);
+                              // controller.updateimagepath(path);
 
-                              controller.updateIsSavingPath(false);
+                              // controller.updateIsSavingPath(false);
                               showSnackbar(context, 'saveRecord'.tr);
                               controller.setPageIndexofDayPersonal(1);
                             } else {
                               if (controller.file == null) {
                                 showSnackbar(context, 'addpicture'.tr);
                               } else if (controller.pmcfile == null) {
-                                showSnackbar(context, 'addpmccertificate'.tr);
+                                showSnackbar(context, 'Add LMPC Certificate');
                               } else if (controller.selectedpersonalTitle?.id ==
                                   null) {
                                 showSnackbar(context, 'selecttitle'.tr);
@@ -699,7 +813,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         },
                       ),
                       SizedBox(
-                        height: Get.height*0.04,
+                        height: Get.height * 0.04,
                       )
                     ],
                   ),

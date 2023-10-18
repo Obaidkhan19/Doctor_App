@@ -18,6 +18,7 @@ import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
+import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
@@ -147,8 +148,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
 
   _getMediciness() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
-    controller.updateInstructionlist(
-      await pmr.getInstruction(),
+    controller.updateMedicinelist(
+      await pmr.getMedicines(),
     );
   }
 
@@ -164,6 +165,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     _getComplaints();
     _getInvestigations();
     _getDiagnostics();
+    PrescribeMedicinRepo.getMedicinesMatrix();
   }
 
   @override
@@ -174,6 +176,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isexpended = false;
     ERXController controller = Get.put(ERXController());
     return GestureDetector(
       onTap: () {
@@ -309,27 +312,31 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   SizedBox(
                                     height: Get.height * 0.01,
                                   ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: Get.width * 0.27),
-                                    child: InkWell(
-                                      onTap: () {
-                                        initiallyExpanded:
-                                        false;
-                                        onExpansionChanged:
-                                        (expanded) {
-                                          setState(() {
-                                            item.isExpanded = expanded;
-                                          });
-                                        };
-                                      },
-                                      child: Container(
-                                        width: Get.width * 0.3,
-                                        height: Get.height * 0.006,
-                                        decoration: BoxDecoration(
-                                          color: ColorManager.kblackColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                  Visibility(
+                                    //  visible: isexpended = true,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.27),
+                                      child: InkWell(
+                                        onTap: () {
+                                          // isexpended = !isexpended;
+                                          initiallyExpanded:
+                                          false;
+                                          onExpansionChanged:
+                                          (expanded) {
+                                            setState(() {
+                                              item.isExpanded = expanded;
+                                            });
+                                          };
+                                        },
+                                        child: Container(
+                                          width: Get.width * 0.3,
+                                          height: Get.height * 0.006,
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.kblackColor,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -1444,417 +1451,64 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                       ),
                     ),
 
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    // MEDICINES
-                    Text(
-                      'medicine'.tr,
-                      style: GoogleFonts.poppins(
-                        textStyle: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    // MEDICINE
+
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'type'.tr,
-                                  style: GoogleFonts.poppins(
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+
+                    Card(
+                        elevation: 4,
+                        surfaceTintColor: ColorManager.kWhiteColor,
+                        child: SizedBox(
+                            // height: Get.height * 0.09,
+                            width: Get.width * 0.9,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: Get.height * 0.01,
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () async {},
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: ColorManager.kblackColor,
-                                      ),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: ColorManager.kWhiteColor,
-                                    ),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.066,
-                                    width: Get.width * 0.21,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.005),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Tab',
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                          Icon(Icons.arrow_drop_down,
-                                              size: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.06,
-                                              color: Colors.black)
-                                        ],
+                                  Text(
+                                    'Medicines',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.01,
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'medicine'.tr,
-                                  style: GoogleFonts.poppins(
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
+                                  SizedBox(
+                                    height: Get.height * 0.01,
+                                  ),
+                                  GetBuilder<ERXController>(
+                                    builder: (cont) => Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Get.width * 0.06,
+                                          right: Get.width * 0.06),
+                                      child: CustomTextField(
+                                        readonly: true,
+                                        onTap: () async {
+                                          String result = await addMedicine(
+                                            context,
+                                            controller.medicineList,
+                                            controller.selectedmedicineList,
+                                            controller.selectedmedicine,
+                                          );
+                                          controller
+                                              .updateselectedmedicine(result);
+                                        },
+                                        prefixIcon: const Icon(
+                                          Icons.search_outlined,
+                                          color: ColorManager.kPrimaryColor,
+                                          size: 35,
+                                        ),
+                                        hintText: 'Search',
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: Get.width * 0.47,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: ColorManager.kWhiteColor,
-                                  ),
-                                  child: CustomFormField2(
-                                    focusNode: controller.medicinefocus,
-                                    controller: controller.medicineController,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'qty'.tr,
-                                  style: GoogleFonts.poppins(
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: Get.width * 0.19,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: ColorManager.kWhiteColor,
-                                  ),
-                                  child: CustomFormField2(
-                                    keyboardType: TextInputType.number,
-                                    focusNode: controller.qtyfocus,
-                                    controller: controller.qtyController,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    // 2 ROW
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'frequency'.tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.01,
-                                    ),
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {},
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: ColorManager.kblackColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: ColorManager.kWhiteColor,
-                                            ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.066,
-                                            width: Get.width * 0.25,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.005),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text(
-                                                    "4 Time",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                  Icon(Icons.arrow_drop_down,
-                                                      size:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.06,
-                                                      color: Colors.black)
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.02,
-                                ),
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'condition'.tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.01,
-                                    ),
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {},
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: ColorManager.kblackColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: ColorManager.kWhiteColor,
-                                            ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.066,
-                                            width: Get.width * 0.25,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.005),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text(
-                                                    "After Mea",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                  Icon(Icons.arrow_drop_down,
-                                                      size:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.06,
-                                                      color: Colors.black)
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: Get.width * 0.02,
-                                ),
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'duration'.tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.01,
-                                    ),
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {},
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: ColorManager.kblackColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: ColorManager.kWhiteColor,
-                                            ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.066,
-                                            width: Get.width * 0.25,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.005),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text(
-                                                    "1 Day",
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                  Icon(Icons.arrow_drop_down,
-                                                      size:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.06,
-                                                      color: Colors.black)
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        // IMAGE
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ImageContainer(
-                              onpressed: () {},
-                              imagePath: Images.add,
-                              isSvg: false,
-                              color: ColorManager.kWhiteColor,
-                              backgroundColor: ColorManager.kPrimaryColor,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
+                                ]))),
 
                     SizedBox(
                       height: Get.height * 0.02,
