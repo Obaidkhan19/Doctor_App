@@ -7,6 +7,7 @@ import 'package:doctormobileapplication/models/diagnostics.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
+import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
@@ -228,6 +229,33 @@ class PrescribeMedicinRepo {
       return followupsList;
     } else {
       throw Exception('Failed to fetch patient details');
+    }
+  }
+
+  Future<List<Medicines1>> getMedicines() async {
+    String doctorid = await LocalDb().getDoctorId() ?? "";
+    String branchid = await LocalDb().getBranchId() ?? "";
+    String pl = "150";
+    String did = doctorid;
+    String bid = branchid;
+    String url = AppConstants.getMedicines;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "PageLength": pl,
+      "DoctorId": did,
+      "BranchId": bid,
+    });
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Medicines'];
+      List<Medicines1> medicinesList =
+          data.map((json) => Medicines1.fromJson(json)).toList();
+      return medicinesList;
+    } else {
+      throw Exception('Failed to fetch medicines details');
     }
   }
 }

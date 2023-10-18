@@ -1,10 +1,12 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
+import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointment_listtile.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -62,6 +64,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
     // ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     // ConsultingQueueController.i
     //     .getConsultingQueueData('', widget.Status.toString());
+    _getimagepath();
     SearchFieldController.clear();
     callback();
     //when scroll page
@@ -81,6 +84,15 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
       }
     });
     super.initState();
+  }
+
+  String imagepath = '';
+  String path = '';
+
+  _getimagepath() async {
+    path = (await LocalDb().getDoctorUserImagePath())!;
+    String baseurl = AppConstants.baseURL;
+    imagepath = baseurl + path;
   }
 
   @override
@@ -124,7 +136,6 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                       controller: SearchFieldController,
                       hintText: 'Search',
                     ),
-                   
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.62,
                         child: ConsultingQueueController
@@ -163,13 +174,23 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                               child: Column(
                                                 children: [
                                                   ListTile(
-                                                    leading: const SizedBox(
+                                                    leading: SizedBox(
                                                       height: 380,
                                                       width: 71,
                                                       child: CircleAvatar(
-                                                        backgroundImage:
-                                                            AssetImage(
-                                                                Images.avator),
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromRGBO(
+                                                                0, 0, 0, 0),
+                                                        radius: 30,
+                                                        child: ClipOval(
+                                                          child: path == '' ||
+                                                                  path == 'null'
+                                                              ? Image.asset(
+                                                                  Images.avator)
+                                                              : Image.network(
+                                                                  imagepath),
+                                                        ),
                                                       ),
                                                     ),
                                                     title: Transform.translate(
@@ -237,11 +258,13 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                         left: Get.width * 0.08,
                                                         right:
                                                             Get.width * 0.06),
-                                                    child: const Divider(
-                                                      thickness: 1,
+                                                    child: const MySeparator(
                                                       color: ColorManager
                                                           .kblackColor,
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(

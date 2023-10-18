@@ -124,12 +124,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: Get.width * 0.01, vertical: Get.width * 0.02),
+                      horizontal: Get.width * 0.01, vertical: Get.width * 0.03),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: const Color(0xff1272D3),
@@ -191,20 +188,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     Container(
-                      height: Get.height*0.06,
+                      height: Get.height * 0.08,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(colors: [
-                           Color(0xff1272D3),Color(0xff001D86),
-                        ])
-                      ),
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(colors: [
+                            Color(0xff1272D3),
+                            Color(0xff001D86),
+                          ])),
                       width: Get.width * 0.45,
                       child: ElevatedButton(
-                        
-                         style: ElevatedButton.styleFrom(
-                          elevation: 0.0,
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent),
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
                         onPressed: () {
                           Get.to(() => const ConsultingQueue());
                           // Get.to(const ConsultingQueueScreen());
@@ -230,6 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: Get.height * 0.008),
                     SizedBox(
                       width: Get.width * 0.43,
+                      height: Get.height * 0.08,
                       child: ElevatedButton(
                         onPressed: () async {
                           var doctorId = await LocalDb().getDoctorId();
@@ -289,6 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(
                       width: Get.width * 0.45,
+                      height: Get.height * 0.23,
                       child: ElevatedButton(
                         onPressed: () {
                           //  Get.to(() => ScrollControllerDemo());
@@ -338,19 +336,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: Get.height * 0.007),
                     Container(
                       width: Get.width * 0.43,
+                      height: Get.height * 0.23,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(colors: [
-                           Color(0xffFDD504),Color(0xffFCB006),
-                        ])
-                      ),
-                        child: ElevatedButton(
-                           
-                           style: ElevatedButton.styleFrom(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(colors: [
+                            Color(0xffFDD504),
+                            Color(0xffFCB006),
+                          ])),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
                             elevation: 0.0,
-                                        backgroundColor: Colors.transparent,
-                                        shadowColor: Colors.transparent),
-                       
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
                         onPressed: () {
                           Get.to(() => const TodayAppointments());
                           //Get.to(() => DailyViewAppointments());
@@ -405,6 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(
                       width: Get.width * 0.45,
+                      height: Get.height * 0.23,
                       child: ElevatedButton(
                         onPressed: () {
                           // Get.to(() => NoDataFound(
@@ -455,19 +453,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: Get.height * 0.007),
                     Container(
                       width: Get.width * 0.43,
+                      height: Get.height * 0.23,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(colors: [
-                           Color(0xffFF4D4D),Color(0xffFF7B7B),
-                        ])
-                      ),
-                        child: ElevatedButton(
-                           
-                           style: ElevatedButton.styleFrom(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(colors: [
+                            Color(0xffFF4D4D),
+                            Color(0xffFF7B7B),
+                          ])),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
                             elevation: 0.0,
-                                        backgroundColor: Colors.transparent,
-                                        shadowColor: Colors.transparent),
-                       
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
                         onPressed: () {
                           // Get.to(() => NoDataFound(
                           //       Title: 'Health Summary',
@@ -515,59 +512,59 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
-                SizedBox(
-                  height: Get.height * 0.01,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height:Get.height*0.15,
-                        decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(colors: [
-                           Color(0xffA6FFC9),Color(0xff1272D3),
-                        ])
-                      ),
-                        child: ElevatedButton(
-                           
-                           style: ElevatedButton.styleFrom(
-                            elevation: 0.0,
-                                        backgroundColor: Colors.transparent,
-                                        shadowColor: Colors.transparent),
-                          // style: ElevatedButton.styleFrom(as
-                          //     backgroundColor: Color(0xffA6FFC9)),
-                          onPressed: () {
-                            Get.to(() => NoDataFound(
-                                  Title: 'assessmentform'.tr,
-                                ));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: Get.height * 0.02,
-                                bottom: Get.height * 0.02),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('assessmentform'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                            color: ColorManager.kWhiteColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // SizedBox(
+                //   height: Get.height * 0.01,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Expanded(
+                //       child: Container(
+                //         height:Get.height*0.15,
+                //         decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         gradient: LinearGradient(colors: [
+                //            Color(0xffA6FFC9),Color(0xff1272D3),
+                //         ])
+                //       ),
+                //         child: ElevatedButton(
+
+                //            style: ElevatedButton.styleFrom(
+                //             elevation: 0.0,
+                //                         backgroundColor: Colors.transparent,
+                //                         shadowColor: Colors.transparent),
+                //           // style: ElevatedButton.styleFrom(as
+                //           //     backgroundColor: Color(0xffA6FFC9)),
+                //           onPressed: () {
+                //             Get.to(() => NoDataFound(
+                //                   Title: 'assessmentform'.tr,
+                //                 ));
+                //           },
+                //           child: Padding(
+                //             padding: EdgeInsets.only(
+                //                 top: Get.height * 0.02,
+                //                 bottom: Get.height * 0.02),
+                //             child: Column(
+                //               crossAxisAlignment: CrossAxisAlignment.center,
+                //               mainAxisAlignment: MainAxisAlignment.center,
+                //               children: [
+                //                 Text('assessmentform'.tr,
+                //                     textAlign: TextAlign.center,
+                //                     style: Theme.of(context)
+                //                         .textTheme
+                //                         .bodyMedium
+                //                         ?.copyWith(
+                //                             color: ColorManager.kWhiteColor,
+                //                             fontSize: 14,
+                //                             fontWeight: FontWeight.bold)),
+                //               ],
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 // Text(
                 //   'Services',
                 //   style: Theme.of(context)

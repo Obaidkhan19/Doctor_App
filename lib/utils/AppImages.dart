@@ -1,4 +1,5 @@
 class AppImages {
+  static String recycle = 'assets/images/recycle.png';
   static String doctorlogo = 'assets/images/doctor_logo.jpg';
   static String arrowback = 'assets/images/Arrow.png';
   static String bin = 'assets/images/bin.png';
