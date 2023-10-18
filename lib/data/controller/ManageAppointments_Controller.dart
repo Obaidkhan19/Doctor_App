@@ -14,6 +14,12 @@ class ManageAppointmentController extends GetxController
   int paid=0;
   static ManageAppointmentController get i => Get.put(ManageAppointmentController());
 
+DateTime? date;
+
+selectedmonthlyspecificdate(dt){
+  date=dt;
+  update();
+}
 
   DailyDoctorAppointmentsModel _dailyDoctorAppointmentsModel =
       DailyDoctorAppointmentsModel();
@@ -84,21 +90,19 @@ updatemonthlyappointment(List<monthlyappointresponse> app)async{
       String Dates, String IsOnline, String WorkLocationId) async {
     _selectall = false;
     isLoadingDailyDoctorAppointmentSlots = true;
-    update();
     if (_dayViewAppointmentSlotModel.appointments != null) {
       _dayViewAppointmentSlotModel.appointments?.clear();
-      update();
     }
     try {
       _dayViewAppointmentSlotModel =
           await ManageAppointmentRepo.getDailyDoctorAppointmentSlots(
               Dates, IsOnline, WorkLocationId);
       isLoadingDailyDoctorAppointmentSlots = false;
-      update();
+     
     } catch (e) {
       print('Error : $e');
       isLoadingDailyDoctorAppointmentSlots = false;
-      update();
+     
     }
     isLoadingDailyDoctorAppointmentSlots = false;
     update();
