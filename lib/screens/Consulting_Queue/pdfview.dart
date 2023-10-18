@@ -12,7 +12,7 @@ class pdfviewconsulted extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: IconButton(onPressed: (){},icon: Icon(Icons.arrow_back_ios_new),),
+      floatingActionButton: IconButton(onPressed: (){Get.back();},icon: Icon(Icons.arrow_back_ios_new),),
         body: Center(
           child: Container(
               height: Get.height * 0.8,
