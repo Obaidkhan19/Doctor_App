@@ -53,7 +53,7 @@ class ManageAppointmentRepo {
   static GetmonthlyDoctorAppointment(String date) async {
     ManageAppointmentController.i.paid =
         ManageAppointmentController.i.unpaid = 0;
-    String? Date = date;
+ 
 
     String? userId = await LocalDb().getDoctorId();
     String? userToken = await LocalDb().getToken();
@@ -67,7 +67,7 @@ class ManageAppointmentRepo {
 // }
 
     var body = {
-      "MonthAndYear": Date,
+      "MonthAndYear": date,
       "DoctorId": "$userId",
       "49576ED4-49C9-EB11-80C2-F8BC123A0405": "$userToken",
       "IsOnline": "false"
@@ -91,10 +91,10 @@ class ManageAppointmentRepo {
           ManageAppointmentController.i.monthlyappintment =
               monthlyDoctorAppointment;
           for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
-            if (monthlyDoctorAppointment[i].paid == 1) {
-              ManageAppointmentController.i.paid++;
-            } else if (monthlyDoctorAppointment[i].unPaid == 1) {
-              ManageAppointmentController.i.unpaid++;
+            if (monthlyDoctorAppointment[i].paid !=0) {
+              ManageAppointmentController.i.paid=monthlyDoctorAppointment[i].paid + ManageAppointmentController.i.paid;
+            } else if (monthlyDoctorAppointment[i].unPaid !=0) {
+              ManageAppointmentController.i.unpaid=monthlyDoctorAppointment[i].unPaid+ManageAppointmentController.i.unpaid;
             }
           }
           ManageAppointmentController.i
