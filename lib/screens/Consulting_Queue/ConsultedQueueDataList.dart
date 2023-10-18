@@ -4,6 +4,7 @@ import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -301,6 +302,11 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                               },
                                                             );
                                                             // const PrescribeMedicineScreen());
+                                                            Get.to(
+                                                              () => pdfviewconsulted(
+                                                                  url: manageAppointment
+                                                                      .reportURL),
+                                                            );
                                                           },
                                                           child: Container(
                                                             child: Image.asset(

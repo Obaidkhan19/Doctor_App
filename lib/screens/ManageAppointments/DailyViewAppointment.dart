@@ -37,6 +37,13 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    ManageAppointmentController.i.date=null;
+    super.dispose();
+  }
+
   bool isFirstTabSelected = true;
 
   void _toggleTabSelection() {

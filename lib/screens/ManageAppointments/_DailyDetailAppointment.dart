@@ -32,7 +32,12 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
   @override
   void initState() {
     DateTime tempDate = DateTime.now();
-    SelectedDate = DateFormat('yyyy-MM-dd').format(tempDate).toString();
+    if(ManageAppointmentController.i.date==null)
+    {
+SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').format( ManageAppointmentController.i.date!).toString():DateFormat('yyyy-MM-dd').format(tempDate).toString();
+    
+    }
+    
     print('dkkkkkk');
     super.initState();
   }
@@ -85,7 +90,7 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
                                     fontWeight: FontWeight.w100),
                             deactivatedColor: ColorManager.kPrimaryLightColor,
                             height: Get.height * 0.15,
-                            initialSelectedDate: DateTime.now(),
+                            initialSelectedDate: ManageAppointmentController.i.date?? DateTime.now(),
                             selectionColor: ColorManager.kPrimaryColor,
                             selectedTextColor: Colors.white,
                             onDateChange: (date) {
