@@ -6,7 +6,7 @@ import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
-import 'package:doctormobileapplication/models/lab_test_dropdown.dart';
+import 'package:doctormobileapplication/models/medicincematrix.dart' as med;
 import 'package:doctormobileapplication/models/medicine_matrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/patient_detail.dart';
@@ -31,6 +31,102 @@ class ERXController extends GetxController implements GetxService {
   FocusNode qtyfocus = FocusNode();
   FocusNode medicinefocus = FocusNode();
   FocusNode notesfocus = FocusNode();
+  int medindex = 0;
+  med.medicinematric selectedlst = med.medicinematric(
+      dateList: [],
+      dayList: [],
+      medicineDosages: [],
+      medicineEventList: [],
+      medicineFrequencies: [],
+      medicineRoutes: []);
+  med.medicinematric medicinelst = med.medicinematric(
+      dateList: [],
+      dayList: [],
+      medicineDosages: [],
+      medicineEventList: [],
+      medicineFrequencies: [],
+      medicineRoutes: []);
+
+  updatemedindex() {
+    medindex += 1;
+    update();
+  }
+
+
+
+ updateselectedduration(med.DayList data,med.DateList d) {
+    med.DayList route = data;
+    med.DateList r=d;
+    if (selectedlst.dayList!.isEmpty) {
+      selectedlst.dateList!.add(r);
+      selectedlst.dayList!.add(route);
+    } else {
+      if (selectedlst.dayList!.length >= medindex) {
+        selectedlst.dayList!.last = route;
+        selectedlst.dateList!.last = r;
+      } else {
+        selectedlst.dateList!.add(r);
+        selectedlst.dayList!.add(route);
+      }
+    }
+    update();
+  }
+
+
+
+  updateselectedmedicince(med.MedicineRoutes data) {
+    med.MedicineRoutes route = data;
+
+    if (selectedlst.medicineRoutes!.isEmpty) {
+      selectedlst.medicineRoutes!.add(route);
+    } else {
+      if (selectedlst.medicineRoutes!.length >= medindex) {
+        selectedlst.medicineRoutes!.last = route;
+      } else {
+        selectedlst.medicineRoutes!.add(route);
+      }
+    }
+    update();
+  }
+
+
+  updateselecteddosages(med.MedicineDosages data) {
+    med.MedicineDosages route = data;
+
+    if (selectedlst.medicineDosages!.isEmpty) {
+      selectedlst.medicineDosages!.add(route);
+    } else {
+      if (selectedlst.medicineDosages!.length >= medindex) {
+        selectedlst.medicineDosages!.last = route;
+      } else {
+        selectedlst.medicineDosages!.add(route);
+      }
+    }
+    update();
+  }
+
+
+
+  updateselectedfrequency(med.MedicineFrequencies data) {
+    med.MedicineFrequencies route = data;
+
+    if (selectedlst.medicineFrequencies!.isEmpty) {
+      selectedlst.medicineFrequencies!.add(route);
+    } else {
+      if (selectedlst.medicineFrequencies!.length >= medindex) {
+        selectedlst.medicineFrequencies!.last= route;
+      } else {
+        selectedlst.medicineFrequencies!.add(route);
+      }
+    }
+
+    update();
+  }
+
+  updatemedicinelist(med.medicinematric data) {
+    medicinelst = data;
+    update();
+  }
 
   unfocus() {
     mycomplaintfocus.unfocus();
@@ -412,6 +508,17 @@ class ERXController extends GetxController implements GetxService {
   // MEDICINES DATA
   List<Medicines1> medicineList = [];
   List<Medicines1> selectedmedicineList = [];
+  List<Medicines1> finalmedicinellist=[];
+
+
+updatefinalmed(Medicines1 m1)
+{
+  finalmedicinellist.add(m1);
+  update();
+}
+
+
+
   updateMedicinelist(List<Medicines1> mlist) {
     medicineList = mlist;
     update();

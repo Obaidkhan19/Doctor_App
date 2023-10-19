@@ -31,11 +31,11 @@ class AddressController extends GetxController implements GetxService {
   // }
 
   getSuggestion(String query) async {
-    String kPLACES_API_KEY = 'AIzaSyDSsTtjvdKipkgZ4s0zYp2tMRVQlAfHsKA';
+    String kplacesApiKey = 'AIzaSyDSsTtjvdKipkgZ4s0zYp2tMRVQlAfHsKA';
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$query&key=$kPLACES_API_KEY&sessiontoken=$sessionTOKEN';
+        '$baseURL?input=$query&key=$kplacesApiKey&sessiontoken=$sessionTOKEN';
     var response = await http.get(Uri.parse(request));
     log(response.body);
     try {

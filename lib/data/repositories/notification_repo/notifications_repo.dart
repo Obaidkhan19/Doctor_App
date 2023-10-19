@@ -55,7 +55,7 @@ class NotificationsRepo {
         message.notification?.body.toString(),
         notifs,
       );
-      log('notifiction custom string is : ' + message.data.toString());
+      log('notifiction custom string is : ${message.data}');
     });
   }
 
@@ -88,13 +88,13 @@ class NotificationsRepo {
         await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
       if (initialMessage.data['NotificationType'].toString() == "8") {
-        Get.to(() => ConsultingQueue());
+        Get.to(() => const ConsultingQueue());
       }
     }
     // when app is in background
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       if (event.data['NotificationType'].toString() == "8") {
-        Get.to(() => ConsultingQueue());
+        Get.to(() => const ConsultingQueue());
       }
     });
   }
@@ -110,10 +110,9 @@ class NotificationsRepo {
     await _plugin.initialize(
       init,
       onDidReceiveNotificationResponse: (payload) {
-        print('Notification Type Is  ' +
-            message.data['NotificationType'].toString());
+        print('Notification Type Is  ${message.data['NotificationType']}');
         if (message.data['NotificationType'].toString() == "8") {
-          Get.to(() => ConsultingQueue());
+          Get.to(() => const ConsultingQueue());
         }
       },
     );

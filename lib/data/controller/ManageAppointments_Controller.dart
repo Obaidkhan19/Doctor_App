@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/models/monthlyappointmentbody.dart';
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +13,7 @@ class ManageAppointmentController extends GetxController
   List<monthlyappointresponse> monthlyappintment = [];
   int unpaid = 0;
   int paid = 0;
+  int? dataindex;
 
   DateTime? date;
 
@@ -30,10 +30,9 @@ class ManageAppointmentController extends GetxController
     update();
   }
 
-  DailyDoctorAppointmentsModel _dailyDoctorAppointmentsModel =
-      DailyDoctorAppointmentsModel();
+  DailyDoctorAppointmentsModel ?_dailyDoctorAppointmentsModel;
   DailyDoctorAppointmentsModel get dailyDoctorAppointmentsModel =>
-      _dailyDoctorAppointmentsModel;
+      _dailyDoctorAppointmentsModel!;
   bool? isLoading = false;
   bool? isLoadingDailyDoctorAppointment = false;
   bool? isLoadingDailyDoctorAppointmentSlots = false;
@@ -83,6 +82,10 @@ class ManageAppointmentController extends GetxController
       _isLoadingscreen = true;
       _dailyDoctorAppointmentsModel =
           await ManageAppointmentRepo.GetDailyDoctorAppointment();
+          if(_dailyDoctorAppointmentsModel!=null)
+          {
+             dataindex=0;
+          }
       _isLoadingscreen = false;
       update();
     } catch (e) {

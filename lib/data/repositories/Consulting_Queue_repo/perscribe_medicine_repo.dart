@@ -1,22 +1,19 @@
 import 'dart:convert';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
-import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
-import 'package:doctormobileapplication/models/erns_history.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
-import 'package:doctormobileapplication/models/medicine_matrix.dart';
+import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class PrescribeMedicinRepo {
@@ -265,7 +262,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  static Future<medicineMatrix> getMedicinesMatrix() async {
+  static Future<medicinematric> getMedicinesMatrix() async {
     String branchid = await LocalDb().getBranchId() ?? "";
 
     String url = AppConstants.getMedicinesMatrix;
@@ -282,11 +279,11 @@ class PrescribeMedicinRepo {
       var status = responseData['Status'];
 
       if (status == 1) {
-        medicineMatrix mm = medicineMatrix.fromJson(responseData);
+        medicinematric mm = medicinematric.fromJson(responseData);
         return mm;
       } else {
         showSnackbar(Get.context!, 'Failed to update');
-        return medicineMatrix();
+        return medicinematric();
       }
     } else {
       throw Exception('Failed to fetch medicines details');

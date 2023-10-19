@@ -1,7 +1,3 @@
-import 'dart:convert';
-import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
-import 'package:http/http.dart' as http;
-import 'package:doctormobileapplication/utils/constants.dart';
 
 class ProvincesData {
   int? status;
