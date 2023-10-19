@@ -75,19 +75,15 @@ class _MenuScreenState extends State<MenuScreen> {
               SizedBox(
                 height: Get.height * 0.14,
               ),
-
               InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () {
-                  ZoomDrawer.of(context)!.close();
-                },
-                child: Image.asset(
-                  AppImages.back,
-                  color: ColorManager.kWhiteColor,
-                ),
-              ),
-
+                  onTap: () {
+                    //Get.;
+                    ZoomDrawer.of(context)!.close();
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  )),
               SizedBox(
                 height: Get.height * 0.04,
               ),

@@ -42,9 +42,9 @@ class Specialists extends StatelessWidget {
                   SizedBox(
                     width: Get.width * 0.02,
                   ),
-                  Expanded(
+                  const Expanded(
                     child: CustomTextField(
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.search,
                         color: ColorManager.kPrimaryColor,
                       ),

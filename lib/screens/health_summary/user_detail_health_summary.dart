@@ -83,29 +83,11 @@ class _UserHealthSummaryState extends State<UserHealthSummary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: const PreferredSize(
-      //   preferredSize: Size.fromHeight(50),
-      //   child: CustomAppBar(
-      //     title: 'Mr. Shaikh Zahid',
-      //   ),
-      // ),
-      appBar: AppBar(
-        leading: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
-            Get.back();
-          },
-          child: Image.asset(
-            AppImages.back,
-            color: ColorManager.kPrimaryColor,
-          ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: CustomAppBar(
+          title: 'Mr. Shaikh Zahid',
         ),
-        title: Text(
-          'Mr. Shaikh Zahid'.tr,
-          style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
       ),
       body: Padding(
         padding:

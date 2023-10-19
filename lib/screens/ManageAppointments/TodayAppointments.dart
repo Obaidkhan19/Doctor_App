@@ -47,7 +47,6 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
             },
             child: Image.asset(
               AppImages.back,
-              color: ColorManager.kPrimaryColor,
             ),
           ),
           centerTitle: true,

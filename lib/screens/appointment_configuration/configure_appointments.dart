@@ -68,7 +68,6 @@ class _ConfigureAppointmentScreenState
               },
               child: Image.asset(
                 AppImages.back,
-                color: ColorManager.kPrimaryColor,
               ),
             ),
             title: Text(
