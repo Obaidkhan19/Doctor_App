@@ -46,9 +46,11 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
 
   callback() async {
     ConsultingQueueRepo.GetConsultingQueuewaitinghold(consultingqueuepatients(
-        branchId: "",
+        branchId: await LocalDb().getBranchId(),
         doctorId: await LocalDb().getDoctorId(),
-        search: "",
+        search: SearchFieldController.text.isEmpty
+            ? ""
+            : SearchFieldController.text,
         workLocationId: "",
         status: "3",
         fromDate: DateTime.now().toString().split(' ')[0],
@@ -59,22 +61,10 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         length: "10",
         orderColumn: "0",
         orderDir: "desc"));
-    ConsultingQueueController.i.updateIsclinicloading(false);
-  }
-
-  @override
-  void initState() {
-    callback();
     ConsultingQueueController.i.clearAllLists(widget.Status.toString());
-    // ConsultingQueueController.i
-    //     .getConsultingQueueData('', widget.Status.toString());
 
     SearchFieldController.clear();
-
-    //when scroll page
     _scrollController.addListener(() {
-      // var nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
-      // if (_scrollController.position.pixels > nextPageTrigger) {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         var isCallToFetchData =
@@ -85,6 +75,11 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         }
       }
     });
+  }
+
+  @override
+  void initState() {
+    callback();
 
     super.initState();
   }
@@ -93,132 +88,259 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
   @override
   Widget build(BuildContext context) {
     var contr = Get.put<ConsultingQueueController>(ConsultingQueueController());
-    //ConsultedDataList
-    //ConsultingQueueController.i.getConsultingQueueData('',widget.Status.toString());
-    return BlurryModalProgressHUD(
-      inAsyncCall: ConsultingQueueController.i.isclinicLoading,
-      blurEffectIntensity: 4,
-      progressIndicator: const SpinKitSpinningLines(
-        color: Color(0xfff1272d3),
-        size: 60,
-      ),
-      dismissible: false,
-      opacity: 0.4,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AppImages.helpful_background_logo),
-              alignment: Alignment.centerLeft,
+    return GetBuilder<ConsultingQueueController>(
+      builder: (cont) => BlurryModalProgressHUD(
+        inAsyncCall: ConsultingQueueController.i.isclinicLoading,
+        blurEffectIntensity: 4,
+        progressIndicator: const SpinKitSpinningLines(
+          color: Color(0xfff1272d3),
+          size: 60,
+        ),
+        dismissible: false,
+        opacity: 0.4,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.helpful_background_logo),
+                alignment: Alignment.centerLeft,
+              ),
             ),
-          ),
-          child: SafeArea(
-            minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomTextField(
-                    prefixIcon: const Icon(
-                      Icons.search_outlined,
-                      color: ColorManager.kPrimaryColor,
-                      size: 35,
+            child: SafeArea(
+              minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      onSubmitted: (String value) {
+                        SearchFieldController.text = value;
+                        callback();
+                        setState(() {});
+                      },
+                      prefixIcon: const Icon(
+                        Icons.search_outlined,
+                        color: ColorManager.kPrimaryColor,
+                        size: 35,
+                      ),
+                      controller: SearchFieldController,
+                      hintText: 'Search',
                     ),
-                    controller: SearchFieldController,
-                    hintText: 'Search',
-                  ),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.66,
-                      child: (ConsultingQueueController.i.response.isNotEmpty)
-                          ? ListView.builder(
-                              controller: _scrollController,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: ((ConsultingQueueController
-                                      .i.response.isNotEmpty)
-                                  ? ConsultingQueueController.i.response.length
-                                  : 0),
-                              itemBuilder: (context, index) {
-                                final manageAppointment =
-                                    (ConsultingQueueController
-                                            .i.response.isNotEmpty)
-                                        ? ConsultingQueueController
-                                            .i.response[index]
-                                        : null;
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.66,
+                        child: (ConsultingQueueController.i.response.isNotEmpty)
+                            ? ListView.builder(
+                                controller: _scrollController,
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: ((ConsultingQueueController
+                                        .i.response.isNotEmpty)
+                                    ? ConsultingQueueController
+                                        .i.response.length
+                                    : 0),
+                                itemBuilder: (context, index) {
+                                  final manageAppointment =
+                                      (ConsultingQueueController
+                                              .i.response.isNotEmpty)
+                                          ? ConsultingQueueController
+                                              .i.response[index]
+                                          : null;
 
-                                {
-                                  return ((manageAppointment != null &&
-                                          (manageAppointment.patientStatusValue
-                                                  .toString() ==
-                                              widget.Status.toString()))
-                                      ? Card(
-                                          elevation: 4,
-                                          surfaceTintColor:
-                                              ColorManager.kWhiteColor,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: Get.height * 0.02,
-                                                bottom: Get.height * 0.02),
-                                            child: Column(
-                                              children: [
-                                                ListTile(
-                                                  leading: SizedBox(
-                                                    height: 380,
-                                                    width: 71,
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          const Color.fromRGBO(
-                                                              0, 0, 0, 0),
-                                                      radius: 30,
-                                                      child: ClipOval(
-                                                        child: manageAppointment
-                                                                    .patientImagePath ==
-                                                                null
-                                                            ? Image.asset(
-                                                                Images.avator)
-                                                            : Image.network(AppConstants
-                                                                    .baseURL +
-                                                                manageAppointment
-                                                                    .patientImagePath),
+                                  {
+                                    return ((manageAppointment != null &&
+                                            (manageAppointment
+                                                    .patientStatusValue
+                                                    .toString() ==
+                                                widget.Status.toString()))
+                                        ? Card(
+                                            elevation: 4,
+                                            surfaceTintColor:
+                                                ColorManager.kWhiteColor,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: Get.height * 0.02,
+                                                  bottom: Get.height * 0.02),
+                                              child: Column(
+                                                children: [
+                                                  ListTile(
+                                                    leading: SizedBox(
+                                                      height: 380,
+                                                      width: 71,
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromRGBO(
+                                                                0, 0, 0, 0),
+                                                        radius: 30,
+                                                        child: ClipOval(
+                                                          child: manageAppointment
+                                                                      .patientImagePath ==
+                                                                  null
+                                                              ? Image.asset(
+                                                                  Images.avator)
+                                                              : Image.network(AppConstants
+                                                                      .baseURL +
+                                                                  manageAppointment
+                                                                      .patientImagePath),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    title: Transform.translate(
+                                                      offset:
+                                                          const Offset(-0, 0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            manageAppointment
+                                                                    .patientName ??
+                                                                "",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 13,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            manageAppointment
+                                                                    .mRNO ??
+                                                                "",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    trailing: SizedBox(
+                                                      width: 70,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              Get.to(
+                                                                () => pdfviewconsulted(
+                                                                    url: manageAppointment
+                                                                        .reportURL),
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              child:
+                                                                  Image.asset(
+                                                                Images.erx,
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                color: ColorManager
+                                                                    .kPrimaryColor,
+                                                                width:
+                                                                    Get.width *
+                                                                        0.09,
+                                                                height:
+                                                                    Get.height *
+                                                                        0.05,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Get.to(() =>
+                                                                  //  HistoryeRXConsultingQueue());
+
+                                                                  PrescribeMedicineScreen(
+                                                                    patientid:
+                                                                        manageAppointment
+                                                                            .patientId,
+                                                                    visitno:
+                                                                        manageAppointment
+                                                                            .visitNo,
+                                                                    prescribedvalue:
+                                                                        manageAppointment
+                                                                            .prescribedInValue,
+                                                                  ));
+                                                              // print(AppConstants.baseURL+
+                                                              //               manageAppointment.reportURL);
+                                                              // Get.to(() =>
+                                                              //  HistoryeRXConsultingQueue());
+
+                                                              // const PrescribeMedicineScreen());
+                                                            },
+                                                            child: Container(
+                                                              child:
+                                                                  Image.asset(
+                                                                Images.rxedit,
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                color: ColorManager
+                                                                    .kPrimaryColor,
+                                                                width:
+                                                                    Get.width *
+                                                                        0.09,
+                                                                height:
+                                                                    Get.height *
+                                                                        0.05,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
-                                                  title: Transform.translate(
-                                                    offset: const Offset(-0, 0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.08,
+                                                        right:
+                                                            Get.width * 0.06),
+                                                    child: const Divider(
+                                                      thickness: 1,
+                                                      color: ColorManager
+                                                          .kblackColor,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.08,
+                                                        right:
+                                                            Get.width * 0.06),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          manageAppointment
-                                                                  .patientName ??
-                                                              "",
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 13,
-                                                            color: ColorManager
-                                                                .kPrimaryColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          manageAppointment
-                                                                  .mRNO ??
-                                                              "",
+                                                          'Waiting Since ${manageAppointment.waitingTime ?? ""}',
                                                           style: GoogleFonts
                                                               .poppins(
                                                             fontSize: 10,
                                                             color: ColorManager
-                                                                .kPrimaryColor,
+                                                                .kblackColor,
                                                           ),
                                                         ),
                                                         Text(
-                                                          'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                          '${manageAppointment.status ?? ""}',
                                                           style: GoogleFonts
                                                               .poppins(
                                                             fontSize: 10,
@@ -229,136 +351,34 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                       ],
                                                     ),
                                                   ),
-                                                  trailing: SizedBox(
-                                                    width: 70,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            Get.to(
-                                                              () => pdfviewconsulted(
-                                                                  url: manageAppointment
-                                                                      .reportURL),
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                            child: Image.asset(
-                                                              Images.erx,
-                                                              fit: BoxFit.fill,
-                                                              color: ColorManager
-                                                                  .kPrimaryColor,
-                                                              width: Get.width *
-                                                                  0.09,
-                                                              height:
-                                                                  Get.height *
-                                                                      0.05,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        InkWell(
-                                                          onTap: () async {
-                                                            Get.to(() =>
-                                                                //  HistoryeRXConsultingQueue());
-
-                                                                const PrescribeMedicineScreen());
-// print(AppConstants.baseURL+
-//               manageAppointment.reportURL);
-                                                            // Get.to(() =>
-                                                            //  HistoryeRXConsultingQueue());
-
-                                                            // const PrescribeMedicineScreen());
-                                                          },
-                                                          child: Container(
-                                                            child: Image.asset(
-                                                              Images.rxedit,
-                                                              fit: BoxFit.fill,
-                                                              color: ColorManager
-                                                                  .kPrimaryColor,
-                                                              width: Get.width *
-                                                                  0.09,
-                                                              height:
-                                                                  Get.height *
-                                                                      0.05,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.08,
-                                                      right: Get.width * 0.06),
-                                                  child: const Divider(
-                                                    thickness: 1,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.08,
-                                                      right: Get.width * 0.06),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        '${manageAppointment.status ?? ""}',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      : Container());
-                                }
-                                return null;
-                              })
-                          : (((ConsultingQueueController.i.ConsultedDataList !=
-                                              null) &&
-                                          (ConsultingQueueController
-                                                  .i.ConsultedDataList.queue !=
-                                              null))
-                                      ? ConsultingQueueController
-                                          .i.ConsultedDataList.queue?.length
-                                      : 0) ==
-                                  0
-                              ? SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                  child: const Center(
+                                          )
+                                        : Container());
+                                  }
+                                  return null;
+                                })
+                            : (((ConsultingQueueController
+                                                    .i.ConsultedDataList !=
+                                                null) &&
+                                            (ConsultingQueueController.i
+                                                    .ConsultedDataList.queue !=
+                                                null))
+                                        ? ConsultingQueueController
+                                            .i.ConsultedDataList.queue?.length
+                                        : 0) ==
+                                    0
+                                ? const Center(
                                     child: Text('No Record Found!'),
-                                  ),
-                                )
-                              : Container()
-                      //     ],
-                      //   ),
-                      // ),
-                      ),
-                ],
+                                  )
+                                : Container()
+                        //     ],
+                        //   ),
+                        // ),
+                        ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
+import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/controller/language_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
@@ -14,5 +15,6 @@ class AppBindings implements Bindings {
     Get.put<AuthController>(AuthController());
     Get.put<LanguageController>(LanguageController());
     Get.put<ManageAppointmentController>(ManageAppointmentController());
+    Get.put<ERXController>(ERXController());
   }
 }

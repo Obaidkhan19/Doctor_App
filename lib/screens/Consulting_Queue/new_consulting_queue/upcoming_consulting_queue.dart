@@ -170,7 +170,7 @@ class _UpcomingConsultingQueueScreenState
                                           InkWell(
                                             onTap: () {
                                               Get.to(() =>
-                                                  const PrescribeMedicineScreen());
+                                                  PrescribeMedicineScreen());
                                             },
                                             child: Container(
                                               width: 47,

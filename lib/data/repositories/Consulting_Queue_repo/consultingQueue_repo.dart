@@ -96,6 +96,8 @@ class ConsultingQueueRepo {
 
   static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
     var body = consult.toJson();
+    print('objectobjectobjectobjectobjectobject');
+    print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
       ConsultingQueueController.i.updateIsclinicloading(true);
@@ -106,6 +108,9 @@ class ConsultingQueueRepo {
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
+        if (result['Status'] == 0) {
+          ConsultingQueueController.i.updateIsclinicloading(false);
+        }
         if (result['Status'] == 1) {
           Iterable lst = result['Queue'];
           List<consultingqueuewaitholdresponse> rep = lst

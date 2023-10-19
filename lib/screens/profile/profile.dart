@@ -83,6 +83,7 @@ class _ProfileState extends State<Profile> {
               },
               child: Image.asset(
                 AppImages.back,
+                color: ColorManager.kPrimaryColor,
               ),
             ),
             title: Text(
@@ -121,7 +122,7 @@ class _ProfileState extends State<Profile> {
                 alignment: Alignment.bottomCenter,
                 width: Get.width,
                 height: Get.height * 0.5,
-                padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
+                padding: EdgeInsets.only(top: Get.height * 0.04),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),

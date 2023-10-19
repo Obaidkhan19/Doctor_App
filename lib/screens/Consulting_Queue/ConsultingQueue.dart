@@ -53,6 +53,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
               },
               child: Image.asset(
                 AppImages.back,
+                color: ColorManager.kPrimaryColor,
               ),
             ),
             title: Text(

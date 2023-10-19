@@ -18,6 +18,14 @@ import 'package:get/get.dart';
 
 class ERXController extends GetxController implements GetxService {
   static ERXController get i => Get.put(ERXController());
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  updateIsloading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
   FocusNode mycomplaintfocus = FocusNode();
   FocusNode findingfocus = FocusNode();
   FocusNode qtyfocus = FocusNode();
@@ -436,40 +444,83 @@ class ERXController extends GetxController implements GetxService {
 
   // =========== ERNS HISTORY
 
+  String historycomplaint = '';
   List<ComplaintsHistory> complaintsHistoryList = [];
-
   updatecomplainthistorydata(List<ComplaintsHistory> clist) {
     complaintsHistoryList = clist;
+    List<String> names = [];
+    for (int i = 0; i < complaintsHistoryList.length; i++) {
+      names.add(complaintsHistoryList[i].name ?? '');
+    }
+    historycomplaint = names.join(', ');
     update();
   }
 
+  String historyprimarydiagnosis = '';
   List<PrimaryDiagnosisHistory> primarydiagnosisHistoryList = [];
   updateprimarydiagnosishistorydata(List<PrimaryDiagnosisHistory> clist) {
     primarydiagnosisHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < primarydiagnosisHistoryList.length; i++) {
+      names.add(primarydiagnosisHistoryList[i].genericName ?? '');
+    }
+    historyprimarydiagnosis = names.join(', ');
     update();
   }
 
+  String historyprecedures = '';
   List<PrceduresHistory> prceduresHistoryList = [];
   updateprcedureshistorydata(List<PrceduresHistory> clist) {
     prceduresHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < prceduresHistoryList.length; i++) {
+      names.add(prceduresHistoryList[i].genericName ?? '');
+    }
+    historyprecedures = names.join(', ');
     update();
   }
 
+  String historydiagnostics = '';
   List<DiagnosticsHistory> diagnosticsHistoryList = [];
   updatediagnosticshistorydata(List<DiagnosticsHistory> clist) {
     diagnosticsHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < diagnosticsHistoryList.length; i++) {
+      names.add(diagnosticsHistoryList[i].name ?? '');
+    }
+    historydiagnostics = names.join(', ');
     update();
   }
 
+  String historyinvestigation = '';
   List<InvestigationsHistory> investigationHistoryList = [];
   updateinvestigationistorydata(List<InvestigationsHistory> clist) {
     investigationHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < investigationHistoryList.length; i++) {
+      names.add(investigationHistoryList[i].name ?? '');
+    }
+    historyinvestigation = names.join(', ');
     update();
   }
 
+  String historyvitals = '';
   List<VitalsHistory> vitalsHistoryList = [];
   updatevitalshistorydata(List<VitalsHistory> clist) {
     vitalsHistoryList = clist;
+    List<String> names = [];
+    for (int i = 0; i < vitalsHistoryList.length; i++) {
+      names.add(vitalsHistoryList[i].name ?? '');
+    }
+    historyvitals = names.join(', ');
     update();
   }
 }

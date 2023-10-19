@@ -690,6 +690,24 @@ addMedicine(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
+                  // Medicines
+                  Center(
+                    child: Text(
+                      'Medicines',
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       contentPadding:

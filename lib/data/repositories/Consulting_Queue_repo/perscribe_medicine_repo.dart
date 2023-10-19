@@ -250,6 +250,7 @@ class PrescribeMedicinRepo {
       "DoctorId": did,
       "BranchId": bid,
     });
+
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
@@ -292,31 +293,87 @@ class PrescribeMedicinRepo {
     }
   }
 
-  //   static Future<ernsHistory> getErnsHistory() async {
-  //   String branchid = await LocalDb().getBranchId() ?? "";
+  Future<String> getErnsHistory(
+    patientid,
+    visitno,
+    prescribedvalue,
+    // ernsbit,currentvisit,prescribedvalue,checkintypevalue
+  ) async {
+    String branchid = await LocalDb().getBranchId() ?? "";
+    String doctorid = await LocalDb().getDoctorId() ?? "";
+    String url = AppConstants.getErnsHistory;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "DoctorId": doctorid,
+      "BranchId": branchid,
+      "PatientId": patientid,
+      "VisitNo": visitno,
+      "PrescribedInValue": prescribedvalue,
+      "currentVisit": visitno,
+      "CheckInTypeValue": 3,
+      "ERNSBit": 3,
+    });
+    try {
+      ERXController.i.updateIsloading(true);
+      var response = await http.post(uri,
+          body: body,
+          headers: <String, String>{'Content-Type': 'application/json'});
 
-  //   String url = AppConstants.getErnsHistory;
-  //   Uri uri = Uri.parse(url);
-  //   var body = jsonEncode(<String, dynamic>{
-  //     "BranchId": branchid,
-  //   });
-  //   var response = await http.post(uri,
-  //       body: body,
-  //       headers: <String, String>{'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        print("responseDataresponseDataresponseData");
+        print(responseData);
+        var status = responseData['Status'];
 
-  //   if (response.statusCode == 200) {
-  //     var responseData = jsonDecode(response.body);
-  //     var status = responseData['Status'];
+        List<dynamic> rawvitalsData = responseData['Vitals'] ?? [];
+        List<VitalsHistory> vitals =
+            rawvitalsData.map((item) => VitalsHistory.fromJson(item)).toList();
 
-  //     if (status == 1) {
-  //       medicineMatrix mm = medicineMatrix.fromJson(responseData);
-  //       return mm;
-  //     } else {
-  //       showSnackbar(Get.context!, 'Failed to update');
-  //       return medicineMatrix();
-  //     }
-  //   } else {
-  //     throw Exception('Failed to fetch medicines details');
-  //   }
-  // }
+        List<dynamic> rawpdData = responseData['PrimaryDiagnosis'] ?? [];
+        List<PrimaryDiagnosisHistory> primarydiagnosis = rawpdData
+            .map((item) => PrimaryDiagnosisHistory.fromJson(item))
+            .toList();
+
+        List<dynamic> rawinvestData = responseData['Investigations'] ?? [];
+        List<InvestigationsHistory> investigations = rawinvestData
+            .map((item) => InvestigationsHistory.fromJson(item))
+            .toList();
+
+        List<dynamic> rawdData = responseData['Diagnostics'] ?? [];
+        List<DiagnosticsHistory> diagnostics =
+            rawdData.map((item) => DiagnosticsHistory.fromJson(item)).toList();
+
+        List<dynamic> rawcomplaintData = responseData['Complaints'] ?? [];
+        List<ComplaintsHistory> complaints = rawcomplaintData
+            .map((item) => ComplaintsHistory.fromJson(item))
+            .toList();
+
+        List<dynamic> rawprceduresData = responseData['Prcedures'] ?? [];
+        List<PrceduresHistory> prcedures = rawprceduresData
+            .map((item) => PrceduresHistory.fromJson(item))
+            .toList();
+
+        if (status == 1) {
+          ERXController.i.updatevitalshistorydata(vitals);
+          ERXController.i.updateprimarydiagnosishistorydata(primarydiagnosis);
+          ERXController.i.updateinvestigationistorydata(investigations);
+          ERXController.i.updatediagnosticshistorydata(diagnostics);
+          ERXController.i.updatecomplainthistorydata(complaints);
+          ERXController.i.updateprcedureshistorydata(prcedures);
+          ERXController.i.updateIsloading(false);
+          return 'Ok';
+        } else {
+          showSnackbar(Get.context!, 'Failed to get');
+          ERXController.i.updateIsloading(false);
+          return 'NotOk';
+        }
+      } else {
+        ERXController.i.updateIsloading(false);
+        throw Exception('Failed to fetch  details');
+      }
+    } catch (e) {
+      ERXController.i.updateIsloading(false);
+      return 'NotOk';
+    }
+  }
 }

@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final Function()? onTap;
+  ValueChanged<String>? onSubmitted;
   final EdgeInsetsGeometry? padding;
   final int? maxlines;
   final Widget? prefixIcon;
@@ -21,8 +22,10 @@ class CustomTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? hintText;
   final Function(String)? onchanged;
-  const CustomTextField({
+
+  CustomTextField({
     super.key,
+    this.onSubmitted,
     this.hintText,
     this.suffixIcon,
     this.fillColor = ColorManager.kPrimaryLightColor,
@@ -47,6 +50,7 @@ class CustomTextField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         TextFormField(
+          onFieldSubmitted: onSubmitted,
           controller: controller,
           onChanged: onchanged,
           validator: validator,
