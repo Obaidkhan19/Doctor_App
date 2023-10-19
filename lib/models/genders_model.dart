@@ -1,4 +1,3 @@
-
 class Genders {
   int? status;
   List<GendersData>? data;

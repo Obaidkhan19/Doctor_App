@@ -60,6 +60,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
               },
               child: Image.asset(
                 AppImages.back,
+                color: ColorManager.kPrimaryColor,
               ),
             ),
             title: Text(
@@ -297,11 +298,11 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                 );
                               })
                           : Center(
-                            child: Text(
+                              child: Text(
                                 "No Record Found",
                                 style: GoogleFonts.poppins(fontSize: 16),
                               ),
-                          ),
+                            ),
                     ),
                   ],
                 ),

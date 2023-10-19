@@ -1,13 +1,17 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:open_app_file/open_app_file.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/genders_model.dart';
+import 'package:doctormobileapplication/models/lab_tests_model.dart';
 import 'package:doctormobileapplication/models/marital_status.dart';
 import 'package:doctormobileapplication/models/person_title.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
+import 'package:doctormobileapplication/models/specialities_model.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

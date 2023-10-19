@@ -1,8 +1,12 @@
+import 'dart:io';
 
 import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/screens/health_summary/user_detail_health_summary.dart';
+import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,11 +22,23 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: CustomAppBar(
-          title: 'healthsummaryappbar'.tr,
+      appBar: AppBar(
+        leading: InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () {
+            Get.offAll(() => const DrawerScreen());
+          },
+          child: Image.asset(
+            AppImages.back,
+            color: ColorManager.kPrimaryColor,
+          ),
         ),
+        title: Text(
+          'healthsummaryappbar'.tr,
+          style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),
