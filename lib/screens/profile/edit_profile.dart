@@ -11,12 +11,10 @@ import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
-import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class EditProfile extends StatefulWidget {
   final String? imagepath;
@@ -137,28 +135,14 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     var edit = Get.put<EditProfileController>(EditProfileController());
     return Scaffold(
-      appBar: AppBar(
-        leading: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
-            Get.back();
-          },
-          child: Image.asset(
-            AppImages.back,
-            color: ColorManager.kPrimaryColor,
-          ),
-        ),
-        title: Text(
-          'editProfile'.tr,
-          style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-      ),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: CustomAppBar(
+            title: 'editProfile'.tr,
+          )),
       body: GetBuilder<EditProfileController>(
         builder: (contr) => Padding(
-          padding: const EdgeInsets.only(
-              top: AppPadding.p20, left: AppPadding.p20, right: AppPadding.p20),
+          padding: const EdgeInsets.all(AppPadding.p20),
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
