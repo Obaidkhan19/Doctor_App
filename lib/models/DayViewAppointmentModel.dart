@@ -12,28 +12,28 @@ class DayViewAppointmentSlotModel {
     if (json['Appointments'] != null) {
       appointments = <Appointments>[];
       json['Appointments'].forEach((v) {
-        appointments!.add(Appointments.fromJson(v));
+        appointments!.add(new Appointments.fromJson(v));
       });
     }
     if (json['OverView'] != null) {
       overView = <OverView>[];
       json['OverView'].forEach((v) {
-        overView!.add(OverView.fromJson(v));
+        overView!.add(new OverView.fromJson(v));
       });
     }
     errorMessage = json['ErrorMessage'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Status'] = status;
-    if (appointments != null) {
-      data['Appointments'] = appointments!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Status'] = this.status;
+    if (this.appointments != null) {
+      data['Appointments'] = this.appointments!.map((v) => v.toJson()).toList();
     }
-    if (overView != null) {
-      data['OverView'] = overView!.map((v) => v.toJson()).toList();
+    if (this.overView != null) {
+      data['OverView'] = this.overView!.map((v) => v.toJson()).toList();
     }
-    data['ErrorMessage'] = errorMessage;
+    data['ErrorMessage'] = this.errorMessage;
     return data;
   }
 }
@@ -94,23 +94,23 @@ class Appointments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['AppointmentId'] = appointmentId;
-    data['PatientAppointmentId'] = patientAppointmentId;
-    data['Time'] = time;
-    data['Date'] = date;
-    data['Name'] = name;
-    data['WorkLocation'] = workLocation;
-    data['CellNumber'] = cellNumber;
-    data['Status'] = status;
-    data['IsOnlineAppointment'] = isOnlineAppointment;
-    data['IsOnlineConsultation'] = isOnlineConsultation;
-    data['DoctorId'] = doctorId;
-    data['PatientId'] = patientId;
-    data['SessionId'] = sessionId;
-    data['WorkLocationId'] = workLocationId;
-    data['BranchId'] = branchId;
-    data['IsChecked'] = IsChecked;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['AppointmentId'] = this.appointmentId;
+    data['PatientAppointmentId'] = this.patientAppointmentId;
+    data['Time'] = this.time;
+    data['Date'] = this.date;
+    data['Name'] = this.name;
+    data['WorkLocation'] = this.workLocation;
+    data['CellNumber'] = this.cellNumber;
+    data['Status'] = this.status;
+    data['IsOnlineAppointment'] = this.isOnlineAppointment;
+    data['IsOnlineConsultation'] = this.isOnlineConsultation;
+    data['DoctorId'] = this.doctorId;
+    data['PatientId'] = this.patientId;
+    data['SessionId'] = this.sessionId;
+    data['WorkLocationId'] = this.workLocationId;
+    data['BranchId'] = this.branchId;
+    data['IsChecked'] = this.IsChecked;
     return data;
   }
 }
@@ -147,15 +147,15 @@ class OverView {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Start'] = start;
-    data['End'] = end;
-    data['Pending'] = pending;
-    data['Cancelled'] = cancelled;
-    data['Paid'] = paid;
-    data['Confirmed'] = confirmed;
-    data['Consulted'] = consulted;
-    data['Booked'] = booked;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Start'] = this.start;
+    data['End'] = this.end;
+    data['Pending'] = this.pending;
+    data['Cancelled'] = this.cancelled;
+    data['Paid'] = this.paid;
+    data['Confirmed'] = this.confirmed;
+    data['Consulted'] = this.consulted;
+    data['Booked'] = this.booked;
     return data;
   }
 }

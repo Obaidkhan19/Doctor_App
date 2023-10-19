@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/allergies.dart';
@@ -83,11 +84,29 @@ class _UserHealthSummaryState extends State<UserHealthSummary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(50),
-        child: CustomAppBar(
-          title: 'Mr. Shaikh Zahid',
+      // appBar: const PreferredSize(
+      //   preferredSize: Size.fromHeight(50),
+      //   child: CustomAppBar(
+      //     title: 'Mr. Shaikh Zahid',
+      //   ),
+      // ),
+      appBar: AppBar(
+        leading: InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () {
+            Get.back();
+          },
+          child: Image.asset(
+            AppImages.back,
+            color: ColorManager.kPrimaryColor,
+          ),
         ),
+        title: Text(
+          'Mr. Shaikh Zahid'.tr,
+          style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding:

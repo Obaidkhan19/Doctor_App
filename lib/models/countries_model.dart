@@ -1,4 +1,3 @@
-
 class CountriesData {
   int? status;
   List<Countries>? data;

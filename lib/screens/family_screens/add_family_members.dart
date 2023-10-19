@@ -22,129 +22,136 @@ class AddFamilyMember extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(AppPadding.p20),
           child: SingleChildScrollView(
-            child: GetBuilder<FamilyScreensController>(
-              builder: (contr) {
-                return Column(
-                  children: [
-                    const CustomTextField(
-                      hintText: 'Mr. No',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    const CustomTextField(
-                      hintText: 'Your Relation',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    PrimaryButton(
-                        title: 'Connect Family Member',
+            child: GetBuilder<FamilyScreensController>(builder: (contr) {
+              return Column(
+                children: [
+                  CustomTextField(
+                    hintText: 'Mr. No',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Your Relation',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  PrimaryButton(
+                      title: 'Connect Family Member',
+                      onPressed: () {},
+                      fontweight: FontWeight.w900,
+                      fontSize: 14,
+                      color: ColorManager.kPrimaryColor,
+                      textcolor: ColorManager.kWhiteColor),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'Add Family Member',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontSize: 13, fontWeight: FontWeight.w900),
+                  ),
+                  Text(
+                    'Personal Information',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontSize: 10, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  CustomTextField(
+                    hintText: 'Full Name',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Fathers Name',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          contr.selectDateAndTime(
+                              context,
+                              FamilyScreensController.arrival,
+                              contr.formatArrival);
+                        },
+                        icon: const Icon(Icons.arrow_drop_down)),
+                    hintText: '${contr.formatArrival}',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Phone Numbers',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Relation',
+                    suffixIcon: IconButton(
                         onPressed: () {},
-                        fontweight: FontWeight.w900,
-                        fontSize: 14,
-                        color: ColorManager.kPrimaryColor,
-                        textcolor: ColorManager.kWhiteColor),
-                    SizedBox(
-                      height: Get.height * 0.03,
-                    ),
-                    Text(
-                      'Add Family Member',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontSize: 13, fontWeight: FontWeight.w900),
-                    ),
-                    Text(
-                      'Personal Information',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontSize: 10, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.03,
-                    ),
-                    const CustomTextField(
-                      hintText: 'Full Name',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    const CustomTextField(
-                      hintText: 'Fathers Name',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                     CustomTextField(
-                      suffixIcon: IconButton(onPressed: (){
-                        contr.selectDateAndTime(context, FamilyScreensController.arrival, contr.formatArrival);
-                      }, icon: const Icon(Icons.arrow_drop_down)),
-                      hintText: '${contr.formatArrival}',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    const CustomTextField(
-                      hintText: 'Phone Numbers',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                     CustomTextField(
-                      hintText: 'Relation',
-                      suffixIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_drop_down)),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    const CustomTextField(
-                      hintText: 'ID 123 4567 8910',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                     CustomTextField(
-                      hintText: 'Gender',
-                      suffixIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_drop_down)),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                     CustomTextField(
-                      hintText: 'Martial Status',
-                      suffixIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_drop_down)),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    const CustomTextField(
-                      hintText: 'Blodd Group',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    const CustomTextField(
-                      hintText: 'Address',
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    PrimaryButton(
-                        title: 'Add Family Member ',
+                        icon: const Icon(Icons.arrow_drop_down)),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'ID 123 4567 8910',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Gender',
+                    suffixIcon: IconButton(
                         onPressed: () {},
-                        color: ColorManager.kPrimaryColor,
-                        textcolor: ColorManager.kWhiteColor)
-                  ],
-                );
-              }
-            ),
+                        icon: const Icon(Icons.arrow_drop_down)),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Martial Status',
+                    suffixIcon: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.arrow_drop_down)),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Blodd Group',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  CustomTextField(
+                    hintText: 'Address',
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  PrimaryButton(
+                      title: 'Add Family Member ',
+                      onPressed: () {},
+                      color: ColorManager.kPrimaryColor,
+                      textcolor: ColorManager.kWhiteColor)
+                ],
+              );
+            }),
           ),
         ),
       ),
     );
   }
 }
-
-

@@ -1,5 +1,4 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -84,6 +83,7 @@ class _ProfileState extends State<Profile> {
               },
               child: Image.asset(
                 AppImages.back,
+                color: ColorManager.kPrimaryColor,
               ),
             ),
             title: Text(
@@ -101,19 +101,9 @@ class _ProfileState extends State<Profile> {
                   backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                   radius: 30,
                   child: ClipOval(
-                    child:path != ""
-                              ?  CachedNetworkImage(
-                                                                imageUrl: imagepath,
-                                                                        fit: BoxFit.fill,
-                                                               
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) =>
-                                                                    Image.asset(
-                                                                        AppImages.doctorlogo),
-                              ):
-                                                                    Image.asset(
-                                                                        AppImages.doctorlogo),
+                    child: path == null
+                        ? Image.asset(AppImages.doctorlogo)
+                        : Image.network(imagepath),
                   ),
                 ),
                 title: Text(
@@ -132,7 +122,7 @@ class _ProfileState extends State<Profile> {
                 alignment: Alignment.bottomCenter,
                 width: Get.width,
                 height: Get.height * 0.5,
-                padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
+                padding: EdgeInsets.only(top: Get.height * 0.04),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),

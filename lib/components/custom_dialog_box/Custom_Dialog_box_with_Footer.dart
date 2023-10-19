@@ -10,7 +10,7 @@ class CustomDialog extends StatelessWidget {
   final String? footer;
   final VoidCallback? onClosePressed;
 
-  const CustomDialog({super.key, 
+  CustomDialog({
     required this.title,
     required this.content,
     this.footer,
@@ -30,7 +30,7 @@ class CustomDialog extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16)),
                 boxShadow: [
@@ -38,7 +38,7 @@ class CustomDialog extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.3), // Shadow color
                     spreadRadius: 1, // Spread radius of the shadow
                     blurRadius: 1, // Blur radius of the shadow
-                    offset: const Offset(0, 1), // Offset of the shadow
+                    offset: Offset(0, 1), // Offset of the shadow
                   ),
                 ],
               ),
@@ -49,7 +49,7 @@ class CustomDialog extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         //fontSize: MediaQuery.of(context).size.height * 0.023,
                         fontWeight: FontWeight.bold,
@@ -72,14 +72,14 @@ class CustomDialog extends StatelessWidget {
                 ],
               ),
             ),
-          SizedBox(
+          Container(
             height: MediaQuery.of(context).size.height * 0.1,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Center(
                 child: Text(
                   content,
-                  style: const TextStyle(fontSize: 12
+                  style: TextStyle(fontSize: 12
                       // fontSize: MediaQuery.of(context).size.height * 0.018
                       ),
                 ),
@@ -101,8 +101,8 @@ class CustomDialog extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.45,
                         height: MediaQuery.of(context).size.height * 0.045,
                         decoration: BoxDecoration(
-                          color: const Color(
-                              0xfff1272d3), // Set the background color of the container
+                          color: Color(
+                              0xfff1272D3), // Set the background color of the container
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Center(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/search_models.dart';
 import 'package:doctormobileapplication/models/specialities_model.dart';
 import 'package:doctormobileapplication/utils/constants.dart';

@@ -1,14 +1,23 @@
+import 'dart:io';
 
+import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
+import 'package:doctormobileapplication/screens/auth_screens/register_screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SecurityScreen extends StatefulWidget {
   const SecurityScreen({super.key});

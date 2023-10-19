@@ -11,7 +11,7 @@ class MyAppointmentsController extends GetxController
   bool? _isPaymentComplete = false;
   bool? get isPaymentComplete => _isPaymentComplete;
 
-  final DailyDoctorAppointmentsModel _dailyDoctorAppointmentsModel =
+  DailyDoctorAppointmentsModel _dailyDoctorAppointmentsModel =
       DailyDoctorAppointmentsModel();
   DailyDoctorAppointmentsModel get dailyDoctorAppointmentsModel =>
       _dailyDoctorAppointmentsModel;

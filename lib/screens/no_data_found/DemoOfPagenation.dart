@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class ScrollControllerDemo extends StatefulWidget {
-  const ScrollControllerDemo({super.key});
-
   @override
   _ScrollControllerDemoState createState() => _ScrollControllerDemoState();
 }
@@ -163,7 +161,7 @@ class PostItem extends StatelessWidget {
   final String title;
   final String body;
 
-  const PostItem(this.title, this.body, {super.key});
+  PostItem(this.title, this.body);
 
   @override
   Widget build(BuildContext context) {
