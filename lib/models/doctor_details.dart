@@ -1,3 +1,4 @@
+
 class DoctorDetails {
   int? status;
   BasicInfo? basicInfo;

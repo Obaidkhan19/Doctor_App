@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controll
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -96,8 +95,6 @@ class ConsultingQueueRepo {
 
   static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
     var body = consult.toJson();
-    print('objectobjectobjectobjectobjectobject');
-    print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
       ConsultingQueueController.i.updateIsclinicloading(true);
@@ -108,9 +105,6 @@ class ConsultingQueueRepo {
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        if (result['Status'] == 0) {
-          ConsultingQueueController.i.updateIsclinicloading(false);
-        }
         if (result['Status'] == 1) {
           Iterable lst = result['Queue'];
           List<consultingqueuewaitholdresponse> rep = lst

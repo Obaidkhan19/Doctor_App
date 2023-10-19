@@ -3,7 +3,6 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:interval_time_picker/interval_time_picker.dart';
 
 class ConfigureAppointmentListTile extends StatefulWidget {
   String dayname;
