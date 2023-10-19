@@ -1696,7 +1696,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       for (int index = 0; index <  controller.selectedlst
                                                     .medicineRoutes!.length; index++)
                                         SizedBox(
-                                          width: Get.width*0.15,
+                                          width: Get.width*0.12,
                                           child: Text(
                                              controller.selectedlst
                                                       .medicineRoutes![index].englishDefinition.toString(),
@@ -1713,7 +1713,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                     ],
                                   ),
                                   SizedBox(
-                                    width: Get.width * 0.06,
+                                    width: Get.width * 0.02,
                                   ),
                                 ],
                               ),
