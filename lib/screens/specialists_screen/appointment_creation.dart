@@ -181,7 +181,7 @@ class _AppointmentCreationState extends State<AppointmentCreation> {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-               Row(
+               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   PositionedButtonWidget(

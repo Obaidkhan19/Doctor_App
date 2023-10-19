@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
-import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
@@ -15,7 +14,6 @@ import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class PrescribeMedicinRepo {

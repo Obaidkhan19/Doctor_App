@@ -1,9 +1,7 @@
-import 'dart:ffi';
 
 import 'package:doctormobileapplication/components/CustomFormField.dart';
 import 'package:doctormobileapplication/components/MyCustomExpansionTile.dart';
 import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
-import 'package:doctormobileapplication/components/custom_expension_listtile.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
@@ -14,15 +12,12 @@ import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
-import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
-import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/doctor_review.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

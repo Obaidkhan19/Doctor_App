@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:doctormobileapplication/components/custom_textfields.dart';
-import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';

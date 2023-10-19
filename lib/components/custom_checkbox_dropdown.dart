@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:doctormobileapplication/components/consulting_queue_dropdown.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';

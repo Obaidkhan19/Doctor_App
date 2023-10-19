@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
-import 'package:doctormobileapplication/models/lab_test_dropdown.dart';
 import 'package:doctormobileapplication/models/medicine_matrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/patient_detail.dart';

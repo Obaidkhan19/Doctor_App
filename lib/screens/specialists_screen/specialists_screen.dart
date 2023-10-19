@@ -149,7 +149,7 @@ class Specialists extends StatelessWidget {
                                   ),
                                   fit: BoxFit.contain)),
                         ),
-                        trailing: Row(
+                        trailing: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(

@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controll
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
