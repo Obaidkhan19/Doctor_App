@@ -1,3 +1,11 @@
+import 'dart:convert';
+import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/data/controller/profile_controller.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:doctormobileapplication/utils/constants.dart';
 
 class DoctorDetails {
   int? status;

@@ -19,6 +19,10 @@ class EditProfileController extends GetxController implements GetxService {
     update();
   }
 
+  disposefile() {
+    file = null;
+  }
+
   File? file;
   Future<File?> pickImage({
     bool allowMultiple = false,

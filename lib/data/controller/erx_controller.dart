@@ -1,6 +1,7 @@
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
+import 'package:doctormobileapplication/models/erns_history.dart';
 import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
@@ -429,6 +430,45 @@ class ERXController extends GetxController implements GetxService {
 
   updateselectedmedicine(String med) {
     selectedmedicine = med;
+    update();
+  }
+
+  // =========== ERNS HISTORY
+
+  List<ComplaintsHistory> complaintsHistoryList = [];
+
+  updatecomplainthistorydata(List<ComplaintsHistory> clist) {
+    complaintsHistoryList = clist;
+    update();
+  }
+
+  List<PrimaryDiagnosisHistory> primarydiagnosisHistoryList = [];
+  updateprimarydiagnosishistorydata(List<PrimaryDiagnosisHistory> clist) {
+    primarydiagnosisHistoryList = clist;
+    update();
+  }
+
+  List<PrceduresHistory> prceduresHistoryList = [];
+  updateprcedureshistorydata(List<PrceduresHistory> clist) {
+    prceduresHistoryList = clist;
+    update();
+  }
+
+  List<DiagnosticsHistory> diagnosticsHistoryList = [];
+  updatediagnosticshistorydata(List<DiagnosticsHistory> clist) {
+    diagnosticsHistoryList = clist;
+    update();
+  }
+
+  List<InvestigationsHistory> investigationHistoryList = [];
+  updateinvestigationistorydata(List<InvestigationsHistory> clist) {
+    investigationHistoryList = clist;
+    update();
+  }
+
+  List<VitalsHistory> vitalsHistoryList = [];
+  updatevitalshistorydata(List<VitalsHistory> clist) {
+    vitalsHistoryList = clist;
     update();
   }
 }

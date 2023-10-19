@@ -4,6 +4,7 @@ import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
+import 'package:doctormobileapplication/models/erns_history.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
@@ -288,4 +289,32 @@ class PrescribeMedicinRepo {
       throw Exception('Failed to fetch medicines details');
     }
   }
+
+  //   static Future<ernsHistory> getErnsHistory() async {
+  //   String branchid = await LocalDb().getBranchId() ?? "";
+
+  //   String url = AppConstants.getErnsHistory;
+  //   Uri uri = Uri.parse(url);
+  //   var body = jsonEncode(<String, dynamic>{
+  //     "BranchId": branchid,
+  //   });
+  //   var response = await http.post(uri,
+  //       body: body,
+  //       headers: <String, String>{'Content-Type': 'application/json'});
+
+  //   if (response.statusCode == 200) {
+  //     var responseData = jsonDecode(response.body);
+  //     var status = responseData['Status'];
+
+  //     if (status == 1) {
+  //       medicineMatrix mm = medicineMatrix.fromJson(responseData);
+  //       return mm;
+  //     } else {
+  //       showSnackbar(Get.context!, 'Failed to update');
+  //       return medicineMatrix();
+  //     }
+  //   } else {
+  //     throw Exception('Failed to fetch medicines details');
+  //   }
+  // }
 }
