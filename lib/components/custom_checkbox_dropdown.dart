@@ -678,7 +678,6 @@ addMedicine(
   //   'Med 1',
   // ];
   await showDialog(
-    barrierColor:  Colors.grey.withOpacity(0.8),
     barrierDismissible: true,
     context: context,
     builder: (context) {
@@ -690,403 +689,312 @@ addMedicine(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             content: SingleChildScrollView(
-              child: SizedBox(
-                height: Get.height * 0.7,
-                width: Get.width * 0.8,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 20),
-                        hintStyle:
-                            const TextStyle(color: ColorManager.kPrimaryColor),
-                        hintText: 'Search',
-                        filled: true,
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryLightColor),
-                            borderRadius: BorderRadius.circular(8)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
+                  // Medicines
+                  Center(
+                    child: Text(
+                      'Medicines',
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                      hintStyle:
+                          const TextStyle(color: ColorManager.kPrimaryColor),
+                      hintText: 'Search',
+                      filled: true,
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: ColorManager.kPrimaryLightColor),
-                        ),
-                        fillColor: ColorManager.kPrimaryLightColor,
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: ColorManager.kPrimaryColor,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: ColorManager.kPrimaryLightColor),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(0.0),
-                          ),
+                          borderRadius: BorderRadius.circular(8)),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                            color: ColorManager.kPrimaryLightColor),
+                      ),
+                      fillColor: ColorManager.kPrimaryLightColor,
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: ColorManager.kPrimaryColor,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: ColorManager.kPrimaryLightColor),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(0.0),
                         ),
                       ),
-                      controller: medController,
-                      onChanged: (val) {
+                    ),
+                    controller: medController,
+                    onChanged: (val) {
+                      medtitle = val;
+                      setState(() {
                         medtitle = val;
-                        setState(() {
-                          medtitle = val;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.009,
-                    ),
-                    GetBuilder<ERXController>(builder: (context) {
-                      return SizedBox(
-                        height: Get.height * 0.15,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: controller.medicineList.length,
-                          itemBuilder: (context, index) {
-                            if (medController.text.isEmpty ||
-                                controller.medicineList[index].name!
-                                    .toLowerCase()
-                                    .contains(medtitle.toLowerCase())) {
-                              final medicine = controller.medicineList[index];
-                              final isSelected = controller.selectedmedicineList
-                                  .contains(medicine);
-                                  
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (isSelected) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content:
-                                                  Text("Already Selected")));
-                                    } else {
-                                      controller.selectedmedicineList.clear();
-                                      controller.selectedmedicineList
-                                          .add(medicine);
-                                     
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  color: isSelected
-                                      ? ColorManager.kPrimaryColor
-                                      : ColorManager.kWhiteColor,
-                                  child: Text(
-                                    medicine.name ?? "",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: isSelected
-                                          ? ColorManager.kWhiteColor
-                                          : ColorManager.kblackColor,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 4,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
-                      );
-                    }),
-                    SizedBox(
-                      height: Get.height * 0.009,
-                    ),
-                    Row(children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Text(
-                              'Routes',
-                              style: GoogleFonts.raleway(
-                                textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.005,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                await showRoutes(context);
-                              },
-                              child: Container(
-                                height: Get.height * 0.05,
-                                width: Get.width * 0.5,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: ColorManager.kGreyColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: Get.height * 0.013,
-                                      left: Get.width * 0.01),
-                                  child: GetBuilder<ERXController>(
-                                      builder: (context) {
-                                    return Text(
-                                      ERXController.i.selectedlst
-                                              .medicineRoutes!.isNotEmpty
-                                          ? ERXController
-                                              .i
-                                              .selectedlst
-                                              .medicineRoutes!
-                                              .last
-                                              .englishDefinition!
-                                          : "Medicine",
-                                      style: const TextStyle(
-                                        color: ColorManager.kblackColor,
-                                        fontSize: 10,
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Text(
-                              'Duration',
-                              style: GoogleFonts.raleway(
-                                textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.005,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                await showDuration(context);
-                              },
-                              child: Container(
-                                height: Get.height * 0.05,
-                                width: Get.width * 0.5,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: ColorManager.kGreyColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: Get.height * 0.013,
-                                      left: Get.width * 0.01),
-                                  child: GetBuilder<ERXController>(
-                                      builder: (context) {
-                                    return Text(
-                                      ERXController
-                                              .i.selectedlst.dayList!.isNotEmpty
-                                          ? "${ERXController.i.selectedlst.dateList!.last.englishCounting!} ${ERXController.i.selectedlst.dayList!.last.englishDay!}"
-                                          : "Duration",
-                                      style: const TextStyle(
-                                        color: ColorManager.kblackColor,
-                                        fontSize: 10,
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.009,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Text(
-                              'Frequency',
-                              style: GoogleFonts.raleway(
-                                textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.005,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                await showfrequency(context);
-                              },
-                              child: Container(
-                                height: Get.height * 0.05,
-                                width: Get.width * 0.5,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: ColorManager.kGreyColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: Get.height * 0.013,
-                                      left: Get.width * 0.01),
-                                  child: GetBuilder<ERXController>(
-                                      builder: (context) {
-                                    return Text(
-                                      ERXController.i.selectedlst
-                                              .medicineFrequencies!.isNotEmpty
-                                          ? ERXController
-                                              .i
-                                              .selectedlst
-                                              .medicineFrequencies!
-                                              .last
-                                              .numericDisplay!
-                                          : "Frequency",
-                                      style: const TextStyle(
-                                        color: ColorManager.kblackColor,
-                                        fontSize: 10,
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Text(
-                              'Dosage',
-                              style: GoogleFonts.raleway(
-                                textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.005,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                await showdosages(context);
-                              },
-                              child: Container(
-                                height: Get.height * 0.05,
-                                width: Get.width * 0.5,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    color: ColorManager.kGreyColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: Get.height * 0.013,
-                                      left: Get.width * 0.01),
-                                  child: GetBuilder<ERXController>(
-                                      builder: (context) {
-                                    return Text(
-                                      ERXController.i.selectedlst
-                                              .medicineDosages!.isNotEmpty
-                                          ? ERXController
-                                              .i
-                                              .selectedlst
-                                              .medicineDosages!
-                                              .last
-                                              .dosageValue!
-                                              .toString()
-                                          : "Dosages",
-                                      style: const TextStyle(
-                                        color: ColorManager.kblackColor,
-                                        fontSize: 10,
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ]),
-                    SizedBox(height: Get.height * 0.04),
-                    Center(
-                      child: PrimaryButton(
-                        title: 'Save',
-                        fontSize: 14,
-                        height: Get.height * 0.06,
-                        onPressed: () {
-                          if (controller.selectedmedicineList.isNotEmpty) {
-                            if (controller.finalmedicinellist.length ==
-                                controller.selectedlst.medicineRoutes!.length) {
-                              if (controller
-                                          .selectedlst.medicineRoutes!.length ==
-                                      controller.selectedlst
-                                          .medicineFrequencies!.length &&
-                                  controller
-                                      .selectedlst.medicineRoutes!.isNotEmpty) {
-                                if (controller.selectedlst.medicineFrequencies!
-                                        .length ==
-                                    controller.selectedlst.dayList!.length) {
-                                  if (controller.selectedlst.dayList!.length ==
-                                      controller.selectedlst.medicineDosages!
-                                          .length) {
-                                    ERXController.i.updatemedindex();
-                                     controller.updatefinalmed(controller.selectedmedicineList[0]);
-                                    completer.complete(selectedMedicine);
-                                    
-                                    Get.back();
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.009,
+                  ),
+                  GetBuilder<ERXController>(builder: (context) {
+                    return SizedBox(
+                      height: Get.height * 0.15,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.medicineList.length,
+                        itemBuilder: (context, index) {
+                          if (medController.text.isEmpty ||
+                              controller.medicineList[index].name!
+                                  .toLowerCase()
+                                  .contains(medtitle.toLowerCase())) {
+                            final medicine = controller.medicineList[index];
+                            final isSelected = controller.selectedmedicineList
+                                .contains(medicine);
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (isSelected) {
+                                    controller.selectedmedicineList.clear();
+                                    selectedMedicine = "";
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content:
-                                                Text("Select Dosage First")));
+                                    controller.selectedmedicineList.clear();
+                                    controller.selectedmedicineList
+                                        .add(medicine);
+                                    selectedMedicine = medicine.name ?? "";
                                   }
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content:
-                                              Text("Select Duration First")));
-                                }
-                              }
-                              {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text("Select Frequency First")));
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text("Select Route First")));
-                            }
+                                });
+                              },
+                              child: Container(
+                                color: isSelected
+                                    ? ColorManager.kPrimaryColor
+                                    : ColorManager.kWhiteColor,
+                                child: Text(
+                                  medicine.name ?? "",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: isSelected
+                                        ? ColorManager.kWhiteColor
+                                        : ColorManager.kblackColor,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 4,
+                                ),
+                              ),
+                            );
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Select Medicine First")));
+                            return Container();
                           }
                         },
-                        color: ColorManager.kPrimaryColor,
-                        textcolor: ColorManager.kWhiteColor,
+                      ),
+                    );
+                  }),
+                  SizedBox(
+                    height: Get.height * 0.009,
+                  ),
+                  Row(children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                          Text(
+                            '  Routes',
+                            style: GoogleFonts.raleway(
+                              textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showRoutes(context);
+                            },
+                            child: Container(
+                              height: Get.height * 0.05,
+                              width: Get.width * 0.5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: ColorManager.kGreyColor,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: Get.height * 0.013,
+                                    left: Get.width * 0.01),
+                                child: const Text(
+                                  'external use',
+                                  style: TextStyle(
+                                    color: ColorManager.kblackColor,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                          Text(
+                            '  Duration',
+                            style: GoogleFonts.raleway(
+                              textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
+                          Container(
+                            height: Get.height * 0.05,
+                            width: Get.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: ColorManager.kGreyColor,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: Get.height * 0.013,
+                                  left: Get.width * 0.01),
+                              child: const Text(
+                                '2 Week',
+                                style: TextStyle(
+                                  color: ColorManager.kblackColor,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                    SizedBox(
+                      width: Get.width * 0.009,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                          Text(
+                            '  Frequency',
+                            style: GoogleFonts.raleway(
+                              textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
+                          Container(
+                            height: Get.height * 0.05,
+                            width: Get.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: ColorManager.kGreyColor,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: Get.height * 0.013,
+                                  left: Get.width * 0.01),
+                              child: const Text(
+                                '1',
+                                style: TextStyle(
+                                  color: ColorManager.kblackColor,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                          Text(
+                            '  Dosage',
+                            style: GoogleFonts.raleway(
+                              textStyle: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
+                          Container(
+                            height: Get.height * 0.05,
+                            width: Get.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: ColorManager.kGreyColor,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: Get.height * 0.013,
+                                  left: Get.width * 0.01),
+                              child: const Text(
+                                'OD',
+                                style: TextStyle(
+                                  color: ColorManager.kblackColor,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+                  SizedBox(height: Get.height * 0.04),
+                  Center(
+                    child: PrimaryButton(
+                      title: 'Save',
+                      fontSize: 14,
+                      height: Get.height * 0.06,
+                      onPressed: () {
+                        Get.back();
+                        completer.complete(selectedMedicine);
+                      },
+                      color: ColorManager.kPrimaryColor,
+                      textcolor: ColorManager.kWhiteColor,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
