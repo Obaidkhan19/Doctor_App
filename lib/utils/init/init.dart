@@ -9,10 +9,10 @@ import 'package:doctormobileapplication/data/controller/google_maps_controller.d
 class AppBindings implements Bindings {
   @override
   void dependencies() {
-    Get.put<ManageAppointmentController>(ManageAppointmentController());
     Get.put<ProfileController>(ProfileController());
     Get.put<AddressController>(AddressController());
     Get.put<AuthController>(AuthController());
     Get.put<LanguageController>(LanguageController());
+    Get.put<ManageAppointmentController>(ManageAppointmentController());
   }
 }

@@ -32,22 +32,24 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
     ManageAppointmentController.i.getDailyDoctorAppointment();
   }
 
+  var contr =
+      Get.put<ManageAppointmentController>(ManageAppointmentController());
+
   @override
   Widget build(BuildContext context) {
-    var contr =
-        Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
         appBar: AppBar(
           leading: InkWell(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () {
-              Get.to(() => const DrawerScreen());
+              Get.offAll(() => const DrawerScreen());
             },
             child: Image.asset(
               AppImages.back,
             ),
           ),
+          centerTitle: true,
           title: Center(
             child: Text(
               'todayappointment'.tr,
@@ -59,17 +61,11 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
               ),
             ),
           ),
-          // actions: const [
-          //   Text(
-          //     'd    ',
-          //     style: TextStyle(color: Colors.white, fontSize: 0.5),
-          //   )
-          // ],
           backgroundColor: Colors.transparent,
         ),
         body: GetBuilder<ManageAppointmentController>(builder: (cont) {
           return BlurryModalProgressHUD(
-              inAsyncCall: cont.isLoadingDailyDoctorAppointment,
+              inAsyncCall: cont.isLoadingscreen,
               blurEffectIntensity: 4,
               progressIndicator: const SpinKitSpinningLines(
                 color: Color(0xfff1272d3),
@@ -335,299 +331,351 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
-                  Card(
-                    elevation: 4,
-                    surfaceTintColor: ColorManager.kWhiteColor,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: Get.height * 0.03,
-                          bottom: Get.height * 0.03,
-                          left: Get.width * 0.025,
-                          right: Get.width * 0.025),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Time Slot',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '14:00 to 18:00',
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 9,
-                                          color: ColorManager.kblackColor,
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: Get.width * 0.001),
+                    child: Card(
+                      elevation: 4,
+                      surfaceTintColor: ColorManager.kWhiteColor,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: Get.height * 0.03,
+                            bottom: Get.height * 0.03,
+                            left: Get.width * 0.025,
+                            right: Get.width * 0.025),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Time Slot',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kblackColor,
+                                              fontWeight: FontWeight.w700),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.03,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.1,
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(bottom: Get.height * 0.02),
-                                child: SizedBox(
-                                  height: Get.height * 0.09,
-                                  child: const MyVerticalSeparator(
-                                    color: ColorManager.kblackColor,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.02,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Booked',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kRedColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '03',
-                                        style: GoogleFonts.poppins(
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[0]}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[1]} to ${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[0]}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[1]}",
+                                          style: GoogleFonts.poppins(
                                             fontSize: 9,
                                             color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.03,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.01,
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(bottom: Get.height * 0.02),
-                                child: SizedBox(
-                                  height: Get.height * 0.09,
-                                  child: const MyVerticalSeparator(
-                                    color: ColorManager.kblackColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.03,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.1,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: Get.height * 0.02),
+                                  child: SizedBox(
+                                    height: Get.height * 0.09,
+                                    child: const MyVerticalSeparator(
+                                      color: ColorManager.kblackColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.01,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Arrived',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kPrimaryColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '01',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.03,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.01,
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(bottom: Get.height * 0.02),
-                                child: SizedBox(
-                                  height: Get.height * 0.09,
-                                  child: const MyVerticalSeparator(
-                                    color: ColorManager.kblackColor,
+                                SizedBox(
+                                  width: Get.width * 0.02,
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Booked',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kRedColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          ManageAppointmentController
+                                                  .i
+                                                  .dailyDoctorAppointmentsModel
+                                                  .appointmentSummary?[0]
+                                                  .booked
+                                                  .toString() ??
+                                              "",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kblackColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.03,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.01,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: Get.height * 0.02),
+                                  child: SizedBox(
+                                    height: Get.height * 0.09,
+                                    child: const MyVerticalSeparator(
+                                      color: ColorManager.kblackColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.01,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Waiting',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kblueColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '02',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.03,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.01,
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(bottom: Get.height * 0.02),
-                                child: SizedBox(
-                                  height: Get.height * 0.09,
-                                  child: const MyVerticalSeparator(
-                                    color: ColorManager.kblackColor,
+                                SizedBox(
+                                  width: Get.width * 0.01,
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Arrived',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kPrimaryColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          ManageAppointmentController
+                                                  .i
+                                                  .dailyDoctorAppointmentsModel
+                                                  .appointmentSummary?[0]
+                                                  .confirmed
+                                                  .toString() ??
+                                              "",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kblackColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.03,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.01,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: Get.height * 0.02),
+                                  child: SizedBox(
+                                    height: Get.height * 0.09,
+                                    child: const MyVerticalSeparator(
+                                      color: ColorManager.kblackColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.01,
-                              ),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'No show',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color:
-                                                ColorManager.kyellowContainer,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
+                                SizedBox(
+                                  width: Get.width * 0.01,
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Waiting',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kblueColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          ManageAppointmentController
+                                                  .i
+                                                  .dailyDoctorAppointmentsModel
+                                                  .appointmentSummary?[0]
+                                                  .pending
+                                                  .toString() ??
+                                              "",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kblackColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.03,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.01,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: Get.height * 0.02),
+                                  child: SizedBox(
+                                    height: Get.height * 0.09,
+                                    child: const MyVerticalSeparator(
+                                      color: ColorManager.kblackColor,
+                                    ),
                                   ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '01',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 9,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.03,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.005,
-                          ),
-                          const MySeparator(
-                            color: ColorManager.kblackColor,
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.01,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Total Appointments',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 8,
-                                    color: ColorManager.kblackColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(width: Get.width * 0.08),
-                              Text(
-                                '03',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 8,
-                                    color: ColorManager.kblackColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(width: Get.width * 0.1),
-                              Text(
-                                '01',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 8,
-                                    color: ColorManager.kblackColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(width: Get.width * 0.1),
-                              Text(
-                                '02',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 8,
-                                    color: ColorManager.kblackColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              SizedBox(width: Get.width * 0.1),
-                              Text(
-                                '01',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 8,
-                                    color: ColorManager.kblackColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                        ],
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.01,
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'No show',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color:
+                                                  ColorManager.kyellowContainer,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          ManageAppointmentController
+                                                  .i
+                                                  .dailyDoctorAppointmentsModel
+                                                  .appointmentSummary?[0]
+                                                  .cancelled
+                                                  .toString() ??
+                                              "",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 9,
+                                              color: ColorManager.kblackColor,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.03,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.005,
+                            ),
+                            const MySeparator(
+                              color: ColorManager.kblackColor,
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Total Appointments',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 8,
+                                      color: ColorManager.kblackColor,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(width: Get.width * 0.1),
+                                Text(
+                                  ManageAppointmentController
+                                          .i
+                                          .dailyDoctorAppointmentsModel
+                                          .appointmentSummary?[0]
+                                          .booked
+                                          .toString() ??
+                                      "",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 8,
+                                      color: ColorManager.kblackColor,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(width: Get.width * 0.12),
+                                Text(
+                                  ManageAppointmentController
+                                          .i
+                                          .dailyDoctorAppointmentsModel
+                                          .appointmentSummary?[0]
+                                          .confirmed
+                                          .toString() ??
+                                      "",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 8,
+                                      color: ColorManager.kblackColor,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(width: Get.width * 0.11),
+                                Text(
+                                  ManageAppointmentController
+                                          .i
+                                          .dailyDoctorAppointmentsModel
+                                          .appointmentSummary?[0]
+                                          .pending
+                                          .toString() ??
+                                      "",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 8,
+                                      color: ColorManager.kblackColor,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                SizedBox(width: Get.width * 0.12),
+                                Text(
+                                  ManageAppointmentController
+                                          .i
+                                          .dailyDoctorAppointmentsModel
+                                          .appointmentSummary?[0]
+                                          .cancelled
+                                          .toString() ??
+                                      "",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 8,
+                                      color: ColorManager.kblackColor,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

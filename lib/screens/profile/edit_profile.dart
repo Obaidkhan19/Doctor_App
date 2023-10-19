@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditProfile extends StatefulWidget {
-  final String? firstName;
+  final String? fullName;
   final String? dob;
   final String? cellNumber;
   final String? email;
@@ -39,7 +39,7 @@ class EditProfile extends StatefulWidget {
       this.country,
       this.province,
       this.address,
-      this.firstName,
+      this.fullName,
       this.cityid,
       this.countryid,
       this.provinceid,
@@ -78,7 +78,7 @@ class _EditProfileState extends State<EditProfile> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    nameController.text = widget.firstName ?? "";
+    nameController.text = widget.fullName ?? "";
     emailController.text = widget.email ?? "";
     numberController.text = widget.cellNumber ?? "";
     addressController.text = widget.address ?? "";
@@ -199,18 +199,11 @@ class _EditProfileState extends State<EditProfile> {
                     controller: nameController,
                   ),
                   EditProfileCustomTextField(
+                    onTap: () {
+                      EditProfileController.i.selectDateAndTime(context,
+                          EditProfileController.arrival, edit.formatearrival);
+                    },
                     readonly: true,
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          EditProfileController.i.selectDateAndTime(
-                              context,
-                              EditProfileController.arrival,
-                              edit.formatearrival);
-                        },
-                        icon: Image.asset(
-                          Images.schedule,
-                          height: Get.height * 0.03,
-                        )),
                     hintText: EditProfileController.i.formatearrival.toString(),
                   ),
                   EditProfileNumberCustomTextField(
@@ -233,6 +226,31 @@ class _EditProfileState extends State<EditProfile> {
                     controller: emailController,
                   ),
                   EditProfileCustomTextField(
+                    onTap: () async {
+                      edit.selectedcountry = null;
+                      edit.selectedcity = null;
+                      edit.citiesList.clear();
+                      edit.selectedprovince = null;
+                      //  edit.provinceList.clear();
+                      widget.province = 'province'.tr;
+                      widget.city = 'city'.tr;
+
+                      Countries generic = await searchabledropdown(
+                          context, edit.countriesList ?? []);
+                      edit.selectedcountry = null;
+                      edit.updateselectedCountry(generic);
+
+                      if (generic != '') {
+                        edit.selectedcountry = generic;
+                        edit.selectedcountry =
+                            (generic == '') ? null : edit.selectedcountry;
+                      }
+                      String cid = EditProfileController.i.selectedcountry!.id
+                          .toString();
+                      setState(() {
+                        _getProvinces(cid);
+                      });
+                    },
                     validator: (value) {
                       if (value == "country".tr) {
                         return 'pleaseselectyourcountry'.tr;
@@ -240,40 +258,32 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     readonly: true,
-                    suffixIcon: IconButton(
-                        onPressed: () async {
-                          edit.selectedcountry = null;
-                          edit.selectedcity = null;
-                          edit.citiesList.clear();
-                          edit.selectedprovince = null;
-                          //  edit.provinceList.clear();
-                          widget.province = 'province'.tr;
-                          widget.city = 'city'.tr;
 
-                          Countries generic = await searchabledropdown(
-                              context, edit.countriesList ?? []);
-                          edit.selectedcountry = null;
-                          edit.updateselectedCountry(generic);
-
-                          if (generic != '') {
-                            edit.selectedcountry = generic;
-                            edit.selectedcountry =
-                                (generic == '') ? null : edit.selectedcountry;
-                          }
-                          String cid = EditProfileController
-                              .i.selectedcountry!.id
-                              .toString();
-                          setState(() {
-                            _getProvinces(cid);
-                          });
-                        },
-                        icon: Image.asset(Images.dropdown)),
                     hintText: EditProfileController.i.selectedcountry == null
                         ? "country".tr
                         : EditProfileController.i.selectedcountry?.name ?? "",
                     // "${(EditProfileController.i.selectedcountry != null && EditProfileController.i.selectedcountry!.name != null) ? (EditProfileController.i.selectedcountry!.name!.length > 10 ? ('${EditProfileController.i.selectedcountry?.name!.substring(0, 10)}...') : EditProfileController.i.selectedcountry?.name) : widget.country ?? "country"}",
                   ),
                   EditProfileCustomTextField(
+                    onTap: () async {
+                      edit.selectedprovince = null;
+                      edit.selectedcity = null;
+                      Provinces generic = await searchabledropdown(
+                          context, edit.provinceList ?? []);
+                      edit.selectedprovince = null;
+                      edit.updateselectedprovince(generic);
+
+                      if (generic != '') {
+                        edit.selectedprovince = generic;
+                        edit.selectedprovince =
+                            (generic == '') ? null : edit.selectedprovince;
+                      }
+                      String cid = EditProfileController.i.selectedprovince!.id
+                          .toString();
+                      setState(() {
+                        _getCities(cid);
+                      });
+                    },
                     validator: (value) {
                       if (value == "province".tr) {
                         return 'pleaseselectyourprovince';
@@ -281,34 +291,27 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     readonly: true,
-                    suffixIcon: IconButton(
-                        onPressed: () async {
-                          edit.selectedprovince = null;
-                          edit.selectedcity = null;
-                          Provinces generic = await searchabledropdown(
-                              context, edit.provinceList ?? []);
-                          edit.selectedprovince = null;
-                          edit.updateselectedprovince(generic);
 
-                          if (generic != '') {
-                            edit.selectedprovince = generic;
-                            edit.selectedprovince =
-                                (generic == '') ? null : edit.selectedprovince;
-                          }
-                          String cid = EditProfileController
-                              .i.selectedprovince!.id
-                              .toString();
-                          setState(() {
-                            _getCities(cid);
-                          });
-                        },
-                        icon: Image.asset(Images.dropdown)),
                     hintText: EditProfileController.i.selectedprovince == null
                         ? "province".tr
                         : EditProfileController.i.selectedprovince?.name ?? "",
                     //  "${(EditProfileController.i.selectedprovince != null && EditProfileController.i.selectedprovince!.name != null) ? (EditProfileController.i.selectedprovince!.name!.length > 10 ? ('${EditProfileController.i.selectedprovince?.name!.substring(0, 10)}...') : EditProfileController.i.selectedprovince?.name) : widget.province ?? "Province"}",
                   ),
                   EditProfileCustomTextField(
+                    onTap: () async {
+                      edit.selectedcity = null;
+                      Cities generic = await searchabledropdown(
+                          context, edit.citiesList ?? []);
+                      edit.selectedcity = null;
+                      edit.updateselectedcity(generic);
+
+                      if (generic != '') {
+                        edit.selectedcity = generic;
+                        edit.selectedcity =
+                            (generic == '') ? null : edit.selectedcity;
+                      }
+                      setState(() {});
+                    },
                     validator: (value) {
                       if (value == "city") {
                         return 'pleaseselectyourcity'.tr;
@@ -316,22 +319,6 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     readonly: true,
-                    suffixIcon: IconButton(
-                        onPressed: () async {
-                          edit.selectedcity = null;
-                          Cities generic = await searchabledropdown(
-                              context, edit.citiesList ?? []);
-                          edit.selectedcity = null;
-                          edit.updateselectedcity(generic);
-
-                          if (generic != '') {
-                            edit.selectedcity = generic;
-                            edit.selectedcity =
-                                (generic == '') ? null : edit.selectedcity;
-                          }
-                          setState(() {});
-                        },
-                        icon: Image.asset(Images.dropdown)),
                     hintText: EditProfileController.i.selectedcity == null
                         ? "city".tr
                         : EditProfileController.i.selectedcity?.name ?? "",

@@ -95,10 +95,7 @@ class ConsultingQueueRepo {
   // }
 
   static GetConsultingQueuewaitinghold(consultingqueuepatients consult) async {
-    ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
-
     var body = consult.toJson();
-    print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
       ConsultingQueueController.i.updateIsclinicloading(true);
@@ -126,9 +123,11 @@ class ConsultingQueueRepo {
           //   print(ConsultingQueue);
         }
       } else {
+        ConsultingQueueController.i.updateIsclinicloading(false);
         log(response.statusCode.toString());
       }
     } catch (e) {
+      ConsultingQueueController.i.updateIsclinicloading(false);
       log('$e exception caught');
     }
   }
