@@ -120,7 +120,7 @@ class _ClinicalPracticeQueueDataListState
                         onSubmitted: (String value) {
                           SearchFieldController.text = value;
                           callback();
-                          //  setState(() {});
+                          setState(() {});
                         },
                         prefixIcon: const Icon(
                           Icons.search_outlined,

@@ -118,7 +118,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                         onSubmitted: (String value) {
                           SearchFieldController.text = value;
                           callback();
-                          // setState(() {});
+                          setState(() {});
                         },
                         prefixIcon: const Icon(
                           Icons.search_outlined,
