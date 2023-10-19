@@ -2,7 +2,6 @@ import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
-import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/wallet_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -26,7 +25,7 @@ class _WalletScreenState extends State<WalletScreen> {
   String path = '';
 
   _getimagepath() async {
-    path = (await LocalDb().getDoctorUserImagePath())!;
+    await LocalDb().getDoctorUserImagePath();
     String baseurl = AppConstants.baseURL;
     imagepath = baseurl + path;
   }
@@ -53,60 +52,36 @@ class _WalletScreenState extends State<WalletScreen> {
                       size: 20, color: ColorManager.kPrimaryColor)),
               Center(
                 child: CircleAvatar(
-                  backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                  backgroundColor: Colors.transparent,
                   radius: 30,
                   child: ClipOval(
-                    child: path == ""
+                    child: path == '' || path == 'null'
                         ? Image.asset(AppImages.doctorlogo)
                         : Image.network(imagepath),
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: Get.width * 0.6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: Get.width * 0.6,
-                          child: Expanded(
-                            child: Text(
-                              ProfileController.i.selectedbasicInfo?.fullName ??
-                                  "",
-                              style: const TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                color: ColorManager.kPrimaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: Text(
-                            //'REG NO. $PMDCNumber',
-                            '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
-                            // style: Theme.of(context)
-                            //     .textTheme
-                            //     .bodyLarge
-                            //     ?.copyWith(
-                            //         fontWeight: FontWeight.w600,
-                            //         fontSize: 14,
-                            //         color: ColorManager.kWhiteColor),
-                            style: const TextStyle(
-                              color: ColorManager.kPrimaryColor,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+              SizedBox(height: Get.height * 0.02),
+              Center(
+                child: Text(
+                  'Dr. Saaliha',
+                  style: GoogleFonts.poppins(
+                    fontSize: 15,
+                    color: ColorManager.kPrimaryColor,
+                    fontWeight: FontWeight.w700,
                   ),
-                ],
+                ),
+              ),
+              SizedBox(height: Get.height * 0.002),
+              Center(
+                child: Text(
+                  'DHA No. 1048480',
+                  style: GoogleFonts.poppins(
+                    fontSize: 10,
+                    color: ColorManager.kPrimaryColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
               SizedBox(height: Get.height * 0.08),
               Stack(

@@ -32,6 +32,7 @@ class DoctorsAppointment extends StatelessWidget {
           return Column(
             children: [
               CarouselSlider.builder(
+                
                 carouselController: CarouselController(),
                 itemCount: services.length,
                 itemBuilder: (context, index, realIndex) {
@@ -95,9 +96,9 @@ class DoctorsAppointment extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Search',
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.search,
                   color: ColorManager.kPrimaryColor,
                 ),
@@ -122,120 +123,119 @@ class DoctorsAppointment extends StatelessWidget {
               ),
               SizedBox(height: Get.height * 0.02),
               Expanded(
-                  child: cont.selectedAppointmentData == 3
-                      ? TabBarView(
-                          controller: controller.tabController,
-                          children: [
-                            buildAppointmentsList(
-                              context,
-                              [
-                                AppointmentData(
-                                  statusText: 'Consult at Clinic',
-                                  statusColor: ColorManager.kOrangeColor,
-                                  name: 'Dr. Sheikh Hamid',
-                                  date: 'Aug 19,2023',
-                                  time: '10:00 AM',
-                                  type: 'Cardiology Specialist',
-                                  rating: '4.5',
-                                  showButtons: false,
-                                  onBookAgainPressed: () {},
-                                  onLeaveReviewPressed: () {},
-                                ),
-                                // Add more upcoming appointments here
-                              ],
-                            ),
-                            buildAppointmentsList(
-                              context,
-                              [
-                                AppointmentData(
-                                  statusText: 'Completed',
-                                  statusColor: Colors.green,
-                                  name: 'Dr Sheikh Hamid',
-                                  date: 'Aug 19, 2023',
-                                  time: '11:00 am',
-                                  type: 'Cardiology Specialist',
-                                  rating: '4.5',
-                                  showButtons: true,
-                                  onBookAgainPressed: () {},
-                                  onLeaveReviewPressed: () {},
-                                ),
-                              ],
-                            ),
-                            buildAppointmentsList(
-                              context,
-                              [
-                                AppointmentData(
-                                  statusText: 'Cancelled',
-                                  statusColor: Colors.red,
-                                  name: 'Dr Sheikh Hamid',
-                                  date: 'Aug 19, 2023',
-                                  time: '11:00 AM',
-                                  type: 'Cardiology Specialist',
-                                  rating: '4.5',
-                                  showButtons: false,
-                                  onBookAgainPressed: () {},
-                                  onLeaveReviewPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      : TabBarView(
-                          controller: controller.tabController,
-                          children: [
-                            buildAppointmentsList(
-                              context,
-                              [
-                                AppointmentData(
-                                  statusText: 'Rider Arriving Soon',
-                                  statusColor: ColorManager.kOrangeColor,
-                                  name: 'Dr. Sheikh Hamid',
-                                  date: 'Aug 19,2023',
-                                  time: '10:00 AM',
-                                  type: 'Home Sampling',
-                                  rating: '4.5',
-                                  showButtons: false,
-                                  onBookAgainPressed: () {},
-                                  onLeaveReviewPressed: () {},
-                                ),
-                              ],
-                            ),
-                            buildAppointmentsList(
-                              context,
-                              [
-                                AppointmentData(
-                                  statusText: 'Completed',
-                                  statusColor: Colors.green,
-                                  name: 'Dr Sheikh Hamid',
-                                  date: 'Aug 19, 2023',
-                                  time: '11:00 am',
-                                  type: 'Home Sampling',
-                                  rating: '4.5',
-                                  showButtons: true,
-                                  onBookAgainPressed: () {},
-                                  onLeaveReviewPressed: () {},
-                                ),
-                              ],
-                            ),
-                            buildAppointmentsList(
-                              context,
-                              [
-                                AppointmentData(
-                                  statusText: 'Cancelled',
-                                  statusColor: Colors.red,
-                                  name: 'Dr Sheikh Hamid',
-                                  date: 'Aug 19, 2023',
-                                  time: '11:00 AM',
-                                  type: 'Home Sampling',
-                                  rating: '4.5',
-                                  showButtons: false,
-                                  onBookAgainPressed: () {},
-                                  onLeaveReviewPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
+                child: cont.selectedAppointmentData == 3 ? TabBarView(
+                  controller: controller.tabController,
+                  children: [
+                    buildAppointmentsList(
+                      context,
+                      [
+                        AppointmentData(
+                          statusText: 'Consult at Clinic',
+                          statusColor: ColorManager.kOrangeColor,
+                          name: 'Dr. Sheikh Hamid',
+                          date: 'Aug 19,2023',
+                          time: '10:00 AM',
+                          type: 'Cardiology Specialist',
+                          rating: '4.5',
+                          showButtons: false,
+                          onBookAgainPressed: () {},
+                          onLeaveReviewPressed: () {},
+                        ),
+                        // Add more upcoming appointments here
+                      ],
+                    ),
+                    buildAppointmentsList(
+                      context,
+                      [
+                        AppointmentData(
+                          statusText: 'Completed',
+                          statusColor: Colors.green,
+                          name: 'Dr Sheikh Hamid',
+                          date: 'Aug 19, 2023',
+                          time: '11:00 am',
+                          type: 'Cardiology Specialist',
+                          rating: '4.5',
+                          showButtons: true,
+                          onBookAgainPressed: () {},
+                          onLeaveReviewPressed: () {},
+                        ),
+                      ],
+                    ),
+                    buildAppointmentsList(
+                      context,
+                      [
+                        AppointmentData(
+                          statusText: 'Cancelled',
+                          statusColor: Colors.red,
+                          name: 'Dr Sheikh Hamid',
+                          date: 'Aug 19, 2023',
+                          time: '11:00 AM',
+                          type: 'Cardiology Specialist',
+                          rating: '4.5',
+                          showButtons: false,
+                          onBookAgainPressed: () {},
+                          onLeaveReviewPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ) : TabBarView(
+                  controller: controller.tabController,
+                  children: [
+                    buildAppointmentsList(
+                      context,
+                      [
+                        AppointmentData(
+                          statusText: 'Rider Arriving Soon',
+                          statusColor: ColorManager.kOrangeColor,
+                          name: 'Dr. Sheikh Hamid',
+                          date: 'Aug 19,2023',
+                          time: '10:00 AM',
+                          type: 'Home Sampling',
+                          rating: '4.5',
+                          showButtons: false,
+                          onBookAgainPressed: () {},
+                          onLeaveReviewPressed: () {},
+                        ),
+                      ],
+                    ),
+                    buildAppointmentsList(
+                      context,
+                      [
+                        AppointmentData(
+                          statusText: 'Completed',
+                          statusColor: Colors.green,
+                          name: 'Dr Sheikh Hamid',
+                          date: 'Aug 19, 2023',
+                          time: '11:00 am',
+                          type: 'Home Sampling',
+                          rating: '4.5',
+                          showButtons: true,
+                          onBookAgainPressed: () {},
+                          onLeaveReviewPressed: () {},
+                        ),
+                      ],
+                    ),
+                    buildAppointmentsList(
+                      context,
+                      [
+                        AppointmentData(
+                          statusText: 'Cancelled',
+                          statusColor: Colors.red,
+                          name: 'Dr Sheikh Hamid',
+                          date: 'Aug 19, 2023',
+                          time: '11:00 AM',
+                          type: 'Home Sampling',
+                          rating: '4.5',
+                          showButtons: false,
+                          onBookAgainPressed: () {},
+                          onLeaveReviewPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ),
             ],
           );
         }),
@@ -243,7 +243,7 @@ class DoctorsAppointment extends StatelessWidget {
     );
   }
 
-  buildAppointmentsList(
+   buildAppointmentsList(
       BuildContext context, List<AppointmentData> appointmentDataList) {
     return ListView.builder(
       itemCount: appointmentDataList.length,
@@ -258,10 +258,14 @@ class DoctorsAppointment extends StatelessWidget {
           rating: appointmentDataList[index].rating!,
           showButtons: appointmentDataList[index].showButtons!,
           onBookAgainPressed: appointmentDataList[index].onBookAgainPressed!,
-          onLeaveReviewPressed:
-              appointmentDataList[index].onLeaveReviewPressed!,
+          onLeaveReviewPressed: appointmentDataList[index].onLeaveReviewPressed!,
         );
       },
     );
   }
 }
+
+
+
+
+

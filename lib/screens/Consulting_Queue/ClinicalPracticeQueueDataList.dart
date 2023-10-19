@@ -1,14 +1,11 @@
-import 'dart:math';
 
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
-import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
-import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +13,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../components/CustomFormField.dart';
 import '../../components/images.dart';
 import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
-import '../../helpers/font_manager.dart';
 import '../../helpers/values_manager.dart';
 import '../../utils/AppImages.dart';
-import 'History_eRX.dart';
 
 class ClinicalPracticeQueueDataList extends StatefulWidget {
   String? Status;
@@ -49,14 +43,11 @@ class _ClinicalPracticeQueueDataListState
   }
 
   int length = 10;
-
   callback() async {
     ConsultingQueueRepo.GetConsultingQueuewaitinghold(consultingqueuepatients(
-        branchId: await LocalDb().getBranchId(),
+        branchId: "",
         doctorId: await LocalDb().getDoctorId(),
-        search: SearchFieldController.text.isEmpty
-            ? ""
-            : SearchFieldController.text,
+        search: "",
         workLocationId: "",
         status: "1",
         fromDate: DateTime.now().toString().split(' ')[0],
@@ -67,6 +58,7 @@ class _ClinicalPracticeQueueDataListState
         length: length.toString(),
         orderColumn: "0",
         orderDir: "desc"));
+    ConsultingQueueController.i.updateIsclinicloading(false);
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -84,6 +76,7 @@ class _ClinicalPracticeQueueDataListState
   @override
   void initState() {
     callback();
+
     super.initState();
   }
 
@@ -111,17 +104,11 @@ class _ClinicalPracticeQueueDataListState
                 ),
               ),
               child: SafeArea(
-                minimum: const EdgeInsets.all(AppPadding.p14)
-                    .copyWith(top: 0, bottom: -10),
+                minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       CustomTextField(
-                        onSubmitted: (String value) {
-                          SearchFieldController.text = value;
-                          callback();
-                          //  setState(() {});
-                        },
                         prefixIcon: const Icon(
                           Icons.search_outlined,
                           color: ColorManager.kPrimaryColor,
@@ -131,7 +118,7 @@ class _ClinicalPracticeQueueDataListState
                         hintText: 'Search',
                       ),
                       SizedBox(
-                        height: Get.height * 0.68,
+                        height: MediaQuery.of(context).size.height * 0.66,
                         child: ConsultingQueueController
                                 .i.consultingqueuewait.isNotEmpty
                             ? ListView.builder(
@@ -186,14 +173,24 @@ class _ClinicalPracticeQueueDataListState
                                                         radius: 30,
                                                         child: ClipOval(
                                                           child: manageAppointment
-                                                                      .patientImagePath ==
-                                                                  null
-                                                              ? Image.asset(
-                                                                  Images.avator)
-                                                              : Image.network(AppConstants
-                                                                      .baseURL +
-                                                                  manageAppointment
-                                                                      .patientImagePath),
+                                                                    .patientImagePath !=
+                                                                null
+                                                            ? CachedNetworkImage(
+                                                                imageUrl: AppConstants
+                                                                        .baseURL +
+                                                                    manageAppointment
+                                                                        .patientImagePath,
+                                                                        fit: BoxFit.fill,
+                                                               
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        Images
+                                                                            .avator),
+                                                              )
+                                                            : Image.asset(
+                                                                Images.avator),
                                                         ),
                                                       ),
                                                     ),
@@ -247,20 +244,7 @@ class _ClinicalPracticeQueueDataListState
                                                         Get.to(() =>
                                                             //  HistoryeRXConsultingQueue());
 
-                                                            PrescribeMedicineScreen(
-                                                              patientid:
-                                                                  manageAppointment
-                                                                      .patientId,
-                                                              visitno:
-                                                                  manageAppointment
-                                                                      .visitNo,
-                                                              // ernsbit: manageAppointment.er,
-                                                              // currentvisit: manageAppointment.,
-                                                              // checkintypevalue: manageAppointment.ch,
-                                                              prescribedvalue:
-                                                                  manageAppointment
-                                                                      .prescribedInValue,
-                                                            ));
+                                                            const PrescribeMedicineScreen());
                                                       },
                                                       child: Image.asset(
                                                         Images.rxedit,
@@ -338,8 +322,12 @@ class _ClinicalPracticeQueueDataListState
                                             ?.length
                                         : 0) ==
                                     0
-                                ? const Center(
-                                    child: Text('No Record Found!'),
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: const Center(
+                                      child: Text('No Record Found!'),
+                                    ),
                                   )
                                 : Container(),
                       ),
