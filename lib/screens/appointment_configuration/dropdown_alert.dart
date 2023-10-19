@@ -1,6 +1,8 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAlertDropDownWidget extends StatefulWidget {
   List<String> list;

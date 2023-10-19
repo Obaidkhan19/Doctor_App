@@ -29,15 +29,15 @@ class ReschedualAppointmentSlots {
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['AppointmentBranchId'] = AppointmentBranchId;
-    data['AppointmentId'] = AppointmentId;
-    data['IsOnlineAppointment'] = IsOnlineAppointment;
-    data['IsOnlineConsultation'] = IsOnlineConsultation;
-    data['PatientAppointmentId'] = PatientAppointmentId;
-    data['SessionId'] = SessionId;
-    data['WorkLocationId'] = WorkLocationId;
-    data['PatientId'] = PatientId;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['AppointmentBranchId'] = AppointmentBranchId;
+    _data['AppointmentId'] = AppointmentId;
+    _data['IsOnlineAppointment'] = IsOnlineAppointment;
+    _data['IsOnlineConsultation'] = IsOnlineConsultation;
+    _data['PatientAppointmentId'] = PatientAppointmentId;
+    _data['SessionId'] = SessionId;
+    _data['WorkLocationId'] = WorkLocationId;
+    _data['PatientId'] = PatientId;
+    return _data;
   }
 }

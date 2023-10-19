@@ -88,19 +88,19 @@ class ernsHistory {
 }
 
 class VitalsHistory {
-  String? id;
-  String? name;
-  String? patientId;
-  int? temperature;
-  int? pulse;
-  int? bloodPressureSystolic;
-  int? bloodPressureDiastolic;
-  int? respiratoryRate;
-  int? weight;
+  dynamic id;
+  dynamic name;
+  dynamic patientId;
+  dynamic temperature;
+  dynamic pulse;
+  dynamic bloodPressureSystolic;
+  dynamic bloodPressureDiastolic;
+  dynamic respiratoryRate;
+  dynamic weight;
   dynamic age;
-  int? height;
-  int? sPO2;
-  String? visitNo;
+  dynamic height;
+  dynamic sPO2;
+  dynamic visitNo;
   dynamic headCircumference;
   dynamic timeStampString;
 

@@ -12,10 +12,10 @@ class monthlyappointresponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Date'] = date;
-    data['Paid'] = paid;
-    data['UnPaid'] = unPaid;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Date'] = this.date;
+    data['Paid'] = this.paid;
+    data['UnPaid'] = this.unPaid;
     return data;
   }
 }
