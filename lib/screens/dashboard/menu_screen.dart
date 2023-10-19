@@ -57,12 +57,14 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   String imagepath = '';
-  String path = '';
+  String? path;
 
   _getimagepath() async {
     path = (await LocalDb().getDoctorUserImagePath())!;
     String baseurl = AppConstants.baseURL;
-    imagepath = baseurl + path;
+    if (path != null) {
+      imagepath = baseurl + path!;
+    }
   }
 
   bool isBiometric = false;
@@ -98,7 +100,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 backgroundColor: Colors.transparent,
                 radius: 30,
                 child: ClipOval(
-                  child: path == '' || path == 'null'
+                  child: path != null
                       ? Image.asset(AppImages.doctorlogo)
                       : Image.network(imagepath),
                 ),
@@ -141,7 +143,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   InkWell(
                     onTap: () {
                       Get.to(() => EditProfile(
-                            firstName: profile.selectedbasicInfo?.firstName,
+                            fullName: profile.selectedbasicInfo?.fullName,
                             dob: profile.selectedbasicInfo?.dateofBirth,
                             cellNumber:
                                 profile.selectedbasicInfo?.contactPublic,

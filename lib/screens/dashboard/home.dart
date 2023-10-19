@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                         radius: 30,
                         child: ClipOval(
-                          child: path == '' || path == 'null'
+                          child: path != ""
                               ? Image.asset(AppImages.doctorlogo)
                               : Image.network(imagepath),
                         ),
@@ -146,34 +146,45 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: Get.width * 0.04,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ProfileController.i.selectedbasicInfo?.fullName ??
-                                "",
-                            style: const TextStyle(
-                              color: ColorManager.kWhiteColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                      SizedBox(
+                        width: Get.width * 0.6,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: Get.width * 0.6,
+                              child: Expanded(
+                                child: Text(
+                                  ProfileController
+                                          .i.selectedbasicInfo?.fullName ??
+                                      "",
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: ColorManager.kWhiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                  maxLines: 1,
+                                ),
+                              ),
                             ),
-                          ),
-                          Text(
-                            //'REG NO. $PMDCNumber',
-                            '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
-                            // style: Theme.of(context)
-                            //     .textTheme
-                            //     .bodyLarge
-                            //     ?.copyWith(
-                            //         fontWeight: FontWeight.w600,
-                            //         fontSize: 14,
-                            //         color: ColorManager.kWhiteColor),
-                            style: const TextStyle(
-                              color: ColorManager.kWhiteColor,
-                              fontSize: 10,
+                            Text(
+                              //'REG NO. $PMDCNumber',
+                              '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                              // style: Theme.of(context)
+                              //     .textTheme
+                              //     .bodyLarge
+                              //     ?.copyWith(
+                              //         fontWeight: FontWeight.w600,
+                              //         fontSize: 14,
+                              //         color: ColorManager.kWhiteColor),
+                              style: const TextStyle(
+                                color: ColorManager.kWhiteColor,
+                                fontSize: 10,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

@@ -64,8 +64,7 @@ class _ClinicalPracticeQueueDataListState
         length: length.toString(),
         orderColumn: "0",
         orderDir: "desc"));
-
-    _getimagepath();
+    ConsultingQueueController.i.updateIsclinicloading(false);
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -78,15 +77,6 @@ class _ClinicalPracticeQueueDataListState
         }
       }
     });
-  }
-
-  String imagepath = '';
-  String path = '';
-
-  _getimagepath() async {
-    path = (await LocalDb().getDoctorUserImagePath())!;
-    String baseurl = AppConstants.baseURL;
-    imagepath = baseurl + path;
   }
 
   @override
@@ -188,12 +178,15 @@ class _ClinicalPracticeQueueDataListState
                                                                 0, 0, 0, 0),
                                                         radius: 30,
                                                         child: ClipOval(
-                                                          child: path == '' ||
-                                                                  path == 'null'
+                                                          child: manageAppointment
+                                                                      .patientImagePath ==
+                                                                  null
                                                               ? Image.asset(
                                                                   Images.avator)
-                                                              : Image.network(
-                                                                  imagepath),
+                                                              : Image.network(AppConstants
+                                                                      .baseURL +
+                                                                  manageAppointment
+                                                                      .patientImagePath),
                                                         ),
                                                       ),
                                                     ),

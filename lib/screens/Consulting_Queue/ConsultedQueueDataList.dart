@@ -59,6 +59,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         length: "10",
         orderColumn: "0",
         orderDir: "desc"));
+    ConsultingQueueController.i.updateIsclinicloading(false);
   }
 
   @override
@@ -84,18 +85,8 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         }
       }
     });
-    _getimagepath();
 
     super.initState();
-  }
-
-  String imagepath = '';
-  String path = '';
-
-  _getimagepath() async {
-    path = (await LocalDb().getDoctorUserImagePath())!;
-    String baseurl = AppConstants.baseURL;
-    imagepath = baseurl + path;
   }
 
 //ConsultedDataList
@@ -183,12 +174,15 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                               0, 0, 0, 0),
                                                       radius: 30,
                                                       child: ClipOval(
-                                                        child: path == '' ||
-                                                                path == 'null'
+                                                        child: manageAppointment
+                                                                    .patientImagePath ==
+                                                                null
                                                             ? Image.asset(
                                                                 Images.avator)
-                                                            : Image.network(
-                                                                imagepath),
+                                                            : Image.network(AppConstants
+                                                                    .baseURL +
+                                                                manageAppointment
+                                                                    .patientImagePath),
                                                       ),
                                                     ),
                                                   ),

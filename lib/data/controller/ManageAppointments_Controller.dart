@@ -9,17 +9,26 @@ import '../repositories/ManageAppointment_repo/manageAppointment_repo.dart';
 
 class ManageAppointmentController extends GetxController
     implements GetxService {
+  static ManageAppointmentController get i =>
+      Get.put(ManageAppointmentController());
   List<monthlyappointresponse> monthlyappintment = [];
-  int unpaid=0;
-  int paid=0;
-  static ManageAppointmentController get i => Get.put(ManageAppointmentController());
+  int unpaid = 0;
+  int paid = 0;
 
-DateTime? date;
+  DateTime? date;
 
-selectedmonthlyspecificdate(dt){
-  date=dt;
-  update();
-}
+  selectedmonthlyspecificdate(dt) {
+    date = dt;
+    update();
+  }
+
+  bool _isLoadingscreen = false;
+  bool get isLoadingscreen => _isLoadingscreen;
+
+  updateIsloadingScreen(bool value) {
+    _isLoadingscreen = value;
+    update();
+  }
 
   DailyDoctorAppointmentsModel _dailyDoctorAppointmentsModel =
       DailyDoctorAppointmentsModel();
@@ -40,10 +49,10 @@ selectedmonthlyspecificdate(dt){
   DayViewAppointmentSlotModel get dayViewAppointmentSlotModel =>
       _dayViewAppointmentSlotModel;
 
-updatemonthlyappointment(List<monthlyappointresponse> app)async{
-  monthlyappintment=app;
-  update();
-}
+  updatemonthlyappointment(List<monthlyappointresponse> app) async {
+    monthlyappintment = app;
+    update();
+  }
 
   getmonthlyoctorAppointment(date) async {
     try {
@@ -71,9 +80,10 @@ updatemonthlyappointment(List<monthlyappointresponse> app)async{
     _dailyDoctorAppointmentsModel = DailyDoctorAppointmentsModel();
 
     try {
+      _isLoadingscreen = true;
       _dailyDoctorAppointmentsModel =
           await ManageAppointmentRepo.GetDailyDoctorAppointment();
-      isLoadingDailyDoctorAppointment = false;
+      _isLoadingscreen = false;
       update();
     } catch (e) {
       isLoadingDailyDoctorAppointment = false;
@@ -98,11 +108,9 @@ updatemonthlyappointment(List<monthlyappointresponse> app)async{
           await ManageAppointmentRepo.getDailyDoctorAppointmentSlots(
               Dates, IsOnline, WorkLocationId);
       isLoadingDailyDoctorAppointmentSlots = false;
-     
     } catch (e) {
       print('Error : $e');
       isLoadingDailyDoctorAppointmentSlots = false;
-     
     }
     isLoadingDailyDoctorAppointmentSlots = false;
     update();
@@ -256,6 +264,4 @@ updatemonthlyappointment(List<monthlyappointresponse> app)async{
       return "";
     }
   }
-
-
 }

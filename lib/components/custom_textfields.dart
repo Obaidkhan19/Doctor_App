@@ -228,7 +228,7 @@ class EditProfileCustomTextField extends StatelessWidget {
           controller: controller,
           onChanged: onchanged,
           validator: validator,
-          onTap: () {},
+          onTap: onTap ?? () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
           style: const TextStyle(

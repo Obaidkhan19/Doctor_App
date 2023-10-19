@@ -57,11 +57,11 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
         length: length.toString(),
         orderColumn: "0",
         orderDir: "desc"));
+    ConsultingQueueController.i.updateIsclinicloading(false);
   }
 
   @override
   void initState() {
-    _getimagepath();
     SearchFieldController.clear();
     callback();
     //when scroll page
@@ -77,15 +77,6 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
       }
     });
     super.initState();
-  }
-
-  String imagepath = '';
-  String path = '';
-
-  _getimagepath() async {
-    path = (await LocalDb().getDoctorUserImagePath())!;
-    String baseurl = AppConstants.baseURL;
-    imagepath = baseurl + path;
   }
 
   @override
@@ -176,12 +167,15 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                 0, 0, 0, 0),
                                                         radius: 30,
                                                         child: ClipOval(
-                                                          child: path == '' ||
-                                                                  path == 'null'
+                                                          child: manageAppointment
+                                                                      .patientImagePath ==
+                                                                  null
                                                               ? Image.asset(
                                                                   Images.avator)
-                                                              : Image.network(
-                                                                  imagepath),
+                                                              : Image.network(AppConstants
+                                                                      .baseURL +
+                                                                  manageAppointment
+                                                                      .patientImagePath),
                                                         ),
                                                       ),
                                                     ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/search_models.dart';
 import 'package:doctormobileapplication/models/specialities_model.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
@@ -69,6 +70,9 @@ class SpecialitiesRepo {
   }
 
   static getStatuses(OnlineStatusRequest object) async {
+    // String dit = await LocalDb().getDoctorId() ?? "";
+    //  String it = await LocalDb().getDoctorId() ?? "";
+    //   String dit = await LocalDb().getDoctorId() ?? "";
     var body = {};
     var headers = {'Content-Type': 'application/json'};
     try {

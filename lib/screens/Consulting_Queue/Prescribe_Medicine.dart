@@ -30,7 +30,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Item {
   final String name;
-  final int age;
+  final String age;
   final String className;
   final String section;
   final String country;
@@ -48,37 +48,7 @@ class Item {
 
 // Define your list of items
 List<Item> items = [
-  Item(
-      name: "John",
-      age: 25,
-      className: "Class A",
-      section: "Section 1",
-      country: "USA"),
-  Item(
-      name: "Alice",
-      age: 22,
-      className: "Class B",
-      section: "Section 2",
-      country: "Canada"),
-  Item(
-      name: "Bob",
-      age: 23,
-      className: "Class A",
-      section: "Section 1",
-      country: "UK"),
-  Item(
-      name: "Eve",
-      age: 24,
-      className: "Class C",
-      section: "Section 3",
-      country: "Australia"),
-  Item(
-      name: "Charlie",
-      age: 26,
-      className: "Class B",
-      section: "Section 2",
-      country: "USA"),
-  // Add more items as needed
+  Item(name: "", age: "", className: "", section: "", country: ""),
 ];
 
 class PrescribeMedicineScreen extends StatefulWidget {
@@ -662,16 +632,19 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                     SizedBox(
                                                       width: Get.width * 0.01,
                                                     ),
-                                                    Text(
-                                                      controller
-                                                          .selectedComplaintsList[
-                                                              index]
-                                                          .name
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kblackColor,
+                                                    Flexible(
+                                                      child: Text(
+                                                        controller
+                                                            .selectedComplaintsList[
+                                                                index]
+                                                            .name
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -796,16 +769,19 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                     SizedBox(
                                                       width: Get.width * 0.01,
                                                     ),
-                                                    Text(
-                                                      controller
-                                                          .selectedprimarydiagnosisList[
-                                                              index]
-                                                          .name
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kblackColor,
+                                                    Flexible(
+                                                      child: Text(
+                                                        controller
+                                                            .selectedprimarydiagnosisList[
+                                                                index]
+                                                            .name
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -910,7 +886,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   controller
                                                       .selectedsecondaryDiagnosisList,
                                                   cid,
-                                                  "pd");
+                                                  "sd");
                                             },
                                             child: Card(
                                               elevation: 4,
@@ -931,16 +907,19 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                     SizedBox(
                                                       width: Get.width * 0.01,
                                                     ),
-                                                    Text(
-                                                      controller
-                                                          .selectedsecondaryDiagnosisList[
-                                                              index]
-                                                          .name
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kblackColor,
+                                                    Flexible(
+                                                      child: Text(
+                                                        controller
+                                                            .selectedsecondaryDiagnosisList[
+                                                                index]
+                                                            .name
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -1089,43 +1068,47 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left: Get.width * 0.03),
-                                            child: Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    String cid = controller
-                                                        .selecteddiagnosticslist[
-                                                            index]
-                                                        .id!;
-                                                    deleteSelected(
-                                                        context,
-                                                        controller
-                                                            .selecteddiagnosticslist,
-                                                        cid,
-                                                        "diagnostics");
-                                                  },
-                                                  child: SizedBox(
+                                            child: InkWell(
+                                              onTap: () {
+                                                String cid = controller
+                                                    .selecteddiagnosticslist[
+                                                        index]
+                                                    .id!;
+                                                deleteSelected(
+                                                    context,
+                                                    controller
+                                                        .selecteddiagnosticslist,
+                                                    cid,
+                                                    "diagnostics");
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
                                                     height: Get.height * 0.04,
                                                     width: Get.width * 0.04,
                                                     child: Image.asset(
                                                         AppImages.cross),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width * 0.02,
-                                                ),
-                                                Text(
-                                                  controller
-                                                      .selecteddiagnosticslist[
-                                                          index]
-                                                      .name
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 8,
-                                                      color: ColorManager
-                                                          .kblackColor),
-                                                ),
-                                              ],
+                                                  SizedBox(
+                                                    width: Get.width * 0.02,
+                                                  ),
+                                                  Flexible(
+                                                    child: Text(
+                                                      controller
+                                                          .selecteddiagnosticslist[
+                                                              index]
+                                                          .name
+                                                          .toString(),
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           )
                                         ],
@@ -1267,43 +1250,47 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left: Get.width * 0.03),
-                                            child: Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    String cid = controller
-                                                        .selectedinvestigationList[
-                                                            index]
-                                                        .id!;
-                                                    deleteSelected(
-                                                        context,
-                                                        controller
-                                                            .selectedinvestigationList,
-                                                        cid,
-                                                        "Investigations");
-                                                  },
-                                                  child: SizedBox(
+                                            child: InkWell(
+                                              onTap: () {
+                                                String cid = controller
+                                                    .selectedinvestigationList[
+                                                        index]
+                                                    .id!;
+                                                deleteSelected(
+                                                    context,
+                                                    controller
+                                                        .selectedinvestigationList,
+                                                    cid,
+                                                    "Investigations");
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
                                                     height: Get.height * 0.04,
                                                     width: Get.width * 0.04,
                                                     child: Image.asset(
                                                         AppImages.cross),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width * 0.02,
-                                                ),
-                                                Text(
-                                                  controller
-                                                      .selectedinvestigationList[
-                                                          index]
-                                                      .name
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 8,
-                                                      color: ColorManager
-                                                          .kblackColor),
-                                                ),
-                                              ],
+                                                  SizedBox(
+                                                    width: Get.width * 0.02,
+                                                  ),
+                                                  Flexible(
+                                                    child: Text(
+                                                      controller
+                                                          .selectedinvestigationList[
+                                                              index]
+                                                          .name
+                                                          .toString(),
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           )
                                         ],
@@ -1423,16 +1410,19 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                     SizedBox(
                                                       width: Get.width * 0.01,
                                                     ),
-                                                    Text(
-                                                      controller
-                                                          .selectedproceduresList[
-                                                              index]
-                                                          .name
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kblackColor,
+                                                    Flexible(
+                                                      child: Text(
+                                                        controller
+                                                            .selectedproceduresList[
+                                                                index]
+                                                            .name
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -1832,14 +1822,18 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   SizedBox(
                                                     width: Get.width * 0.01,
                                                   ),
-                                                  Text(
-                                                    controller.selectedfup?.name
-                                                            .toString() ??
-                                                        "Names",
-                                                    style: const TextStyle(
-                                                      fontSize: 10,
-                                                      color: ColorManager
-                                                          .kblackColor,
+                                                  Flexible(
+                                                    child: Text(
+                                                      controller
+                                                              .selectedfup?.name
+                                                              .toString() ??
+                                                          "Names",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -1961,16 +1955,19 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                     SizedBox(
                                                       width: Get.width * 0.01,
                                                     ),
-                                                    Text(
-                                                      controller
-                                                          .selectedinstructionList[
-                                                              index]
-                                                          .name
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kblackColor,
+                                                    Flexible(
+                                                      child: Text(
+                                                        controller
+                                                            .selectedinstructionList[
+                                                                index]
+                                                            .name
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],

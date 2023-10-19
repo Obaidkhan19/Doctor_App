@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
 import 'package:doctormobileapplication/models/monthlyappointmentbody.dart';
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
+import 'package:doctormobileapplication/screens/doctors_appointment/doctors_appointment.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class ManageAppointmentRepo {
     var headers = {'Content-Type': 'application/json'};
     print("$body  a");
     try {
+      ManageAppointmentController.i.updateIsloadingScreen(true);
       var response = await http.post(
           Uri.parse(AppConstants.GetDailyAppointment),
           headers: headers,
@@ -40,12 +42,15 @@ class ManageAppointmentRepo {
           DailyDoctorAppointmentsModel DailyDoctorAppointment =
               DailyDoctorAppointmentsModel.fromJson(jsonDecode(response.body));
           log('${DailyDoctorAppointment.toString()} DailyDoctorAppointment');
+          ManageAppointmentController.i.updateIsloadingScreen(false);
           return DailyDoctorAppointment;
         }
       } else {
+        ManageAppointmentController.i.updateIsloadingScreen(false);
         log(response.statusCode.toString());
       }
     } catch (e) {
+      ManageAppointmentController.i.updateIsloadingScreen(false);
       log('$e exception caught');
     }
   }
@@ -53,7 +58,6 @@ class ManageAppointmentRepo {
   static GetmonthlyDoctorAppointment(String date) async {
     ManageAppointmentController.i.paid =
         ManageAppointmentController.i.unpaid = 0;
- 
 
     String? userId = await LocalDb().getDoctorId();
     String? userToken = await LocalDb().getToken();
@@ -91,10 +95,14 @@ class ManageAppointmentRepo {
           ManageAppointmentController.i.monthlyappintment =
               monthlyDoctorAppointment;
           for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
-            if (monthlyDoctorAppointment[i].paid !=0) {
-              ManageAppointmentController.i.paid=monthlyDoctorAppointment[i].paid + ManageAppointmentController.i.paid;
-            } else if (monthlyDoctorAppointment[i].unPaid !=0) {
-              ManageAppointmentController.i.unpaid=monthlyDoctorAppointment[i].unPaid+ManageAppointmentController.i.unpaid;
+            if (monthlyDoctorAppointment[i].paid != 0) {
+              ManageAppointmentController.i.paid =
+                  monthlyDoctorAppointment[i].paid +
+                      ManageAppointmentController.i.paid;
+            } else if (monthlyDoctorAppointment[i].unPaid != 0) {
+              ManageAppointmentController.i.unpaid =
+                  monthlyDoctorAppointment[i].unPaid +
+                      ManageAppointmentController.i.unpaid;
             }
           }
           ManageAppointmentController.i

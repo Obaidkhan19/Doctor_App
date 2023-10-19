@@ -12,9 +12,9 @@ class AppConstants {
 
   //static const String baseURL = 'http://qa.patient.ihealthcure.com';
 
-  static const String baseURL = 'http://192.168.88.254:324';
+  // static const String baseURL = 'http://192.168.88.254:324';
 
-  // static const String baseURL = 'https://tabibalbait.patient.ihealthcure.com';
+  static const String baseURL = 'https://patient.helpful.ihealthcure.com/';
 
   // Branch ID
   //static const String branchID = "D8340ED5-AF5D-4F68-895B-0350114AAB09";
