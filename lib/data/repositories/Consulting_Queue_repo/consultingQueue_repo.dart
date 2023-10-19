@@ -110,7 +110,6 @@ class ConsultingQueueRepo {
         var result = jsonDecode(response.body);
         if (result['Status'] == 0) {
           ConsultingQueueController.i.updateIsclinicloading(false);
-          ConsultingQueueController.i.updateIsclinicloading(true);
         }
         if (result['Status'] == 1) {
           Iterable lst = result['Queue'];
