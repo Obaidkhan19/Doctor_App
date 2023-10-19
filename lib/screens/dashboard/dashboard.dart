@@ -22,7 +22,7 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   _launchWhatsApp() async {
-    const contact = "+923418495820";
+    const contact = "+971551660911";
     const androidUrl =
         "whatsapp://send?phone=$contact&text=Hi, I need some help";
     const iosUrl = "https://wa.me/$contact?text=Hi,%20I%20need%20some%20help";

@@ -1,5 +1,6 @@
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

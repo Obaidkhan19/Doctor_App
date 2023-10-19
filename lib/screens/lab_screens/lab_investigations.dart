@@ -330,7 +330,7 @@ class _LabInvestigationsState extends State<LabInvestigations> {
                   visible: cont.selectedalue == 2,
                   child: Column(
                     children: [
-                      const CustomTextField(
+                      CustomTextField(
                         hintText: 'Doctor Name',
                       ),
                       SizedBox(

@@ -18,41 +18,41 @@ class DailyDoctorAppointmentsModel {
     status = json['Status'];
     onlineAppointments = json['OnlineAppointments'];
     onlineAppointmentStatistics = json['OnlineAppointmentStatistics'] != null
-        ? OnlineAppointmentStatistics.fromJson(
+        ? new OnlineAppointmentStatistics.fromJson(
             json['OnlineAppointmentStatistics'])
         : null;
     if (json['AppointmentStatistics'] != null) {
       appointmentStatistics = <AppointmentStatistics>[];
       json['AppointmentStatistics'].forEach((v) {
-        appointmentStatistics!.add(AppointmentStatistics.fromJson(v));
+        appointmentStatistics!.add(new AppointmentStatistics.fromJson(v));
       });
     }
     if (json['AppointmentSummary'] != null) {
       appointmentSummary = <AppointmentSummary>[];
       json['AppointmentSummary'].forEach((v) {
-        appointmentSummary!.add(AppointmentSummary.fromJson(v));
+        appointmentSummary!.add(new AppointmentSummary.fromJson(v));
       });
     }
     errorMessage = json['ErrorMessage'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Status'] = status;
-    data['OnlineAppointments'] = onlineAppointments;
-    if (onlineAppointmentStatistics != null) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Status'] = this.status;
+    data['OnlineAppointments'] = this.onlineAppointments;
+    if (this.onlineAppointmentStatistics != null) {
       data['OnlineAppointmentStatistics'] =
-          onlineAppointmentStatistics!.toJson();
+          this.onlineAppointmentStatistics!.toJson();
     }
-    if (appointmentStatistics != null) {
+    if (this.appointmentStatistics != null) {
       data['AppointmentStatistics'] =
-          appointmentStatistics!.map((v) => v.toJson()).toList();
+          this.appointmentStatistics!.map((v) => v.toJson()).toList();
     }
-    if (appointmentSummary != null) {
+    if (this.appointmentSummary != null) {
       data['AppointmentSummary'] =
-          appointmentSummary!.map((v) => v.toJson()).toList();
+          this.appointmentSummary!.map((v) => v.toJson()).toList();
     }
-    data['ErrorMessage'] = errorMessage;
+    data['ErrorMessage'] = this.errorMessage;
     return data;
   }
 }
@@ -98,18 +98,18 @@ class OnlineAppointmentStatistics {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Location'] = location;
-    data['WorkLocationId'] = workLocationId;
-    data['Address'] = address;
-    data['NoofAppointments'] = noofAppointments;
-    data['Sunday'] = sunday;
-    data['Monday'] = monday;
-    data['Tuesday'] = tuesday;
-    data['Wednesday'] = wednesday;
-    data['Thursday'] = thursday;
-    data['Friday'] = friday;
-    data['Saturday'] = saturday;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Location'] = this.location;
+    data['WorkLocationId'] = this.workLocationId;
+    data['Address'] = this.address;
+    data['NoofAppointments'] = this.noofAppointments;
+    data['Sunday'] = this.sunday;
+    data['Monday'] = this.monday;
+    data['Tuesday'] = this.tuesday;
+    data['Wednesday'] = this.wednesday;
+    data['Thursday'] = this.thursday;
+    data['Friday'] = this.friday;
+    data['Saturday'] = this.saturday;
     return data;
   }
 }
@@ -155,18 +155,18 @@ class AppointmentStatistics {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Location'] = location;
-    data['WorkLocationId'] = workLocationId;
-    data['Address'] = address;
-    data['NoofAppointments'] = noofAppointments;
-    data['Sunday'] = sunday;
-    data['Monday'] = monday;
-    data['Tuesday'] = tuesday;
-    data['Wednesday'] = wednesday;
-    data['Thursday'] = thursday;
-    data['Friday'] = friday;
-    data['Saturday'] = saturday;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Location'] = this.location;
+    data['WorkLocationId'] = this.workLocationId;
+    data['Address'] = this.address;
+    data['NoofAppointments'] = this.noofAppointments;
+    data['Sunday'] = this.sunday;
+    data['Monday'] = this.monday;
+    data['Tuesday'] = this.tuesday;
+    data['Wednesday'] = this.wednesday;
+    data['Thursday'] = this.thursday;
+    data['Friday'] = this.friday;
+    data['Saturday'] = this.saturday;
     return data;
   }
 }
@@ -203,15 +203,15 @@ class AppointmentSummary {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Start'] = start;
-    data['End'] = end;
-    data['Pending'] = pending;
-    data['Cancelled'] = cancelled;
-    data['Paid'] = paid;
-    data['Confirmed'] = confirmed;
-    data['Consulted'] = consulted;
-    data['Booked'] = booked;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Start'] = this.start;
+    data['End'] = this.end;
+    data['Pending'] = this.pending;
+    data['Cancelled'] = this.cancelled;
+    data['Paid'] = this.paid;
+    data['Confirmed'] = this.confirmed;
+    data['Consulted'] = this.consulted;
+    data['Booked'] = this.booked;
     return data;
   }
 }

@@ -6,7 +6,7 @@ import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
-import 'package:doctormobileapplication/models/medicincematrix.dart' as med;
+import 'package:doctormobileapplication/models/lab_test_dropdown.dart';
 import 'package:doctormobileapplication/models/medicine_matrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/patient_detail.dart';
@@ -18,107 +18,19 @@ import 'package:get/get.dart';
 
 class ERXController extends GetxController implements GetxService {
   static ERXController get i => Get.put(ERXController());
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  updateIsloading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
   FocusNode mycomplaintfocus = FocusNode();
   FocusNode findingfocus = FocusNode();
   FocusNode qtyfocus = FocusNode();
   FocusNode medicinefocus = FocusNode();
   FocusNode notesfocus = FocusNode();
-  int medindex = 0;
-  med.medicinematric selectedlst = med.medicinematric(
-      dateList: [],
-      dayList: [],
-      medicineDosages: [],
-      medicineEventList: [],
-      medicineFrequencies: [],
-      medicineRoutes: []);
-  med.medicinematric medicinelst = med.medicinematric(
-      dateList: [],
-      dayList: [],
-      medicineDosages: [],
-      medicineEventList: [],
-      medicineFrequencies: [],
-      medicineRoutes: []);
-
-  updatemedindex() {
-    medindex += 1;
-    update();
-  }
-
-
-
- updateselectedduration(med.DayList data,med.DateList d) {
-    med.DayList route = data;
-    med.DateList r=d;
-    if (selectedlst.dayList!.isEmpty) {
-      selectedlst.dateList!.add(r);
-      selectedlst.dayList!.add(route);
-    } else {
-      if (selectedlst.dayList!.length >= medindex) {
-        selectedlst.dayList!.last = route;
-        selectedlst.dateList!.last = r;
-      } else {
-        selectedlst.dateList!.add(r);
-        selectedlst.dayList!.add(route);
-      }
-    }
-    update();
-  }
-
-
-
-  updateselectedmedicince(med.MedicineRoutes data) {
-    med.MedicineRoutes route = data;
-
-    if (selectedlst.medicineRoutes!.isEmpty) {
-      selectedlst.medicineRoutes!.add(route);
-    } else {
-      if (selectedlst.medicineRoutes!.length >= medindex) {
-        selectedlst.medicineRoutes!.last = route;
-      } else {
-        selectedlst.medicineRoutes!.add(route);
-      }
-    }
-    update();
-  }
-
-
-  updateselecteddosages(med.MedicineDosages data) {
-    med.MedicineDosages route = data;
-
-    if (selectedlst.medicineDosages!.isEmpty) {
-      selectedlst.medicineDosages!.add(route);
-    } else {
-      if (selectedlst.medicineDosages!.length >= medindex) {
-        selectedlst.medicineDosages!.last = route;
-      } else {
-        selectedlst.medicineDosages!.add(route);
-      }
-    }
-    update();
-  }
-
-
-
-  updateselectedfrequency(med.MedicineFrequencies data) {
-    med.MedicineFrequencies route = data;
-
-    if (selectedlst.medicineFrequencies!.isEmpty) {
-      selectedlst.medicineFrequencies!.add(route);
-    } else {
-      if (selectedlst.medicineFrequencies!.length >= medindex) {
-        selectedlst.medicineFrequencies!.last= route;
-      } else {
-        selectedlst.medicineFrequencies!.add(route);
-      }
-    }
-
-    update();
-  }
-
-  updatemedicinelist(med.medicinematric data) {
-    medicinelst = data;
-    update();
-  }
 
   unfocus() {
     mycomplaintfocus.unfocus();
@@ -500,17 +412,6 @@ class ERXController extends GetxController implements GetxService {
   // MEDICINES DATA
   List<Medicines1> medicineList = [];
   List<Medicines1> selectedmedicineList = [];
-  List<Medicines1> finalmedicinellist=[];
-
-
-updatefinalmed(Medicines1 m1)
-{
-  finalmedicinellist.add(m1);
-  update();
-}
-
-
-
   updateMedicinelist(List<Medicines1> mlist) {
     medicineList = mlist;
     update();
@@ -543,40 +444,83 @@ updatefinalmed(Medicines1 m1)
 
   // =========== ERNS HISTORY
 
+  String historycomplaint = '';
   List<ComplaintsHistory> complaintsHistoryList = [];
-
   updatecomplainthistorydata(List<ComplaintsHistory> clist) {
     complaintsHistoryList = clist;
+    List<String> names = [];
+    for (int i = 0; i < complaintsHistoryList.length; i++) {
+      names.add(complaintsHistoryList[i].name ?? '');
+    }
+    historycomplaint = names.join(', ');
     update();
   }
 
+  String historyprimarydiagnosis = '';
   List<PrimaryDiagnosisHistory> primarydiagnosisHistoryList = [];
   updateprimarydiagnosishistorydata(List<PrimaryDiagnosisHistory> clist) {
     primarydiagnosisHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < primarydiagnosisHistoryList.length; i++) {
+      names.add(primarydiagnosisHistoryList[i].genericName ?? '');
+    }
+    historyprimarydiagnosis = names.join(', ');
     update();
   }
 
+  String historyprecedures = '';
   List<PrceduresHistory> prceduresHistoryList = [];
   updateprcedureshistorydata(List<PrceduresHistory> clist) {
     prceduresHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < prceduresHistoryList.length; i++) {
+      names.add(prceduresHistoryList[i].genericName ?? '');
+    }
+    historyprecedures = names.join(', ');
     update();
   }
 
+  String historydiagnostics = '';
   List<DiagnosticsHistory> diagnosticsHistoryList = [];
   updatediagnosticshistorydata(List<DiagnosticsHistory> clist) {
     diagnosticsHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < diagnosticsHistoryList.length; i++) {
+      names.add(diagnosticsHistoryList[i].name ?? '');
+    }
+    historydiagnostics = names.join(', ');
     update();
   }
 
+  String historyinvestigation = '';
   List<InvestigationsHistory> investigationHistoryList = [];
   updateinvestigationistorydata(List<InvestigationsHistory> clist) {
     investigationHistoryList = clist;
+
+    List<String> names = [];
+
+    for (int i = 0; i < investigationHistoryList.length; i++) {
+      names.add(investigationHistoryList[i].name ?? '');
+    }
+    historyinvestigation = names.join(', ');
     update();
   }
 
+  String historyvitals = '';
   List<VitalsHistory> vitalsHistoryList = [];
   updatevitalshistorydata(List<VitalsHistory> clist) {
     vitalsHistoryList = clist;
+    List<String> names = [];
+    for (int i = 0; i < vitalsHistoryList.length; i++) {
+      names.add(vitalsHistoryList[i].name ?? '');
+    }
+    historyvitals = names.join(', ');
     update();
   }
 }

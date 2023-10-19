@@ -15,11 +15,11 @@ class monthlyappointbody {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['DoctorId'] = doctorId;
-    data['MonthAndYear'] = monthAndYear;
-    data['WorkLocationId'] = workLocationId;
-    data['IsOnline'] = isOnline;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['DoctorId'] = this.doctorId;
+    data['MonthAndYear'] = this.monthAndYear;
+    data['WorkLocationId'] = this.workLocationId;
+    data['IsOnline'] = this.isOnline;
     return data;
   }
 }
