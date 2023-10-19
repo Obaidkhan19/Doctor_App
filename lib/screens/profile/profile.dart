@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
                   backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                   radius: 30,
                   child: ClipOval(
-                    child: path != null
+                    child: path == null
                         ? Image.asset(AppImages.doctorlogo)
                         : Image.network(imagepath),
                   ),
@@ -201,6 +201,7 @@ class _ProfileState extends State<Profile> {
                           onPressed: () async {
                             var result = await Get.to(
                               () => EditProfile(
+                                imagepath: imagepath != '' ? imagepath : "",
                                 fullName: profile.selectedbasicInfo?.fullName,
                                 dob: profile.selectedbasicInfo?.dateofBirth,
                                 cellNumber:

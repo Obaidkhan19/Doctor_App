@@ -14,11 +14,11 @@ import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
-import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditProfile extends StatefulWidget {
+  final String? imagepath;
   final String? fullName;
   final String? dob;
   final String? cellNumber;
@@ -33,6 +33,7 @@ class EditProfile extends StatefulWidget {
 
   EditProfile(
       {this.dob,
+      this.imagepath,
       this.cellNumber,
       this.city,
       this.email,
@@ -120,17 +121,15 @@ class _EditProfileState extends State<EditProfile> {
     _getCountries();
     _getProvinces(widget.countryid);
     _getCities(widget.provinceid);
-    _getimagepath();
+
     super.initState();
   }
 
-  String imagepath = '';
-  String path = '';
-
-  _getimagepath() async {
-    path = (await LocalDb().getDoctorUserImagePath())!;
-    String baseurl = AppConstants.baseURL;
-    imagepath = baseurl + path;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    EditProfileController.i.disposefile();
+    super.dispose();
   }
 
   @override
@@ -164,10 +163,15 @@ class _EditProfileState extends State<EditProfile> {
                                 image: FileImage(File(edit.file!.path)),
                                 fit: BoxFit.cover,
                               )
-                            : DecorationImage(
-                                image: AssetImage(AppImages.doctorlogo),
-                                fit: BoxFit.cover,
-                              ),
+                            : widget.imagepath != ""
+                                ? DecorationImage(
+                                    image: NetworkImage(widget.imagepath!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : DecorationImage(
+                                    image: AssetImage(AppImages.doctorlogo),
+                                    fit: BoxFit.cover,
+                                  ),
                       ),
                       child: Align(
                           alignment: Alignment.bottomRight,

@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                         radius: 30,
                         child: ClipOval(
-                          child: path != ""
+                          child: path == ""
                               ? Image.asset(AppImages.doctorlogo)
                               : Image.network(imagepath),
                         ),

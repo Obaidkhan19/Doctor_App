@@ -70,8 +70,6 @@ class _MenuScreenState extends State<MenuScreen> {
   bool isBiometric = false;
   @override
   Widget build(BuildContext context) {
-    print('pathpathpath');
-    print('$path   aaaa');
     var profile = Get.put<ProfileController>(ProfileController());
     return Scaffold(
       backgroundColor: ColorManager.kPrimaryColor,
@@ -100,7 +98,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 backgroundColor: Colors.transparent,
                 radius: 30,
                 child: ClipOval(
-                  child: path != null
+                  child: path == null
                       ? Image.asset(AppImages.doctorlogo)
                       : Image.network(imagepath),
                 ),
@@ -143,6 +141,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   InkWell(
                     onTap: () {
                       Get.to(() => EditProfile(
+                            imagepath: imagepath != '' ? imagepath : "",
                             fullName: profile.selectedbasicInfo?.fullName,
                             dob: profile.selectedbasicInfo?.dateofBirth,
                             cellNumber:
