@@ -49,32 +49,32 @@ class LabInvestigationController extends GetxController implements GetxService {
     log('${labPackages?.length}');
   }
 
-  updateSummaryWidgets() {
-    // Update the list of widgets as needed
-    summaryWidgets = [
-      const DetailsRow(
-        title: 'Test Sample',
-        description: 'Oral Glucose Tolerance',
-      ),
-      const DetailsRow(
-        title: 'Date & Hour',
-        description: 'Aug 19, 2023 || 9:00 AM - 10 AM',
-      ),
-      const DetailsRow(
-        title: 'Package',
-        description: 'Home Sampling',
-      ),
-      DetailsRow(
-        title: 'Prescribed By',
-        description: '${LabInvestigationController().selectedalue}',
-      ),
-      const DetailsRow(
-        title: 'Address',
-        description: 'RawalPindi, Pakistan',
-      ),
-    ];
-    update();
-  }
+  // updateSummaryWidgets() {
+  //   // Update the list of widgets as needed
+  //   summaryWidgets = [
+  //     const DetailsRow(
+  //       title: 'Test Sample',
+  //       description: 'Oral Glucose Tolerance',
+  //     ),
+  //     const DetailsRow(
+  //       title: 'Date & Hour',
+  //       description: 'Aug 19, 2023 || 9:00 AM - 10 AM',
+  //     ),
+  //     const DetailsRow(
+  //       title: 'Package',
+  //       description: 'Home Sampling',
+  //     ),
+  //     DetailsRow(
+  //       title: 'Prescribed By',
+  //       description: '${LabInvestigationController().selectedalue}',
+  //     ),
+  //     const DetailsRow(
+  //       title: 'Address',
+  //       description: 'RawalPindi, Pakistan',
+  //     ),
+  //   ];
+  //   update();
+  // }
 
   Future<void> selectTime(
     BuildContext context,
