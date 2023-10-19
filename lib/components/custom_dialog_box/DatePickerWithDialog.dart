@@ -11,7 +11,7 @@ class CustomDialog_DatePicker extends StatefulWidget {
   TextEditingController controller;
   final VoidCallback? onPressed;
 
-  CustomDialog_DatePicker({
+  CustomDialog_DatePicker({super.key, 
     required this.dateTime,
     required this.controller,
     this.onPressed,
@@ -34,14 +34,14 @@ class _CustomDialogState extends State<CustomDialog_DatePicker> {
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(16), topRight: Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.3), // Shadow color
                   spreadRadius: 1, // Spread radius of the shadow
                   blurRadius: 1, // Blur radius of the shadow
-                  offset: Offset(0, 1), // Offset of the shadow
+                  offset: const Offset(0, 1), // Offset of the shadow
                 ),
               ],
             ),
@@ -143,8 +143,8 @@ class _CustomDialogState extends State<CustomDialog_DatePicker> {
                       width: MediaQuery.of(context).size.width * 0.45,
                       height: MediaQuery.of(context).size.height * 0.045,
                       decoration: BoxDecoration(
-                        color: Color(
-                            0xfff1272D3), // Set the background color of the container
+                        color: const Color(
+                            0xfff1272d3), // Set the background color of the container
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(

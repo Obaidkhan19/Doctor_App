@@ -75,7 +75,7 @@ class StatusScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: CustomTextField(
                         fillColor: ColorManager.kWhiteColor,
                         hintText: 'Documents proof',
