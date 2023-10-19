@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -90,9 +91,19 @@ class _MenuScreenState extends State<MenuScreen> {
                 backgroundColor: Colors.transparent,
                 radius: 30,
                 child: ClipOval(
-                  child: path == null
-                      ? Image.asset(AppImages.doctorlogo)
-                      : Image.network(imagepath),
+                  child: path != ""
+                              ?  CachedNetworkImage(
+                                                                imageUrl: imagepath,
+                                                                        fit: BoxFit.fill,
+                                                               
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        AppImages.doctorlogo),
+                              ):
+                                                                    Image.asset(
+                                                                        AppImages.doctorlogo),
                 ),
               ),
 

@@ -8,6 +8,7 @@ import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -175,14 +176,32 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                       radius: 30,
                                                       child: ClipOval(
                                                         child: manageAppointment
-                                                                    .patientImagePath ==
+                                                                    .patientImagePath !=
                                                                 null
-                                                            ? Image.asset(
-                                                                Images.avator)
-                                                            : Image.network(AppConstants
-                                                                    .baseURL +
-                                                                manageAppointment
-                                                                    .patientImagePath),
+                                                            ? CachedNetworkImage(
+                                                                imageUrl: AppConstants
+                                                                        .baseURL +
+                                                                    manageAppointment
+                                                                        .patientImagePath,
+                                                               
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        Images
+                                                                            .avator),
+                                                              )
+                                                            : Image.asset(
+                                                                Images.avator),
+
+                                                        //  manageAppointment
+                                                        //             .patientImagePath ==
+                                                        //         ""
+                                                        //     ? :manageAppointment
+                                                        //             .patientImagePath == null?
+                                                        //             Image.asset(
+                                                        //         Images.avator)
+                                                        //     : Image.network(),
                                                       ),
                                                     ),
                                                   ),
@@ -308,13 +327,18 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                         MainAxisAlignment
                                                             .spaceBetween,
                                                     children: [
-                                                      Text(
-                                                        'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kblackColor,
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 10,
+                                                            color: ColorManager
+                                                                .kblackColor,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
                                                         ),
                                                       ),
                                                       Text(

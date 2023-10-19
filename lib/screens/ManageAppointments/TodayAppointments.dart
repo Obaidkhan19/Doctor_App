@@ -63,7 +63,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
           ),
           backgroundColor: Colors.transparent,
         ),
-        body: GetBuilder<ManageAppointmentController>(builder: (cont) {
+        body: ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentStatistics!=null? GetBuilder<ManageAppointmentController>(builder: (cont) {
           return BlurryModalProgressHUD(
               inAsyncCall: cont.isLoadingscreen,
               blurEffectIntensity: 4,
@@ -670,6 +670,9 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                   ),
                 ]),
               )));
-        }));
+        }):
+        const Center(child: Text("No Record Found"))
+        
+        );
   }
 }
