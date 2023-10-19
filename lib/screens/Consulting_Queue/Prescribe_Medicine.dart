@@ -1693,20 +1693,27 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       SizedBox(
                                         height: Get.height * 0.02,
                                       ),
-                                      for (int index = 0; index < 3; index++)
-                                        Text(
-                                          '5 Day',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 8,
-                                              color: Colors.black,
+                                      for (int index = 0; index <  controller.selectedlst
+                                                    .medicineRoutes!.length; index++)
+                                        SizedBox(
+                                          width: Get.width*0.15,
+                                          child: Text(
+                                             controller.selectedlst
+                                                      .medicineRoutes![index].englishDefinition.toString(),
+                                            style: GoogleFonts.poppins(
+                                              textStyle: GoogleFonts.poppins(
+                                                fontSize: 8,
+                                                color: Colors.black,
+                                              ),
                                             ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                           ),
                                         ),
                                     ],
                                   ),
                                   SizedBox(
-                                    width: Get.width * 0.02,
+                                    width: Get.width * 0.06,
                                   ),
                                 ],
                               ),
