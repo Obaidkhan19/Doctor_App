@@ -1,4 +1,5 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -167,15 +168,24 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                 0, 0, 0, 0),
                                                         radius: 30,
                                                         child: ClipOval(
-                                                          child: manageAppointment
-                                                                      .patientImagePath ==
-                                                                  null
-                                                              ? Image.asset(
-                                                                  Images.avator)
-                                                              : Image.network(AppConstants
-                                                                      .baseURL +
-                                                                  manageAppointment
-                                                                      .patientImagePath),
+                                                          child:manageAppointment
+                                                                    .patientImagePath !=
+                                                                null
+                                                            ? CachedNetworkImage(
+                                                                imageUrl: AppConstants
+                                                                        .baseURL +
+                                                                    manageAppointment
+                                                                        .patientImagePath,
+                                                               
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        Images
+                                                                            .avator),
+                                                              )
+                                                            : Image.asset(
+                                                                Images.avator),
                                                         ),
                                                       ),
                                                     ),

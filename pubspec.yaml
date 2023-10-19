@@ -69,6 +69,7 @@ dependencies:
   local_auth: ^2.1.7
   url_launcher: ^6.1.14
   syncfusion_flutter_pdfviewer: ^23.1.41
+  cached_network_image: ^3.3.0
 
   #Above Two Packages for Notification from firebase
 

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -136,10 +137,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                         radius: 30,
                         child: ClipOval(
-                          child: path == ""
-                              ? Image.asset(AppImages.doctorlogo)
-                              : Image.network(imagepath),
-                        ),
+                          child: path != ""
+                              ?  CachedNetworkImage(
+                                                                imageUrl: imagepath,
+                                                                        fit: BoxFit.fill,
+                                                               
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        AppImages.doctorlogo),
+                              ):
+                                                                    Image.asset(
+                                                                        AppImages.doctorlogo),)
                       ),
                       SizedBox(
                         width: Get.width * 0.04,

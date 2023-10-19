@@ -296,10 +296,12 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                       )),
                                 );
                               })
-                          : Text(
-                              "No Record Found",
-                              style: GoogleFonts.poppins(fontSize: 16),
-                            ),
+                          : Center(
+                            child: Text(
+                                "No Record Found",
+                                style: GoogleFonts.poppins(fontSize: 16),
+                              ),
+                          ),
                     ),
                   ],
                 ),

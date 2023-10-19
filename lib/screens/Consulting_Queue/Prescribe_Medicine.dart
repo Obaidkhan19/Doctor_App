@@ -1,4 +1,3 @@
-
 import 'package:doctormobileapplication/components/CustomFormField.dart';
 import 'package:doctormobileapplication/components/MyCustomExpansionTile.dart';
 import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
@@ -130,7 +129,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     _getComplaints();
     _getInvestigations();
     _getDiagnostics();
-    PrescribeMedicinRepo.getMedicinesMatrix();
+    //   PrescribeMedicinRepo.getMedicinesMatrix();
   }
 
   @override
@@ -587,7 +586,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   children: <Widget>[
                                     Wrap(
                                       direction: Axis
-                                          .horizontal, // Make sure items are laid out horizontally
+                                          .horizontal, // Make su``re items are laid out horizontally
                                       runSpacing: 8.0,
                                       children: <Widget>[
                                         for (int index = 0;
@@ -1475,6 +1474,10 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       child: CustomTextField(
                                         readonly: true,
                                         onTap: () async {
+                                          ERXController.i.updatemedicinelist(
+                                              await PrescribeMedicinRepo
+                                                  .getMedicinesMatrix());
+
                                           String result = await addMedicine(
                                             context,
                                             controller.medicineList,
@@ -1538,7 +1541,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         SizedBox(
                                           height: Get.height * 0.02,
                                         ),
-                                        for (int index = 0; index < 3; index++)
+                                        for (int index = 0;
+                                            index <
+                                                controller.finalmedicinellist
+                                                    .length;
+                                            index++)
                                           Row(
                                             children: [
                                               SizedBox(
@@ -1550,14 +1557,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                               SizedBox(
                                                 width: Get.width * 0.01,
                                               ),
-                                              Text(
-                                                'Tab - Panadol 20',
-                                                style: GoogleFonts.poppins(
-                                                  textStyle:
-                                                      GoogleFonts.poppins(
-                                                    fontSize: 8,
-                                                    color: Colors.black,
+                                              SizedBox(
+                                                child: Text(
+                                                     controller.finalmedicinellist[index]
+                                                      .medicine!,
+                                                  style: GoogleFonts.poppins(
+                                                    textStyle:
+                                                        GoogleFonts.poppins(
+                                                      fontSize: 8,
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ],
@@ -1583,9 +1596,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       SizedBox(
                                         height: Get.height * 0.02,
                                       ),
-                                      for (int index = 0; index < 3; index++)
+                                      for (int index = 0; index <  controller.selectedlst
+                                                    .medicineRoutes!.length; index++)
                                         Text(
-                                          '2',
+                                          controller.selectedlst
+                                                    .medicineFrequencies![index].quantity.toString(),
                                           style: GoogleFonts.poppins(
                                             textStyle: GoogleFonts.poppins(
                                               fontSize: 8,
@@ -1613,9 +1628,12 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       SizedBox(
                                         height: Get.height * 0.02,
                                       ),
-                                      for (int index = 0; index < 3; index++)
+                                      for (int index = 0; index <  controller.selectedlst
+                                                    .medicineRoutes!.length; index++)
                                         Text(
-                                          'After Meal',
+                                          controller.selectedlst
+                                                    .dateList![index].englishCounting.toString()+" "+ controller.selectedlst
+                                                    .dayList![index].englishDay .toString(),
                                           style: GoogleFonts.poppins(
                                             textStyle: GoogleFonts.poppins(
                                               fontSize: 8,
@@ -1643,9 +1661,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       SizedBox(
                                         height: Get.height * 0.02,
                                       ),
-                                      for (int index = 0; index < 3; index++)
+                                      for (int index = 0; index <  controller.selectedlst
+                                                    .medicineRoutes!.length; index++)
                                         Text(
-                                          '2 Times',
+                                          controller.selectedlst
+                                                    .medicineFrequencies![index].numericDisplay.toString(),
                                           style: GoogleFonts.poppins(
                                             textStyle: GoogleFonts.poppins(
                                               fontSize: 8,
@@ -1673,14 +1693,21 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       SizedBox(
                                         height: Get.height * 0.02,
                                       ),
-                                      for (int index = 0; index < 3; index++)
-                                        Text(
-                                          '5 Day',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 8,
-                                              color: Colors.black,
+                                      for (int index = 0; index <  controller.selectedlst
+                                                    .medicineRoutes!.length; index++)
+                                        SizedBox(
+                                          width: Get.width*0.15,
+                                          child: Text(
+                                             controller.selectedlst
+                                                      .medicineRoutes![index].englishDefinition.toString(),
+                                            style: GoogleFonts.poppins(
+                                              textStyle: GoogleFonts.poppins(
+                                                fontSize: 8,
+                                                color: Colors.black,
+                                              ),
                                             ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                           ),
                                         ),
                                     ],
