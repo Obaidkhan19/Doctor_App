@@ -87,34 +87,34 @@ class consultingqueuewaitholdresponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['PatientCheckInId'] = this.patientCheckInId;
-    data['PatientId'] = this.patientId;
-    data['DoctorId'] = this.doctorId;
-    data['BranchId'] = this.branchId;
-    data['PatientName'] = this.patientName;
-    data['PatientImagePath'] = this.patientImagePath;
-    data['IdentityNo'] = this.identityNo;
-    data['MRNO'] = this.mRNO;
-    data['ReferMessage'] = this.referMessage;
-    data['ReferBy'] = this.referBy;
-    data['ReferTime'] = this.referTime;
-    data['VisitNo'] = this.visitNo;
-    data['VisitTime'] = this.visitTime;
-    data['WaitingTime'] = this.waitingTime;
-    data['ConsultedTime'] = this.consultedTime;
-    data['DepartmentId'] = this.departmentId;
-    data['SubDepartmentId'] = this.subDepartmentId;
-    data['IsOnline'] = this.isOnline;
-    data['ChatURL'] = this.chatURL;
-    data['DoctorName'] = this.doctorName;
-    data['PrescribedInValue'] = this.prescribedInValue;
-    data['PatientStatusValue'] = this.patientStatusValue;
-    data['Status'] = this.status;
-    data['AdmissionNumber'] = this.admissionNumber;
-    data['IsFirstTimeVisit'] = this.isFirstTimeVisit;
-    data['Reasons'] = this.reasons;
-    data['ReportURL'] = this.reportURL;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['PatientCheckInId'] = patientCheckInId;
+    data['PatientId'] = patientId;
+    data['DoctorId'] = doctorId;
+    data['BranchId'] = branchId;
+    data['PatientName'] = patientName;
+    data['PatientImagePath'] = patientImagePath;
+    data['IdentityNo'] = identityNo;
+    data['MRNO'] = mRNO;
+    data['ReferMessage'] = referMessage;
+    data['ReferBy'] = referBy;
+    data['ReferTime'] = referTime;
+    data['VisitNo'] = visitNo;
+    data['VisitTime'] = visitTime;
+    data['WaitingTime'] = waitingTime;
+    data['ConsultedTime'] = consultedTime;
+    data['DepartmentId'] = departmentId;
+    data['SubDepartmentId'] = subDepartmentId;
+    data['IsOnline'] = isOnline;
+    data['ChatURL'] = chatURL;
+    data['DoctorName'] = doctorName;
+    data['PrescribedInValue'] = prescribedInValue;
+    data['PatientStatusValue'] = patientStatusValue;
+    data['Status'] = status;
+    data['AdmissionNumber'] = admissionNumber;
+    data['IsFirstTimeVisit'] = isFirstTimeVisit;
+    data['Reasons'] = reasons;
+    data['ReportURL'] = reportURL;
     return data;
   }
 }

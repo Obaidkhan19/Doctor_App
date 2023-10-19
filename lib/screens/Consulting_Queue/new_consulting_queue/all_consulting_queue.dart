@@ -171,7 +171,7 @@ class _AllConsultingQueueScreenState extends State<AllConsultingQueueScreen> {
                                           InkWell(
                                             onTap: () {
                                               Get.to(() =>
-                                                  PrescribeMedicineScreen());
+                                                  const PrescribeMedicineScreen());
                                             },
                                             child: Container(
                                               width: 47,

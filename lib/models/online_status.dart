@@ -17,12 +17,12 @@ class OnlineStatusRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['DoctorId'] = this.doctorId;
-    data['DayDate'] = this.dayDate;
-    data['BranchId'] = this.branchId;
-    data['Token'] = this.token;
-    data['IsOnline'] = this.isOnline;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['DoctorId'] = doctorId;
+    data['DayDate'] = dayDate;
+    data['BranchId'] = branchId;
+    data['Token'] = token;
+    data['IsOnline'] = isOnline;
     return data;
   }
 }
