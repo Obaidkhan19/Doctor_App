@@ -2,7 +2,6 @@ import 'package:doctormobileapplication/data/controller/configure_appointment_co
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class CustomDropDownWidget extends StatefulWidget {
   List<String> list;

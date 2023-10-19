@@ -47,7 +47,6 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
             },
             child: Image.asset(
               AppImages.back,
-              color: ColorManager.kPrimaryColor,
             ),
           ),
           centerTitle: true,
@@ -64,7 +63,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
           ),
           backgroundColor: Colors.transparent,
         ),
-        body: GetBuilder<ManageAppointmentController>(builder: (cont) {
+        body: ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentStatistics!=null? GetBuilder<ManageAppointmentController>(builder: (cont) {
           return BlurryModalProgressHUD(
               inAsyncCall: cont.isLoadingscreen,
               blurEffectIntensity: 4,
@@ -79,10 +78,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                   child: SafeArea(
                 minimum: const EdgeInsets.all(AppPadding.p22).copyWith(top: 0),
                 child: Column(children: [
-                  (ManageAppointmentController.i.dailyDoctorAppointmentsModel
-                              .onlineAppointmentStatistics !=
-                          null)
-                      ? Padding(
+                  Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: Container(
                             decoration: BoxDecoration(
@@ -167,7 +163,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                             .onlineAppointmentStatistics
                                             ?.noofAppointments
                                             .toString() ??
-                                        "",
+                                        "0",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -195,14 +191,8 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                               ),
                             ),
                           ),
-                        )
-                      : Container(
-                          child: const Text('No Data'),
                         ),
-                  (ManageAppointmentController.i.dailyDoctorAppointmentsModel
-                              .appointmentStatistics !=
-                          null)
-                      ? ListView.builder(
+                   ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: ((ManageAppointmentController
@@ -291,7 +281,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
-                                              '${manageAppointment.noofAppointments ?? ""}',
+                                              '${manageAppointment.noofAppointments ?? "0"}',
                                               style: const TextStyle(
                                                   fontSize: 20,
                                                   color: Colors.blue),
@@ -315,9 +305,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                   )
                                 : Container());
                           })
-                      : Container(
-                          child: const Text('No Data'),
-                        ),
+                     ,
                   SizedBox(
                     height: Get.height * 0.03,
                   ),
@@ -682,6 +670,9 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                   ),
                 ]),
               )));
-        }));
+        }):
+        const Center(child: Text("No Record Found"))
+        
+        );
   }
 }

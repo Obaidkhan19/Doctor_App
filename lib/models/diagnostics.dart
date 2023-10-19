@@ -1,3 +1,4 @@
+
 class Diagnostics {
   int? status;
   List<Diagnostics>? diagnostics;

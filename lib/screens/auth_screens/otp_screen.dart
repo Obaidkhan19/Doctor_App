@@ -1,12 +1,9 @@
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
-import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/create_new_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/forget_password.dart';
-import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
