@@ -43,14 +43,11 @@ class _ClinicalPracticeQueueDataListState
   }
 
   int length = 10;
-
   callback() async {
     ConsultingQueueRepo.GetConsultingQueuewaitinghold(consultingqueuepatients(
-        branchId: await LocalDb().getBranchId(),
+        branchId: "",
         doctorId: await LocalDb().getDoctorId(),
-        search: SearchFieldController.text.isEmpty
-            ? ""
-            : SearchFieldController.text,
+        search: "",
         workLocationId: "",
         status: "1",
         fromDate: DateTime.now().toString().split(' ')[0],
@@ -61,6 +58,7 @@ class _ClinicalPracticeQueueDataListState
         length: length.toString(),
         orderColumn: "0",
         orderDir: "desc"));
+    ConsultingQueueController.i.updateIsclinicloading(false);
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -78,6 +76,7 @@ class _ClinicalPracticeQueueDataListState
   @override
   void initState() {
     callback();
+
     super.initState();
   }
 
@@ -105,17 +104,11 @@ class _ClinicalPracticeQueueDataListState
                 ),
               ),
               child: SafeArea(
-                minimum: const EdgeInsets.all(AppPadding.p14)
-                    .copyWith(top: 0, bottom: -10),
+                minimum: const EdgeInsets.all(AppPadding.p14).copyWith(top: 0),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       CustomTextField(
-                        onSubmitted: (String value) {
-                          SearchFieldController.text = value;
-                          callback();
-                          setState(() {});
-                        },
                         prefixIcon: const Icon(
                           Icons.search_outlined,
                           color: ColorManager.kPrimaryColor,
@@ -125,7 +118,7 @@ class _ClinicalPracticeQueueDataListState
                         hintText: 'Search',
                       ),
                       SizedBox(
-                        height: Get.height * 0.68,
+                        height: MediaQuery.of(context).size.height * 0.66,
                         child: ConsultingQueueController
                                 .i.consultingqueuewait.isNotEmpty
                             ? ListView.builder(
@@ -251,20 +244,7 @@ class _ClinicalPracticeQueueDataListState
                                                         Get.to(() =>
                                                             //  HistoryeRXConsultingQueue());
 
-                                                            PrescribeMedicineScreen(
-                                                              patientid:
-                                                                  manageAppointment
-                                                                      .patientId,
-                                                              visitno:
-                                                                  manageAppointment
-                                                                      .visitNo,
-                                                              // ernsbit: manageAppointment.er,
-                                                              // currentvisit: manageAppointment.,
-                                                              // checkintypevalue: manageAppointment.ch,
-                                                              prescribedvalue:
-                                                                  manageAppointment
-                                                                      .prescribedInValue,
-                                                            ));
+                                                            const PrescribeMedicineScreen());
                                                       },
                                                       child: Image.asset(
                                                         Images.rxedit,
@@ -342,8 +322,12 @@ class _ClinicalPracticeQueueDataListState
                                             ?.length
                                         : 0) ==
                                     0
-                                ? const Center(
-                                    child: Text('No Record Found!'),
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: const Center(
+                                      child: Text('No Record Found!'),
+                                    ),
                                   )
                                 : Container(),
                       ),

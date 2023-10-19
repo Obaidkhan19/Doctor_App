@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
+import 'package:doctormobileapplication/models/erns_history.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
