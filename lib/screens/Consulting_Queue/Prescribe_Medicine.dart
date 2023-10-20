@@ -1,5 +1,3 @@
-
-
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/CustomFormField.dart';
 import 'package:doctormobileapplication/components/MyCustomExpansionTile.dart';
@@ -177,7 +175,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     super.dispose();
     controller.clearLists();
   }
-  bool expand=false;
+
+  bool expand = false;
 
   @override
   Widget build(BuildContext context) {
@@ -269,11 +268,13 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           height: Get.height * 0.02,
                         ),
                         SizedBox(
-                          width: Get.width*0.9,
-                          
-                          child: Card(
-                                elevation: 4,
-                                surfaceTintColor: ColorManager.kWhiteColor,
+                            width: Get.width * 0.9,
+                            child: Card(
+                              elevation: 4,
+                              surfaceTintColor: ColorManager.kWhiteColor,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Get.width * 0.01),
                                 child: MyCustomTile(
                                   title: Column(
                                     crossAxisAlignment:
@@ -296,8 +297,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                           SizedBox(
                                             width: Get.width * 0.52,
                                             child: Text(
-                                              ERXController
-                                                  .i.historycomplaint,
+                                              ERXController.i.historycomplaint,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 10,
                                               ),
@@ -347,9 +347,10 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   },
                                   children: [
                                     SizedBox(
-                                      width:Get.width*0.8,
+                                      width: Get.width * 0.8,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             crossAxisAlignment:
@@ -362,7 +363,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.bold,
-                                                  color: ColorManager.kblackColor,
+                                                  color:
+                                                      ColorManager.kblackColor,
                                                 ),
                                               ),
                                               SizedBox(
@@ -390,7 +392,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.bold,
-                                                  color: ColorManager.kblackColor,
+                                                  color:
+                                                      ColorManager.kblackColor,
                                                 ),
                                               ),
                                               SizedBox(
@@ -418,7 +421,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.bold,
-                                                  color: ColorManager.kblackColor,
+                                                  color:
+                                                      ColorManager.kblackColor,
                                                 ),
                                               ),
                                               SizedBox(
@@ -447,7 +451,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.bold,
-                                                  color: ColorManager.kblackColor,
+                                                  color:
+                                                      ColorManager.kblackColor,
                                                 ),
                                               ),
                                               SizedBox(
@@ -466,8 +471,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                     ),
                                   ],
                                 ),
-                              )
-                        ),
+                              ),
+                            )),
                         Padding(
                           padding: EdgeInsets.only(
                             left: Get.width * 0.03,
@@ -1833,8 +1838,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                               child: Text(
                                                 controller
                                                         .selectedlst
-                                                        .medicineRoutes?[
-                                                            index]
+                                                        .medicineRoutes?[index]
                                                         .englishDefinition
                                                         .toString() ??
                                                     "",
@@ -1845,8 +1849,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                     color: Colors.black,
                                                   ),
                                                 ),
-                                                overflow:
-                                                    TextOverflow.ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,
                                               ),
                                             ),

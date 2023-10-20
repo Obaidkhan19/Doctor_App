@@ -99,20 +99,25 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 30,
-                    child: ClipOval(
-                      child: path != ""
-                          ? CachedNetworkImage(
-                              imageUrl: imagepath,
-                              fit: BoxFit.fill,
-                              errorWidget: (context, url, error) =>
-                                  Image.asset(AppImages.doctorlogo),
-                            )
-                          : Image.asset(AppImages.doctorlogo),
-                    ),
-                  ),
+                  leading:  GetBuilder<ProfileController>(
+                builder: (context) {
+                  return CircleAvatar(
+                      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                      radius: 30,
+                      child: ClipOval(
+                          child: CachedNetworkImage(
+                        imageUrl: ProfileController
+                                    .i.selectedbasicInfo?.picturePath !=
+                                null
+                            ? AppConstants.baseURL +
+                                ProfileController.i.selectedbasicInfo?.picturePath
+                            : "",
+                        fit: BoxFit.fill,
+                        errorWidget: (context, url, error) =>
+                            Image.asset(AppImages.doctorlogo),
+                      )));
+                }
+              ),
                   title: Text(
                     profile.selectedbasicInfo?.fullName ?? "",
                     style: GoogleFonts.poppins(

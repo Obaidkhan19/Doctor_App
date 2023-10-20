@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String path = '';
 
   _getimagepath() async {
-    path = (await LocalDb().getDoctorUserImagePath())!;
+    path = ProfileController.i.selectedbasicInfo?.picturePath??"";// (await LocalDb().getDoctorUserImagePath())!;
     String baseurl = AppConstants.baseURL;
     imagepath = baseurl + path;
   }
@@ -133,19 +133,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                          radius: 30,
-                          child: ClipOval(
-                            child: path != ""
-                                ? CachedNetworkImage(
-                                    imageUrl: imagepath,
-                                    fit: BoxFit.fill,
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(AppImages.doctorlogo),
-                                  )
-                                : Image.asset(AppImages.doctorlogo),
-                          )),
+                      GetBuilder<ProfileController>(
+                        builder: (context) {
+                          return CircleAvatar(
+                              backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                              radius: 30,
+                              child: ClipOval(
+                                child:CachedNetworkImage(
+                                        imageUrl: ProfileController.i.selectedbasicInfo?.picturePath!=null?AppConstants.baseURL+ProfileController.i.selectedbasicInfo?.picturePath:"" ,
+                                        fit: BoxFit.fill,
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(AppImages.doctorlogo),
+                                      )
+                              ));
+                        }
+                      ),
                       SizedBox(
                         width: Get.width * 0.04,
                       ),

@@ -53,8 +53,34 @@ class _MyCustomTileState extends State<MyCustomTile> {
                     widget.title,
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Visibility(
+                      visible: !_isExpanded,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          width: Get.width * 0.3,
+                          height: Get.height * 0.006,
+                          decoration: BoxDecoration(
+                            color: ColorManager.kblackColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            if (_isExpanded) ...widget.children,
+            SizedBox(height: Get.height * 0.01),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Visibility(
-                  visible: !_isExpanded,
+                  visible: _isExpanded,
                   child: InkWell(
                     onTap: () {},
                     child: Container(
@@ -68,22 +94,6 @@ class _MyCustomTileState extends State<MyCustomTile> {
                   ),
                 ),
               ],
-            ),
-            if (_isExpanded) ...widget.children,
-            SizedBox(height: Get.height * 0.01),
-            Visibility(
-              visible: _isExpanded,
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                  width: Get.width * 0.3,
-                  height: Get.height * 0.006,
-                  decoration: BoxDecoration(
-                    color: ColorManager.kblackColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
             ),
             SizedBox(height: Get.height * 0.01),
           ],

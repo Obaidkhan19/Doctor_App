@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -12,6 +14,7 @@ import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -162,45 +165,50 @@ class _EditProfileState extends State<EditProfile> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      edit.pickImage();
-                    },
-                    child: Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: edit.file != null
-                            ? DecorationImage(
-                                image: FileImage(File(edit.file!.path)),
-                                fit: BoxFit.cover,
-                              )
-                            : widget.imagepath != ""
+                  GetBuilder<ProfileController>(
+                    builder: (cont) {
+                      return InkWell(
+                        onTap: () {
+                          edit.pickImage();
+                        },
+
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: edit.file != null
                                 ? DecorationImage(
-                                    image: NetworkImage(widget.imagepath!),
+                                    image: FileImage(File(edit.file!.path)),
                                     fit: BoxFit.cover,
                                   )
-                                : DecorationImage(
-                                    image: AssetImage(AppImages.doctorlogo),
-                                    fit: BoxFit.cover,
-                                  ),
-                      ),
-                      child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.green,
-                            child: IconButton(
-                                onPressed: () {
-                                  edit.pickImage();
-                                },
-                                icon: const Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 15,
-                                )),
-                          )),
-                    ),
+                                : cont.selectedbasicInfo!.picturePath!=null
+                                    ? DecorationImage(
+                                        image:NetworkImage(AppConstants.baseURL+cont.selectedbasicInfo!.picturePath) ,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : DecorationImage(
+                                        image: AssetImage(AppImages.doctorlogo),
+                                        fit: BoxFit.cover,
+                                      ),
+                          ),
+                          child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: CircleAvatar(
+                                radius: 15,
+                                backgroundColor: Colors.green,
+                                child: IconButton(
+                                    onPressed: () {
+                                      edit.pickImage();
+                                    },
+                                    icon: const Icon(
+                                      Icons.camera_alt_outlined,
+                                      size: 15,
+                                    )),
+                              )),
+                        ),
+                      );
+                    }
                   ),
                   SizedBox(
                     height: Get.height * 0.02,

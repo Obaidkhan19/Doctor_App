@@ -51,15 +51,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
             ),
           ),
           centerTitle: true,
-          title: Center(
-            child: Text(
-              'todayappointment'.tr,
-              style: GoogleFonts.raleway(
-                textStyle: GoogleFonts.poppins(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: ColorManager.kPrimaryColor),
-              ),
+          title: Text(
+            'todayappointment'.tr,
+            style: GoogleFonts.raleway(
+              textStyle: GoogleFonts.poppins(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.kPrimaryColor),
             ),
           ),
           backgroundColor: Colors.transparent,
@@ -154,6 +152,9 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                   .onlineAppointmentStatistics
                                                   ?.noofAppointments
                                                   .toString() ??
+
+// onlineAppointmentStatistics?.noofAppointments
+
                                               "",
                                           style: Theme.of(context)
                                               .textTheme
@@ -200,7 +201,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                 itemCount: ManageAppointmentController
                                         .i
                                         .dailyDoctorAppointmentsModel
-                                        .appointmentSummary
+                                        .appointmentStatistics
                                         ?.length
                                  ,
                                 itemBuilder: (context, index) {
@@ -287,7 +288,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
-                                                    '${manageAppointment.noofAppointments ?? ""}',
+                                                    '${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentStatistics?[index].noofAppointments ?? ""}',
                                                     style: const TextStyle(
                                                         fontSize: 20,
                                                         color: Colors.blue),
