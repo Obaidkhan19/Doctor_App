@@ -164,11 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .i.selectedbasicInfo?.fullName ??
                                       "",
                                   style: const TextStyle(
-                                    overflow: TextOverflow.ellipsis,
                                     color: ColorManager.kWhiteColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
                               ),

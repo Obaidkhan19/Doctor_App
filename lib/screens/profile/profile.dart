@@ -127,7 +127,7 @@ class _ProfileState extends State<Profile> {
               Container(
                 alignment: Alignment.bottomCenter,
                 width: Get.width,
-                height: Get.height * 0.5,
+                height: Get.height * 0.65,
                 padding: EdgeInsets.only(top: Get.height * 0.04),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -231,7 +231,7 @@ class _ProfileState extends State<Profile> {
                           color: ColorManager.kWhiteColor,
                           textcolor: ColorManager.kPrimaryColor),
                       SizedBox(
-                        height: Get.height * 0.1,
+                        height: Get.height * 0.2,
                       ),
                     ],
                   ),
