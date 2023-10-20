@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: Get.width * 0.6,
+                              width: Get.width * 0.4,
                               child: Expanded(
                                 child: Text(
                                   ProfileController

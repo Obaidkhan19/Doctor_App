@@ -49,6 +49,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
+                contr.tabindex = 0;
                 Navigator.pop(context);
               },
               child: Image.asset(
