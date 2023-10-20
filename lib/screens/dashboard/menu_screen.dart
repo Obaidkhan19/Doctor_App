@@ -1,3 +1,4 @@
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
@@ -8,6 +9,9 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/auth_r
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
+import 'package:doctormobileapplication/screens/dashboard/dashboard.dart';
+import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
+import 'package:doctormobileapplication/screens/health_summary/patient_history.dart';
 import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -23,6 +27,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../components/images.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../components/images.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -75,15 +83,19 @@ class _MenuScreenState extends State<MenuScreen> {
               SizedBox(
                 height: Get.height * 0.14,
               ),
+
               InkWell(
-                  onTap: () {
-                    //Get.;
-                    ZoomDrawer.of(context)!.close();
-                  },
-                  child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  )),
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  ZoomDrawer.of(context)!.close();
+                },
+                child: Image.asset(
+                  AppImages.back,
+                  color: ColorManager.kWhiteColor,
+                ),
+              ),
+
               SizedBox(
                 height: Get.height * 0.04,
               ),
@@ -92,18 +104,13 @@ class _MenuScreenState extends State<MenuScreen> {
                 radius: 30,
                 child: ClipOval(
                   child: path != ""
-                              ?  CachedNetworkImage(
-                                                                imageUrl: imagepath,
-                                                                        fit: BoxFit.fill,
-                                                               
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) =>
-                                                                    Image.asset(
-                                                                        AppImages.doctorlogo),
-                              ):
-                                                                    Image.asset(
-                                                                        AppImages.doctorlogo),
+                      ? CachedNetworkImage(
+                          imageUrl: imagepath,
+                          fit: BoxFit.fill,
+                          errorWidget: (context, url, error) =>
+                              Image.asset(AppImages.doctorlogo),
+                        )
+                      : Image.asset(AppImages.doctorlogo),
                 ),
               ),
 

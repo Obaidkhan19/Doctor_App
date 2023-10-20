@@ -35,7 +35,6 @@ class ConsultingQueueController extends GetxController implements GetxService {
   int _index = 0;
   int get index => _index;
   List<consultingqueuewaitholdresponse> response = [];
-  List<consultingqueuereponse> pastconsultation = [];
   List<consultingqueuewaitholdresponse> consultingqueuewait = [];
   List<consultingqueuewaitholdresponse> consultingqueuehold = [];
 
@@ -58,6 +57,8 @@ class ConsultingQueueController extends GetxController implements GetxService {
     update();
   }
 
+// CONSULTED VAULT
+  List<consultingqueuereponse> pastconsultation = [];
   updatepastconsultinglist(List<consultingqueuereponse> data) {
     pastconsultation = data;
     update();

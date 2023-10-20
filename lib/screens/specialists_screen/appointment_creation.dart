@@ -174,14 +174,14 @@ class _AppointmentCreationState extends State<AppointmentCreation> {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              const CustomTextField(
+              CustomTextField(
                 maxlines: 5,
                 hintText: '',
               ),
               SizedBox(
                 height: Get.height * 0.02,
               ),
-               const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   PositionedButtonWidget(
@@ -264,61 +264,52 @@ class _AppointmentCreationState extends State<AppointmentCreation> {
 
   Future<dynamic> PaymentMethodDialogue(BuildContext context) {
     return showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Material(
-                              type: MaterialType.transparency,
-                              shape: const RoundedRectangleBorder(),
-                              color: ColorManager.kWhiteColor,
-                              child: AlertDialog(
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.topRight,
-                                        child: InkWell(
-                                            onTap: () {
-                                              Get.back();
-                                            },
-                                            child: Image.asset(
-                                                Images.crossicon))),
-                                    SizedBox(
-                                      height: Get.height * 0.04,
-                                    ),
-                                    Text(
-                                      'Payment Method',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                              color:
-                                                  ColorManager.kPrimaryColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w900),
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.09,
-                                    ),
-                                    buildStyledContainer(
-                                        'Pay from your Wallet',
-                                        context,
-                                        false,
-                                        () {}),
-                                    SizedBox(height: Get.height * 0.01),
-                                    buildStyledContainer(
-                                        'Pay Online', context, true, () {
-                                      Get.back();
-                                      paymentDialogue(context);
-                                    }),
-                                    SizedBox(height: Get.height * 0.01),
-                                    buildStyledContainer('Pay at Clinic',
-                                        context, false, () {}),
-                                    SizedBox(height: Get.height * 0.01),
-                                    // Add more containers as needed
-                                  ],
-                                ),
-                              ));
-                        });
+        context: context,
+        builder: (context) {
+          return Material(
+              type: MaterialType.transparency,
+              shape: const RoundedRectangleBorder(),
+              color: ColorManager.kWhiteColor,
+              child: AlertDialog(
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Image.asset(Images.crossicon))),
+                    SizedBox(
+                      height: Get.height * 0.04,
+                    ),
+                    Text(
+                      'Payment Method',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: ColorManager.kPrimaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.09,
+                    ),
+                    buildStyledContainer(
+                        'Pay from your Wallet', context, false, () {}),
+                    SizedBox(height: Get.height * 0.01),
+                    buildStyledContainer('Pay Online', context, true, () {
+                      Get.back();
+                      paymentDialogue(context);
+                    }),
+                    SizedBox(height: Get.height * 0.01),
+                    buildStyledContainer(
+                        'Pay at Clinic', context, false, () {}),
+                    SizedBox(height: Get.height * 0.01),
+                    // Add more containers as needed
+                  ],
+                ),
+              ));
+        });
   }
 
   paymentDialogue(BuildContext context) {
@@ -480,7 +471,7 @@ class _AppointmentCreationState extends State<AppointmentCreation> {
 class CreditCardFormField extends StatelessWidget {
   const CreditCardFormField({
     super.key,
-     this.controller,
+    this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
     this.inputFormatters,

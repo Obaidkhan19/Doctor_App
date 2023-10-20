@@ -11,12 +11,14 @@ import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
+import 'package:doctormobileapplication/models/patient_detail.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/AppImages.dart';
 
@@ -1516,11 +1518,11 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
 
                       InkWell(
                         onTap: () async {
-                          String? result = await searchableDropdownRadioButton(
-                              context,
-                              controller.selectedfollowup,
-                              controller.followupList);
-                          controller.updateselectedfollowup(result!);
+                          // String? result = await searchableDropdownRadioButton(
+                          //     context,
+                          //     controller.selectedfollowup,
+                          //     controller.followupList);
+                          // controller.updateselectedfollowup(result!);
                         },
                         child: Container(
                           height: Get.height * 0.06,
@@ -1556,7 +1558,7 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
 
                       // Display list
                       Visibility(
-                        visible: controller.selectedfollowup != '',
+                        //  visible: controller.selectedfollowup != '',
                         child: Container(
                           width: Get.width * 0.88,
                           decoration: BoxDecoration(
@@ -1582,9 +1584,10 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                                         borderRadius:
                                             BorderRadius.circular(12.0),
                                       ),
-                                      child: Text(
-                                        controller.selectedfollowup,
-                                        style: const TextStyle(
+                                      child: const Text(
+                                        //controller.selectedfollowup,
+                                        "",
+                                        style: TextStyle(
                                           fontSize: 8,
                                           color: ColorManager.kWhiteColor,
                                         ),
@@ -1810,13 +1813,13 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                               }
                               print('5');
                               // FOLLOW UP
-                              String followupname = controller.selectedfollowup;
+                              // String followupname = controller.selectedfollowup;
                               FollowUps1? followupWithMatchingName;
                               try {
-                                followupWithMatchingName =
-                                    controller.followupList.firstWhere(
-                                  (followup) => followup.name == followupname,
-                                );
+                                // followupWithMatchingName =
+                                //     controller.followupList.firstWhere(
+                                //   (followup) => followup.name == followupname,
+                                // );
                               } catch (e) {
                                 followupWithMatchingName = null;
                               }

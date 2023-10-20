@@ -5,6 +5,7 @@ import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controll
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +21,7 @@ class ConsultingQueueRepo {
     var body = {
       "DoctorId": userId,
       "Search": "",
-      "BranchId": "",
+      "BranchId": branchId,
       "WorkLocationId": "",
       "Status": "",
       "FromDate": DateTime.now().toString().split(' ')[0],
@@ -42,8 +43,6 @@ class ConsultingQueueRepo {
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        print('consultingqueueresult');
-        print(result);
         if (result['Status'] == 1) {
           Iterable lst = result['Consultations'];
           List<consultingqueuereponse> rep =
@@ -97,6 +96,9 @@ class ConsultingQueueRepo {
     var body = consult.toJson();
     var headers = {'Content-Type': 'application/json'};
     try {
+      ConsultingQueueController.i.response.clear();
+      ConsultingQueueController.i.consultingqueuewait.clear();
+      ConsultingQueueController.i.consultingqueuehold.clear();
       ConsultingQueueController.i.updateIsclinicloading(true);
       var response = await http.post(
           Uri.parse(AppConstants.consultingqueuewait),
@@ -105,6 +107,9 @@ class ConsultingQueueRepo {
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
+        if (result['Status'] == 0) {
+          ConsultingQueueController.i.updateIsclinicloading(false);
+        }
         if (result['Status'] == 1) {
           Iterable lst = result['Queue'];
           List<consultingqueuewaitholdresponse> rep = lst

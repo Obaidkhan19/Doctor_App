@@ -1,4 +1,3 @@
-
 class Investigation {
   int? status;
   List<Investigations1>? investigations;

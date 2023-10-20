@@ -10,8 +10,10 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 
 import 'package:doctormobileapplication/screens/book_your_appointment/book_your_appointment.dart';
+import 'package:doctormobileapplication/screens/consulted_vault/past_consultations.dart';
 import 'package:doctormobileapplication/screens/health_summary/health_summary_Screen.dart';
 import 'package:doctormobileapplication/screens/consulted_vault/appointment_history.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointments.dart';
@@ -134,23 +136,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
-                        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                        radius: 30,
-                        child: ClipOval(
-                          child: path != ""
-                              ?  CachedNetworkImage(
-                                                                imageUrl: imagepath,
-                                                                        fit: BoxFit.fill,
-                                                               
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) =>
-                                                                    Image.asset(
-                                                                        AppImages.doctorlogo),
-                              ):
-                                                                    Image.asset(
-                                                                        AppImages.doctorlogo),)
-                      ),
+                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                          radius: 30,
+                          child: ClipOval(
+                            child: path != ""
+                                ? CachedNetworkImage(
+                                    imageUrl: imagepath,
+                                    fit: BoxFit.fill,
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(AppImages.doctorlogo),
+                                  )
+                                : Image.asset(AppImages.doctorlogo),
+                          )),
                       SizedBox(
                         width: Get.width * 0.04,
                       ),

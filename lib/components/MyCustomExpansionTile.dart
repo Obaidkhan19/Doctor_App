@@ -1,3 +1,5 @@
+import 'package:doctormobileapplication/components/custom_expension_listtile.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,29 +32,63 @@ class _MyCustomTileState extends State<MyCustomTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: Get.height * 0.01),
-        InkWell(
-          onTap: () {
-            setState(() {
-              _isExpanded = !_isExpanded;
-              widget.onExpansionChanged(_isExpanded);
-            });
-          },
-          child: Padding(
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _isExpanded = !_isExpanded;
+          widget.onExpansionChanged(_isExpanded);
+        });
+      },
+      child: Column(
+        children: [
+          SizedBox(height: Get.height * 0.01),
+          Padding(
             padding: EdgeInsets.only(right: Get.width * 0.05),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                widget.title,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    widget.title,
+                  ],
+                ),
+                Visibility(
+                  visible: !_isExpanded,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      width: Get.width * 0.3,
+                      height: Get.height * 0.006,
+                      decoration: BoxDecoration(
+                        color: ColorManager.kblackColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-        ),
-        if (_isExpanded) ...widget.children,
-        SizedBox(height: Get.height * 0.01),
-      ],
+          if (_isExpanded) ...widget.children,
+          SizedBox(height: Get.height * 0.01),
+          Visibility(
+            visible: _isExpanded,
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                width: Get.width * 0.3,
+                height: Get.height * 0.006,
+                decoration: BoxDecoration(
+                  color: ColorManager.kblackColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: Get.height * 0.01),
+        ],
+      ),
     );
   }
 }

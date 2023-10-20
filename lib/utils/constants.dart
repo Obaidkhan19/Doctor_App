@@ -77,6 +77,8 @@ class AppConstants {
       "$baseURL/api/doctor/GetMedicineMatrix";
   static const String getErnsHistory =
       "$baseURL/api/patient/GetPatientERNSHistory";
+  static const String getErnsDetailHistory =
+      "$baseURL/api/patient/GetPatientERNSDetail";
 
   static const String getMedicinesByGroupId =
       "http://58.65.158.107:64/api/doctor/GetMedicinesByGroupId";

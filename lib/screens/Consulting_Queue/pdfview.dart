@@ -1,6 +1,9 @@
+import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class pdfviewconsulted extends StatelessWidget {
@@ -10,16 +13,27 @@ class pdfviewconsulted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: IconButton(onPressed: (){
-        Get.back();
-      },icon: const Icon(Icons.arrow_back_ios_new),),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+        // floatingActionButton: IconButton(onPressed: (){},icon: Icon(Icons.arrow_back_ios_new),),
+        appBar: AppBar(
+          leading: InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () {
+              Get.back();
+            },
+            child: Image.asset(
+              AppImages.back,
+              color: ColorManager.kPrimaryColor,
+            ),
+          ),
+        ),
         body: Center(
           child: SizedBox(
-              height: Get.height * 0.8,
-              width: Get.width * 1,
-              child: SfPdfViewer.network(AppConstants.baseURL + url),
-            ),
+            height: Get.height * 0.8,
+            width: Get.width * 1,
+            child: SfPdfViewer.network(AppConstants.baseURL + url),
+          ),
         ));
   }
 }
