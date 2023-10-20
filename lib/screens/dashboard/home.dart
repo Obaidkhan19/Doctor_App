@@ -10,10 +10,8 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 
 import 'package:doctormobileapplication/screens/book_your_appointment/book_your_appointment.dart';
-import 'package:doctormobileapplication/screens/consulted_vault/past_consultations.dart';
 import 'package:doctormobileapplication/screens/health_summary/health_summary_Screen.dart';
 import 'package:doctormobileapplication/screens/consulted_vault/appointment_history.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointments.dart';
@@ -157,32 +155,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: Get.width * 0.4,
-                              child: Expanded(
-                                child: Text(
-                                  ProfileController
-                                          .i.selectedbasicInfo?.fullName ??
-                                      "",
-                                  style: const TextStyle(
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                              width: Get.width * 0.5,
+                              child: Text(
+                                ProfileController
+                                        .i.selectedbasicInfo?.fullName ??
+                                    "",
+                                style: const TextStyle(
+                                  color: ColorManager.kWhiteColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                             ),
                             Text(
-                              //'REG NO. $PMDCNumber',
                               '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
-                              // style: Theme.of(context)
-                              //     .textTheme
-                              //     .bodyLarge
-                              //     ?.copyWith(
-                              //         fontWeight: FontWeight.w600,
-                              //         fontSize: 14,
-                              //         color: ColorManager.kWhiteColor),
+                             
                               style: const TextStyle(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 10,
@@ -194,10 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // SizedBox(
-                //   height: Get.height * 0.1,
-                // ),
-                // bookAppointmentContainer(context),
+               
                 SizedBox(
                   height: Get.height * 0.01,
                 ),

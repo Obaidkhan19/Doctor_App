@@ -1,10 +1,7 @@
-import 'dart:io';
 
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
-import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/screens/health_summary/user_detail_health_summary.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';

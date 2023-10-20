@@ -3,7 +3,6 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class pdfviewconsulted extends StatelessWidget {

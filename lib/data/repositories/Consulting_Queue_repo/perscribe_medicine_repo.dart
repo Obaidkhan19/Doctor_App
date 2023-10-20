@@ -12,14 +12,12 @@ import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
-import 'package:doctormobileapplication/models/medicine_matrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
 class PrescribeMedicinRepo {

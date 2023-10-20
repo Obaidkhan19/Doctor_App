@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/CustomFormField.dart';
@@ -177,6 +177,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     super.dispose();
     controller.clearLists();
   }
+  bool expand=false;
 
   @override
   Widget build(BuildContext context) {
@@ -267,20 +268,14 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            final item = items.first;
-                            return Card(
-                              elevation: 4,
-                              surfaceTintColor: ColorManager.kWhiteColor,
-                              child: MyCustomTile(
-                                title: Padding(
-                                  padding:
-                                      EdgeInsets.only(left: Get.width * 0.04),
-                                  child: Column(
+                        SizedBox(
+                          width: Get.width*0.9,
+                          
+                          child: Card(
+                                elevation: 4,
+                                surfaceTintColor: ColorManager.kWhiteColor,
+                                child: MyCustomTile(
+                                  title: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -300,13 +295,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                           ),
                                           SizedBox(
                                             width: Get.width * 0.52,
-                                            child: Flexible(
-                                              child: Text(
-                                                ERXController
-                                                    .i.historycomplaint,
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                ),
+                                            child: Text(
+                                              ERXController
+                                                  .i.historycomplaint,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 10,
                                               ),
                                             ),
                                           ),
@@ -331,13 +324,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                           ),
                                           SizedBox(
                                             width: Get.width * 0.52,
-                                            child: Flexible(
-                                              child: Text(
-                                                ERXController
-                                                    .i.historyprimarydiagnosis,
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                ),
+                                            child: Text(
+                                              ERXController
+                                                  .i.historyprimarydiagnosis,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 10,
                                               ),
                                             ),
                                           ),
@@ -348,36 +339,34 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       ),
                                     ],
                                   ),
-                                ),
-                                initiallyExpanded: false,
-                                onExpansionChanged: (expanded) {
-                                  setState(() {
-                                    item.isExpanded = expanded;
-                                  });
-                                },
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(left: Get.width * 0.04),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Procedures:        ",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorManager.kblackColor,
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (expanded) {
+                                    setState(() {
+                                      expand = expanded;
+                                    });
+                                  },
+                                  children: [
+                                    SizedBox(
+                                      width:Get.width*0.8,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Procedures:        ",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorManager.kblackColor,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width * 0.52,
-                                              child: Flexible(
+                                              SizedBox(
+                                                width: Get.width * 0.52,
                                                 child: Text(
                                                   controller.historyprecedures,
                                                   style: GoogleFonts.poppins(
@@ -385,29 +374,27 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.01,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Diagnostics:       ",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorManager.kblackColor,
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.01,
+                                          ),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Diagnostics:       ",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorManager.kblackColor,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width * 0.52,
-                                              child: Flexible(
+                                              SizedBox(
+                                                width: Get.width * 0.52,
                                                 child: Text(
                                                   controller.historydiagnostics,
                                                   style: GoogleFonts.poppins(
@@ -415,29 +402,27 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.01,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Investigations:   ",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorManager.kblackColor,
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.01,
+                                          ),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Investigations:   ",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorManager.kblackColor,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width * 0.52,
-                                              child: Flexible(
+                                              SizedBox(
+                                                width: Get.width * 0.52,
                                                 child: Text(
                                                   controller
                                                       .historyinvestigation,
@@ -446,29 +431,27 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.03,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Vitals:                       ",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorManager.kblackColor,
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.03,
+                                          ),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Vitals:                       ",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorManager.kblackColor,
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width * 0.52,
-                                              child: Flexible(
+                                              SizedBox(
+                                                width: Get.width * 0.52,
                                                 child: Text(
                                                   controller.historyvitals,
                                                   style: GoogleFonts.poppins(
@@ -476,16 +459,14 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                                  ],
+                                ),
+                              )
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -1849,26 +1830,24 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                               index++)
                                             SizedBox(
                                               width: Get.width * 0.15,
-                                              child: Expanded(
-                                                child: Text(
-                                                  controller
-                                                          .selectedlst
-                                                          .medicineRoutes?[
-                                                              index]
-                                                          .englishDefinition
-                                                          .toString() ??
-                                                      "",
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
-                                                      fontSize: 8,
-                                                      color: Colors.black,
-                                                    ),
+                                              child: Text(
+                                                controller
+                                                        .selectedlst
+                                                        .medicineRoutes?[
+                                                            index]
+                                                        .englishDefinition
+                                                        .toString() ??
+                                                    "",
+                                                style: GoogleFonts.poppins(
+                                                  textStyle:
+                                                      GoogleFonts.poppins(
+                                                    fontSize: 8,
+                                                    color: Colors.black,
                                                   ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
                                                 ),
+                                                overflow:
+                                                    TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
                                             ),
                                         ],

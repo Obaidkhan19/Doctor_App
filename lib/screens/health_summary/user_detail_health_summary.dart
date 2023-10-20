@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/allergies.dart';
-import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

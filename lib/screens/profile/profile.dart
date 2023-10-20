@@ -94,150 +94,152 @@ class _ProfileState extends State<Profile> {
             ),
             centerTitle: true,
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 30,
-                  child: ClipOval(
-                    child: path != ""
-                        ? CachedNetworkImage(
-                            imageUrl: imagepath,
-                            fit: BoxFit.fill,
-                            errorWidget: (context, url, error) =>
-                                Image.asset(AppImages.doctorlogo),
-                          )
-                        : Image.asset(AppImages.doctorlogo),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 30,
+                    child: ClipOval(
+                      child: path != ""
+                          ? CachedNetworkImage(
+                              imageUrl: imagepath,
+                              fit: BoxFit.fill,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AppImages.doctorlogo),
+                            )
+                          : Image.asset(AppImages.doctorlogo),
+                    ),
+                  ),
+                  title: Text(
+                    profile.selectedbasicInfo?.fullName ?? "",
+                    style: GoogleFonts.poppins(
+                      fontSize: 25,
+                      color: ColorManager.kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                title: Text(
-                  profile.selectedbasicInfo?.fullName ?? "",
-                  style: GoogleFonts.poppins(
-                    fontSize: 25,
-                    color: ColorManager.kPrimaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                SizedBox(
+                  height: Get.height * 0.07,
                 ),
-              ),
-              SizedBox(
-                height: Get.height * 0.07,
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                width: Get.width,
-                height: Get.height * 0.65,
-                padding: EdgeInsets.only(top: Get.height * 0.04),
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
-                    color: ColorManager.kPrimaryColor),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      RecordWidget(
-                          //   title: 'fullName'.tr,
-                          title: "fullName".tr,
-                          // name:
-                          //     ProfileController.i.selectedbasicInfo?.fullName ??
-                          //         "",
-                          // name: EditProfileController.i.name),
-                          name: profile.selectedbasicInfo?.fullName ?? ""),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                        title: "dateOfBirth".tr,
-                        name: (profile.selectedbasicInfo?.dateofBirth != null)
-                            ? DateFormat('MM-dd-y').format(DateTime.parse(
-                                profile.selectedbasicInfo?.dateofBirth!
-                                    .split("T")[0]))
-                            : "-",
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                        title: "contact".tr,
-                        name: profile.selectedbasicInfo?.contactPublic ?? "",
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                          title: "email".tr,
-                          name: profile.selectedbasicInfo?.email ?? ""),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                        title: "country".tr,
-                        name: profile.selectedbasicInfo?.countryName ?? "",
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                        title: "province/state".tr,
-                        name: profile.selectedbasicInfo?.stateName ?? "",
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                        title: "city".tr,
-                        name: profile.selectedbasicInfo?.cityName ?? "",
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      RecordWidget(
-                        title: "address".tr,
-                        name: profile.selectedbasicInfo?.address ?? "",
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.04,
-                      ),
-                      PrimaryButton(
-                          width: Get.width * 0.9,
-                          height: Get.height * 0.06,
-                          fontSize: 15,
-                          title: "editProfile".tr,
-                          onPressed: () async {
-                            var result = await Get.to(
-                              () => EditProfile(
-                                imagepath: imagepath != '' ? imagepath : "",
-                                fullName: profile.selectedbasicInfo?.fullName,
-                                dob: profile.selectedbasicInfo?.dateofBirth,
-                                cellNumber:
-                                    profile.selectedbasicInfo?.contactPublic,
-                                email: profile.selectedbasicInfo?.email,
-                                country: profile.selectedbasicInfo?.countryName,
-                                province: profile.selectedbasicInfo?.stateName,
-                                city: profile.selectedbasicInfo?.cityName,
-                                address: profile.selectedbasicInfo?.address,
-                                cityid: profile.selectedbasicInfo?.cityId,
-                                countryid: profile.selectedbasicInfo?.countryId,
-                                provinceid: profile
-                                    .selectedbasicInfo?.stateOrProvinceId,
-                              ),
-                            );
-                            if (result == true) {
-                              _getDoctorBasicInfo();
-                            }
-                          },
-                          color: ColorManager.kWhiteColor,
-                          textcolor: ColorManager.kPrimaryColor),
-                      SizedBox(
-                        height: Get.height * 0.2,
-                      ),
-                    ],
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  width: Get.width,
+                  height: Get.height * 0.65,
+                  padding: EdgeInsets.only(top: Get.height * 0.04),
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      color: ColorManager.kPrimaryColor),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        RecordWidget(
+                            //   title: 'fullName'.tr,
+                            title: "fullName".tr,
+                            // name:
+                            //     ProfileController.i.selectedbasicInfo?.fullName ??
+                            //         "",
+                            // name: EditProfileController.i.name),
+                            name: profile.selectedbasicInfo?.fullName ?? ""),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                          title: "dateOfBirth".tr,
+                          name: (profile.selectedbasicInfo?.dateofBirth != null)
+                              ? DateFormat('MM-dd-y').format(DateTime.parse(
+                                  profile.selectedbasicInfo?.dateofBirth!
+                                      .split("T")[0]))
+                              : "-",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                          title: "contact".tr,
+                          name: profile.selectedbasicInfo?.contactPublic ?? "",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                            title: "email".tr,
+                            name: profile.selectedbasicInfo?.email ?? ""),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                          title: "country".tr,
+                          name: profile.selectedbasicInfo?.countryName ?? "",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                          title: "province/state".tr,
+                          name: profile.selectedbasicInfo?.stateName ?? "",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                          title: "city".tr,
+                          name: profile.selectedbasicInfo?.cityName ?? "",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
+                        RecordWidget(
+                          title: "address".tr,
+                          name: profile.selectedbasicInfo?.address ?? "",
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.04,
+                        ),
+                        PrimaryButton(
+                            width: Get.width * 0.9,
+                            height: Get.height * 0.06,
+                            fontSize: 15,
+                            title: "editProfile".tr,
+                            onPressed: () async {
+                              var result = await Get.to(
+                                () => EditProfile(
+                                  imagepath: imagepath != '' ? imagepath : "",
+                                  fullName: profile.selectedbasicInfo?.fullName,
+                                  dob: profile.selectedbasicInfo?.dateofBirth,
+                                  cellNumber:
+                                      profile.selectedbasicInfo?.contactPublic,
+                                  email: profile.selectedbasicInfo?.email,
+                                  country: profile.selectedbasicInfo?.countryName,
+                                  province: profile.selectedbasicInfo?.stateName,
+                                  city: profile.selectedbasicInfo?.cityName,
+                                  address: profile.selectedbasicInfo?.address,
+                                  cityid: profile.selectedbasicInfo?.cityId,
+                                  countryid: profile.selectedbasicInfo?.countryId,
+                                  provinceid: profile
+                                      .selectedbasicInfo?.stateOrProvinceId,
+                                ),
+                              );
+                              if (result == true) {
+                                _getDoctorBasicInfo();
+                              }
+                            },
+                            color: ColorManager.kWhiteColor,
+                            textcolor: ColorManager.kPrimaryColor),
+                        SizedBox(
+                          height: Get.height * 0.2,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

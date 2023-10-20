@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:doctormobileapplication/components/custom_textfields.dart';
-import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
@@ -12,8 +11,6 @@ import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
-import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
-import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

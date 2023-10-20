@@ -1,7 +1,6 @@
 import 'package:doctormobileapplication/components/Customrowdesign.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:interval_time_picker/interval_time_picker.dart';
 
 class ConfigureAppointmentController extends GetxController
     implements GetxService {

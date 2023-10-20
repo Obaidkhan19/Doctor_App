@@ -64,7 +64,7 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                     children: [
                       Flexible(
                         child: Container(
-                          height: Get.height * 0.13,
+                          height: Get.height * 0.14,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: ColorManager.kPrimaryLightColor),

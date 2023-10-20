@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/components/custom_expension_listtile.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,13 +38,14 @@ class _MyCustomTileState extends State<MyCustomTile> {
           widget.onExpansionChanged(_isExpanded);
         });
       },
-      child: Column(
-        children: [
-          SizedBox(height: Get.height * 0.01),
-          Padding(
-            padding: EdgeInsets.only(right: Get.width * 0.05),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+      child: SizedBox(
+        width: Get.width * 0.8,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: Get.height * 0.01),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,25 +69,25 @@ class _MyCustomTileState extends State<MyCustomTile> {
                 ),
               ],
             ),
-          ),
-          if (_isExpanded) ...widget.children,
-          SizedBox(height: Get.height * 0.01),
-          Visibility(
-            visible: _isExpanded,
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                width: Get.width * 0.3,
-                height: Get.height * 0.006,
-                decoration: BoxDecoration(
-                  color: ColorManager.kblackColor,
-                  borderRadius: BorderRadius.circular(10),
+            if (_isExpanded) ...widget.children,
+            SizedBox(height: Get.height * 0.01),
+            Visibility(
+              visible: _isExpanded,
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  width: Get.width * 0.3,
+                  height: Get.height * 0.006,
+                  decoration: BoxDecoration(
+                    color: ColorManager.kblackColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: Get.height * 0.01),
-        ],
+            SizedBox(height: Get.height * 0.01),
+          ],
+        ),
       ),
     );
   }

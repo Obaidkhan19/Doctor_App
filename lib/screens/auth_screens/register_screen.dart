@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';

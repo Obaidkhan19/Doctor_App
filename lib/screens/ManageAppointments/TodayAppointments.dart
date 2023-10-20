@@ -75,10 +75,9 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
               dismissible: false,
               opacity: 0.4,
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: ManageAppointmentController.i.dailyDoctorAppointmentsModel
-                          .onlineAppointmentStatistics !=
+              child: ManageAppointmentController.i.dailyDoctorAppointmentsModel.onlineAppointmentStatistics !=
                       null
-                  ? SingleChildScrollView(
+                  ?  SingleChildScrollView(
                       child: SafeArea(
                       minimum:
                           const EdgeInsets.all(AppPadding.p22).copyWith(top: 0),
@@ -121,13 +120,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           dateTime: Date.toString(),
                                           IsOnline: 'true',
                                           WorkLocationId: ''));
-                                      // List<Search> search =
-                                      //     await SpecialitiesController.i
-                                      //         .getDoctors(doctor.id!);
-                                      // Get.to(() => Specialists(
-                                      //       doctors: search,
-                                      //       title: doctor.name,
-                                      //     ));
+                                   
                                     },
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -149,22 +142,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         color: ColorManager.kWhiteColor,
                                       ),
                                     ),
-                                    // subtitle: Text(
-                                    //   ManageAppointmentController
-                                    //           .i
-                                    //           .dailyDoctorAppointmentsModel
-                                    //           .onlineAppointmentStatistics
-                                    //           ?.address
-                                    //           .toString() ??
-                                    //       "",
-                                    //   style: Theme.of(context)
-                                    //       .textTheme
-                                    //       .bodyMedium!
-                                    //       .copyWith(
-                                    //           color: ColorManager.kWhiteColor,
-                                    //           fontWeight: FontWeightManager.light,
-                                    //           fontSize: 12),
-                                    // ),
+                                 
                                     trailing: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       mainAxisSize: MainAxisSize.min,
@@ -210,28 +188,21 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                   ),
                                 ),
                               )
-                            : Container(
-                                child: const Text('No Data'),
-                              ),
-                        (ManageAppointmentController
+                            : const SizedBox.shrink(),
+                        ManageAppointmentController
                                     .i
                                     .dailyDoctorAppointmentsModel
-                                    .appointmentStatistics !=
-                                null)
+                                    .appointmentStatistics!=null
+                                
                             ? ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: ((ManageAppointmentController
-                                            .i
-                                            .dailyDoctorAppointmentsModel
-                                            .appointmentStatistics !=
-                                        null)
-                                    ? ManageAppointmentController
+                                itemCount: ManageAppointmentController
                                         .i
                                         .dailyDoctorAppointmentsModel
-                                        .appointmentStatistics
+                                        .appointmentSummary
                                         ?.length
-                                    : 1),
+                                 ,
                                 itemBuilder: (context, index) {
                                   final manageAppointment =
                                       (ManageAppointmentController
@@ -347,7 +318,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                         SizedBox(
                           height: Get.height * 0.03,
                         ),
-                        Text(
+                        ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!.isEmpty?const SizedBox.shrink():Text(
                           'Appointments Time Overview'.tr,
                           style: GoogleFonts.poppins(
                               fontSize: 15,
@@ -358,7 +329,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
-                        Padding(
+                       ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!.isEmpty?const SizedBox.shrink(): Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: Get.width * 0.001),
                           child: Card(
@@ -370,7 +341,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                   bottom: Get.height * 0.03,
                                   left: Get.width * 0.025,
                                   right: Get.width * 0.025),
-                              child: Column(
+                              child:  Column(
                                 children: [
                                   Row(
                                     children: [
@@ -392,7 +363,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           SizedBox(
                                             height: Get.height * 0.01,
                                           ),
-                                          Row(
+                                          ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!.isNotEmpty?Row(
                                             children: [
                                               Text(
                                                 "${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[1] ?? ""} to ${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[1] ?? ""}",
@@ -403,7 +374,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 ),
                                               ),
                                             ],
-                                          ),
+                                          ):const Text("0"),
                                           SizedBox(
                                             height: Get.height * 0.03,
                                           ),
@@ -445,12 +416,12 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                             ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
                                                 ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
                                                         .appointmentSummary?[0]
-                                                        .booked
+                                                        .confirmed
                                                         .toString() ??
                                                     "",
                                                 style: GoogleFonts.poppins(
@@ -459,7 +430,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                         .kblackColor,
                                                     fontWeight:
                                                         FontWeight.w700),
-                                              ),
+                                              ):const Text("0"),
                                             ],
                                           ),
                                           SizedBox(
@@ -503,12 +474,12 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                              ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null? Text(
                                                 ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
                                                         .appointmentSummary?[0]
-                                                        .confirmed
+                                                        .consulted
                                                         .toString() ??
                                                     "",
                                                 style: GoogleFonts.poppins(
@@ -517,7 +488,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                         .kblackColor,
                                                     fontWeight:
                                                         FontWeight.w700),
-                                              ),
+                                              ):const Text("0"),
                                             ],
                                           ),
                                           SizedBox(
@@ -561,7 +532,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                             ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
                                                 ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
@@ -575,7 +546,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                         .kblackColor,
                                                     fontWeight:
                                                         FontWeight.w700),
-                                              ),
+                                              ):const Text("0"),
                                             ],
                                           ),
                                           SizedBox(
@@ -619,7 +590,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           ),
                                           Row(
                                             children: [
-                                              Text(
+                                             ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
                                                 ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
@@ -633,7 +604,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                         .kblackColor,
                                                     fontWeight:
                                                         FontWeight.w700),
-                                              ),
+                                              ):const Text("0"),
                                             ],
                                           ),
                                           SizedBox(
@@ -662,21 +633,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                             fontWeight: FontWeight.w700),
                                       ),
                                       SizedBox(width: Get.width * 0.1),
-                                      Text(
-                                        ManageAppointmentController
-                                                .i
-                                                .dailyDoctorAppointmentsModel
-                                                .appointmentSummary?[0]
-                                                .booked
-                                                .toString() ??
-                                            "",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 8,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(width: Get.width * 0.12),
-                                      Text(
+                                     ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
                                         ManageAppointmentController
                                                 .i
                                                 .dailyDoctorAppointmentsModel
@@ -688,9 +645,23 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                             fontSize: 8,
                                             color: ColorManager.kblackColor,
                                             fontWeight: FontWeight.w700),
+                                      ):const Text("0"),
+                                      SizedBox(width: Get.width * 0.12),
+                                      Text(
+                                        ManageAppointmentController
+                                                .i
+                                                .dailyDoctorAppointmentsModel
+                                                .appointmentSummary?[0]
+                                                .consulted
+                                                .toString() ??
+                                            "",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 8,
+                                            color: ColorManager.kblackColor,
+                                            fontWeight: FontWeight.w700),
                                       ),
                                       SizedBox(width: Get.width * 0.11),
-                                      Text(
+                                      ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null? Text(
                                         ManageAppointmentController
                                                 .i
                                                 .dailyDoctorAppointmentsModel
@@ -702,10 +673,10 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                             fontSize: 8,
                                             color: ColorManager.kblackColor,
                                             fontWeight: FontWeight.w700),
-                                      ),
+                                      ):const Text("0"),
                                       SizedBox(width: Get.width * 0.12),
-                                      Text(
-                                        ManageAppointmentController
+                                      ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
+                                       ManageAppointmentController
                                                 .i
                                                 .dailyDoctorAppointmentsModel
                                                 .appointmentSummary?[0]
@@ -716,7 +687,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                             fontSize: 8,
                                             color: ColorManager.kblackColor,
                                             fontWeight: FontWeight.w700),
-                                      ),
+                                      ):const Text("0"),
                                     ],
                                   ),
                                 ],
