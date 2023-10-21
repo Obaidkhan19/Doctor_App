@@ -39,24 +39,31 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () {
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            color: ColorManager.kPrimaryColor,
+            onPressed: () {
               Get.offAll(() => const DrawerScreen());
             },
-            child: Image.asset(
-              AppImages.back,
-              color: ColorManager.kPrimaryColor,
-            ),
           ),
+          // InkWell(
+          //   splashColor: Colors.transparent,
+          //   highlightColor: Colors.transparent,
+          //   onTap: () {
+          //     Get.offAll(() => const DrawerScreen());
+          //   },
+          //   child: Image.asset(
+          //     AppImages.back,
+          //     color: ColorManager.kPrimaryColor,
+          //   ),
+          // ),
           centerTitle: true,
           title: Text(
             'todayappointment'.tr,
             style: GoogleFonts.raleway(
               textStyle: GoogleFonts.poppins(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
                   color: ColorManager.kPrimaryColor),
             ),
           ),
@@ -73,9 +80,10 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
               dismissible: false,
               opacity: 0.4,
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: ManageAppointmentController.i.dailyDoctorAppointmentsModel.onlineAppointmentStatistics !=
+              child: ManageAppointmentController.i.dailyDoctorAppointmentsModel
+                          .onlineAppointmentStatistics !=
                       null
-                  ?  SingleChildScrollView(
+                  ? SingleChildScrollView(
                       child: SafeArea(
                       minimum:
                           const EdgeInsets.all(AppPadding.p22).copyWith(top: 0),
@@ -118,7 +126,6 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                           dateTime: Date.toString(),
                                           IsOnline: 'true',
                                           WorkLocationId: ''));
-                                   
                                     },
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -140,7 +147,6 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         color: ColorManager.kWhiteColor,
                                       ),
                                     ),
-                                 
                                     trailing: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       mainAxisSize: MainAxisSize.min,
@@ -193,17 +199,16 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                         ManageAppointmentController
                                     .i
                                     .dailyDoctorAppointmentsModel
-                                    .appointmentStatistics!=null
-                                
+                                    .appointmentStatistics !=
+                                null
                             ? ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: ManageAppointmentController
-                                        .i
-                                        .dailyDoctorAppointmentsModel
-                                        .appointmentStatistics
-                                        ?.length
-                                 ,
+                                    .i
+                                    .dailyDoctorAppointmentsModel
+                                    .appointmentStatistics
+                                    ?.length,
                                 itemBuilder: (context, index) {
                                   final manageAppointment =
                                       (ManageAppointmentController
@@ -319,383 +324,471 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                         SizedBox(
                           height: Get.height * 0.03,
                         ),
-                        ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!.isEmpty?const SizedBox.shrink():Text(
-                          'Appointments Time Overview'.tr,
-                          style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              color: ColorManager.kPrimaryColor,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
+                        ManageAppointmentController
+                                .i
+                                .dailyDoctorAppointmentsModel
+                                .appointmentSummary!
+                                .isEmpty
+                            ? const SizedBox.shrink()
+                            : Text(
+                                'Appointments Time Overview'.tr,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    color: ColorManager.kPrimaryColor,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
-                       ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!.isEmpty?const SizedBox.shrink(): Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Get.width * 0.001),
-                          child: Card(
-                            elevation: 4,
-                            surfaceTintColor: ColorManager.kWhiteColor,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: Get.height * 0.03,
-                                  bottom: Get.height * 0.03,
-                                  left: Get.width * 0.025,
-                                  right: Get.width * 0.025),
-                              child:  Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'Time Slot',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!.isNotEmpty?Row(
-                                            children: [
-                                              Text(
-                                                "${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[1] ?? ""} to ${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[1] ?? ""}",
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 9,
+                        ManageAppointmentController
+                                .i
+                                .dailyDoctorAppointmentsModel
+                                .appointmentSummary!
+                                .isEmpty
+                            ? const SizedBox.shrink()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Get.width * 0.001),
+                                child: Card(
+                                  elevation: 4,
+                                  surfaceTintColor: ColorManager.kWhiteColor,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: Get.height * 0.03,
+                                        bottom: Get.height * 0.03,
+                                        left: Get.width * 0.025,
+                                        right: Get.width * 0.025),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Time Slot',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 9,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.01,
+                                                ),
+                                                ManageAppointmentController
+                                                        .i
+                                                        .dailyDoctorAppointmentsModel
+                                                        .appointmentSummary!
+                                                        .isNotEmpty
+                                                    ? Row(
+                                                        children: [
+                                                          Text(
+                                                            "${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[1] ?? ""} to ${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[1] ?? ""}",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 9,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : const Text("0"),
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.1,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: Get.height * 0.02),
+                                              child: SizedBox(
+                                                height: Get.height * 0.09,
+                                                child:
+                                                    const MyVerticalSeparator(
                                                   color:
                                                       ColorManager.kblackColor,
                                                 ),
                                               ),
-                                            ],
-                                          ):const Text("0"),
-                                          SizedBox(
-                                            height: Get.height * 0.03,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.1,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: Get.height * 0.02),
-                                        child: SizedBox(
-                                          height: Get.height * 0.09,
-                                          child: const MyVerticalSeparator(
-                                            color: ColorManager.kblackColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.02,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'Booked',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color:
-                                                        ColorManager.kRedColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.02,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Booked',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 9,
+                                                          color: ColorManager
+                                                              .kRedColor,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.01,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    ManageAppointmentController
+                                                                .i
+                                                                .dailyDoctorAppointmentsModel
+                                                                .appointmentSummary !=
+                                                            null
+                                                        ? Text(
+                                                            ManageAppointmentController
+                                                                    .i
+                                                                    .dailyDoctorAppointmentsModel
+                                                                    .appointmentSummary?[
+                                                                        0]
+                                                                    .confirmed
+                                                                    .toString() ??
+                                                                "",
+                                                            style: GoogleFonts.poppins(
+                                                                fontSize: 9,
+                                                                color: ColorManager
+                                                                    .kblackColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          )
+                                                        : const Text("0"),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: Get.height * 0.02),
+                                              child: SizedBox(
+                                                height: Get.height * 0.09,
+                                                child:
+                                                    const MyVerticalSeparator(
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                ),
                                               ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Row(
-                                            children: [
-                                             ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
-                                                ManageAppointmentController
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Arrived',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 9,
+                                                          color: ColorManager
+                                                              .kPrimaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.01,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    ManageAppointmentController
+                                                                .i
+                                                                .dailyDoctorAppointmentsModel
+                                                                .appointmentSummary !=
+                                                            null
+                                                        ? Text(
+                                                            ManageAppointmentController
+                                                                    .i
+                                                                    .dailyDoctorAppointmentsModel
+                                                                    .appointmentSummary?[
+                                                                        0]
+                                                                    .consulted
+                                                                    .toString() ??
+                                                                "",
+                                                            style: GoogleFonts.poppins(
+                                                                fontSize: 9,
+                                                                color: ColorManager
+                                                                    .kblackColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          )
+                                                        : const Text("0"),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: Get.height * 0.02),
+                                              child: SizedBox(
+                                                height: Get.height * 0.09,
+                                                child:
+                                                    const MyVerticalSeparator(
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Waiting',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 9,
+                                                          color: ColorManager
+                                                              .kblueColor,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.01,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    ManageAppointmentController
+                                                                .i
+                                                                .dailyDoctorAppointmentsModel
+                                                                .appointmentSummary !=
+                                                            null
+                                                        ? Text(
+                                                            ManageAppointmentController
+                                                                    .i
+                                                                    .dailyDoctorAppointmentsModel
+                                                                    .appointmentSummary?[
+                                                                        0]
+                                                                    .pending
+                                                                    .toString() ??
+                                                                "",
+                                                            style: GoogleFonts.poppins(
+                                                                fontSize: 9,
+                                                                color: ColorManager
+                                                                    .kblackColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          )
+                                                        : const Text("0"),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: Get.height * 0.02),
+                                              child: SizedBox(
+                                                height: Get.height * 0.09,
+                                                child:
+                                                    const MyVerticalSeparator(
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'No show',
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 9,
+                                                          color: ColorManager
+                                                              .kyellowContainer,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.01,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    ManageAppointmentController
+                                                                .i
+                                                                .dailyDoctorAppointmentsModel
+                                                                .appointmentSummary !=
+                                                            null
+                                                        ? Text(
+                                                            ManageAppointmentController
+                                                                    .i
+                                                                    .dailyDoctorAppointmentsModel
+                                                                    .appointmentSummary?[
+                                                                        0]
+                                                                    .cancelled
+                                                                    .toString() ??
+                                                                "",
+                                                            style: GoogleFonts.poppins(
+                                                                fontSize: 9,
+                                                                color: ColorManager
+                                                                    .kblackColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          )
+                                                        : const Text("0"),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.005,
+                                        ),
+                                        const MySeparator(
+                                          color: ColorManager.kblackColor,
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.01,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Total Appointments',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 8,
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            SizedBox(width: Get.width * 0.1),
+                                            ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
-                                                        .appointmentSummary?[0]
-                                                        .confirmed
-                                                        .toString() ??
-                                                    "",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ):const Text("0"),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.03,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.01,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: Get.height * 0.02),
-                                        child: SizedBox(
-                                          height: Get.height * 0.09,
-                                          child: const MyVerticalSeparator(
-                                            color: ColorManager.kblackColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.01,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'Arrived',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kPrimaryColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Row(
-                                            children: [
-                                              ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null? Text(
-                                                ManageAppointmentController
+                                                        .appointmentSummary !=
+                                                    null
+                                                ? Text(
+                                                    ManageAppointmentController
+                                                            .i
+                                                            .dailyDoctorAppointmentsModel
+                                                            .appointmentSummary?[
+                                                                0]
+                                                            .confirmed
+                                                            .toString() ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 8,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  )
+                                                : const Text("0"),
+                                            SizedBox(width: Get.width * 0.12),
+                                            Text(
+                                              ManageAppointmentController
+                                                      .i
+                                                      .dailyDoctorAppointmentsModel
+                                                      .appointmentSummary?[0]
+                                                      .consulted
+                                                      .toString() ??
+                                                  "",
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 8,
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            SizedBox(width: Get.width * 0.11),
+                                            ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
-                                                        .appointmentSummary?[0]
-                                                        .consulted
-                                                        .toString() ??
-                                                    "",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ):const Text("0"),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.03,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.01,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: Get.height * 0.02),
-                                        child: SizedBox(
-                                          height: Get.height * 0.09,
-                                          child: const MyVerticalSeparator(
-                                            color: ColorManager.kblackColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.01,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'Waiting',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color:
-                                                        ColorManager.kblueColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Row(
-                                            children: [
-                                             ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
-                                                ManageAppointmentController
+                                                        .appointmentSummary !=
+                                                    null
+                                                ? Text(
+                                                    ManageAppointmentController
+                                                            .i
+                                                            .dailyDoctorAppointmentsModel
+                                                            .appointmentSummary?[
+                                                                0]
+                                                            .pending
+                                                            .toString() ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 8,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  )
+                                                : const Text("0"),
+                                            SizedBox(width: Get.width * 0.12),
+                                            ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
-                                                        .appointmentSummary?[0]
-                                                        .pending
-                                                        .toString() ??
-                                                    "",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ):const Text("0"),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.03,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.01,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: Get.height * 0.02),
-                                        child: SizedBox(
-                                          height: Get.height * 0.09,
-                                          child: const MyVerticalSeparator(
-                                            color: ColorManager.kblackColor,
-                                          ),
+                                                        .appointmentSummary !=
+                                                    null
+                                                ? Text(
+                                                    ManageAppointmentController
+                                                            .i
+                                                            .dailyDoctorAppointmentsModel
+                                                            .appointmentSummary?[
+                                                                0]
+                                                            .cancelled
+                                                            .toString() ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 8,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  )
+                                                : const Text("0"),
+                                          ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: Get.width * 0.01,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'No show',
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kyellowContainer,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Row(
-                                            children: [
-                                             ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
-                                                ManageAppointmentController
-                                                        .i
-                                                        .dailyDoctorAppointmentsModel
-                                                        .appointmentSummary?[0]
-                                                        .cancelled
-                                                        .toString() ??
-                                                    "",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ):const Text("0"),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.03,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(
-                                    height: Get.height * 0.005,
-                                  ),
-                                  const MySeparator(
-                                    color: ColorManager.kblackColor,
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Total Appointments',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 8,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(width: Get.width * 0.1),
-                                     ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
-                                        ManageAppointmentController
-                                                .i
-                                                .dailyDoctorAppointmentsModel
-                                                .appointmentSummary?[0]
-                                                .confirmed
-                                                .toString() ??
-                                            "",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 8,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ):const Text("0"),
-                                      SizedBox(width: Get.width * 0.12),
-                                      Text(
-                                        ManageAppointmentController
-                                                .i
-                                                .dailyDoctorAppointmentsModel
-                                                .appointmentSummary?[0]
-                                                .consulted
-                                                .toString() ??
-                                            "",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 8,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(width: Get.width * 0.11),
-                                      ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null? Text(
-                                        ManageAppointmentController
-                                                .i
-                                                .dailyDoctorAppointmentsModel
-                                                .appointmentSummary?[0]
-                                                .pending
-                                                .toString() ??
-                                            "",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 8,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ):const Text("0"),
-                                      SizedBox(width: Get.width * 0.12),
-                                      ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary!=null?  Text(
-                                       ManageAppointmentController
-                                                .i
-                                                .dailyDoctorAppointmentsModel
-                                                .appointmentSummary?[0]
-                                                .cancelled
-                                                .toString() ??
-                                            "",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 8,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.w700),
-                                      ):const Text("0"),
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                       ]),
                     ))
                   : const Center(

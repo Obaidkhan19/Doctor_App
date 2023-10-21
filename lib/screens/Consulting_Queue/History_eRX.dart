@@ -547,7 +547,7 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                               value: true,
                               groupValue: controller.smokeryesSelected.value,
                               onChanged: (value) =>
-                                  controller.smokerupdateYes(value!),
+                                  controller.smokerupdateYes(true),
                             ),
                           ),
                           Text(
@@ -564,9 +564,9 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                               fillColor: MaterialStateColor.resolveWith(
                                   (states) => ColorManager.kPrimaryColor),
                               value: true,
-                              groupValue: controller.smokernoSelected.value,
+                              groupValue: controller.smokeryesSelected.value,
                               onChanged: (value) =>
-                                  controller.smokerupdateNo(value!),
+                                  controller.smokerupdateYes(false),
                             ),
                           ),
                           Text(
@@ -600,7 +600,7 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                               value: true,
                               groupValue: controller.diabeticyesSelected.value,
                               onChanged: (value) =>
-                                  controller.diabeticupdateYes(value!),
+                                  controller.diabeticupdateYes(true),
                             ),
                           ),
                           Text(
@@ -617,9 +617,9 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                               fillColor: MaterialStateColor.resolveWith(
                                   (states) => ColorManager.kPrimaryColor),
                               value: true,
-                              groupValue: controller.diabeticnoSelected.value,
+                              groupValue: controller.diabeticyesSelected.value,
                               onChanged: (value) =>
-                                  controller.diabeticupdateNo(value!),
+                                  controller.diabeticupdateYes(true),
                             ),
                           ),
                           Text(
@@ -1760,20 +1760,6 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                             height: Get.height * 0.06,
                             width: Get.width * 0.4,
                             onPressed: () async {
-                              print('1');
-                              // SMOKER RADIO
-                              if (controller.smokeryesSelected.value) {
-                                //  print(" SMOKER Yes option is selected");
-                              } else if (controller.smokernoSelected.value) {
-                                //  print("SMOKER No option is selected");
-                              }
-                              // DIABETIC RADIO
-                              if (controller.diabeticyesSelected.value) {
-                                //  print(" DIABETIC Yes option is selected");
-                              } else if (controller.diabeticnoSelected.value) {
-                                //   print("DIABETIC No option is selected");
-                              }
-                              print('2');
                               // ADVICE
                               String advice = controller.adviceController.text;
                               print(advice);

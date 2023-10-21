@@ -12,15 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import '../../components/CustomFormField.dart';
 import '../../components/images.dart';
 import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
-import '../../helpers/font_manager.dart';
 import '../../helpers/values_manager.dart';
 import '../../utils/AppImages.dart';
-import 'History_eRX.dart';
 
 class ConsultedQueueDataList extends StatefulWidget {
   String? Status;
@@ -203,7 +199,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                     ),
                                                     title: Transform.translate(
                                                       offset:
-                                                          const Offset(-0, 0),
+                                                          const Offset(-16, 0),
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -247,76 +243,118 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                       ),
                                                     ),
                                                     trailing: SizedBox(
-                                                      width: 70,
-                                                      child: Row(
+                                                      width: Get.width * 0.2,
+                                                      child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          InkWell(
-                                                            onTap: () {
-                                                              Get.to(
-                                                                () => pdfviewconsulted(
-                                                                    url: manageAppointment
-                                                                        .reportURL),
-                                                              );
-                                                            },
-                                                            child: Container(
-                                                              child:
-                                                                  Image.asset(
-                                                                Images.erx,
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                color: ColorManager
-                                                                    .kPrimaryColor,
-                                                                width:
-                                                                    Get.width *
-                                                                        0.09,
-                                                                height:
-                                                                    Get.height *
-                                                                        0.05,
+                                                          Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                manageAppointment
+                                                                            .isOnline ==
+                                                                        true
+                                                                    ? 'Online'
+                                                                    : 'Offline',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  fontSize: 10,
+                                                                  color: manageAppointment
+                                                                              .isOnline ==
+                                                                          true
+                                                                      ? ColorManager
+                                                                          .KgreenColor
+                                                                      : ColorManager
+                                                                          .kRedColor,
+                                                                ),
                                                               ),
-                                                            ),
+                                                            ],
                                                           ),
-                                                          InkWell(
-                                                            onTap: () async {
-                                                              Get.to(() =>
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  Get.to(
+                                                                    () => pdfviewconsulted(
+                                                                        url: manageAppointment
+                                                                            .reportURL),
+                                                                  );
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    Images.erx,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    color: ColorManager
+                                                                        .kPrimaryColor,
+                                                                    width:
+                                                                        Get.width *
+                                                                            0.09,
+                                                                    height: Get
+                                                                            .height *
+                                                                        0.055,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  Get.to(() =>
+                                                                      //  HistoryeRXConsultingQueue());
+
+                                                                      PrescribeMedicineScreen(
+                                                                        checkfirst:
+                                                                            false,
+                                                                        patientstatusvalue: manageAppointment
+                                                                            .patientStatusValue
+                                                                            .toString(),
+                                                                        patientid:
+                                                                            manageAppointment.patientId,
+                                                                        visitno:
+                                                                            manageAppointment.visitNo,
+                                                                        prescribedvalue:
+                                                                            manageAppointment.prescribedInValue,
+                                                                      ));
+                                                                  // print(AppConstants.baseURL+
+                                                                  //               manageAppointment.reportURL);
+                                                                  // Get.to(() =>
                                                                   //  HistoryeRXConsultingQueue());
 
-                                                                  PrescribeMedicineScreen(
-                                                                    patientid:
-                                                                        manageAppointment
-                                                                            .patientId,
-                                                                    visitno:
-                                                                        manageAppointment
-                                                                            .visitNo,
-                                                                    prescribedvalue:
-                                                                        manageAppointment
-                                                                            .prescribedInValue,
-                                                                  ));
-                                                              // print(AppConstants.baseURL+
-                                                              //               manageAppointment.reportURL);
-                                                              // Get.to(() =>
-                                                              //  HistoryeRXConsultingQueue());
-
-                                                              // const PrescribeMedicineScreen());
-                                                            },
-                                                            child: Container(
-                                                              child:
-                                                                  Image.asset(
-                                                                Images.rxedit,
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                color: ColorManager
-                                                                    .kPrimaryColor,
-                                                                width:
-                                                                    Get.width *
-                                                                        0.09,
-                                                                height:
-                                                                    Get.height *
-                                                                        0.05,
+                                                                  // const PrescribeMedicineScreen());
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  child: Image
+                                                                      .asset(
+                                                                    Images
+                                                                        .rxedit,
+                                                                    fit: BoxFit
+                                                                        .fill,
+                                                                    color: ColorManager
+                                                                        .kPrimaryColor,
+                                                                    width:
+                                                                        Get.width *
+                                                                            0.09,
+                                                                    height: Get
+                                                                            .height *
+                                                                        0.055,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
+                                                            ],
                                                           ),
                                                         ],
                                                       ),

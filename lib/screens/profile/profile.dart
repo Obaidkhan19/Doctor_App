@@ -76,21 +76,19 @@ class _ProfileState extends State<Profile> {
         ),
         child: Scaffold(
           appBar: AppBar(
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () {
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              color: ColorManager.kPrimaryColor,
+              onPressed: () {
                 Get.offAll(() => const DrawerScreen());
               },
-              child: Image.asset(
-                AppImages.back,
-                color: ColorManager.kPrimaryColor,
-              ),
             ),
             title: Text(
               'profile'.tr,
               style: GoogleFonts.poppins(
-                  fontSize: 19, fontWeight: FontWeight.w600),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: ColorManager.kPrimaryColor),
             ),
             centerTitle: true,
           ),
@@ -99,25 +97,24 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  leading:  GetBuilder<ProfileController>(
-                builder: (context) {
-                  return CircleAvatar(
-                      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                      radius: 30,
-                      child: ClipOval(
-                          child: CachedNetworkImage(
-                        imageUrl: ProfileController
-                                    .i.selectedbasicInfo?.picturePath !=
-                                null
-                            ? AppConstants.baseURL +
-                                ProfileController.i.selectedbasicInfo?.picturePath
-                            : "",
-                        fit: BoxFit.fill,
-                        errorWidget: (context, url, error) =>
-                            Image.asset(AppImages.doctorlogo),
-                      )));
-                }
-              ),
+                  leading: GetBuilder<ProfileController>(builder: (context) {
+                    return CircleAvatar(
+                        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                        radius: 30,
+                        child: ClipOval(
+                            child: CachedNetworkImage(
+                          imageUrl: ProfileController
+                                      .i.selectedbasicInfo?.picturePath !=
+                                  null
+                              ? AppConstants.baseURL +
+                                  ProfileController
+                                      .i.selectedbasicInfo?.picturePath
+                              : "",
+                          fit: BoxFit.fill,
+                          errorWidget: (context, url, error) =>
+                              Image.asset(AppImages.doctorlogo),
+                        )));
+                  }),
                   title: Text(
                     profile.selectedbasicInfo?.fullName ?? "",
                     style: GoogleFonts.poppins(
@@ -220,12 +217,15 @@ class _ProfileState extends State<Profile> {
                                   cellNumber:
                                       profile.selectedbasicInfo?.contactPublic,
                                   email: profile.selectedbasicInfo?.email,
-                                  country: profile.selectedbasicInfo?.countryName,
-                                  province: profile.selectedbasicInfo?.stateName,
+                                  country:
+                                      profile.selectedbasicInfo?.countryName,
+                                  province:
+                                      profile.selectedbasicInfo?.stateName,
                                   city: profile.selectedbasicInfo?.cityName,
                                   address: profile.selectedbasicInfo?.address,
                                   cityid: profile.selectedbasicInfo?.cityId,
-                                  countryid: profile.selectedbasicInfo?.countryId,
+                                  countryid:
+                                      profile.selectedbasicInfo?.countryId,
                                   provinceid: profile
                                       .selectedbasicInfo?.stateOrProvinceId,
                                 ),

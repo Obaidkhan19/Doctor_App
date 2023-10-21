@@ -254,34 +254,67 @@ class _ClinicalPracticeQueueDataListState
                                                         ],
                                                       ),
                                                     ),
-                                                    trailing: InkWell(
-                                                      onTap: () {
-                                                        Get.to(() =>
-                                                            //  HistoryeRXConsultingQueue());
-
-                                                            PrescribeMedicineScreen(
-                                                              patientid:
-                                                                  manageAppointment
-                                                                      .patientId,
-                                                              visitno:
-                                                                  manageAppointment
-                                                                      .visitNo,
-                                                              // ernsbit: manageAppointment.er,
-                                                              // currentvisit: manageAppointment.,
-                                                              // checkintypevalue: manageAppointment.ch,
-                                                              prescribedvalue:
-                                                                  manageAppointment
-                                                                      .prescribedInValue,
-                                                            ));
-                                                      },
-                                                      child: Image.asset(
-                                                        Images.rxedit,
-                                                        color: ColorManager
-                                                            .kPrimaryColor,
-                                                        width: Get.width * 0.09,
-                                                        height:
-                                                            Get.height * 0.1,
-                                                      ),
+                                                    trailing: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          manageAppointment
+                                                                      .isOnline ==
+                                                                  true
+                                                              ? 'Online'
+                                                              : 'Offline',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 10,
+                                                            color: manageAppointment
+                                                                        .isOnline ==
+                                                                    true
+                                                                ? ColorManager
+                                                                    .KgreenColor
+                                                                : ColorManager
+                                                                    .kRedColor,
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            Get.to(() =>
+                                                                PrescribeMedicineScreen(
+                                                                  checkfirst:
+                                                                      true,
+                                                                  patientstatusvalue:
+                                                                      manageAppointment
+                                                                          .patientStatusValue
+                                                                          .toString(),
+                                                                  patientid:
+                                                                      manageAppointment
+                                                                          .patientId,
+                                                                  visitno:
+                                                                      manageAppointment
+                                                                          .visitNo,
+                                                                  // ernsbit: manageAppointment.er,
+                                                                  // currentvisit: manageAppointment.,
+                                                                  // checkintypevalue: manageAppointment.ch,
+                                                                  prescribedvalue:
+                                                                      manageAppointment
+                                                                          .prescribedInValue,
+                                                                ));
+                                                          },
+                                                          child: Image.asset(
+                                                            Images.rxedit,
+                                                            color: ColorManager
+                                                                .kPrimaryColor,
+                                                            width: Get.width *
+                                                                0.09,
+                                                            height: Get.height *
+                                                                0.05,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                   Padding(

@@ -11,6 +11,38 @@ import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 
 class ProfileRepo {
+  Future<bool> getDoctorspeciality() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String? doctorId = await LocalDb().getDoctorId();
+    var body = {"DoctorId": doctorId};
+    ProfileController.i.updateIsloading(true);
+    try {
+      var response = await http.post(Uri.parse(AppConstants.getDoctorBasicInfo),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        final prf = Get.put(ProfileController());
+        Iterable dt = responseData['Specialities'];
+        prf.updatespecialitites(
+            dt.map((e) => Specialities.fromJson(e)).toList());
+        for (int i = 0; i < prf.specialities.length; i++) {
+          if (prf.specialities[i].isDefault == 1) {
+            prf.updatemainspeciality(prf.specialities[i]);
+            break;
+          }
+        }
+        ProfileController.i.updateIsloading(false);
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      ProfileController.i.updateIsloading(false);
+      return false;
+    }
+    return false;
+  }
+
   Future<List<Countries>> getCountries() async {
     String url = AppConstants.getCountries;
     Uri uri = Uri.parse(url);

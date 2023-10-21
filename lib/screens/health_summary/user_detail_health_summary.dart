@@ -89,17 +89,24 @@ class _UserHealthSummaryState extends State<UserHealthSummary> {
       //   ),
       // ),
       appBar: AppBar(
-        leading: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
-            Get.back();
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: ColorManager.kPrimaryColor,
+          onPressed: () {
+            Navigator.pop(context);
           },
-          child: Image.asset(
-            AppImages.back,
-            color: ColorManager.kPrimaryColor,
-          ),
         ),
+        //  InkWell(
+        //   splashColor: Colors.transparent,
+        //   highlightColor: Colors.transparent,
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Image.asset(
+        //     AppImages.back,
+        //     color: ColorManager.kPrimaryColor,
+        //   ),
+        // ),
         title: Text(
           'Mr. Shaikh Zahid'.tr,
           style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),

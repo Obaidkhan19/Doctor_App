@@ -43,245 +43,224 @@ class _WalletScreenState extends State<WalletScreen> {
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
-          width: Get.width*1,
-          height: Get.height*1,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.arrow_back_ios,
-                        size: 20, color: ColorManager.kPrimaryColor)),
-                Center(
-                  child: CircleAvatar(
-                    backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                    radius: 30,
-                    child: ClipOval(
-                      child: GetBuilder<ProfileController>(
-                  builder: (context) {
-                    return CircleAvatar(
-                        backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                        radius: 30,
-                        child: ClipOval(
-                            child: CachedNetworkImage(
-                          imageUrl: ProfileController
-                                      .i.selectedbasicInfo?.picturePath !=
-                                  null
-                              ? AppConstants.baseURL +
-                                  ProfileController.i.selectedbasicInfo?.picturePath
-                              : "",
-                          fit: BoxFit.fill,
-                          errorWidget: (context, url, error) =>
-                              Image.asset(AppImages.doctorlogo),
-                        )));
-                  }
-                ),
-                    ),
+          width: Get.width * 1,
+          height: Get.height * 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios),
+                color: ColorManager.kPrimaryColor,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              Center(
+                child: CircleAvatar(
+                  backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                  radius: 30,
+                  child: ClipOval(
+                    child: GetBuilder<ProfileController>(builder: (context) {
+                      return CircleAvatar(
+                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                          radius: 30,
+                          child: ClipOval(
+                              child: CachedNetworkImage(
+                            imageUrl: ProfileController
+                                        .i.selectedbasicInfo?.picturePath !=
+                                    null
+                                ? AppConstants.baseURL +
+                                    ProfileController
+                                        .i.selectedbasicInfo?.picturePath
+                                : "",
+                            fit: BoxFit.fill,
+                            errorWidget: (context, url, error) =>
+                                Image.asset(AppImages.doctorlogo),
+                          )));
+                    }),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: Get.width * 0.6,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: Get.width * 0.6,
-                            child: Expanded(
-                              child: Text(
-                                ProfileController.i.selectedbasicInfo?.fullName ??
-                                    "",
-                                style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: ColorManager.kPrimaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                                maxLines: 1,
-                              ),
-                            ),
-                          ),
-                          Center(
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: Get.width * 0.6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.5,
+                          child: Expanded(
                             child: Text(
-                              //'REG NO. $PMDCNumber',
-                              '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
-                              // style: Theme.of(context)
-                              //     .textTheme
-                              //     .bodyLarge
-                              //     ?.copyWith(
-                              //         fontWeight: FontWeight.w600,
-                              //         fontSize: 14,
-                              //         color: ColorManager.kWhiteColor),
+                              ProfileController.i.selectedbasicInfo?.fullName ??
+                                  "",
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
                                 color: ColorManager.kPrimaryColor,
-                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
                               ),
+                              maxLines: 1,
                             ),
                           ),
-                        ],
+                        ),
+                        Center(
+                          child: Text(
+                            //'REG NO. $PMDCNumber',
+                            '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                            // style: Theme.of(context)
+                            //     .textTheme
+                            //     .bodyLarge
+                            //     ?.copyWith(
+                            //         fontWeight: FontWeight.w600,
+                            //         fontSize: 14,
+                            //         color: ColorManager.kWhiteColor),
+                            style: const TextStyle(
+                              color: ColorManager.kPrimaryColor,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: Get.height * 0.08),
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: ColorManager.kPrimaryLightColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.08),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: ColorManager.kPrimaryLightColor,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
+                    child: Column(
+                      children: [
+                        SizedBox(height: Get.height * 0.1),
+                        Text(
+                          'recenttransections'.tr,
+                          style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            color: ColorManager.kPrimaryColor,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(height: Get.height * 0.1),
-                          Text(
-                            'recenttransections'.tr,
-                            style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              color: ColorManager.kPrimaryColor,
-                              fontWeight: FontWeight.w700,
-                            ),
+                        SizedBox(height: Get.height * 0.01),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: Get.width * 0.05, right: Get.width * 0.05),
+                          child: const Divider(
+                            color: ColorManager.kPrimaryColor,
+                            thickness: 1,
                           ),
-                          SizedBox(height: Get.height * 0.01),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: Get.width * 0.05, right: Get.width * 0.05),
-                            child: const Divider(
-                              color: ColorManager.kPrimaryColor,
-                              thickness: 1,
-                            ),
-                          ),
-                          SizedBox(height: Get.height * 0.02),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 2,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                      left: Get.width * 0.03,
-                                      right: Get.width * 0.03),
-                                  child: Column(
-                                    children: [
-                                      Card(
-                                        elevation: 4,
-                                        surfaceTintColor:
-                                            ColorManager.kWhiteColor,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: Get.height * 0.02,
-                                              bottom: Get.height * 0.02,
-                                              left: Get.width * 0.03,
-                                              right: Get.width * 0.03),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'receivedamount'.tr,
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      color:
-                                                          ColorManager.kGreyColor,
-                                                      fontWeight: FontWeight.w400,
-                                                    ),
+                        ),
+                        SizedBox(height: Get.height * 0.02),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 2,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: Column(
+                                  children: [
+                                    Card(
+                                      elevation: 4,
+                                      surfaceTintColor:
+                                          ColorManager.kWhiteColor,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: Get.height * 0.02,
+                                            bottom: Get.height * 0.02,
+                                            left: Get.width * 0.03,
+                                            right: Get.width * 0.03),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'receivedamount'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 10,
+                                                    color:
+                                                        ColorManager.kGreyColor,
+                                                    fontWeight: FontWeight.w400,
                                                   ),
-                                                  Text(
-                                                    '19-08-2023 | 10:24am',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      color:
-                                                          ColorManager.kGreyColor,
-                                                      fontWeight: FontWeight.w400,
-                                                    ),
+                                                ),
+                                                Text(
+                                                  '19-08-2023 | 10:24am',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 10,
+                                                    color:
+                                                        ColorManager.kGreyColor,
+                                                    fontWeight: FontWeight.w400,
                                                   ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Dr. Shaikh Hamid',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      color: ColorManager
-                                                          .kPrimaryColor,
-                                                      fontWeight: FontWeight.w700,
-                                                    ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Dr. Shaikh Hamid',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: ColorManager
+                                                        .kPrimaryColor,
+                                                    fontWeight: FontWeight.w700,
                                                   ),
-                                                  Text(
-                                                    'AED. 1,100/-',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      color: ColorManager
-                                                          .kblackColor,
-                                                      fontWeight: FontWeight.w700,
-                                                    ),
+                                                ),
+                                                Text(
+                                                  'AED. 1,100/-',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: ColorManager
+                                                        .kblackColor,
+                                                    fontWeight: FontWeight.w700,
                                                   ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: Get.height * 0.02,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                          if (widget.index == 0)
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                          if (widget.index == 1)
-                            SizedBox(
-                              height: Get.height * 0.12,
-                            ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  creditAlert(context);
-                                },
-                                child: Container(
-                                  height: Get.height * 0.07,
-                                  width: Get.width * 0.3,
-                                  decoration: BoxDecoration(
-                                      color: ColorManager.kPrimaryColor,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                    child: Text(
-                                      'add'.tr,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                        color: ColorManager.kWhiteColor,
-                                        fontWeight: FontWeight.w700,
-                                      ),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      height: Get.height * 0.02,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                width: Get.width * 0.08,
-                              ),
-                              Container(
+                              );
+                            }),
+                        if (widget.index == 0)
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                        if (widget.index == 1)
+                          SizedBox(
+                            height: Get.height * 0.12,
+                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                creditAlert(context);
+                              },
+                              child: Container(
                                 height: Get.height * 0.07,
                                 width: Get.width * 0.3,
                                 decoration: BoxDecoration(
@@ -289,7 +268,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Center(
                                   child: Text(
-                                    'withdraw'.tr,
+                                    'add'.tr,
                                     style: GoogleFonts.poppins(
                                       fontSize: 15,
                                       color: ColorManager.kWhiteColor,
@@ -298,54 +277,74 @@ class _WalletScreenState extends State<WalletScreen> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(height: Get.height * 0.04),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: -45,
-                      left: 0,
-                      right: 0,
-                      child: Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: ColorManager.kPrimaryColor,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: ColorManager.kWhiteColor, width: 5)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 60, right: 60, top: 20, bottom: 20),
-                            child: Column(
-                              children: [
-                                Text(
-                                  'availablebalance'.tr,
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.08,
+                            ),
+                            Container(
+                              height: Get.height * 0.07,
+                              width: Get.width * 0.3,
+                              decoration: BoxDecoration(
+                                  color: ColorManager.kPrimaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Center(
+                                child: Text(
+                                  'withdraw'.tr,
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Text(
-                                  'AED. 2,645.00',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     color: ColorManager.kWhiteColor,
                                     fontWeight: FontWeight.w700,
                                   ),
-                                )
-                              ],
+                                ),
+                              ),
                             ),
+                          ],
+                        ),
+                        SizedBox(height: Get.height * 0.04),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: -45,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: ColorManager.kPrimaryColor,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: ColorManager.kWhiteColor, width: 5)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 60, right: 60, top: 20, bottom: 20),
+                          child: Column(
+                            children: [
+                              Text(
+                                'availablebalance'.tr,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: ColorManager.kWhiteColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                'AED. 2,645.00',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  color: ColorManager.kWhiteColor,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

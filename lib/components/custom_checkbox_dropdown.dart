@@ -65,7 +65,7 @@ Future<String?> searchableDropdownRadioButton(
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20),
-                        hintStyle: const TextStyle(
+                        hintStyle: GoogleFonts.poppins(
                             fontWeight: FontWeight.w900,
                             color: ColorManager.kPrimaryColor),
                         hintText: 'Search',
@@ -121,7 +121,7 @@ Future<String?> searchableDropdownRadioButton(
                                   horizontal: 0, vertical: -4),
                               title: Text(
                                 list[index].name.toString(),
-                                style: const TextStyle(fontSize: 10),
+                                style: GoogleFonts.poppins(fontSize: 10),
                               ),
                               value: list[index].name.toString(),
                               //value: isChecked,
@@ -226,7 +226,7 @@ Future<dynamic> searchableDropdownCheckBox(
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20),
-                        hintStyle: const TextStyle(
+                        hintStyle: GoogleFonts.poppins(
                             fontWeight: FontWeight.w900,
                             color: ColorManager.kPrimaryColor),
                         hintText: 'Search',
@@ -304,7 +304,7 @@ Future<dynamic> searchableDropdownCheckBox(
                                       width: Get.width * 0.42,
                                       child: Text(
                                         list[index].name.toString(),
-                                        style: const TextStyle(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 10,
                                         ),
                                         overflow: TextOverflow.ellipsis,
@@ -316,7 +316,7 @@ Future<dynamic> searchableDropdownCheckBox(
                                       width: Get.width * 0.32,
                                       child: Text(
                                         list[index].name.toString(),
-                                        style: const TextStyle(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 10,
                                         ),
                                         overflow: TextOverflow.ellipsis,
@@ -747,6 +747,16 @@ addMedicine(
   List<dynamic> selectedMedicineList,
   String selectedMedicine,
 ) async {
+  ERXController.i
+      .updatemedicineroutes(ERXController.i.medicinelst.medicineRoutes![0]);
+  ERXController.i.updateDateList(ERXController.i.medicinelst.dateList![0]);
+  ERXController.i.updatedayList(
+    ERXController.i.medicinelst.dayList![0],
+  );
+  ERXController.i
+      .updatemedicineDosages(ERXController.i.medicinelst.medicineDosages![0]);
+  ERXController.i
+      .updatemedfrequency(ERXController.i.medicinelst.medicineFrequencies![0]);
   String medtitle = "";
   TextEditingController medController = TextEditingController();
   Completer<dynamic> completer = Completer<dynamic>();
@@ -854,7 +864,7 @@ addMedicine(
                                       : ColorManager.kWhiteColor,
                                   child: Text(
                                     medicine.name ?? "",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 10,
                                       color: isSelected
                                           ? ColorManager.kWhiteColor
@@ -919,7 +929,7 @@ addMedicine(
                                           ? ERXController.i.medicineRoutes!
                                               .englishDefinition!
                                           : "Medicine",
-                                      style: const TextStyle(
+                                      style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
                                       ),
@@ -967,7 +977,7 @@ addMedicine(
                                               ERXController.i.dateList != null
                                           ? "${ERXController.i.dateList!.englishCounting!} ${ERXController.i.dayList!.englishDay!}"
                                           : "Duration",
-                                      style: const TextStyle(
+                                      style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
                                       ),
@@ -1026,7 +1036,7 @@ addMedicine(
                                           ? ERXController.i.medicineFrequencies!
                                               .numericDisplay!
                                           : "Frequency",
-                                      style: const TextStyle(
+                                      style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
                                       ),
@@ -1075,7 +1085,7 @@ addMedicine(
                                               .i.medicineDosages!.dosageValue!
                                               .toString()
                                           : "Dosages",
-                                      style: const TextStyle(
+                                      style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
                                       ),
@@ -1274,7 +1284,7 @@ showRoutes(
                                                   .medicineRoutes?[index]
                                                   .englishDefinition ??
                                               "",
-                                          style: const TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10,
                                             color: ColorManager.kblackColor,
                                           ),
@@ -1387,7 +1397,8 @@ showDuration(
                                                               .dayList?[index]
                                                               .englishDay ??
                                                           "",
-                                                      style: const TextStyle(
+                                                      style:
+                                                          GoogleFonts.poppins(
                                                         fontSize: 16,
                                                         color: ColorManager
                                                             .kblackColor,
@@ -1544,7 +1555,7 @@ showdosages(
                                                     .dosageValue
                                                     .toString() ??
                                                 "",
-                                            style: const TextStyle(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 10,
                                               color: ColorManager.kblackColor,
                                             ),
@@ -1619,7 +1630,7 @@ showfrequency(
                                                   .medicineFrequencies?[index]
                                                   .numericDisplay ??
                                               "",
-                                          style: const TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10,
                                             color: ColorManager.kblackColor,
                                           ),
@@ -2190,7 +2201,7 @@ deleteSelectedMedicine(
                           child: Center(
                             child: Text(
                               medicineobject.route!,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: ColorManager.kPrimaryColor,
                                 fontSize: 10,
                               ),
@@ -2220,7 +2231,7 @@ deleteSelectedMedicine(
                           child: Center(
                             child: Text(
                               medicineobject.possibleDurations!,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: ColorManager.kPrimaryColor,
                                 fontSize: 10,
                               ),
@@ -2257,7 +2268,7 @@ deleteSelectedMedicine(
                           child: Center(
                             child: Text(
                               medicineobject.frequency!,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: ColorManager.kPrimaryColor,
                                 fontSize: 10,
                               ),
@@ -2287,7 +2298,7 @@ deleteSelectedMedicine(
                           child: Center(
                             child: Text(
                               medicineobject.dosage!,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: ColorManager.kPrimaryColor,
                                 fontSize: 10,
                               ),

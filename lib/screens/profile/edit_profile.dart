@@ -139,20 +139,30 @@ class _EditProfileState extends State<EditProfile> {
     var edit = Get.put<EditProfileController>(EditProfileController());
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
-            Get.back();
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: ColorManager.kPrimaryColor,
+          onPressed: () {
+            Navigator.pop(context);
           },
-          child: Image.asset(
-            AppImages.back,
-            color: ColorManager.kPrimaryColor,
-          ),
         ),
+        // InkWell(
+        //   splashColor: Colors.transparent,
+        //   highlightColor: Colors.transparent,
+        //   onTap: () {
+        //     Get.back();
+        //   },
+        //   child: Image.asset(
+        //     AppImages.back,
+        //     color: ColorManager.kPrimaryColor,
+        //   ),
+        // ),
         title: Text(
           'editProfile'.tr,
-          style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),
+          style: GoogleFonts.poppins(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: ColorManager.kPrimaryColor),
         ),
         centerTitle: true,
       ),
@@ -165,51 +175,49 @@ class _EditProfileState extends State<EditProfile> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  GetBuilder<ProfileController>(
-                    builder: (cont) {
-                      return InkWell(
-                        onTap: () {
-                          edit.pickImage();
-                        },
-
-                        child: Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: edit.file != null
-                                ? DecorationImage(
-                                    image: FileImage(File(edit.file!.path)),
-                                    fit: BoxFit.cover,
-                                  )
-                                : cont.selectedbasicInfo!.picturePath!=null
-                                    ? DecorationImage(
-                                        image:NetworkImage(AppConstants.baseURL+cont.selectedbasicInfo!.picturePath) ,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : DecorationImage(
-                                        image: AssetImage(AppImages.doctorlogo),
-                                        fit: BoxFit.cover,
-                                      ),
-                          ),
-                          child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: CircleAvatar(
-                                radius: 15,
-                                backgroundColor: Colors.green,
-                                child: IconButton(
-                                    onPressed: () {
-                                      edit.pickImage();
-                                    },
-                                    icon: const Icon(
-                                      Icons.camera_alt_outlined,
-                                      size: 15,
-                                    )),
-                              )),
+                  GetBuilder<ProfileController>(builder: (cont) {
+                    return InkWell(
+                      onTap: () {
+                        edit.pickImage();
+                      },
+                      child: Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: edit.file != null
+                              ? DecorationImage(
+                                  image: FileImage(File(edit.file!.path)),
+                                  fit: BoxFit.cover,
+                                )
+                              : cont.selectedbasicInfo!.picturePath != null
+                                  ? DecorationImage(
+                                      image: NetworkImage(AppConstants.baseURL +
+                                          cont.selectedbasicInfo!.picturePath),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : DecorationImage(
+                                      image: AssetImage(AppImages.doctorlogo),
+                                      fit: BoxFit.cover,
+                                    ),
                         ),
-                      );
-                    }
-                  ),
+                        child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.green,
+                              child: IconButton(
+                                  onPressed: () {
+                                    edit.pickImage();
+                                  },
+                                  icon: const Icon(
+                                    Icons.camera_alt_outlined,
+                                    size: 15,
+                                  )),
+                            )),
+                      ),
+                    );
+                  }),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
@@ -359,7 +367,7 @@ class _EditProfileState extends State<EditProfile> {
                     //hintText: 'Address',
                     controller: addressController,
                   ),
-                  SizedBox(height: Get.height * 0.05),
+                  SizedBox(height: Get.height * 0.03),
                   PrimaryButton(
                       fontSize: 15,
                       title: 'update'.tr,
@@ -409,6 +417,7 @@ class _EditProfileState extends State<EditProfile> {
                       },
                       color: ColorManager.kPrimaryColor,
                       textcolor: ColorManager.kWhiteColor),
+                  SizedBox(height: Get.height * 0.03),
                 ],
               ),
             ),

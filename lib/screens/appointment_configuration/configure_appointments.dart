@@ -60,23 +60,34 @@ class _ConfigureAppointmentScreenState
     return GetBuilder<ConfigureAppointmentController>(
       builder: (cont) => Scaffold(
           appBar: AppBar(
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () {
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              color: ColorManager.kPrimaryColor,
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: Image.asset(
-                AppImages.back,
-                color: ColorManager.kPrimaryColor,
-              ),
             ),
+
+            //  InkWell(
+            //   splashColor: Colors.transparent,
+            //   highlightColor: Colors.transparent,
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            //   child: Image.asset(
+            //     AppImages.back,
+            //     color: ColorManager.kPrimaryColor,
+            //     fit: BoxFit.fill,
+            //     height: Get.height * 0.02,
+            //     width: Get.width * 0.002,
+            //   ),
+            // ),
             title: Text(
               'configureappointmentappbar'.tr,
               textAlign: TextAlign.center,
               style: GoogleFonts.raleway(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
                 height: 1.175,
                 color: ColorManager.kPrimaryColor,
               ),
@@ -162,7 +173,7 @@ class _ConfigureAppointmentScreenState
                                               Expanded(
                                                 child: Text(
                                                   contr.hospitalselectedoption,
-                                                  style: const TextStyle(
+                                                  style: GoogleFonts.poppins(
                                                       color: ColorManager
                                                           .kblackColor,
                                                       fontSize: 10),
@@ -729,7 +740,7 @@ class _ConfigureAppointmentScreenState
                               Text.rich(
                                 TextSpan(
                                   text: "nonpaidappointmentapproval".tr,
-                                  style: const TextStyle(
+                                  style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: ColorManager.kPrimaryColor,
                                       fontWeight: FontWeight.bold),
@@ -815,7 +826,7 @@ class _ConfigureAppointmentScreenState
                                                     child: Center(
                                                         child: Text(
                                                       e.toString(),
-                                                      style: const TextStyle(
+                                                      style: GoogleFonts.poppins(
                                                           color: ColorManager
                                                               .kblackColor,
                                                           fontSize: 10),

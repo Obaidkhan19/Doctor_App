@@ -61,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String path = '';
 
   _getimagepath() async {
-    path = ProfileController.i.selectedbasicInfo?.picturePath??"";// (await LocalDb().getDoctorUserImagePath())!;
+    path = ProfileController.i.selectedbasicInfo?.picturePath ??
+        ""; // (await LocalDb().getDoctorUserImagePath())!;
     String baseurl = AppConstants.baseURL;
     imagepath = baseurl + path;
   }
@@ -77,21 +78,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: Get.width * 0.2,
         leading: InkWell(
-            onTap: () {
-              if (ZoomDrawer.of(context)!.isOpen()) {
-                ZoomDrawer.of(context)!.close();
-              } else {
-                ZoomDrawer.of(context)!.open();
-              }
-            },
+          onTap: () {
+            if (ZoomDrawer.of(context)!.isOpen()) {
+              ZoomDrawer.of(context)!.close();
+            } else {
+              ZoomDrawer.of(context)!.open();
+            }
+          },
+          child: Container(
+            alignment: Alignment.center, // use aligment
+            color: ColorManager.kWhiteColor,
             child: Image.asset(
-              height: 3,
               Images.menuIcon,
-            )),
+              height: 27,
+              width: 27,
+              fit: BoxFit.contain,
+              color: ColorManager.kPrimaryColor,
+            ),
+          ),
+        ),
         title: Center(
-          child:
-              SizedBox(width: 150, height: 80, child: Image.asset(Images.logo)),
+          child: SizedBox(
+              width: Get.width * 0.45, child: Image.asset(Images.logo)),
         ),
         actions: [
           Row(
@@ -106,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Image.asset(
                     Images.notification,
                     height: Get.height * 0.035,
+                    color: ColorManager.kPrimaryColor,
                   )),
               const SizedBox(
                 width: AppPadding.p24,
@@ -133,21 +144,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GetBuilder<ProfileController>(
-                        builder: (context) {
-                          return CircleAvatar(
-                              backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                              radius: 30,
-                              child: ClipOval(
-                                child:CachedNetworkImage(
-                                        imageUrl: ProfileController.i.selectedbasicInfo?.picturePath!=null?AppConstants.baseURL+ProfileController.i.selectedbasicInfo?.picturePath:"" ,
-                                        fit: BoxFit.fill,
-                                        errorWidget: (context, url, error) =>
-                                            Image.asset(AppImages.doctorlogo),
-                                      )
-                              ));
-                        }
-                      ),
+                      GetBuilder<ProfileController>(builder: (context) {
+                        return CircleAvatar(
+                            backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                            radius: 30,
+                            child: ClipOval(
+                                child: CachedNetworkImage(
+                              imageUrl: ProfileController
+                                          .i.selectedbasicInfo?.picturePath !=
+                                      null
+                                  ? AppConstants.baseURL +
+                                      ProfileController
+                                          .i.selectedbasicInfo?.picturePath
+                                  : "",
+                              fit: BoxFit.fill,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AppImages.doctorlogo),
+                            )));
+                      }),
                       SizedBox(
                         width: Get.width * 0.04,
                       ),
@@ -162,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ProfileController
                                         .i.selectedbasicInfo?.fullName ??
                                     "",
-                                style: const TextStyle(
+                                style: GoogleFonts.poppins(
                                   color: ColorManager.kWhiteColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
@@ -173,8 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
-                             
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 10,
                               ),
@@ -185,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-               
+
                 SizedBox(
                   height: Get.height * 0.01,
                 ),

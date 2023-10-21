@@ -40,7 +40,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
   @override
   void dispose() {
     // TODO: implement dispose
-    ManageAppointmentController.i.date=null;
+    ManageAppointmentController.i.date = null;
     super.dispose();
   }
 
@@ -58,15 +58,12 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
         Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () {
-              Navigator.pop(context);
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            color: ColorManager.kPrimaryColor,
+            onPressed: () {
+              Get.back();
             },
-            child: Image.asset(
-              AppImages.back,
-            ),
           ),
           title: GetBuilder<ManageAppointmentController>(
             builder: (con) {
@@ -78,6 +75,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                   textStyle: GoogleFonts.poppins(
                     fontSize: 15,
                     color: ColorManager.kPrimaryColor,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               );

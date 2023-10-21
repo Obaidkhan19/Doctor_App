@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/data/controller/appointment_history.dart';
 import 'package:doctormobileapplication/models/branch.dart';
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
@@ -15,19 +16,23 @@ import '../../localDB/local_db.dart';
 
 class ConsultingQueueRepo {
   static GetConsultingQueue() async {
-    ConsultingQueueModel ConsultingQueue = ConsultingQueueModel();
     String? userId = await LocalDb().getDoctorId();
-    String? userToken = await LocalDb().getToken();
     String? branchId = await LocalDb().getBranchId();
     var body = {
       "DoctorId": userId,
       "Search": "",
-      "BranchId": branchId,
-      "WorkLocationId": "",
+      "BranchId": AppointmentHistoryController.i.selectedbranch?.id ?? branchId,
+      "WorkLocationId":
+          AppointmentHistoryController.i.selectedhospital?.id ?? "",
       "Status": "",
-      "FromDate": DateTime.now().toString().split(' ')[0],
-      "ToDate": DateTime.now().toString().split(' ')[0],
-      "IsOnline": "false",
+      // "FromDate": DateTime.now().toString().split(' ')[0],
+      // "ToDate": DateTime.now().toString().split(' ')[0],
+      "FromDate":
+          AppointmentHistoryController.i.dateTimealert.toString().split(' ')[0],
+      "ToDate": AppointmentHistoryController.i.dateTime2alert
+          .toString()
+          .split(' ')[0],
+      "IsOnline": AppointmentHistoryController.i.isOnline,
       "Token": "",
       "Start": "0",
       "Length": "10",
@@ -46,13 +51,15 @@ class ConsultingQueueRepo {
       // print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        if (result['Status'] == 1) {
+
+        if (result['Status'] == 0) {
+          ConsultingQueueController.i.pastconsultation.clear();
+        } else if (result['Status'] == 1) {
           Iterable lst = result['Consultations'];
           List<consultingqueuereponse> rep =
               lst.map((e) => consultingqueuereponse.fromJson(e)).toList();
           log('${rep.toString()} ConsultingQueue');
           ConsultingQueueController.i.updatepastconsultinglist(rep);
-          //   print(ConsultingQueue);
         }
       } else {
         log(response.statusCode.toString());

@@ -33,8 +33,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               width: Get.width,
               fit: BoxFit.cover,
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: Get.height * 0.06,
             ),
             Center(
               child: Text('Welcome to ',
@@ -82,7 +82,7 @@ class GetStartedButton extends StatelessWidget {
         radius: 35,
         backgroundColor: ColorManager.kPrimaryColor,
         child: CircleAvatar(
-          radius: 32,
+          radius: 34,
           backgroundColor: ColorManager.kWhiteColor,
           child: CircleAvatar(
             radius: 27,

@@ -351,10 +351,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             color: ColorManager.kPrimaryColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Add LMPC',
-                              style: TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 15,
                               ),
@@ -489,7 +489,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                       ? RegistrationController.i.formatearrival
                                           .toString()
                                       : "dateofbirth".tr,
-                                  style: const TextStyle(
+                                  style: GoogleFonts.poppins(
                                     color: ColorManager.kGreyColor,
                                     fontSize: 12,
                                   ),
@@ -526,7 +526,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         onChanged: (phone) {
                           controller.updatecountryfullno(phone.completeNumber);
                         },
-                        style: const TextStyle(
+                        style: GoogleFonts.poppins(
                             color: ColorManager.kGreyColor, fontSize: 12),
                         showDropdownIcon: true,
                         dropdownIcon: const Icon(
@@ -534,7 +534,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           color: Colors.white,
                           size: 10,
                         ),
-                        dropdownTextStyle: const TextStyle(
+                        dropdownTextStyle: GoogleFonts.poppins(
                             color: ColorManager.kGreyColor, fontSize: 12),
                         showCountryFlag: false,
                         initialCountryCode: 'AE',
@@ -634,7 +634,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       RegisterCustomTextField(
                         validator: (value) {
                           if (value == "Province") {
-                            return 'pleaseselectyourprovince'.tr;
+                            return 'Please select your State'.tr;
                           }
                           return null;
                         },
@@ -684,7 +684,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             },
                             icon: Image.asset(Images.dropdown)),
                         hintText: controller.selectedprovince == null
-                            ? 'province'.tr
+                            ? 'State'
                             : controller.selectedprovince!.name.toString(),
                       ),
                       RegisterCustomTextField(

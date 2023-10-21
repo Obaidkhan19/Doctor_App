@@ -1,4 +1,3 @@
-
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
@@ -20,20 +19,27 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: ColorManager.kPrimaryColor,
+          onPressed: () {
             Get.offAll(() => const DrawerScreen());
           },
-          child: Image.asset(
-            AppImages.back,
-            color: ColorManager.kPrimaryColor,
-          ),
         ),
+        // InkWell(
+        //   splashColor: Colors.transparent,
+        //   highlightColor: Colors.transparent,
+        //   onTap: () {
+        //     Get.offAll(() => const DrawerScreen());
+        //   },
+        //   child: Image.asset(
+        //     AppImages.back,
+        //     color: ColorManager.kPrimaryColor,
+        //   ),
+        // ),
         title: Text(
           'healthsummaryappbar'.tr,
-          style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w600),
+          style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),

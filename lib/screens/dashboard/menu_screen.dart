@@ -75,40 +75,45 @@ class _MenuScreenState extends State<MenuScreen> {
                 height: Get.height * 0.14,
               ),
 
-              InkWell(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () {
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios),
+                color: ColorManager.kWhiteColor,
+                onPressed: () {
                   ZoomDrawer.of(context)!.close();
                 },
-                child: Image.asset(
-                  AppImages.back,
-                  color: ColorManager.kWhiteColor,
-                ),
               ),
+              // InkWell(
+              //   splashColor: Colors.transparent,
+              //   highlightColor: Colors.transparent,
+              //   onTap: () {
+              //     ZoomDrawer.of(context)!.close();
+              //   },
+              //   child: Image.asset(
+              //     AppImages.back,
+              //     color: ColorManager.kWhiteColor,
+              //   ),
+              // ),
 
               SizedBox(
                 height: Get.height * 0.04,
               ),
-              GetBuilder<ProfileController>(
-                builder: (context) {
-                  return CircleAvatar(
-                      backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                      radius: 30,
-                      child: ClipOval(
-                          child: CachedNetworkImage(
-                        imageUrl: ProfileController
-                                    .i.selectedbasicInfo?.picturePath !=
-                                null
-                            ? AppConstants.baseURL +
-                                ProfileController.i.selectedbasicInfo?.picturePath
-                            : "",
-                        fit: BoxFit.fill,
-                        errorWidget: (context, url, error) =>
-                            Image.asset(AppImages.doctorlogo),
-                      )));
-                }
-              ),
+              GetBuilder<ProfileController>(builder: (context) {
+                return CircleAvatar(
+                    backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                    radius: 30,
+                    child: ClipOval(
+                        child: CachedNetworkImage(
+                      imageUrl: ProfileController
+                                  .i.selectedbasicInfo?.picturePath !=
+                              null
+                          ? AppConstants.baseURL +
+                              ProfileController.i.selectedbasicInfo?.picturePath
+                          : "",
+                      fit: BoxFit.fill,
+                      errorWidget: (context, url, error) =>
+                          Image.asset(AppImages.doctorlogo),
+                    )));
+              }),
 
               SizedBox(
                 height: Get.height * 0.01,

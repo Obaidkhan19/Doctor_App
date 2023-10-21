@@ -37,18 +37,26 @@ class _ConsultingQueueState extends State<ConsultingQueue>
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             centerTitle: true,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () {
-                contr.tabindex = 0;
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              color: ColorManager.kPrimaryColor,
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: Image.asset(
-                AppImages.back,
-                color: ColorManager.kPrimaryColor,
-              ),
             ),
+
+            //  InkWell(
+            //   splashColor: Colors.transparent,
+            //   highlightColor: Colors.transparent,
+            //   onTap: () {
+            //     contr.tabindex = 0;
+            //     Navigator.pop(context);
+            //   },
+            //   child: Image.asset(
+            //     AppImages.back,
+            //     color: ColorManager.kPrimaryColor,
+            //   ),
+            // ),
             title: Text(
               'waitingqueue'.tr,
               style: GoogleFonts.poppins(
@@ -150,7 +158,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                       ),
                     ),
                     SizedBox(
-                      height: Get.height * 0.72,
+                      height: Get.height * 0.77,
                       child: TabBarView(
                           physics: const NeverScrollableScrollPhysics(),
                           children: [

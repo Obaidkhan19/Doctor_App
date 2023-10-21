@@ -60,6 +60,7 @@ class ConsultingQueueController extends GetxController implements GetxService {
 // CONSULTED VAULT
   List<consultingqueuereponse> pastconsultation = [];
   updatepastconsultinglist(List<consultingqueuereponse> data) {
+    pastconsultation.clear();
     pastconsultation = data;
     update();
   }

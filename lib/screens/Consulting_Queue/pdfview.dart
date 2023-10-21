@@ -15,17 +15,24 @@ class pdfviewconsulted extends StatelessWidget {
         // floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         // floatingActionButton: IconButton(onPressed: (){},icon: Icon(Icons.arrow_back_ios_new),),
         appBar: AppBar(
-          leading: InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () {
-              Get.back();
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            color: ColorManager.kPrimaryColor,
+            onPressed: () {
+              Navigator.pop(context);
             },
-            child: Image.asset(
-              AppImages.back,
-              color: ColorManager.kPrimaryColor,
-            ),
           ),
+          //  InkWell(
+          //   splashColor: Colors.transparent,
+          //   highlightColor: Colors.transparent,
+          //   onTap: () {
+          //     Get.back();
+          //   },
+          //   child: Image.asset(
+          //     AppImages.back,
+          //     color: ColorManager.kPrimaryColor,
+          //   ),
+          // ),
         ),
         body: Center(
           child: SizedBox(

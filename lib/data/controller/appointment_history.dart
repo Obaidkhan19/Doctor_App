@@ -9,36 +9,24 @@ class AppointmentHistoryController extends GetxController {
 
   static AppointmentHistoryController get i =>
       Get.put(AppointmentHistoryController());
+
+  String switchText = 'Offline';
   bool isOnline = false;
 
   updateSwitch(value) {
     isOnline = value;
+    if (value == true) {
+      switchText = 'Online';
+    } else if (value == false) {
+      switchText = 'Offline';
+    }
     update();
   }
 
   final dateFormatalert = DateFormat('yyyy-MM-dd');
-  DateTime dateTimealert = DateTime.now().subtract(const Duration(days: 30));
+//  DateTime dateTimealert = DateTime.now().subtract(const Duration(days: 30));
+  DateTime dateTimealert = DateTime.now();
   DateTime dateTime2alert = DateTime.now();
-
-  // String barnchselectedoption = '';
-  // List<String> branchList = [
-  //   'A',
-  //   'B',
-  //   'C',
-  //   'D',
-  //   'E',
-  //   'F',
-  //   'G',
-  //   'H',
-  //   'I',
-  // ];
-
-  // String hospitalselectedoption = '';
-  // List<String> hospitalList = [
-  //   'Hospital 1',
-  //   'Hospital 2',
-  //   'Hospital 3',
-  // ];
 
   List<BranchData> branchList = [];
   BranchData? selectedbranch;
