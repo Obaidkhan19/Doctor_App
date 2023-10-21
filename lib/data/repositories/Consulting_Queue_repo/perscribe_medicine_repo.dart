@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -43,6 +43,23 @@ class PrescribeMedicinRepo {
       List<Diagnostics1> diagnosticsList =
           data.map((json) => Diagnostics1.fromJson(json)).toList();
       return diagnosticsList;
+    } else {
+      throw Exception('Failed to fetch patient details');
+    }
+  }
+
+  precribemedicine(data) async {
+    String url = AppConstants.prescribemed;
+    Uri uri = Uri.parse(url);
+    var body = data;
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      
+      dynamic data=jsonData['ErrorMessage'];
+      return data;
     } else {
       throw Exception('Failed to fetch patient details');
     }

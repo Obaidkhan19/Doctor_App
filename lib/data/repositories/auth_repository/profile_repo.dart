@@ -99,6 +99,45 @@ class ProfileRepo {
     return false;
   }
 
+
+
+Future<bool> getDoctorspeciality() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String? doctorId = await LocalDb().getDoctorId();
+    var body = {"DoctorId": doctorId};
+    ProfileController.i.updateIsloading(true);
+    try {
+      var response = await http.post(Uri.parse(AppConstants.getDoctorBasicInfo),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        final prf = Get.put(ProfileController());
+        Iterable dt=responseData['Specialities'];
+        prf.updatespecialitites(dt.map((e) => Specialities.fromJson(e)).toList() );
+        for(int i=0;i<prf.specialities.length;i++)
+        {
+          if(prf.specialities[i].isDefault==1)
+          {
+            prf.updatemainspeciality(prf.specialities[i]);
+            break;
+          }
+        }
+        ProfileController.i.updateIsloading(false);
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      ProfileController.i.updateIsloading(false);
+      return false;
+    }
+    return false;
+  }
+
+
+
+
+
   Future<String> updateaccount(docid, name, dob, contactno, email, countryid,
       provinceid, cityid, address, token) async {
     var headers = {

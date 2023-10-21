@@ -16,6 +16,19 @@ class ProfileController extends GetxController implements GetxService {
     update();
   }
 
+Specialities? mainspeciality;
+ updatemainspeciality(Specialities data){
+  mainspeciality=data;
+  update();
+}
+
+  List<Specialities> specialities=[];
+  updatespecialitites(List<Specialities> data){
+    specialities=data;
+    update();
+  }
+
+
   BasicInfo? selectedbasicInfo;
   updatedDoctorInfo(BasicInfo bi) {
     selectedbasicInfo = bi;

@@ -249,6 +249,8 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                         onTap: () {
                                                           Get.to(() =>
                                                               PrescribeMedicineScreen(
+                                                                checkfirst: false,
+                                                                     patientstatusvalue: manageAppointment.patientStatusValue.toString(),
                                                                 patientid:
                                                                     manageAppointment
                                                                         .patientId,

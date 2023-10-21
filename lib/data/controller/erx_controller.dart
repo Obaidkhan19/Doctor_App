@@ -231,30 +231,15 @@ class ERXController extends GetxController implements GetxService {
   }
 
   RxBool smokeryesSelected = false.obs;
-  RxBool smokernoSelected = false.obs;
-
   void smokerupdateYes(bool value) {
     smokeryesSelected.value = value;
-    smokernoSelected.value = !value;
-  }
-
-  void smokerupdateNo(bool value) {
-    smokernoSelected.value = value;
-    smokeryesSelected.value = !value;
   }
 
   RxBool diabeticyesSelected = false.obs;
-  RxBool diabeticnoSelected = false.obs;
-
   void diabeticupdateYes(bool value) {
     diabeticyesSelected.value = value;
-    diabeticnoSelected.value = !value;
   }
 
-  void diabeticupdateNo(bool value) {
-    diabeticnoSelected.value = value;
-    diabeticyesSelected.value = !value;
-  }
 
 // CLEAR LISTS
   clearLists() {
@@ -568,6 +553,19 @@ class ERXController extends GetxController implements GetxService {
   List<Medicines1> selectedmedicineList = [];
 
   List<Medicines1> finalmedicinellist = [];
+
+
+removefinalmedindex(int index)
+{
+  selectedlst.dateList?.removeAt(index);
+  selectedlst.dayList?.removeAt(index);
+  selectedlst.medicineRoutes?.removeAt(index);
+  selectedlst.medicineFrequencies?.removeAt(index);
+  selectedlst.medicineDosages?.removeAt(index);
+  finalmedicinellist.removeAt(index);
+  update();
+}
+
 
   updatefinalmed(Medicines1 m1) {
     finalmedicinellist.add(m1);

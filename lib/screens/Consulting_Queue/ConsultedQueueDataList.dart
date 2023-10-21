@@ -284,6 +284,8 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                   //  HistoryeRXConsultingQueue());
 
                                                                   PrescribeMedicineScreen(
+                                                                    checkfirst: false,
+                                                                       patientstatusvalue: manageAppointment.patientStatusValue.toString(),
                                                                     patientid:
                                                                         manageAppointment
                                                                             .patientId,

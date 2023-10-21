@@ -747,6 +747,22 @@ addMedicine(
   List<dynamic> selectedMedicineList,
   String selectedMedicine,
 ) async {
+   ERXController.i.updatemedicineroutes(
+                                      ERXController.i.medicinelst
+                                          .medicineRoutes![0]);
+                                           ERXController.i.updateDateList(
+                                                ERXController.i.medicinelst
+                                                    .dateList![0]);
+                                            ERXController.i.updatedayList(
+                                              ERXController
+                                                  .i.medicinelst.dayList![0],
+                                            );
+                                           ERXController.i.updatemedicineDosages(
+                                      ERXController.i.medicinelst
+                                          .medicineDosages![0]);
+                                           ERXController.i.updatemedfrequency(
+                                      ERXController.i.medicinelst
+                                          .medicineFrequencies![0]);
   String medtitle = "";
   TextEditingController medController = TextEditingController();
   Completer<dynamic> completer = Completer<dynamic>();

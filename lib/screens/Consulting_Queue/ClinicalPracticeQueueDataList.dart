@@ -260,6 +260,8 @@ class _ClinicalPracticeQueueDataListState
                                                             //  HistoryeRXConsultingQueue());
 
                                                             PrescribeMedicineScreen(
+                                                              checkfirst: true,
+                                                              patientstatusvalue: manageAppointment.patientStatusValue.toString(),
                                                               patientid:
                                                                   manageAppointment
                                                                       .patientId,

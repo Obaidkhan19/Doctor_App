@@ -12,9 +12,9 @@ class AppConstants {
 
   //static const String baseURL = 'http://qa.patient.ihealthcure.com';
 
-  // static const String baseURL = 'http://192.168.88.254:324';
+  static const String baseURL = 'http://192.168.88.254:324';
 
-  static const String baseURL = 'https://patient.helpful.ihealthcure.com';
+  // static const String baseURL = 'https://patient.helpful.ihealthcure.com';
 
   // Branch ID
   //static const String branchID = "D8340ED5-AF5D-4F68-895B-0350114AAB09";
@@ -74,6 +74,7 @@ class AppConstants {
   static const String getFollowup = "$baseURL/api/doctor/GetFollowUps";
 
   static const String getDiagnostics = "$baseURL/api/doctor/GetDiagnostics";
+  static const String prescribemed = "$baseURL/api/doctor/Prescription";
 
   static const String getMedicines = "$baseURL/api/doctor/GetMedicineList";
 

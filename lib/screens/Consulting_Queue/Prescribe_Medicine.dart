@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/CustomFormField.dart';
 import 'package:doctormobileapplication/components/MyCustomExpansionTile.dart';
@@ -9,7 +12,10 @@ import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
+import 'package:doctormobileapplication/data/controller/profile_controller.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/perscribe_medicine_repo.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
@@ -18,6 +24,8 @@ import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
+import 'package:doctormobileapplication/models/prescribemedcinemodel.dart'
+    as pm;
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
@@ -52,8 +60,10 @@ List<Item> items = [
 ];
 
 class PrescribeMedicineScreen extends StatefulWidget {
+  bool? checkfirst;
   String? patientid;
   String? visitno;
+  String? patientstatusvalue;
   // String? ernsbit;
   dynamic currentvisit;
   dynamic prescribedvalue;
@@ -61,6 +71,8 @@ class PrescribeMedicineScreen extends StatefulWidget {
   PrescribeMedicineScreen(
       {this.patientid,
       this.visitno,
+      this.checkfirst,
+      this.patientstatusvalue,
       // this.ernsbit,
       this.currentvisit,
       this.prescribedvalue,
@@ -154,8 +166,17 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     );
   }
 
+  String? speciality;
+
+  call() async {
+    await ProfileRepo().getDoctorspeciality();
+  }
+
+  String? performancestartdate;
   @override
   void initState() {
+    performancestartdate = DateTime.now().toString().split('.')[0];
+    call();
     _getErnsDetailHistory();
     _getErnsHistory();
     _getMediciness();
@@ -173,6 +194,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
   @override
   void dispose() {
     super.dispose();
+    Get.put<ERXController>(ERXController());
     controller.clearLists();
   }
 
@@ -497,7 +519,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   groupValue:
                                       controller.smokeryesSelected.value,
                                   onChanged: (value) =>
-                                      controller.smokerupdateYes(value!),
+                                      controller.smokerupdateYes(true),
                                 ),
                               ),
                               Text(
@@ -513,10 +535,10 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                 () => Radio(
                                   fillColor: MaterialStateColor.resolveWith(
                                       (states) => ColorManager.kPrimaryColor),
-                                  value: true,
-                                  groupValue: controller.smokernoSelected.value,
+                                  value: false,
+                                  groupValue: controller.smokeryesSelected.value,
                                   onChanged: (value) =>
-                                      controller.smokerupdateNo(value!),
+                                      controller.smokerupdateYes(false),
                                 ),
                               ),
                               Text(
@@ -557,7 +579,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   groupValue:
                                       controller.diabeticyesSelected.value,
                                   onChanged: (value) =>
-                                      controller.diabeticupdateYes(value!),
+                                      controller.diabeticupdateYes(true),
                                 ),
                               ),
                               Text(
@@ -573,11 +595,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                 () => Radio(
                                   fillColor: MaterialStateColor.resolveWith(
                                       (states) => ColorManager.kPrimaryColor),
-                                  value: true,
+                                  value: false,
                                   groupValue:
-                                      controller.diabeticnoSelected.value,
+                                      controller.diabeticyesSelected.value,
                                   onChanged: (value) =>
-                                      controller.diabeticupdateNo(value!),
+                                      controller.diabeticupdateYes(false),
                                 ),
                               ),
                               Text(
@@ -1664,8 +1686,14 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   SizedBox(
                                                     height: Get.height * 0.02,
                                                     width: Get.width * 0.02,
-                                                    child: Image.asset(
-                                                        AppImages.cross),
+                                                    child: InkWell(
+                                                    onTap:(){
+                                                      controller
+                                                        .removefinalmedindex(index);
+                                                    },
+                                                      child: Image.asset(
+                                                          AppImages.cross),
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     width: Get.width * 0.01,
@@ -2194,6 +2222,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               child: PrimaryButton(
                                   title: 'hold'.tr,
                                   onPressed: () async {
+                                    precribeholdandconsult("2", context);
                                     //Get.to(const DoctorReviewScreen());
                                   },
                                   fontSize: 15,
@@ -2205,6 +2234,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               child: PrimaryButton(
                                   title: 'consult'.tr,
                                   onPressed: () async {
+                                    precribeholdandconsult("3", context);
                                     // Get.to(const DoctorReviewScreen());
                                   },
                                   fontSize: 15,
@@ -2224,5 +2254,209 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
             ),
           )),
     );
+  }
+
+  precribeholdandconsult(String val, BuildContext context) async {
+    ERXController.i.updateIsloading(true);
+    List<pm.MedicineList> data = [];
+    String qyt = "";
+    for (int i = 0; i < ERXController.i.finalmedicinellist.length; i++) {
+      String doseng = ERXController
+              .i.selectedlst.medicineDosages?[i].dosageValue
+              .toString() ??
+          "";
+      String dateng =
+          ERXController.i.selectedlst.dateList?[i].englishCounting.toString() ??
+              "";
+      String dayeng =
+          ERXController.i.selectedlst.dayList?[i].englishDay.toString() ?? "";
+      DateTime dateeng = DateTime.now();
+      if (dayeng.toLowerCase() == "day") {
+        qyt = "";
+        dateeng = dateeng.add(Duration(days: (1 * int.parse(dateng)).toInt()));
+        qyt = (int.parse(dateng)).toString();
+      } else if (dayeng.toLowerCase() == "week") {
+        qyt = "";
+        dateeng =
+            dateeng.add(Duration(days: (7 * (int.parse(dateng))).toInt()));
+        qyt = (int.parse(dateng) * 7).toString();
+      } else if (dayeng.toLowerCase() == "month") {
+        qyt = "";
+        dateeng =
+            dateeng.add(Duration(days: (30 * (int.parse(dateng))).toInt()));
+        qyt = (int.parse(dateng) * 30).toString();
+      }
+      String diff = dateeng.toString().split(' ')[0];
+      String englishdiscription = "$doseng for $dateng $dayeng    [" +
+          performancestartdate!.split(' ')[0] +
+          ' - ' +
+          diff +
+          "]";
+
+      String daturdu =
+          ERXController.i.selectedlst.dateList?[i].urduCounting.toString() ??
+              "";
+      String dayurdu =
+          ERXController.i.selectedlst.dayList?[i].urduDay.toString() ?? "";
+      DateTime dateurdu = DateTime.now();
+      if (dayeng.toLowerCase() == "day") {
+        qyt = "";
+        dateeng = dateeng.add(Duration(days: (1 * int.parse(dateng)).toInt()));
+        qyt = (int.parse(dateng)).toString();
+      } else if (dayeng.toLowerCase() == "week") {
+        qyt = "";
+        dateeng =
+            dateeng.add(Duration(days: (7 * (int.parse(dateng))).toInt()));
+        qyt = (int.parse(dateng) * 7).toString();
+      } else if (dayeng.toLowerCase() == "month") {
+        qyt = "";
+        dateeng =
+            dateeng.add(Duration(days: (30 * (int.parse(dateng))).toInt()));
+        qyt = (int.parse(dateng) * 30).toString();
+      }
+
+      String urdudiscription = "$doseng for $daturdu $dayurdu  [" +
+          performancestartdate!.split(' ')[0] +
+          ' - ' +
+          diff +
+          "]";
+
+      data.add(pm.MedicineList(
+          id: ERXController.i.finalmedicinellist[i].id,
+          medicineStrengthId: "",
+          medicineDosageId:
+              ERXController.i.selectedlst.medicineDosages?[i].id ?? "",
+          dosageValue: ERXController
+                  .i.selectedlst.medicineDosages?[i].dosageValue
+                  .toString() ??
+              "",
+          frequencyNumeric: ERXController
+                  .i.selectedlst.medicineFrequencies?[i].numericDisplay ??
+              "",
+          frequencyQuantity: ERXController
+                  .i.selectedlst.medicineFrequencies?[i].quantity
+                  .toString() ??
+              "",
+          dayId: ERXController.i.selectedlst.dayList?[i].id.toString() ?? "",
+          dateId: ERXController.i.selectedlst.dateList?[i].id.toString() ?? "",
+          medicineRouteId:
+              ERXController.i.selectedlst.medicineRoutes?[i].id.toString() ??
+                  "",
+          medicineEventTimingId: "",
+          preference: "1",
+          medicineEventTimingDetail: "",
+          medicineEnglishDescription: englishdiscription,
+          medicineUrduDescription: urdudiscription,
+          tappedMedicinesDetail: "",
+          medicineDurationDetail: diff,
+          quantity: qyt,
+          medicineTypeInTakeId: "",
+          ophthType: "",
+          comment: ""));
+    }
+    List<String> invest = [];
+    for (int i = 0; i < ERXController.i.selectedinvestigationList.length; i++) {
+      invest.add(ERXController.i.selectedinvestigationList[i].id ?? "");
+    }
+
+    List<String> dignose = [];
+    for (int i = 0; i < ERXController.i.selecteddiagnosticslist.length; i++) {
+      dignose.add(ERXController.i.selecteddiagnosticslist[i].id ?? "");
+    }
+
+    List<pm.Procedures> proceureslt = [];
+    for (int i = 0; i < ERXController.i.selectedproceduresList.length; i++) {
+      proceureslt.add(pm.Procedures(
+        id: ERXController.i.selectedproceduresList[i].id ?? "",
+        discountStatus: "4",
+        anesthesiaType: "0",
+        clinicalHistory: "",
+        comments: "",
+        isGAFitnessRequried: "0",
+        isUrgent: "0",
+        ophthType: "",
+        procedureDate: "",
+        procedureDurationInMinutes: "",
+        procedureTime: "",
+        subDepartmentId: "",
+      ));
+    }
+
+    List<pm.Diagnosis> diagnosislst = [];
+    for (int i = 0;
+        i < ERXController.i.selectedprimarydiagnosisList.length;
+        i++) {
+      diagnosislst.add(pm.Diagnosis(
+          id: ERXController.i.selectedprimarydiagnosisList[i].id ?? "",
+          comments: "",
+          ophthType: ""));
+    }
+    List<String> complaintlst = [];
+    for (int i = 0; i < ERXController.i.selectedComplaintsList.length; i++) {
+      complaintlst.add(ERXController.i.selectedComplaintsList[i].id ?? "");
+    }
+
+    List<String> instructionslst = [];
+    for (int i = 0; i < ERXController.i.selectedinstructionList.length; i++) {
+      instructionslst.add(ERXController.i.selectedinstructionList[i].id ?? "");
+    }
+
+    List<pm.SecondayDiagnosis> secondarydiagnosislst = [];
+    for (int i = 0;
+        i < ERXController.i.selectedsecondaryDiagnosisList.length;
+        i++) {
+      secondarydiagnosislst.add(pm.SecondayDiagnosis(
+          id: ERXController.i.selectedsecondaryDiagnosisList[i].id ?? "",
+          comments: "",
+          ophthType: ""));
+    }
+// ERXController.i.selectedprimarydiagnosisList
+
+    pm.prescribemedicinemodel prescribe = pm.prescribemedicinemodel(
+        branchId: await LocalDb().getBranchId(),
+        doctorId: await LocalDb().getDoctorId(),
+        patientId: widget.patientid,
+        visitNo: widget.visitno,
+        prescriptionPerformanceStart: performancestartdate,
+        prescriptionPerformanceEnd: DateTime.now().toString().split('.')[0],
+        defaultDoctorSpecialityId: ProfileController.i.mainspeciality!.id,
+        examFinding: ERXController.i.findingsController.text.toString() != ''
+            ? ERXController.i.findingsController.text.toString()
+            : "",
+        advice: ERXController.i.adviceController.text.toString() != ''
+            ? ERXController.i.adviceController.text.toString()
+            : "",
+        patientStatusValue: val,
+        medicineList: data,
+        deletedMedicineList: [],
+        investigations: invest,
+        deletedInvestigations: [],
+        diagnostics: dignose,
+        deletedDiagnosis: [],
+        procedures: proceureslt,
+        deletedProcedures: [],
+        diagnosis: diagnosislst,
+        deletedDiagnostics: [],
+        complaints: complaintlst,
+        deletedComplaints: [],
+        proceduralFindingText: "",
+        proceduralFindingId: "",
+        followUps: [ERXController.i.selectedfup?.id ?? ""],
+        instructions: instructionslst,
+        deletedInstructions: [],
+        prescribedInValue: "2",
+        dischargeNotes: "",
+        secondayDiagnosis: secondarydiagnosislst,
+        deletedSecondayDiagnosis: [],
+        isFirstTimeVisit: widget.checkfirst! ? "True" : "false",
+        smoker: ERXController.i.smokeryesSelected.toString()=="true"?"true":"false",
+        diabetic: ERXController.i.diabeticyesSelected.toString()=="true"?"true":"false",
+        // medicineList:
+        );
+    log(jsonEncode(prescribe));
+    String rep =
+        await PrescribeMedicinRepo().precribemedicine(jsonEncode(prescribe));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(rep)));
+    ERXController.i.updateIsloading(false);
   }
 }
