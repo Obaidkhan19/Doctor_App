@@ -1094,7 +1094,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: controller
-                                                        .selectedinvestigation
+                                                        .selecteddiagnostics
                                                         ?.name !=
                                                     null
                                                 ? Colors.black

@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/models/branch.dart';
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
+import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,6 +34,8 @@ class ConsultingQueueRepo {
       "OrderColumn": "0",
       "OrderDir": "desc"
     };
+    print("pastconsultationbody");
+    print(body);
 
     var headers = {'Content-Type': 'application/json'};
     try {
@@ -132,6 +136,50 @@ class ConsultingQueueRepo {
     } catch (e) {
       ConsultingQueueController.i.updateIsclinicloading(false);
       log('$e exception caught');
+    }
+  }
+
+  Future<List<BranchData>> getBranch() async {
+    String doctorid = await LocalDb().getDoctorId() ?? "";
+    String url = AppConstants.getBranch;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "DoctorId": doctorid,
+    });
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Data'];
+      List<BranchData> branchList =
+          data.map((json) => BranchData.fromJson(json)).toList();
+
+      return branchList;
+    } else {
+      throw Exception('Failed to fetch details');
+    }
+  }
+
+  Future<List<HospitalORClinics>> getHospitalORClinic() async {
+    String doctorid = await LocalDb().getDoctorId() ?? "";
+    String url = AppConstants.getHospital;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "DoctorId": doctorid,
+    });
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['HospitalORClinics'];
+      List<HospitalORClinics> hospitalList =
+          data.map((json) => HospitalORClinics.fromJson(json)).toList();
+
+      return hospitalList;
+    } else {
+      throw Exception('Failed to fetch details');
     }
   }
 }

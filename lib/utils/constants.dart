@@ -63,6 +63,10 @@ class AppConstants {
   static const String getInvestigations =
       "$baseURL/api/doctor/GetInvestigations";
 
+  static const String getBranch = "$baseURL/api/ddl/GetUserBranches";
+
+  static const String getHospital = "$baseURL/api/ddl/GetHospitalORClinics";
+
   static const String getProcedures = "$baseURL/api/doctor/GetProcedures";
 
   static const String getInstruction = "$baseURL/api/doctor/GetInstructions";

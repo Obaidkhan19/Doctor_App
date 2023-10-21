@@ -1,11 +1,15 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/dropdown_data_widget.dart';
+import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/controller/appointment_history.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/models/branch.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
+import 'package:doctormobileapplication/models/hospital_clinic.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/dropdown.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/dropdown_alert.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -38,10 +42,25 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
     await ConsultingQueueController.i.updateIsloading(false);
   }
 
+  _getBranch() async {
+    ConsultingQueueRepo cqr = ConsultingQueueRepo();
+    AppointmentHistoryController.i.updatebranchlist(
+      await cqr.getBranch(),
+    );
+  }
+
+  _getHospital() async {
+    ConsultingQueueRepo cqr = ConsultingQueueRepo();
+    AppointmentHistoryController.i.updatehospitallist(
+      await cqr.getHospitalORClinic(),
+    );
+  }
+
   @override
   void initState() {
     callback();
-    // TODO: implement initState
+    _getBranch();
+    _getHospital();
     super.initState();
   }
 
@@ -270,7 +289,20 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                             Align(
                                               alignment: Alignment.bottomCenter,
                                               child: ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Get.to(
+                                                    () => pdfviewconsulted(
+                                                      url: ConsultingQueueController
+                                                              .i
+                                                              .pastconsultation[
+                                                                  index]
+                                                              .consultationDetails?[
+                                                                  0]
+                                                              .uRL ??
+                                                          "",
+                                                    ),
+                                                  );
+                                                },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
                                                       ColorManager.kWhiteColor,
@@ -313,10 +345,6 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
   }
 
   void _showAlertDialog(BuildContext context) {
-    final dateFormatalert = DateFormat('yyyy-MM-dd');
-    DateTime dateTimealert = DateTime.now().subtract(const Duration(days: 30));
-    DateTime dateTime2alert = DateTime.now();
-
     final AppointmentHistoryController controller =
         Get.put(AppointmentHistoryController());
 
@@ -324,54 +352,119 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Padding(
-          padding:
-              EdgeInsets.only(left: Get.width * 0.05, right: Get.width * 0.05),
-          child: StatefulBuilder(builder: (context, setState) {
-            return AlertDialog(
-              surfaceTintColor: Colors.white,
-              insetPadding: EdgeInsets.zero,
-              content: GetBuilder<AppointmentHistoryController>(
-                builder: (cont) => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: Get.width * 0.10,
-                        ),
-                        Text(
-                          "searchconsultancy".tr,
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: ColorManager.kPrimaryColor,
+        return GetBuilder<AppointmentHistoryController>(
+          builder: (cont) => Padding(
+            padding: EdgeInsets.only(
+                left: Get.width * 0.05, right: Get.width * 0.05),
+            child: StatefulBuilder(builder: (context, setState) {
+              return AlertDialog(
+                surfaceTintColor: Colors.white,
+                insetPadding: EdgeInsets.zero,
+                content: GetBuilder<AppointmentHistoryController>(
+                  builder: (cont) => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: Get.width * 0.10,
                           ),
-                        ),
-                        // SizedBox(
-                        //   width: Get.width * 0.13,
-                        // ),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: SizedBox(
-                            height: Get.height * 0.05,
-                            width: Get.width * 0.05,
-                            child: Image.asset(AppImages.cross),
+                          Text(
+                            "searchconsultancy".tr,
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.kPrimaryColor,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    Row(
-                      children: [
-                        Card(
-                          elevation: 2,
-                          child: Container(
+                          // SizedBox(
+                          //   width: Get.width * 0.13,
+                          // ),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: SizedBox(
+                              height: Get.height * 0.05,
+                              width: Get.width * 0.05,
+                              child: Image.asset(AppImages.cross),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+                      Row(
+                        children: [
+                          Card(
+                            elevation: 2,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorManager.kWhiteColor,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: CupertinoColors.white,
+                                ),
+                                // color: ColorManager.kWhiteColor,
+                                width: MediaQuery.of(context).size.width / 3.5,
+                                child: CupertinoTextField(
+                                  readOnly: true,
+                                  controller: TextEditingController(
+                                    text: controller.dateFormatalert
+                                        .format(controller.dateTimealert),
+                                  ),
+                                  prefix: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: Get.width * 0.03),
+                                    child: const Icon(
+                                      Icons.calendar_month,
+                                      color: CupertinoColors.black,
+                                    ),
+                                  ),
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    color: CupertinoColors.black,
+                                  ),
+                                  onTap: () {
+                                    showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (BuildContext context) => Center(
+                                        child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.3,
+                                          child: CupertinoDatePicker(
+                                            backgroundColor: Colors.white,
+                                            initialDateTime:
+                                                controller.dateTimealert,
+                                            onDateTimeChanged:
+                                                (DateTime newTime) {
+                                              setState(() => controller
+                                                  .dateTimealert = newTime);
+                                            },
+                                            use24hFormat: true,
+                                            mode: CupertinoDatePickerMode.date,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )),
+                          ),
+                          Text(
+                            'to'.tr,
+                            style: GoogleFonts.poppins(
+                                fontSize: 10, fontWeight: FontWeight.bold),
+                          ),
+                          Card(
+                            elevation: 2,
+                            child: Container(
+                              //  color: ColorManager.kWhiteColor,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: ColorManager.kWhiteColor,
@@ -380,18 +473,19 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: CupertinoColors.white,
                               ),
-                              // color: ColorManager.kWhiteColor,
                               width: MediaQuery.of(context).size.width / 3.5,
                               child: CupertinoTextField(
                                 readOnly: true,
                                 controller: TextEditingController(
-                                  text: dateFormatalert.format(dateTimealert),
+                                  text: controller.dateFormatalert
+                                      .format(controller.dateTime2alert),
                                 ),
                                 prefix: Padding(
                                   padding:
                                       EdgeInsets.only(left: Get.width * 0.03),
                                   child: const Icon(
-                                    Icons.calendar_month,
+                                    Icons
+                                        .calendar_month, // You can replace this with your desired icon
                                     color: CupertinoColors.black,
                                   ),
                                 ),
@@ -409,11 +503,12 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                                 0.3,
                                         child: CupertinoDatePicker(
                                           backgroundColor: Colors.white,
-                                          initialDateTime: dateTimealert,
+                                          initialDateTime:
+                                              controller.dateTime2alert,
                                           onDateTimeChanged:
                                               (DateTime newTime) {
-                                            setState(
-                                                () => dateTimealert = newTime);
+                                            setState(() => controller
+                                                .dateTime2alert = newTime);
                                           },
                                           use24hFormat: true,
                                           mode: CupertinoDatePickerMode.date,
@@ -422,146 +517,184 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                     ),
                                   );
                                 },
-                              )),
-                        ),
-                        Text(
-                          'to'.tr,
-                          style: GoogleFonts.poppins(
-                              fontSize: 10, fontWeight: FontWeight.bold),
-                        ),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            //  color: ColorManager.kWhiteColor,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: ColorManager.kWhiteColor,
-                                width: 1.0,
                               ),
-                              borderRadius: BorderRadius.circular(10),
-                              color: CupertinoColors.white,
                             ),
-                            width: MediaQuery.of(context).size.width / 3.5,
-                            child: CupertinoTextField(
-                              readOnly: true,
-                              controller: TextEditingController(
-                                text: dateFormatalert.format(dateTime2alert),
+                          ),
+                          SizedBox(
+                            width: Get.width * 0.009,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment
+                                .spaceBetween, // Adjust this as needed
+                            mainAxisSize:
+                                MainAxisSize.min, // Adjust this as needed
+                            children: [
+                              Text(
+                                'online'.tr,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    color: ColorManager.kPrimaryColor,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              prefix: Padding(
-                                padding:
-                                    EdgeInsets.only(left: Get.width * 0.03),
-                                child: const Icon(
-                                  Icons
-                                      .calendar_month, // You can replace this with your desired icon
-                                  color: CupertinoColors.black,
+                              SizedBox(
+                                width: Get.width * 0.1,
+                                height: Get.height * 0.03,
+                                child: Transform.scale(
+                                  scale: 0.55,
+                                  child: Switch(
+                                    value: controller.isOnline,
+                                    activeColor: ColorManager.kPrimaryColor,
+                                    onChanged: (value) {
+                                      controller.updateSwitch(value);
+                                    },
+                                  ),
                                 ),
                               ),
-                              style: const TextStyle(
-                                fontSize: 10,
-                                color: CupertinoColors.black,
-                              ),
-                              onTap: () {
-                                showCupertinoModalPopup(
-                                  context: context,
-                                  builder: (BuildContext context) => Center(
-                                    child: SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.3,
-                                      child: CupertinoDatePicker(
-                                        backgroundColor: Colors.white,
-                                        initialDateTime: dateTime2alert,
-                                        onDateTimeChanged: (DateTime newTime) {
-                                          setState(
-                                              () => dateTime2alert = newTime);
-                                        },
-                                        use24hFormat: true,
-                                        mode: CupertinoDatePickerMode.date,
-                                      ),
-                                    ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.03,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          controller.selectedbranch = null;
+                          BranchData generic = await searchabledropdown(
+                              context, controller.branchList ?? []);
+                          controller.selectedbranch = null;
+                          controller.updatebranch(generic);
+
+                          if (generic != '') {
+                            controller.selectedbranch = generic;
+                            controller.selectedbranch = (generic == '')
+                                ? null
+                                : controller.selectedbranch;
+                          }
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: Get.width * 1,
+                          height: Get.height * 0.06,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: ColorManager.kPrimaryColor,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Get.width * 0.03,
+                                vertical: Get.height * 0.01),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${(controller.selectedbranch != null && controller.selectedbranch?.name != null) ? (controller.selectedbranch!.name!.length > 20 ? ('${controller.selectedbranch?.name!.substring(0, 20 > controller.selectedbranch!.name!.length ? controller.selectedbranch!.name!.length : 20)}...') : controller.selectedbranch?.name) : "Select Branch"}",
+                                  semanticsLabel:
+                                      "${(controller.selectedbranch != null) ? (controller.selectedbranch!.name!.length > 20 ? ('${controller.selectedbranch?.name!.substring(0, 20 > controller.selectedbranch!.name!.length ? controller.selectedbranch!.name!.length : 20)}...') : controller.selectedbranch) : "Select Branch"}",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color:
+                                        controller.selectedbranch?.name != null
+                                            ? ColorManager.kblackColor
+                                            : Colors.grey[700],
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                );
-                              },
+                                ),
+                                const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: ColorManager.kblackColor,
+                                )
+                              ],
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: Get.width * 0.009,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment
-                              .spaceBetween, // Adjust this as needed
-                          mainAxisSize:
-                              MainAxisSize.min, // Adjust this as needed
-                          children: [
-                            Text(
-                              'online'.tr,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 10,
-                                  color: ColorManager.kPrimaryColor,
-                                  fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          controller.selectedhospital = null;
+                          HospitalORClinics generic = await searchabledropdown(
+                              context, controller.hospitalList ?? []);
+                          controller.selectedhospital = null;
+                          controller.updatehospital(generic);
+
+                          if (generic != '') {
+                            controller.selectedhospital = generic;
+                            controller.selectedhospital = (generic == '')
+                                ? null
+                                : controller.selectedhospital;
+                          }
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: Get.width * 1,
+                          height: Get.height * 0.06,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: ColorManager.kPrimaryColor,
+                              width: 1.0,
                             ),
-                            SizedBox(
-                              width: Get.width * 0.1,
-                              height: Get.height * 0.03,
-                              child: Transform.scale(
-                                scale: 0.55,
-                                child: Switch(
-                                  value: controller.isOnline,
-                                  activeColor: ColorManager.kPrimaryColor,
-                                  onChanged: (value) {
-                                    // setState(() {
-                                    //   isOnline1 = value;
-                                    // });
-                                    controller.updateSwitch(value);
-                                  },
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Get.width * 0.03,
+                                vertical: Get.height * 0.01),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${(controller.selectedhospital != null && controller.selectedhospital?.name != null) ? (controller.selectedhospital!.name!.length > 20 ? ('${controller.selectedhospital?.name!.substring(0, 20 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 20)}...') : controller.selectedhospital?.name) : "Select Hospital/Clinic"}",
+                                  semanticsLabel:
+                                      "${(controller.selectedhospital != null) ? (controller.selectedhospital!.name!.length > 20 ? ('${controller.selectedhospital?.name!.substring(0, 20 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 20)}...') : controller.selectedhospital) : "Select Hospital/Clinic"}",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color:
+                                        controller.selectedbranch?.name != null
+                                            ? ColorManager.kblackColor
+                                            : Colors.grey[700],
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
+                                const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: ColorManager.kblackColor,
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    CustomAlertDropDownWidget(
-                      list: controller.branchList,
-                      selected: controller.barnchselectedoption,
-                      hinttext: 'selectbranch'.tr,
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    CustomAlertDropDownWidget(
-                      list: controller.hospitalList,
-                      selected: controller.hospitalselectedoption,
-                      hinttext: 'selecthospitalclinic'.tr,
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorManager.kPrimaryColor,
-                        fixedSize: const Size(380, 4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10), // Set the border radius here
+                          ),
                         ),
                       ),
-                      child: Text(
-                        'search'.tr,
-                        style: GoogleFonts.poppins(
-                            fontSize: 12, color: Colors.white),
+                      SizedBox(
+                        height: Get.height * 0.01,
                       ),
-                    ),
-                  ],
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorManager.kPrimaryColor,
+                          fixedSize: const Size(380, 4),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10), // Set the border radius here
+                          ),
+                        ),
+                        child: Text(
+                          'search'.tr,
+                          style: GoogleFonts.poppins(
+                              fontSize: 12, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         );
       },
     );
