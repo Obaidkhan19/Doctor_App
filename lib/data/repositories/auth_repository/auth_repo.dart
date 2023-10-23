@@ -527,12 +527,11 @@ class AuthRepo {
       ]
     };
     print(body);
-    var response = await http.post(
-      uri,
-      body: jsonEncode(body),
-    // );
-    headers: <String, String>{'Content-Type': 'application/json'});
-       print(jsonEncode(body));
+    var response = await http.post(uri,
+        body: jsonEncode(body),
+        // );
+        headers: <String, String>{'Content-Type': 'application/json'});
+    print(jsonEncode(body));
     if (response.statusCode == 200) {
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['SubSpecialities']; //Data
@@ -650,8 +649,6 @@ class AuthRepo {
         var verificationCode = responseData['VerificationCode'];
         var username = responseData['Username'];
         var email = responseData['Email'];
-        print("verificationCodeverificationCodeverificationCode");
-        print(verificationCode);
         if (status == 1) {
           AuthController.i.updateverificationcode(verificationCode);
           AuthController.i.updateusername(username);
@@ -671,5 +668,135 @@ class AuthRepo {
       return 'false';
     }
     return 'false';
+  }
+
+  Future<bool> usernameAvaibility(username) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "UserName": username,
+    };
+    try {
+      var response = await http.post(
+        Uri.parse(AppConstants.usernameavaibility),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        if (status == 1) {
+          RegistrationController.i.updateusernameavaibility(true);
+          return true;
+        } else {
+          RegistrationController.i.updateusernameavaibility(false);
+          showSnackbar(Get.context!, 'Username Already Taken');
+          return false;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return false;
+    }
+    return false;
+  }
+
+  Future<bool> passportAvaibility(passport) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "PassportNumber": passport,
+    };
+    try {
+      var response = await http.post(
+        Uri.parse(AppConstants.passportavaibility),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+
+        if (status == 1) {
+          RegistrationController.i.updatepassportavaibility(true);
+          return true;
+        } else {
+          RegistrationController.i.updatepassportavaibility(false);
+          showSnackbar(Get.context!, 'Passport Already Taken');
+          return false;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return false;
+    }
+    return false;
+  }
+
+  Future<bool> cnicAvaibility(cnic) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "CNICNumber": cnic,
+    };
+    try {
+      var response = await http.post(
+        Uri.parse(AppConstants.cnicavaibility),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        if (status == 1) {
+          RegistrationController.i.updateidnoavaibility(true);
+          return true;
+        } else {
+          RegistrationController.i.updateidnoavaibility(false);
+          showSnackbar(Get.context!, 'ID Number Already Taken');
+          return false;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return false;
+    }
+    return false;
+  }
+
+  Future<bool> pmdcAvaibility(pmdc) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "PMDCNumber": pmdc,
+    };
+    try {
+      var response = await http.post(
+        Uri.parse(AppConstants.pmdcavaibility),
+        body: jsonEncode(body),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        if (status == 1) {
+          RegistrationController.i.updateepmdcavaibility(true);
+          return true;
+        } else {
+          RegistrationController.i.updateepmdcavaibility(false);
+          showSnackbar(Get.context!, 'LMPC No Already Taken');
+          return false;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return false;
+    }
+    return false;
   }
 }

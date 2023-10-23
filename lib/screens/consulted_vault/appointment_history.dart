@@ -698,10 +698,10 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                       "${(controller.selectedhospital != null) ? (controller.selectedhospital!.name!.length > 50 ? ('${controller.selectedhospital?.name!.substring(0, 50 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 50)}...') : controller.selectedhospital) : "Select Hospital/Clinic"}",
                                   style: GoogleFonts.poppins(
                                     fontSize: 10,
-                                    color:
-                                        controller.selectedbranch?.name != null
-                                            ? ColorManager.kblackColor
-                                            : Colors.grey[700],
+                                    color: controller.selectedhospital?.name !=
+                                            null
+                                        ? ColorManager.kblackColor
+                                        : Colors.grey[700],
                                   ),
                                 ),
                                 const Icon(

@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/components/Customrowdesign.dart';
+import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,16 +26,15 @@ class ConfigureAppointmentController extends GetxController
     followupfeeController.clear();
   }
 
-  String hospitalselectedoption = "Institute of Cardiology";
-  List<String> hospitalList = [
-    'Institute of Cardiology',
-    'Institute of Cardiology 1',
-    'Institute of Cardiology 2000',
-  ];
+  List<HospitalORClinics> hospitalList = [];
+  HospitalORClinics? selectedhospital;
+  updatehospitallist(List<HospitalORClinics> hlist) {
+    hospitalList = hlist;
+    update();
+  }
 
-  updatehospital(String selected) {
-    hospitalselectedoption = selected;
-    isHospitalExpanded = false;
+  updatehospital(HospitalORClinics bran) {
+    selectedhospital = bran;
     update();
   }
 

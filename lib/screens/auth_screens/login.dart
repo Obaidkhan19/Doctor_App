@@ -270,9 +270,12 @@ class AuthTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? hintText;
   final bool? readOnly;
+  final ValueChanged<String>? onChangedwidget;
+
   const AuthTextField({
     super.key,
     this.hintText,
+    this.onChangedwidget,
     this.suffixIcon,
     this.controller,
     this.validator,
@@ -288,6 +291,7 @@ class AuthTextField extends StatelessWidget {
         fontSize: 12,
         color: ColorManager.kGreyColor,
       ),
+      onChanged: onChangedwidget,
       obscureText: obscureText ?? false,
       inputFormatters: formatters,
       readOnly: readOnly ?? false,

@@ -30,8 +30,10 @@ class _WalletScreenState extends State<WalletScreen> {
     path = (await LocalDb().getDoctorUserImagePath())!;
     String baseurl = AppConstants.baseURL;
     imagepath = baseurl + path;
+    //  dit = LocalDb().getDoctorId().toString();
   }
 
+  //String dit = '';
   @override
   void initState() {
     _getimagepath();

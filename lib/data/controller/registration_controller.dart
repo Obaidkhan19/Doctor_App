@@ -15,6 +15,31 @@ import 'package:intl/intl.dart';
 class RegistrationController extends GetxController implements GetxService {
   static RegistrationController get i => Get.put(RegistrationController());
 
+  bool usernameavaibility = false;
+  bool passportavaibility = false;
+  bool pmdcavaibility = false;
+  bool idnoavaibility = false;
+
+  updateusernameavaibility(value) {
+    usernameavaibility = value;
+    update();
+  }
+
+  updatepassportavaibility(value) {
+    passportavaibility = value;
+    update();
+  }
+
+  updateepmdcavaibility(value) {
+    pmdcavaibility = value;
+    update();
+  }
+
+  updateidnoavaibility(value) {
+    idnoavaibility = value;
+    update();
+  }
+
   disposevalues() {
     firstname.clear();
     lastname.clear();

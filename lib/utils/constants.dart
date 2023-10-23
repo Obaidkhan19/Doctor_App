@@ -50,7 +50,16 @@ class AppConstants {
   static const String changePassword = "$baseURL/api/doctor/ChangePassword";
   static const String forgetPassword = "$baseURL/api/doctor/ForgetPassword";
   static const String newPassword = "$baseURL/api/doctor/ResetPassword";
+
+  static const String usernameavaibility =
+      "$baseURL/api/doctor/UserNameAvailibility";
+  static const String passportavaibility =
+      "$baseURL/api/doctor/PassportNumberAvailibility";
+  static const String cnicavaibility = "$baseURL/api/doctor/CNICAvailibility";
+
+  static const String idnoavaibility = "$baseURL/api/doctor/CNICAvailibility";
 // eRX APIS
+
   static const String getPatientDetailForPrescription =
       "http://58.65.158.107:64/api/patient/GetPatientDetailForPrescription";
   static const String getComplaints = "$baseURL/api/doctor/GetComplaints";

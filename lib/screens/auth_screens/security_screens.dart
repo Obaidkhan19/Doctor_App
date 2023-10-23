@@ -1,4 +1,3 @@
-
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
@@ -46,9 +45,14 @@ class _SecurityScreenState extends State<SecurityScreen> {
                 children: [
                   GetBuilder<RegistrationController>(builder: (context) {
                     return AuthTextField(
+                      onChangedwidget: (value) {
+                        AuthRepo ar = AuthRepo();
+
+                        ar.usernameAvaibility(controller.username.text);
+                      },
                       validator: (p0) {
                         if (p0!.isEmpty) {
-                          return 'enteryourfullname'.tr;
+                          return 'Enter UserName';
                         }
                         return null;
                       },
@@ -110,6 +114,11 @@ class _SecurityScreenState extends State<SecurityScreen> {
                   PrimaryButton(
                       title: 'register'.tr,
                       onPressed: () async {
+                        if (RegistrationController.i.usernameavaibility ==
+                            false) {
+                          showSnackbar(
+                              context, "UserName Number Already Taken");
+                        }
                         controller.updateIsSavingPath(true);
 
                         AuthRepo ar = AuthRepo();
@@ -124,11 +133,13 @@ class _SecurityScreenState extends State<SecurityScreen> {
                             controller.selectedpersonalTitle?.id != null &&
                             controller.selectedgender?.id != null &&
                             controller.selectedmaritalStatus?.id != null &&
-                            controller.countryfullnumber == '') {}
-                        if (controller.filepath == null ||
-                            controller.imagepath == null) {
+                            controller.countryfullnumber == '') {
                           showSnackbar(context, "pleasesavepersonaldetails".tr);
                         }
+                        // if (controller.filepath == null ||
+                        //     controller.imagepath == null) {
+                        //   showSnackbar(context, "pleasesavepersonaldetails".tr);
+                        // }
 
                         String path = await ar.uploadPicture(controller.file!);
 

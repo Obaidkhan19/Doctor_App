@@ -1,5 +1,8 @@
+import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/configure_appointment_controller.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/models/hospital_clinic.dart';
 
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,11 +42,19 @@ class _ConfigureAppointmentScreenState
   }
 
   late BuildContext _context;
+
+  _getHospital() async {
+    ConsultingQueueRepo cqr = ConsultingQueueRepo();
+    contr.updatehospitallist(
+      await cqr.getHospitalORClinic(),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _context = context;
-
+    _getHospital();
     ConfigureAppointmentController.i.initialrows(_context);
   }
 
@@ -146,84 +157,142 @@ class _ConfigureAppointmentScreenState
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
-                              Column(
-                                children: [
-                                  Container(
-                                    width: Get.width * 1,
-                                    height: Get.height * 0.06,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: ColorManager.kPrimaryColor,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15.0),
+                              InkWell(
+                                onTap: () async {
+                                  contr.selectedhospital = null;
+                                  HospitalORClinics generic =
+                                      await searchabledropdown(
+                                          context, contr.hospitalList ?? []);
+                                  contr.selectedhospital = null;
+                                  contr.updatehospital(generic);
+
+                                  if (generic != '') {
+                                    contr.selectedhospital = generic;
+                                    contr.selectedhospital = (generic == '')
+                                        ? null
+                                        : contr.selectedhospital;
+                                  }
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  width: Get.width * 1,
+                                  height: Get.height * 0.07,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: ColorManager.kPrimaryColor,
+                                      width: 1.0,
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: Get.width * 0.03),
-                                      child: InkWell(
-                                          onTap: () {
-                                            FocusScope.of(context).unfocus();
-                                            contr.updateisHospitalExpanded();
-                                          },
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  contr.hospitalselectedoption,
-                                                  style: GoogleFonts.poppins(
-                                                      color: ColorManager
-                                                          .kblackColor,
-                                                      fontSize: 10),
-                                                ),
-                                              ),
-                                              Icon(
-                                                contr.isHospitalExpanded
-                                                    ? Icons.keyboard_arrow_up
-                                                    : Icons.keyboard_arrow_down,
-                                                color: ColorManager.kblackColor,
-                                              )
-                                            ],
-                                          )),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: Get.width * 0.03,
+                                        vertical: Get.height * 0.01),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "${(contr.selectedhospital != null && contr.selectedhospital?.name != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital?.name) : "Select Hospital/Clinic"}",
+                                          semanticsLabel:
+                                              "${(contr.selectedhospital != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital) : "Select Hospital/Clinic"}",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 10,
+                                            color:
+                                                contr.selectedhospital?.name !=
+                                                        null
+                                                    ? ColorManager.kblackColor
+                                                    : Colors.grey[700],
+                                          ),
+                                        ),
+                                        const Icon(
+                                          Icons.keyboard_arrow_down,
+                                          size: 20,
+                                          color: ColorManager.kblackColor,
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  if (contr.isHospitalExpanded)
-                                    ListView(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      children: contr.hospitalList
-                                          .map((e) => InkWell(
-                                                onTap: () {
-                                                  contr.updatehospital(e);
-                                                },
-                                                child: Container(
-                                                    height: 40,
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          contr.hospitalselectedoption ==
-                                                                  e
-                                                              ? ColorManager
-                                                                  .kPrimaryColor
-                                                              : Colors.grey
-                                                                  .shade300,
-                                                    ),
-                                                    child: Center(
-                                                        child: Text(
-                                                      e.toString(),
-                                                      style: const TextStyle(
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                          fontSize: 10),
-                                                    ))),
-                                              ))
-                                          .toList(),
-                                    )
-                                ],
+                                ),
                               ),
+                              // Column(
+                              //   children: [
+                              //     Container(
+                              //       width: Get.width * 1,
+                              //       height: Get.height * 0.06,
+                              //       decoration: BoxDecoration(
+                              //         border: Border.all(
+                              //           color: ColorManager.kPrimaryColor,
+                              //           width: 1.0,
+                              //         ),
+                              //         borderRadius: BorderRadius.circular(15.0),
+                              //       ),
+                              //       child: Padding(
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: Get.width * 0.03),
+                              //         child: InkWell(
+                              //             onTap: () {
+                              //               FocusScope.of(context).unfocus();
+                              //               contr.updateisHospitalExpanded();
+                              //             },
+                              //             child: Row(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment.spaceBetween,
+                              //               children: [
+                              //                 Expanded(
+                              //                   child: Text(
+                              //                     contr.hospitalselectedoption,
+                              //                     style: GoogleFonts.poppins(
+                              //                         color: ColorManager
+                              //                             .kblackColor,
+                              //                         fontSize: 10),
+                              //                   ),
+                              //                 ),
+                              //                 Icon(
+                              //                   contr.isHospitalExpanded
+                              //                       ? Icons.keyboard_arrow_up
+                              //                       : Icons.keyboard_arrow_down,
+                              //                   color: ColorManager.kblackColor,
+                              //                 )
+                              //               ],
+                              //             )),
+                              //       ),
+                              //     ),
+                              //     if (contr.isHospitalExpanded)
+                              //       ListView(
+                              //         shrinkWrap: true,
+                              //         physics:
+                              //             const NeverScrollableScrollPhysics(),
+                              //         children: contr.hospitalList
+                              //             .map((e) => InkWell(
+                              //                   onTap: () {
+                              //                     contr.updatehospital(e);
+                              //                   },
+                              //                   child: Container(
+                              //                       height: 40,
+                              //                       width: double.infinity,
+                              //                       decoration: BoxDecoration(
+                              //                         color:
+                              //                             contr.hospitalselectedoption ==
+                              //                                     e
+                              //                                 ? ColorManager
+                              //                                     .kPrimaryColor
+                              //                                 : Colors.grey
+                              //                                     .shade300,
+                              //                       ),
+                              //                       child: Center(
+                              //                           child: Text(
+                              //                         e.toString(),
+                              //                         style: const TextStyle(
+                              //                             color: ColorManager
+                              //                                 .kblackColor,
+                              //                             fontSize: 10),
+                              //                       ))),
+                              //                 ))
+                              //             .toList(),
+                              //       )
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
