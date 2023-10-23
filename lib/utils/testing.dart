@@ -217,8 +217,8 @@ Page resource error:
             ),
             favoriteButton(),
 
-            FloatingActionButton(onPressed: (){Get.back();},backgroundColor: const Color(0xffF5F5F5),child:  Image.asset(Images.rxedit,color: Colors.black,),),
-          ],
+            FloatingActionButton(onPressed: (){Get.back();},backgroundColor: const Color(0xffF5F5F5),child:  Image.asset(Images.rxeditcall,color: Colors.black,height: Get.height*0.07,),),
+          ]
         ),
         
         ),
@@ -227,6 +227,7 @@ Page resource error:
 
   Widget favoriteButton() {
     return FloatingActionButton(
+      backgroundColor: const Color(0xffF5F5F5),
       onPressed: () async {
         _controller.currentUrl();
         // if (context.mounted) {
@@ -235,7 +236,7 @@ Page resource error:
         //   );
         // }
       },
-      child: const Icon(Icons.favorite),
+      child: const Icon(Icons.favorite,color: Colors.black,),
     );
   }
 }
