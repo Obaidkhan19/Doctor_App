@@ -55,6 +55,7 @@ class AppConstants {
 
   static const String idnoavaibility = "$baseURL/api/doctor/CNICAvailibility";
 // eRX APIS
+static const String pmdcavaibility = "$baseURL/api/doctor/PMDCAvailibility";
 
   static const String getPatientDetailForPrescription =
       "http://58.65.158.107:64/api/patient/GetPatientDetailForPrescription";
