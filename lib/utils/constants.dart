@@ -7,10 +7,6 @@ class AppConstants {
   // Base Url
   static const String testing = 'http://192.168.88.254:324'; // for testing QA
 
-  // static const String baseURL =
-  //     'https://demo22.patient.ihealthcure.com'; // Live URL Helpful patient
-
-  //static const String baseURL = 'http://qa.patient.ihealthcure.com';
 
   static const String baseURL = 'http://192.168.88.254:324';
 
