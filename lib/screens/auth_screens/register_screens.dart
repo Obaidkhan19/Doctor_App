@@ -1,4 +1,3 @@
-import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_radio.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
@@ -17,7 +16,6 @@ import 'package:doctormobileapplication/models/person_title.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';

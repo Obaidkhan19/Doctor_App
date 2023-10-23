@@ -2,7 +2,6 @@ import 'package:doctormobileapplication/data/controller/language_controller.dart
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/helpers/theme_manager.dart';
 import 'package:doctormobileapplication/models/language_model.dart';
-import 'package:doctormobileapplication/screens/auth_screens/main_registration_screen.dart';
 import 'package:doctormobileapplication/screens/splash_screen/splash_screen.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/init/init.dart';
