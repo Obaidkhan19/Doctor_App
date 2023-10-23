@@ -7,7 +7,6 @@ class AppConstants {
   // Base Url
   static const String testing = 'http://192.168.88.254:324'; // for testing QA
 
-
   static const String baseURL = 'http://192.168.88.254:324';
 
   // static const String baseURL = 'https://patient.helpful.ihealthcure.com';
@@ -53,7 +52,7 @@ class AppConstants {
       "$baseURL/api/doctor/PassportNumberAvailibility";
   static const String cnicavaibility = "$baseURL/api/doctor/CNICAvailibility";
 
-  static const String idnoavaibility = "$baseURL/api/doctor/CNICAvailibility";
+  static const String pmdcavaibility = "$baseURL/api/doctor/PMDCAvailibility";
 // eRX APIS
 static const String pmdcavaibility = "$baseURL/api/doctor/PMDCAvailibility";
 
