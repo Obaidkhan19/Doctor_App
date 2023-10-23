@@ -8,7 +8,6 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
 import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
-import 'package:doctormobileapplication/screens/profile/profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/DialogBoxes/language_dialog.dart';

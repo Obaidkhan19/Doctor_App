@@ -249,35 +249,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              Text(
-                                                                manageAppointment
-                                                                            .isOnline ==
-                                                                        true
-                                                                    ? 'Online'
-                                                                    : 'Offline',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .poppins(
-                                                                  fontSize: 10,
-                                                                  color: manageAppointment
-                                                                              .isOnline ==
-                                                                          true
-                                                                      ? ColorManager
-                                                                          .KgreenColor
-                                                                      : ColorManager
-                                                                          .kRedColor,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                         
                                                           Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment

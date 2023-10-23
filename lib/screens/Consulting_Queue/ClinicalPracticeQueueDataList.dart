@@ -12,10 +12,12 @@ import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/CustomFormField.dart';
 import '../../components/images.dart';
@@ -260,58 +262,67 @@ class _ClinicalPracticeQueueDataListState
                                                               .start,
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
-                                                              .start,
+                                                              .end,
                                                       children: [
-                                                        Text(
-                                                          manageAppointment
-                                                                      .isOnline ==
-                                                                  true
-                                                              ? 'Online'
-                                                              : 'Offline',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: manageAppointment
-                                                                        .isOnline ==
-                                                                    true
-                                                                ? ColorManager
-                                                                    .KgreenColor
-                                                                : ColorManager
-                                                                    .kRedColor,
-                                                          ),
-                                                        ),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            Get.to(() =>
-                                                                PrescribeMedicineScreen(
-                                                                  checkfirst:
-                                                                      true,
-                                                                  patientstatusvalue:
-                                                                      manageAppointment
-                                                                          .patientStatusValue
-                                                                          .toString(),
-                                                                  patientid:
-                                                                      manageAppointment
-                                                                          .patientId,
-                                                                  visitno:
-                                                                      manageAppointment
-                                                                          .visitNo,
-                                                                  // ernsbit: manageAppointment.er,
-                                                                  // currentvisit: manageAppointment.,
-                                                                  // checkintypevalue: manageAppointment.ch,
-                                                                  prescribedvalue:
-                                                                      manageAppointment
-                                                                          .prescribedInValue,
-                                                                ));
-                                                          },
-                                                          child: Image.asset(
-                                                            Images.rxedit,
-                                                            color: ColorManager
-                                                                .kPrimaryColor,
-                                                            width: Get.width *
-                                                                0.09,
-                                                            height: Get.height *
-                                                                0.05,
+                                                        
+                                                        SizedBox(
+                                                          width: Get.width*0.16,
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                                            children: [
+                                                              
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  Get.to(() =>
+                                                                      PrescribeMedicineScreen(
+                                                                        checkfirst:
+                                                                            true,
+                                                                        patientstatusvalue:
+                                                                            manageAppointment
+                                                                                .patientStatusValue
+                                                                                .toString(),
+                                                                        patientid:
+                                                                            manageAppointment
+                                                                                .patientId,
+                                                                        visitno:
+                                                                            manageAppointment
+                                                                                .visitNo,
+                                                                        // ernsbit: manageAppointment.er,
+                                                                        // currentvisit: manageAppointment.,
+                                                                        // checkintypevalue: manageAppointment.ch,
+                                                                        prescribedvalue:
+                                                                            manageAppointment
+                                                                                .prescribedInValue,
+                                                                      ));
+                                                                },
+                                                                child: Image.asset(
+                                                                  Images.rxedit,
+                                                                  color: ColorManager
+                                                                      .kPrimaryColor,
+                                                                  width: Get.width *
+                                                                      0.06,
+                                                                  height: Get.height *
+                                                                      0.05,
+                                                                ),
+                                                              ),
+                                                              manageAppointment.chatURL!=null?
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  Get.to(()=>WebViewExample(url: manageAppointment.chatURL) );
+                                                                //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
+                                                                },
+                                                                child: Image.asset(
+                                                                  Images.videocall,
+                                                                  
+                                                                  color: ColorManager
+                                                                      .kPrimaryColor,
+                                                                  width: Get.width *
+                                                                      0.06,
+                                                                  height: Get.height *
+                                                                      0.04,
+                                                                ),
+                                                              ):const SizedBox.shrink(),
+                                                            ],
                                                           ),
                                                         ),
                                                       ],

@@ -1,7 +1,6 @@
 import 'package:doctormobileapplication/models/branch.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentHistoryController extends GetxController {

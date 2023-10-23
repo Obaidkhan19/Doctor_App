@@ -2,7 +2,6 @@ import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/screens/health_summary/user_detail_health_summary.dart';
-import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

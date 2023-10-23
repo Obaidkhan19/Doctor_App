@@ -253,24 +253,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            manageAppointment
-                                                                        .isOnline ==
-                                                                    true
-                                                                ? 'Online'
-                                                                : 'Offline',
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              fontSize: 10,
-                                                              color: manageAppointment
-                                                                          .isOnline ==
-                                                                      true
-                                                                  ? ColorManager
-                                                                      .KgreenColor
-                                                                  : ColorManager
-                                                                      .kRedColor,
-                                                            ),
-                                                          ),
+                                                         
                                                           InkWell(
                                                             onTap: () {
                                                               Get.to(() =>

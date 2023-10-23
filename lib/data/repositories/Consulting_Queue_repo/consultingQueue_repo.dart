@@ -11,7 +11,6 @@ import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../models/ConsultingQueue.dart';
 import '../../localDB/local_db.dart';
 
 class ConsultingQueueRepo {

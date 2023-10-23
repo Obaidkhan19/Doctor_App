@@ -70,6 +70,7 @@ dependencies:
   url_launcher: ^6.1.14
   syncfusion_flutter_pdfviewer: ^23.1.41
   cached_network_image: ^3.3.0
+  webview_flutter: ^4.4.1
 
   #Above Two Packages for Notification from firebase
 
