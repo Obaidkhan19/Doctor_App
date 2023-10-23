@@ -176,7 +176,7 @@ class _ConfigureAppointmentScreenState
                                 },
                                 child: Container(
                                   width: Get.width * 1,
-                                  height: Get.height * 0.07,
+                                  height: Get.height * 0.06,
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                       color: ColorManager.kPrimaryColor,
@@ -215,84 +215,6 @@ class _ConfigureAppointmentScreenState
                                   ),
                                 ),
                               ),
-                              // Column(
-                              //   children: [
-                              //     Container(
-                              //       width: Get.width * 1,
-                              //       height: Get.height * 0.06,
-                              //       decoration: BoxDecoration(
-                              //         border: Border.all(
-                              //           color: ColorManager.kPrimaryColor,
-                              //           width: 1.0,
-                              //         ),
-                              //         borderRadius: BorderRadius.circular(15.0),
-                              //       ),
-                              //       child: Padding(
-                              //         padding: EdgeInsets.symmetric(
-                              //             horizontal: Get.width * 0.03),
-                              //         child: InkWell(
-                              //             onTap: () {
-                              //               FocusScope.of(context).unfocus();
-                              //               contr.updateisHospitalExpanded();
-                              //             },
-                              //             child: Row(
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.spaceBetween,
-                              //               children: [
-                              //                 Expanded(
-                              //                   child: Text(
-                              //                     contr.hospitalselectedoption,
-                              //                     style: GoogleFonts.poppins(
-                              //                         color: ColorManager
-                              //                             .kblackColor,
-                              //                         fontSize: 10),
-                              //                   ),
-                              //                 ),
-                              //                 Icon(
-                              //                   contr.isHospitalExpanded
-                              //                       ? Icons.keyboard_arrow_up
-                              //                       : Icons.keyboard_arrow_down,
-                              //                   color: ColorManager.kblackColor,
-                              //                 )
-                              //               ],
-                              //             )),
-                              //       ),
-                              //     ),
-                              //     if (contr.isHospitalExpanded)
-                              //       ListView(
-                              //         shrinkWrap: true,
-                              //         physics:
-                              //             const NeverScrollableScrollPhysics(),
-                              //         children: contr.hospitalList
-                              //             .map((e) => InkWell(
-                              //                   onTap: () {
-                              //                     contr.updatehospital(e);
-                              //                   },
-                              //                   child: Container(
-                              //                       height: 40,
-                              //                       width: double.infinity,
-                              //                       decoration: BoxDecoration(
-                              //                         color:
-                              //                             contr.hospitalselectedoption ==
-                              //                                     e
-                              //                                 ? ColorManager
-                              //                                     .kPrimaryColor
-                              //                                 : Colors.grey
-                              //                                     .shade300,
-                              //                       ),
-                              //                       child: Center(
-                              //                           child: Text(
-                              //                         e.toString(),
-                              //                         style: const TextStyle(
-                              //                             color: ColorManager
-                              //                                 .kblackColor,
-                              //                             fontSize: 10),
-                              //                       ))),
-                              //                 ))
-                              //             .toList(),
-                              //       )
-                              //   ],
-                              // ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
@@ -826,85 +748,144 @@ class _ConfigureAppointmentScreenState
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
-                              Column(
-                                children: [
-                                  Container(
-                                    width: Get.width * 1,
-                                    height: Get.height * 0.06,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: ColorManager.kPrimaryColor,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          15.0), // Adjust the border radius as needed
+
+                              InkWell(
+                                onTap: () async {
+                                  contr.selectedhospital = null;
+                                  HospitalORClinics generic =
+                                      await searchabledropdown(
+                                          context, contr.hospitalList ?? []);
+                                  contr.selectedhospital = null;
+                                  contr.updatehospital(generic);
+
+                                  if (generic != '') {
+                                    contr.selectedhospital = generic;
+                                    contr.selectedhospital = (generic == '')
+                                        ? null
+                                        : contr.selectedhospital;
+                                  }
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  width: Get.width * 1,
+                                  height: Get.height * 0.06,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: ColorManager.kPrimaryColor,
+                                      width: 1.0,
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: Get.width * 0.03),
-                                      child: InkWell(
-                                          onTap: () {
-                                            FocusScope.of(context).unfocus();
-                                            contr.updateisApprovalExpanded();
-                                          },
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  contr.approvalselectedoption,
-                                                  style: const TextStyle(
-                                                      color: ColorManager
-                                                          .kblackColor,
-                                                      fontSize: 10),
-                                                ),
-                                              ),
-                                              Icon(
-                                                contr.isApprovalExpanded
-                                                    ? Icons.keyboard_arrow_up
-                                                    : Icons.keyboard_arrow_down,
-                                                color: ColorManager.kblackColor,
-                                              )
-                                            ],
-                                          )),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: Get.width * 0.03,
+                                        vertical: Get.height * 0.01),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "${(contr.selectedhospital != null && contr.selectedhospital?.name != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital?.name) : "Select Hospital/Clinic"}",
+                                          semanticsLabel:
+                                              "${(contr.selectedhospital != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital) : "Select Hospital/Clinic"}",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 10,
+                                            color:
+                                                contr.selectedhospital?.name !=
+                                                        null
+                                                    ? ColorManager.kblackColor
+                                                    : Colors.grey[700],
+                                          ),
+                                        ),
+                                        const Icon(
+                                          Icons.keyboard_arrow_down,
+                                          size: 20,
+                                          color: ColorManager.kblackColor,
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  if (contr.isApprovalExpanded)
-                                    ListView(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      children: contr.approvalList
-                                          .map((e) => InkWell(
-                                                onTap: () {
-                                                  contr.updateapproval(e);
-                                                },
-                                                child: Container(
-                                                    height: 40,
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          contr.approvalselectedoption ==
-                                                                  e
-                                                              ? ColorManager
-                                                                  .kPrimaryColor
-                                                              : Colors.grey
-                                                                  .shade300,
-                                                    ),
-                                                    child: Center(
-                                                        child: Text(
-                                                      e.toString(),
-                                                      style: GoogleFonts.poppins(
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                          fontSize: 10),
-                                                    ))),
-                                              ))
-                                          .toList(),
-                                    )
-                                ],
+                                ),
                               ),
+                              // Column(
+                              //   children: [
+                              //     Container(
+                              //       width: Get.width * 1,
+                              //       height: Get.height * 0.06,
+                              //       decoration: BoxDecoration(
+                              //         border: Border.all(
+                              //           color: ColorManager.kPrimaryColor,
+                              //           width: 1.0,
+                              //         ),
+                              //         borderRadius: BorderRadius.circular(
+                              //             15.0), // Adjust the border radius as needed
+                              //       ),
+                              //       child: Padding(
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: Get.width * 0.03),
+                              //         child: InkWell(
+                              //             onTap: () {
+                              //               FocusScope.of(context).unfocus();
+                              //               contr.updateisApprovalExpanded();
+                              //             },
+                              //             child: Row(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment.spaceBetween,
+                              //               children: [
+                              //                 Expanded(
+                              //                   child: Text(
+                              //                     contr.approvalselectedoption,
+                              //                     style: const TextStyle(
+                              //                         color: ColorManager
+                              //                             .kblackColor,
+                              //                         fontSize: 10),
+                              //                   ),
+                              //                 ),
+                              //                 Icon(
+                              //                   contr.isApprovalExpanded
+                              //                       ? Icons.keyboard_arrow_up
+                              //                       : Icons.keyboard_arrow_down,
+                              //                   color: ColorManager.kblackColor,
+                              //                 )
+                              //               ],
+                              //             )),
+                              //       ),
+                              //     ),
+                              //     if (contr.isApprovalExpanded)
+                              //       ListView(
+                              //         shrinkWrap: true,
+                              //         physics:
+                              //             const NeverScrollableScrollPhysics(),
+                              //         children: contr.approvalList
+                              //             .map((e) => InkWell(
+                              //                   onTap: () {
+                              //                     contr.updateapproval(e);
+                              //                   },
+                              //                   child: Container(
+                              //                       height: 40,
+                              //                       width: double.infinity,
+                              //                       decoration: BoxDecoration(
+                              //                         color:
+                              //                             contr.approvalselectedoption ==
+                              //                                     e
+                              //                                 ? ColorManager
+                              //                                     .kPrimaryColor
+                              //                                 : Colors.grey
+                              //                                     .shade300,
+                              //                       ),
+                              //                       child: Center(
+                              //                           child: Text(
+                              //                         e.toString(),
+                              //                         style: GoogleFonts.poppins(
+                              //                             color: ColorManager
+                              //                                 .kblackColor,
+                              //                             fontSize: 10),
+                              //                       ))),
+                              //                 ))
+                              //             .toList(),
+                              //       )
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),

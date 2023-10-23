@@ -38,23 +38,15 @@ class ConfigureAppointmentController extends GetxController
     update();
   }
 
-  String approvalselectedoption = "Approved by PA only";
-  List<String> approvalList = [
-    'Approved by PA only',
-    'Approved by PA only 1',
-    'Approved by PA only 2000',
-  ];
-
-  updateapproval(String selected) {
-    approvalselectedoption = selected;
-    isApprovalExpanded = false;
+  List<HospitalORClinics> approvalcriterialList = [];
+  HospitalORClinics? selectedapprovalcriterial;
+  updateapprovalcriterialList(List<HospitalORClinics> hlist) {
+    approvalcriterialList = hlist;
     update();
   }
 
-  bool isApprovalExpanded = false;
-
-  updateisApprovalExpanded() {
-    isApprovalExpanded = !isApprovalExpanded;
+  updateapprovalcriterial(HospitalORClinics bran) {
+    selectedapprovalcriterial = bran;
     update();
   }
 
