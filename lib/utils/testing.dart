@@ -308,7 +308,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
 call() async{
-   var options = JitsiMeetConferenceOptions(serverURL: widget.title,room: "");
+   var options = JitsiMeetConferenceOptions(room:widget.title);
    await jitsiMeet.join(options);
    Get.back();
 }
@@ -324,7 +324,6 @@ call() async{
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
