@@ -1,33 +1,22 @@
-import 'dart:math';
-
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
-import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
-import 'package:doctormobileapplication/screens/dashboard/home.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../../components/CustomFormField.dart';
 import '../../components/images.dart';
 import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
-import '../../helpers/font_manager.dart';
 import '../../helpers/values_manager.dart';
 import '../../utils/AppImages.dart';
-import 'History_eRX.dart';
 
 class ClinicalPracticeQueueDataList extends StatefulWidget {
   String? Status;
