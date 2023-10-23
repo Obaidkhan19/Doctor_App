@@ -11,6 +11,7 @@ import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/screens/dashboard/home.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
@@ -302,7 +303,9 @@ class _ClinicalPracticeQueueDataListState
                                                                       onTap:
                                                                           () {
                                                                         Get.to(() =>
-                                                                            WebViewExample(url: manageAppointment.chatURL));
+                                                                            MyHomePage(
+                                                                              title: manageAppointment.chatURL,
+                                                                            ));
                                                                         //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
                                                                       },
                                                                       child: Image

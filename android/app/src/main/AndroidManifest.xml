@@ -1,6 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tabib.emedicare.doctor">
+    package="com.tabib.emedicare.doctor"
+    xmlns:tools="http://schemas.android.com/tools">
+      <uses-permission android:name="android.permission.CAMERA"  android:hardwareAccelerated="false"/>
+<uses-feature android:name="android.hardware.camera" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
    <application
+        tools:replace="android:label"
         android:label="Helpful Doctor"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -35,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
