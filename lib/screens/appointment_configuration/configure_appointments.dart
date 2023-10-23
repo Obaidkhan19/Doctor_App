@@ -96,8 +96,8 @@ class _ConfigureAppointmentScreenState
             title: Text(
               'configureappointmentappbar'.tr,
               textAlign: TextAlign.center,
-              style: GoogleFonts.raleway(
-                fontSize: 15,
+              style: GoogleFonts.poppins(
+                fontSize: 17,
                 fontWeight: FontWeight.w600,
                 height: 1.175,
                 color: ColorManager.kPrimaryColor,
@@ -748,21 +748,19 @@ class _ConfigureAppointmentScreenState
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
-
                               InkWell(
                                 onTap: () async {
-                                  contr.selectedhospital = null;
-                                  HospitalORClinics generic =
-                                      await searchabledropdown(
-                                          context, contr.hospitalList ?? []);
-                                  contr.selectedhospital = null;
-                                  contr.updatehospital(generic);
+                                  ApprovalCriteria generic =
+                                      await searchabledropdown(context,
+                                          contr.approvalCriteriaList ?? []);
+                                  contr.updateApprovalCriteria(generic);
 
                                   if (generic != '') {
-                                    contr.selectedhospital = generic;
-                                    contr.selectedhospital = (generic == '')
-                                        ? null
-                                        : contr.selectedhospital;
+                                    contr.selectedApprovalCriteria = generic;
+                                    contr.selectedApprovalCriteria =
+                                        (generic == '')
+                                            ? null
+                                            : contr.selectedApprovalCriteria;
                                   }
                                   setState(() {});
                                 },
@@ -785,17 +783,12 @@ class _ConfigureAppointmentScreenState
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "${(contr.selectedhospital != null && contr.selectedhospital?.name != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital?.name) : "Select Hospital/Clinic"}",
+                                          "${(contr.selectedApprovalCriteria != null && contr.selectedApprovalCriteria?.name != null) ? (contr.selectedApprovalCriteria!.name.length > 50 ? ('${contr.selectedApprovalCriteria?.name.substring(0, 50 > contr.selectedApprovalCriteria!.name.length ? contr.selectedApprovalCriteria!.name.length : 50)}...') : contr.selectedApprovalCriteria?.name) : "Select Hospital/Clinic"}",
                                           semanticsLabel:
-                                              "${(contr.selectedhospital != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital) : "Select Hospital/Clinic"}",
+                                              "${(contr.selectedApprovalCriteria != null) ? (contr.selectedApprovalCriteria!.name.length > 50 ? ('${contr.selectedApprovalCriteria?.name.substring(0, 50 > contr.selectedApprovalCriteria!.name.length ? contr.selectedApprovalCriteria!.name.length : 50)}...') : contr.selectedApprovalCriteria) : "Select Hospital/Clinic"}",
                                           style: GoogleFonts.poppins(
-                                            fontSize: 10,
-                                            color:
-                                                contr.selectedhospital?.name !=
-                                                        null
-                                                    ? ColorManager.kblackColor
-                                                    : Colors.grey[700],
-                                          ),
+                                              fontSize: 10,
+                                              color: ColorManager.kblackColor),
                                         ),
                                         const Icon(
                                           Icons.keyboard_arrow_down,
@@ -807,85 +800,6 @@ class _ConfigureAppointmentScreenState
                                   ),
                                 ),
                               ),
-                              // Column(
-                              //   children: [
-                              //     Container(
-                              //       width: Get.width * 1,
-                              //       height: Get.height * 0.06,
-                              //       decoration: BoxDecoration(
-                              //         border: Border.all(
-                              //           color: ColorManager.kPrimaryColor,
-                              //           width: 1.0,
-                              //         ),
-                              //         borderRadius: BorderRadius.circular(
-                              //             15.0), // Adjust the border radius as needed
-                              //       ),
-                              //       child: Padding(
-                              //         padding: EdgeInsets.symmetric(
-                              //             horizontal: Get.width * 0.03),
-                              //         child: InkWell(
-                              //             onTap: () {
-                              //               FocusScope.of(context).unfocus();
-                              //               contr.updateisApprovalExpanded();
-                              //             },
-                              //             child: Row(
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.spaceBetween,
-                              //               children: [
-                              //                 Expanded(
-                              //                   child: Text(
-                              //                     contr.approvalselectedoption,
-                              //                     style: const TextStyle(
-                              //                         color: ColorManager
-                              //                             .kblackColor,
-                              //                         fontSize: 10),
-                              //                   ),
-                              //                 ),
-                              //                 Icon(
-                              //                   contr.isApprovalExpanded
-                              //                       ? Icons.keyboard_arrow_up
-                              //                       : Icons.keyboard_arrow_down,
-                              //                   color: ColorManager.kblackColor,
-                              //                 )
-                              //               ],
-                              //             )),
-                              //       ),
-                              //     ),
-                              //     if (contr.isApprovalExpanded)
-                              //       ListView(
-                              //         shrinkWrap: true,
-                              //         physics:
-                              //             const NeverScrollableScrollPhysics(),
-                              //         children: contr.approvalList
-                              //             .map((e) => InkWell(
-                              //                   onTap: () {
-                              //                     contr.updateapproval(e);
-                              //                   },
-                              //                   child: Container(
-                              //                       height: 40,
-                              //                       width: double.infinity,
-                              //                       decoration: BoxDecoration(
-                              //                         color:
-                              //                             contr.approvalselectedoption ==
-                              //                                     e
-                              //                                 ? ColorManager
-                              //                                     .kPrimaryColor
-                              //                                 : Colors.grey
-                              //                                     .shade300,
-                              //                       ),
-                              //                       child: Center(
-                              //                           child: Text(
-                              //                         e.toString(),
-                              //                         style: GoogleFonts.poppins(
-                              //                             color: ColorManager
-                              //                                 .kblackColor,
-                              //                             fontSize: 10),
-                              //                       ))),
-                              //                 ))
-                              //             .toList(),
-                              //       )
-                              //   ],
-                              // ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),

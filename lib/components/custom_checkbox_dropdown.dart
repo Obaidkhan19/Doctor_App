@@ -19,7 +19,7 @@ Future<String?> searchableDropdownRadioButton(
   Completer<String?> completer = Completer();
 
   showDialog<String>(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -762,13 +762,8 @@ addMedicine(
   Completer<dynamic> completer = Completer<dynamic>();
   controller.medicineList.sort((a, b) => a.name!.compareTo(b.name!));
 
-  // String selectedgroup = 'Select';
-  // List<String> groupList = [
-  //   'Select',
-  //   'Med 1',
-  // ];
   await showDialog(
-    barrierColor: Colors.grey.withOpacity(0.1),
+    //  barrierColor: Colors.grey.withOpacity(0.1),
     barrierDismissible: true,
     context: context,
     builder: (context) {
@@ -780,17 +775,31 @@ addMedicine(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             content: SingleChildScrollView(
               child: SizedBox(
-                height: Get.height * 0.7,
-                width: Get.width * 0.8,
+                height: Get.height * 0.6,
+                width: Get.width * 1,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: Get.height * 0.01,
+                    ),
+                    Center(
+                      child: Text(
+                        "Medicines",
+                        style: GoogleFonts.poppins(
+                            fontSize: 12, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.01,
+                    ),
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20),
-                        hintStyle:
-                            const TextStyle(color: ColorManager.kPrimaryColor),
+                        hintStyle: GoogleFonts.poppins(
+                            color: ColorManager.kPrimaryColor),
                         hintText: 'Search',
                         filled: true,
                         disabledBorder: OutlineInputBorder(
@@ -1170,52 +1179,6 @@ addMedicine(
                                 const SnackBar(
                                     content: Text("Select Medicine First")));
                           }
-
-                          // if (controller.selectedmedicineList.isNotEmpty) {
-                          //   if (controller.finalmedicinellist.length ==
-                          //       controller.selectedlst.medicineRoutes!.length) {
-                          //     if (controller
-                          //                 .selectedlst.medicineRoutes!.length ==
-                          //             controller.selectedlst
-                          //                 .medicineFrequencies!.length &&
-                          //         controller
-                          //             .selectedlst.medicineRoutes!.isNotEmpty) {
-                          //       if (controller.selectedlst.medicineFrequencies!
-                          //               .length ==
-                          //           controller.selectedlst.dayList!.length) {
-                          //         if (controller.selectedlst.dayList!.length ==
-                          //             controller.selectedlst.medicineDosages!
-                          //                 .length) {
-                          //
-                          //         } else {
-                          //           ScaffoldMessenger.of(context).showSnackBar(
-                          //               const SnackBar(
-                          //                   content:
-                          //                       Text("Select Dosage First")));
-                          //         }
-                          //       } else {
-                          //         ScaffoldMessenger.of(context).showSnackBar(
-                          //             const SnackBar(
-                          //                 content:
-                          //                     Text("Select Duration First")));
-                          //       }
-                          //     }
-                          //     {
-                          //       ScaffoldMessenger.of(context).showSnackBar(
-                          //           const SnackBar(
-                          //               content:
-                          //                   Text("Select Frequency First")));
-                          //     }
-                          //   } else {
-                          //     ScaffoldMessenger.of(context).showSnackBar(
-                          //         const SnackBar(
-                          //             content: Text("Select Route First")));
-                          //   }
-                          // } else {
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //       const SnackBar(
-                          //           content: Text("Select Medicine First")));
-                          // }
                         },
                         color: ColorManager.kPrimaryColor,
                         textcolor: ColorManager.kWhiteColor,
@@ -1237,7 +1200,7 @@ showRoutes(
   BuildContext context,
 ) async {
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -1311,7 +1274,7 @@ showDuration(
   BuildContext context,
 ) async {
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -1506,7 +1469,7 @@ showdosages(
   BuildContext context,
 ) async {
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -1583,7 +1546,7 @@ showfrequency(
   BuildContext context,
 ) async {
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -2070,7 +2033,7 @@ medicineRowitems(
   BuildContext context,
 ) async {
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(
@@ -2126,7 +2089,7 @@ deleteSelectedMedicine(
   Medicines1 medicineobject,
 ) async {
   await showDialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     context: context,
     builder: (context) {
       return StatefulBuilder(

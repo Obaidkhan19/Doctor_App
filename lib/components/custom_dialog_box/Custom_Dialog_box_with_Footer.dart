@@ -1,6 +1,7 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../helpers/font_manager.dart';
 
@@ -10,7 +11,8 @@ class CustomDialog extends StatelessWidget {
   final String? footer;
   final VoidCallback? onClosePressed;
 
-  const CustomDialog({super.key, 
+  const CustomDialog({
+    super.key,
     required this.title,
     required this.content,
     this.footer,
@@ -79,7 +81,7 @@ class CustomDialog extends StatelessWidget {
               child: Center(
                 child: Text(
                   content,
-                  style: const TextStyle(fontSize: 12
+                  style: GoogleFonts.poppins(fontSize: 12
                       // fontSize: MediaQuery.of(context).size.height * 0.018
                       ),
                 ),

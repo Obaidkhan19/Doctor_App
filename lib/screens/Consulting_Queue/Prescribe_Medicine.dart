@@ -222,7 +222,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
               'erx'.tr,
               style: GoogleFonts.poppins(
                 textStyle: GoogleFonts.poppins(
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: ColorManager.kPrimaryColor),
               ),
@@ -1107,7 +1107,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         "${(controller.selecteddiagnostics != null && controller.selecteddiagnostics?.name != null) ? (controller.selecteddiagnostics!.name!.length > 20 ? ('${controller.selecteddiagnostics?.name!.substring(0, 20 > controller.selecteddiagnostics!.name!.length ? controller.selecteddiagnostics!.name!.length : 20)}...') : controller.selecteddiagnostics?.name) : "Select Diagnostics"}",
                                         semanticsLabel:
                                             "${(controller.selecteddiagnostics != null) ? (controller.selecteddiagnostics!.name!.length > 20 ? ('${controller.selecteddiagnostics?.name!.substring(0, 20 > controller.selecteddiagnostics!.name!.length ? controller.selecteddiagnostics!.name!.length : 20)}...') : controller.selecteddiagnostics) : "Select Diagnostics"}",
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: controller
                                                         .selecteddiagnostics
@@ -1298,7 +1298,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         "${(controller.selectedinvestigation != null && controller.selectedinvestigation?.name != null) ? (controller.selectedinvestigation!.name!.length > 20 ? ('${controller.selectedinvestigation?.name!.substring(0, 20 > controller.selectedinvestigation!.name!.length ? controller.selectedinvestigation!.name!.length : 20)}...') : controller.selectedinvestigation?.name) : "Select Test"}",
                                         semanticsLabel:
                                             "${(controller.selectedinvestigation != null) ? (controller.selectedinvestigation!.name!.length > 20 ? ('${controller.selectedinvestigation?.name!.substring(0, 20 > controller.selectedinvestigation!.name!.length ? controller.selectedinvestigation!.name!.length : 20)}...') : controller.selectedinvestigation) : "Select Test"}",
-                                        style: TextStyle(
+                                        style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: controller
                                                         .selectedinvestigation

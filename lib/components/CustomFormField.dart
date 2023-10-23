@@ -2,6 +2,7 @@ import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../helpers/color_manager.dart';
 
@@ -60,7 +61,7 @@ class _CustomFormField2State extends State<CustomFormField2> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           hintText: widget.hintText,
           hintStyle:
-              const TextStyle(color: ColorManager.kGreyColor, fontSize: 12),
+              GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
           disabledBorder: const OutlineInputBorder(),
           errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorManager.kRedColor)),
@@ -125,7 +126,7 @@ class _CustomFormFieldNotesState extends State<CustomFormFieldNotes> {
           suffixIcon: widget.suffixIcon,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           hintText: widget.hintText,
-          hintStyle: TextStyle(
+          hintStyle: GoogleFonts.poppins(
             color: ColorManager.kGreyColor,
             fontSize: 12,
             height: Get.height * 0.005,
@@ -195,7 +196,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           hintText: widget.hintText,
           hintStyle:
-              const TextStyle(color: ColorManager.kGreyColor, fontSize: 12),
+              GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
           disabledBorder: const OutlineInputBorder(),
           errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorManager.kRedColor)),
@@ -263,7 +264,7 @@ class _CustomFormField1State extends State<CustomFormField1> {
           suffixIcon: widget.suffixIcon,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           hintText: widget.hintText,
-          hintStyle: const TextStyle(
+          hintStyle: GoogleFonts.poppins(
               color: ColorManager.kPrimaryLightColor, fontSize: 12),
           disabledBorder: const OutlineInputBorder(),
           errorBorder: const OutlineInputBorder(
@@ -336,8 +337,8 @@ class _CustomFormFieldqueueState extends State<CustomFormFieldqueue> {
           prefix: widget.prefix,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           hintText: widget.hintText,
-          hintStyle:
-              const TextStyle(color: ColorManager.kPrimaryColor, fontSize: 12),
+          hintStyle: GoogleFonts.poppins(
+              color: ColorManager.kPrimaryColor, fontSize: 12),
           disabledBorder: const OutlineInputBorder(),
           errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorManager.kRedColor)),

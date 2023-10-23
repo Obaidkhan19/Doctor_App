@@ -31,7 +31,7 @@ class _PatientHistoryState extends State<PatientHistory> {
             TextFormField(
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                hintStyle: const TextStyle(
+                hintStyle: GoogleFonts.poppins(
                     color: ColorManager.kPrimaryColor, fontSize: 10),
                 hintText: 'Enter MRN:',
                 filled: true,

@@ -10,6 +10,7 @@ import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../components/image_container.dart';
 
 class StatusScreen extends StatelessWidget {
@@ -254,9 +255,9 @@ class RecordWidget extends StatelessWidget {
                     ),
               ),
             ),
-            const Text(
+            Text(
               ':',
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
               ),

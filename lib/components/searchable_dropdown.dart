@@ -1,6 +1,7 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 searchabledropdown(BuildContext context, List<dynamic> list) async {
   TextEditingController search = TextEditingController();
@@ -26,8 +27,7 @@ searchabledropdown(BuildContext context, List<dynamic> list) async {
                         decoration: InputDecoration(
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 20),
-                          hintStyle: const TextStyle(
-                              fontWeight: FontWeight.w900,
+                          hintStyle: GoogleFonts.poppins(
                               color: ColorManager.kPrimaryColor),
                           hintText: 'search'.tr,
                           filled: true,

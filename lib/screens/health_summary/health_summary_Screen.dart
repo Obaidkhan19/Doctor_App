@@ -25,20 +25,12 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
             Get.offAll(() => const DrawerScreen());
           },
         ),
-        // InkWell(
-        //   splashColor: Colors.transparent,
-        //   highlightColor: Colors.transparent,
-        //   onTap: () {
-        //     Get.offAll(() => const DrawerScreen());
-        //   },
-        //   child: Image.asset(
-        //     AppImages.back,
-        //     color: ColorManager.kPrimaryColor,
-        //   ),
-        // ),
         title: Text(
           'healthsummaryappbar'.tr,
-          style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600),
+          style: GoogleFonts.poppins(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              color: ColorManager.kPrimaryColor),
         ),
         centerTitle: true,
       ),

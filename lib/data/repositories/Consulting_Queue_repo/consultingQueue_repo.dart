@@ -113,7 +113,7 @@ class ConsultingQueueRepo {
           Uri.parse(AppConstants.consultingqueuewait),
           headers: headers,
           body: jsonEncode(body));
-      // print(body);
+      print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 0) {

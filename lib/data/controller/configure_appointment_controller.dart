@@ -38,16 +38,21 @@ class ConfigureAppointmentController extends GetxController
     update();
   }
 
-  List<HospitalORClinics> approvalcriterialList = [];
-  HospitalORClinics? selectedapprovalcriterial;
-  updateapprovalcriterialList(List<HospitalORClinics> hlist) {
-    approvalcriterialList = hlist;
-    update();
+  List<ApprovalCriteria> approvalCriteriaList = [
+    ApprovalCriteria(1, 'Approved By PA Only'),
+    ApprovalCriteria(2, 'Approved By Doctor Only'),
+    ApprovalCriteria(3, 'Approved By PA and Doctor'),
+    ApprovalCriteria(4, 'Auto Approved'),
+  ];
+
+  ApprovalCriteria? selectedApprovalCriteria;
+
+  void initializeSelectedApprovalCriteria() {
+    selectedApprovalCriteria = approvalCriteriaList[0];
   }
 
-  updateapprovalcriterial(HospitalORClinics bran) {
-    selectedapprovalcriterial = bran;
-    update();
+  void updateApprovalCriteria(ApprovalCriteria criteria) {
+    selectedApprovalCriteria = criteria;
   }
 
   bool isOnline = false;
@@ -127,4 +132,11 @@ class ConfigureAppointmentController extends GetxController
 
   static ConfigureAppointmentController get i =>
       Get.put(ConfigureAppointmentController());
+}
+
+class ApprovalCriteria {
+  int id;
+  String name;
+
+  ApprovalCriteria(this.id, this.name);
 }

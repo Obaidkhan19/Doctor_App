@@ -1,5 +1,6 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomRadioTile extends StatelessWidget {
   final String title;
@@ -32,7 +33,7 @@ class CustomRadioTile extends StatelessWidget {
           ),
           Text(
             title,
-            style: const TextStyle(fontSize: 12),
+            style: GoogleFonts.poppins(fontSize: 12),
           ),
         ],
       ),

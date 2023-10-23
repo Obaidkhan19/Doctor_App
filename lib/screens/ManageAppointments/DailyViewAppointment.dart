@@ -39,7 +39,6 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     ManageAppointmentController.i.date = null;
     super.dispose();
   }
@@ -73,7 +72,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                     : 'monthlyviewappointments'.tr,
                 style: GoogleFonts.poppins(
                   textStyle: GoogleFonts.poppins(
-                    fontSize: 15,
+                    fontSize: 17,
                     color: ColorManager.kPrimaryColor,
                     fontWeight: FontWeight.w600,
                   ),
@@ -97,10 +96,9 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
               opacity: 0.4,
               color: Theme.of(context).scaffoldBackgroundColor,
               child: SafeArea(
-                //  minimum: EdgeInsets.all(AppPadding.p18).copyWith(top: 0),
                 child: SingleChildScrollView(
                   child: Column(children: [
-                    /*  SpecialitiesController.i.isLoading == false ?*/ SingleChildScrollView(
+                    SingleChildScrollView(
                       child: Visibility(
                         visible: true,
                         child: Padding(
@@ -143,21 +141,14 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                             MediaQuery.of(context).size.height *
                                                 0.08,
                                         child: Center(
-                                            child: Text(
-                                          'daily'.tr,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  color: cont.index == 1
-                                                      ? const Color(0xfff1272d3)
-                                                      : ColorManager
-                                                          .kWhiteColor,
-                                                  //     color: ColorManager.kWhiteColor,
-                                                  fontWeight:
-                                                      FontWeightManager.bold,
-                                                  fontSize: 15),
-                                        )),
+                                            child: Text('daily'.tr,
+                                                style: GoogleFonts.poppins(
+                                                    color: cont.index == 0
+                                                        ? const Color(
+                                                            0xfff1272d3)
+                                                        : ColorManager
+                                                            .kWhiteColor,
+                                                    fontSize: 16))),
                                       ),
                                     ),
                                     InkWell(
@@ -203,20 +194,14 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                         //   color: Colors.blue,
                                         // ),
                                         child: Center(
-                                            child: Text(
-                                          'monthly'.tr,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  color: cont.index == 0
-                                                      ? const Color(0xfff1272d3)
-                                                      : ColorManager
-                                                          .kWhiteColor,
-                                                  fontWeight:
-                                                      FontWeightManager.bold,
-                                                  fontSize: 15),
-                                        )),
+                                            child: Text('monthly'.tr,
+                                                style: GoogleFonts.poppins(
+                                                    color: cont.index == 0
+                                                        ? const Color(
+                                                            0xfff1272d3)
+                                                        : ColorManager
+                                                            .kWhiteColor,
+                                                    fontSize: 16))),
                                       ),
                                     ),
                                   ],

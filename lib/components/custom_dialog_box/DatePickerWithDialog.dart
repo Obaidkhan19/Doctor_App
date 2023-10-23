@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../helpers/color_manager.dart';
@@ -11,7 +12,8 @@ class CustomDialog_DatePicker extends StatefulWidget {
   TextEditingController controller;
   final VoidCallback? onPressed;
 
-  CustomDialog_DatePicker({super.key, 
+  CustomDialog_DatePicker({
+    super.key,
     required this.dateTime,
     required this.controller,
     this.onPressed,
@@ -52,7 +54,7 @@ class _CustomDialogState extends State<CustomDialog_DatePicker> {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'Appointment Reschedule',
-                    style: TextStyle(
+                    style: GoogleFonts.poppins(
                       fontSize: MediaQuery.of(context).size.height * 0.020,
                       fontWeight: FontWeight.bold,
                     ),
@@ -101,7 +103,7 @@ class _CustomDialogState extends State<CustomDialog_DatePicker> {
                             .calendar_month, // You can replace this with your desired icon
                         color: CupertinoColors.black),
                   ),
-                  style: const TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     color: CupertinoColors.black,
                   ),

@@ -1,6 +1,7 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RegisterDropDownWidget extends StatefulWidget {
   List<String> list;
@@ -55,7 +56,7 @@ class _RegisterDropDownWidgetState extends State<RegisterDropDownWidget> {
                         widget.selected.isNotEmpty
                             ? widget.selected
                             : widget.hinttext,
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             color: isOpened == false
                                 ? ColorManager.kGreyColor
                                 : ColorManager.kblackColor,
@@ -116,7 +117,7 @@ class _RegisterDropDownWidgetState extends State<RegisterDropDownWidget> {
                         child: Center(
                           child: Text(
                             e.toString(),
-                            style: const TextStyle(
+                            style: GoogleFonts.poppins(
                               color: ColorManager.kblackColor,
                               fontSize: 12,
                             ),

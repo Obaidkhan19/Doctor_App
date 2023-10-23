@@ -61,7 +61,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
               'waitingqueue'.tr,
               style: GoogleFonts.poppins(
                 textStyle: GoogleFonts.poppins(
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: ColorManager.kPrimaryColor),
               ),

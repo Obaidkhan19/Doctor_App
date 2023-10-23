@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -57,12 +58,12 @@ class CustomTextField extends StatelessWidget {
           onTap: onTap ?? () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
-          style: const TextStyle(
+          style: GoogleFonts.poppins(
             color: ColorManager.kPrimaryColor,
           ),
           decoration: InputDecoration(
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: const TextStyle(color: ColorManager.kPrimaryColor),
+            hintStyle: GoogleFonts.poppins(color: ColorManager.kPrimaryColor),
             hintText: hintText,
             filled: true,
             disabledBorder:
@@ -148,10 +149,11 @@ class RegisterCustomTextField extends StatelessWidget {
           onTap: onTap ?? () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
-          style: TextStyle(color: ColorManager.kblackColor, fontSize: 12),
+          style: GoogleFonts.poppins(
+              color: ColorManager.kblackColor, fontSize: 12),
           decoration: InputDecoration(
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: const TextStyle(color: ColorManager.kGreyColor),
+            hintStyle: GoogleFonts.poppins(color: ColorManager.kGreyColor),
             hintText: hintText,
             filled: true,
             disabledBorder:
@@ -235,13 +237,13 @@ class EditProfileCustomTextField extends StatelessWidget {
           onTap: onTap ?? () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
-          style: const TextStyle(
+          style: GoogleFonts.poppins(
               color: ColorManager.kPrimaryColor,
               fontSize: 12,
               fontWeight: FontWeight.w700),
           decoration: InputDecoration(
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: const TextStyle(
+            hintStyle: GoogleFonts.poppins(
                 fontSize: 12,
                 color: ColorManager.kPrimaryColor,
                 fontWeight: FontWeight.w700),
@@ -331,13 +333,13 @@ class EditProfileNumberCustomTextField extends StatelessWidget {
           onTap: () {},
           maxLines: maxlines ?? 1,
           readOnly: readonly,
-          style: const TextStyle(
+          style: GoogleFonts.poppins(
               color: ColorManager.kPrimaryColor,
               fontSize: 12,
               fontWeight: FontWeight.w700),
           decoration: InputDecoration(
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: const TextStyle(
+            hintStyle: GoogleFonts.poppins(
                 fontSize: 12,
                 color: ColorManager.kPrimaryColor,
                 fontWeight: FontWeight.w700),

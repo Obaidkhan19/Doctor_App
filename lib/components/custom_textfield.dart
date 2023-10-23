@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TextInputField extends StatefulWidget {
   final TextEditingController controller;
@@ -42,8 +43,8 @@ class _TextInputFieldState extends State<TextInputField> {
         contentPadding:
             EdgeInsets.only(left: Get.width * 0.07, right: Get.width * 0.05),
         labelText: widget.labelText,
-        labelStyle: const TextStyle(fontSize: 12, color: Colors.black),
-        floatingLabelStyle: TextStyle(color: widget.color),
+        labelStyle: GoogleFonts.poppins(fontSize: 12, color: Colors.black),
+        floatingLabelStyle: GoogleFonts.poppins(color: widget.color),
         suffixIcon: Icon(
           widget.icon,
           color: focusNode.hasFocus ? widget.color : Colors.black,

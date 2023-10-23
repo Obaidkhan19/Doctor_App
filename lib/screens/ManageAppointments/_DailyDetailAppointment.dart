@@ -2,6 +2,7 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../components/custom_dialog_box/Custom_Dialog_box_with_Footer.dart';
@@ -32,12 +33,14 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
   @override
   void initState() {
     DateTime tempDate = DateTime.now();
-    if(ManageAppointmentController.i.date==null)
-    {
-SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').format( ManageAppointmentController.i.date!).toString():DateFormat('yyyy-MM-dd').format(tempDate).toString();
-    
+    if (ManageAppointmentController.i.date == null) {
+      SelectedDate = ManageAppointmentController.i.date != null
+          ? DateFormat('yyyy-MM-dd')
+              .format(ManageAppointmentController.i.date!)
+              .toString()
+          : DateFormat('yyyy-MM-dd').format(tempDate).toString();
     }
-    
+
     print('dkkkkkk');
     super.initState();
   }
@@ -47,7 +50,6 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
     var contr =
         Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
-      
         body: GetBuilder<ManageAppointmentController>(builder: (cont) {
       return /*  SpecialitiesController.i.isLoading == false ?*/
           SingleChildScrollView(
@@ -70,27 +72,23 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                               color: ColorManager.kPrimaryLightColor),
                           child: DatePicker(
                             DateTime.now(),
-                            dateTextStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: ColorManager.kPrimaryColor,
-                                    fontWeight: FontWeight.w700),
-                            dayTextStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: ColorManager.kPrimaryColor,
-                                    fontWeight: FontWeight.w100),
-                            monthTextStyle: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    color: ColorManager.kPrimaryColor,
-                                    fontWeight: FontWeight.w100),
+                            dateTextStyle: GoogleFonts.poppins(
+                                color: ColorManager.kPrimaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            dayTextStyle: GoogleFonts.poppins(
+                              color: ColorManager.kPrimaryColor,
+                              fontSize: 12,
+                            ),
+                            monthTextStyle: GoogleFonts.poppins(
+                              color: ColorManager.kPrimaryColor,
+                              fontSize: 12,
+                            ),
                             deactivatedColor: ColorManager.kPrimaryLightColor,
                             height: Get.height * 0.15,
-                            initialSelectedDate: ManageAppointmentController.i.date?? DateTime.now(),
+                            initialSelectedDate:
+                                ManageAppointmentController.i.date ??
+                                    DateTime.now(),
                             selectionColor: ColorManager.kPrimaryColor,
                             selectedTextColor: Colors.white,
                             onDateChange: (date) {
@@ -145,7 +143,6 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                                     dateTime: dateTime,
                                     controller: dateReshedualcontroller,
                                     onPressed: () async {
-                                      print(dateReshedualcontroller.text);
                                       Navigator.of(context).pop();
                                       var response =
                                           await ManageAppointmentController.i
@@ -190,15 +187,11 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                             child: Center(
                                 child: Text(
                               'Reschedule',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      fontSize: 13,
-                                      // fontSize:
-                                      //     MediaQuery.of(context).size.width * 0.035,
-                                      color: const Color(0xfff1272d3),
-                                      fontWeight: FontWeightManager.bold),
+                              style: GoogleFonts.poppins(
+                                color: ColorManager.kPrimaryColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ))),
                       ),
                       InkWell(
@@ -224,7 +217,6 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                             var response = await ManageAppointmentController.i
                                 .approveAppointmentSlots(
                                     result[0].branchId.toString(), result);
-                            print('shedualled? : $response');
                             if (response == 1) {
                               ManageAppointmentController.i
                                   .getDailyDoctorAppointmentSlots(
@@ -256,15 +248,11 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                             child: Center(
                                 child: Text(
                               'Approve',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      fontSize: 13,
-                                      // fontSize:
-                                      //     MediaQuery.of(context).size.width * 0.035,
-                                      color: const Color(0xfff1272d3),
-                                      fontWeight: FontWeightManager.bold),
+                              style: GoogleFonts.poppins(
+                                color: ColorManager.kPrimaryColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ))),
                       ),
                       InkWell(
@@ -297,16 +285,11 @@ SelectedDate =ManageAppointmentController.i.date!=null?DateFormat('yyyy-MM-dd').
                                 Center(
                                     child: Text(
                                   'Select All',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          fontSize: 13,
-                                          // fontSize:
-                                          //     MediaQuery.of(context).size.width *
-                                          //         0.035,
-                                          color: const Color(0xfff1272d3),
-                                          fontWeight: FontWeightManager.bold),
+                                  style: GoogleFonts.poppins(
+                                    color: ColorManager.kPrimaryColor,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 )),
                                 Padding(
                                   padding:

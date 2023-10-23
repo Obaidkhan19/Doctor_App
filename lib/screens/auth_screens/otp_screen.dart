@@ -201,7 +201,7 @@ class OTPTextField extends StatelessWidget {
     return TextFormField(
       maxLength: 1,
       keyboardType: TextInputType.number,
-      style: const TextStyle(
+      style: GoogleFonts.poppins(
         fontSize: 12,
         color: ColorManager.kblackColor,
       ),

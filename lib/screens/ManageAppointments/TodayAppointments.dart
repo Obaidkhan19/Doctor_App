@@ -46,23 +46,12 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
               Get.offAll(() => const DrawerScreen());
             },
           ),
-          // InkWell(
-          //   splashColor: Colors.transparent,
-          //   highlightColor: Colors.transparent,
-          //   onTap: () {
-          //     Get.offAll(() => const DrawerScreen());
-          //   },
-          //   child: Image.asset(
-          //     AppImages.back,
-          //     color: ColorManager.kPrimaryColor,
-          //   ),
-          // ),
           centerTitle: true,
           title: Text(
             'todayappointment'.tr,
-            style: GoogleFonts.raleway(
+            style: GoogleFonts.poppins(
               textStyle: GoogleFonts.poppins(
-                  fontSize: 15,
+                  fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: ColorManager.kPrimaryColor),
             ),
@@ -298,9 +287,9 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                         fontSize: 20,
                                                         color: Colors.blue),
                                                   ),
-                                                  const Text(
+                                                  Text(
                                                     " | ",
-                                                    style: TextStyle(
+                                                    style: GoogleFonts.poppins(
                                                         fontSize: 20,
                                                         color: Colors.blue),
                                                   ),

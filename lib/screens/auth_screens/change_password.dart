@@ -28,16 +28,12 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
     var login = Get.put<AuthController>(AuthController());
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onTap: () {
-            Get.back();
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: ColorManager.kPrimaryColor,
+          onPressed: () {
+            Navigator.pop(context);
           },
-          child: Image.asset(
-            AppImages.back,
-            color: ColorManager.kPrimaryColor,
-          ),
         ),
         automaticallyImplyLeading: false,
         toolbarHeight: 50,

@@ -150,17 +150,7 @@ class _ClinicalPracticeQueueDataListState
                                           ? ConsultingQueueController
                                               .i.consultingqueuewait[index]
                                           : null;
-                                  // FILTER CODE
-                                  // if (ConsultingQueueController.i.date
-                                  //         .toString()
-                                  //         .split(' ')[0] ==
-                                  //     ConsultingQueueController
-                                  //         .i
-                                  //         .ClinicalPracticeDataList
-                                  //         .queue?[index]
-                                  //         .visitTime
-                                  //         .toString()
-                                  //         .split('T')[0])
+
                                   {
                                     return ((manageAppointment != null &&
                                             (manageAppointment
@@ -264,64 +254,71 @@ class _ClinicalPracticeQueueDataListState
                                                           CrossAxisAlignment
                                                               .end,
                                                       children: [
-                                                        
                                                         SizedBox(
-                                                          width: Get.width*0.16,
+                                                          width:
+                                                              Get.width * 0.16,
                                                           child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
                                                             children: [
-                                                              
                                                               InkWell(
                                                                 onTap: () {
                                                                   Get.to(() =>
                                                                       PrescribeMedicineScreen(
                                                                         checkfirst:
                                                                             true,
-                                                                        patientstatusvalue:
-                                                                            manageAppointment
-                                                                                .patientStatusValue
-                                                                                .toString(),
+                                                                        patientstatusvalue: manageAppointment
+                                                                            .patientStatusValue
+                                                                            .toString(),
                                                                         patientid:
-                                                                            manageAppointment
-                                                                                .patientId,
+                                                                            manageAppointment.patientId,
                                                                         visitno:
-                                                                            manageAppointment
-                                                                                .visitNo,
+                                                                            manageAppointment.visitNo,
                                                                         // ernsbit: manageAppointment.er,
                                                                         // currentvisit: manageAppointment.,
                                                                         // checkintypevalue: manageAppointment.ch,
                                                                         prescribedvalue:
-                                                                            manageAppointment
-                                                                                .prescribedInValue,
+                                                                            manageAppointment.prescribedInValue,
                                                                       ));
                                                                 },
-                                                                child: Image.asset(
+                                                                child:
+                                                                    Image.asset(
                                                                   Images.rxedit,
                                                                   color: ColorManager
                                                                       .kPrimaryColor,
-                                                                  width: Get.width *
-                                                                      0.06,
-                                                                  height: Get.height *
-                                                                      0.05,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.06,
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.05,
                                                                 ),
                                                               ),
-                                                              manageAppointment.chatURL!=null?
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  Get.to(()=>WebViewExample(url: manageAppointment.chatURL) );
-                                                                //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
-                                                                },
-                                                                child: Image.asset(
-                                                                  Images.videocall,
-                                                                  
-                                                                  color: ColorManager
-                                                                      .kPrimaryColor,
-                                                                  width: Get.width *
-                                                                      0.06,
-                                                                  height: Get.height *
-                                                                      0.04,
-                                                                ),
-                                                              ):const SizedBox.shrink(),
+                                                              manageAppointment
+                                                                          .chatURL !=
+                                                                      null
+                                                                  ? InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Get.to(() =>
+                                                                            WebViewExample(url: manageAppointment.chatURL));
+                                                                        //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
+                                                                      },
+                                                                      child: Image
+                                                                          .asset(
+                                                                        Images
+                                                                            .videocall,
+                                                                        color: ColorManager
+                                                                            .kPrimaryColor,
+                                                                        width: Get.width *
+                                                                            0.06,
+                                                                        height: Get.height *
+                                                                            0.04,
+                                                                      ),
+                                                                    )
+                                                                  : const SizedBox
+                                                                      .shrink(),
                                                             ],
                                                           ),
                                                         ),

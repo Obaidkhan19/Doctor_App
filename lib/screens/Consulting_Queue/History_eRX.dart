@@ -407,16 +407,16 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                                   children: [
                                     Row(
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Name: ",
-                                          style: TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
                                           item.name,
-                                          style: const TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10,
                                           ),
                                         ),
@@ -427,16 +427,16 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                                     ),
                                     Row(
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Age: ",
-                                          style: TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
                                           item.age.toString(),
-                                          style: const TextStyle(
+                                          style: GoogleFonts.poppins(
                                             fontSize: 10,
                                           ),
                                         ),
@@ -462,16 +462,16 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                                     children: [
                                       Row(
                                         children: [
-                                          const Text(
+                                          Text(
                                             "Class: ",
-                                            style: TextStyle(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
                                             item.className,
-                                            style: const TextStyle(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 10,
                                             ),
                                           ),
@@ -482,16 +482,16 @@ class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
                                       ),
                                       Row(
                                         children: [
-                                          const Text(
+                                          Text(
                                             "Section: ",
-                                            style: TextStyle(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
                                             item.section,
-                                            style: const TextStyle(
+                                            style: GoogleFonts.poppins(
                                               fontSize: 10,
                                             ),
                                           ),

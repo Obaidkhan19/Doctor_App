@@ -2,6 +2,7 @@ import 'package:doctormobileapplication/data/controller/configure_appointment_co
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomDropDownWidget extends StatefulWidget {
   List<String> list;
@@ -46,7 +47,7 @@ class _CustomDropDownWidgetState extends State<CustomDropDownWidget> {
                     Expanded(
                       child: Text(
                         widget.selected,
-                        style: const TextStyle(
+                        style: GoogleFonts.poppins(
                             color: ColorManager.kblackColor, fontSize: 10),
                       ),
                     ),

@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
             title: Text(
               'profile'.tr,
               style: GoogleFonts.poppins(
-                  fontSize: 15,
+                  fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: ColorManager.kPrimaryColor),
             ),

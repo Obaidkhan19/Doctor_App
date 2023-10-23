@@ -16,7 +16,6 @@ List<Meeting> _getDataSource() {
   for (int i = 0;
       i < ManageAppointmentController.i.monthlyappintment.length;
       i++) {
-    // meetings1.clear();
     meetings.add(Meeting(
         '${ManageAppointmentController.i.monthlyappintment[i].paid} ',
         DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
@@ -103,14 +102,11 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
               EdgeInsets.only(left: Get.width * 0.03, right: Get.width * 0.03),
           child: Stack(
             children: [
-              // const BackgroundLogoimage(),
               Column(
                 children: [
                   SizedBox(
                     height: Get.height * 0.03,
                   ),
-
-                  // CALENDER CODE
                   SfCalendar(
                     cellBorderColor: Colors.transparent,
                     view: CalendarView.month,
@@ -139,19 +135,16 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       String dt = DateFormat('yyyy-MM-dd')
                           .format(ManageAppointmentController.i.date!)
                           .toString();
-                      print(dt);
                       ManageAppointmentController.i
                           .getDailyDoctorAppointmentSlots(
                               dt.toString(), "true", "");
                       ManageAppointmentController.i
                           .setPageIndexofDayViewAppointment(0);
-                      print('dkkkkkk');
 
                       // print(details.date.toString().split(' ')[0]);
                       // ManageAppointmentController.i.getmonthlyoctorAppointment(details.date.toString().split(' ')[0]);
                     },
                   ),
-
                   SizedBox(
                     height: Get.height * 0.04,
                   ),
@@ -168,7 +161,6 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       GetBuilder<ManageAppointmentController>(
                           builder: (context) {
                         return Text(
-                          // ${ManageAppointmentController.i.paid}
                           'Paid Appointments |  ${ManageAppointmentController.i.paid}'
                           '',
                           style: GoogleFonts.poppins(
@@ -188,7 +180,6 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       GetBuilder<ManageAppointmentController>(
                           builder: (context) {
                         return Text(
-                          // ${ManageAppointmentController.i.unpaid}
                           'UnPaid Appointments |  ${ManageAppointmentController.i.unpaid}'
                           '',
                           style: GoogleFonts.poppins(

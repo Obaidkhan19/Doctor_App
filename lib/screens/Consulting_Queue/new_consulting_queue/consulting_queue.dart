@@ -61,7 +61,7 @@ class _ConsultingQueueScreenState extends State<ConsultingQueueScreen> {
           'waitingqueue'.tr,
           style: GoogleFonts.raleway(
             textStyle: GoogleFonts.poppins(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                fontSize: 17, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
       ),

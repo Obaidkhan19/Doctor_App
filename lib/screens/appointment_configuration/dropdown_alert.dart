@@ -1,6 +1,7 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAlertDropDownWidget extends StatefulWidget {
   List<String> list;
@@ -54,7 +55,7 @@ class _CustomDropDownWidgetState extends State<CustomAlertDropDownWidget> {
                         widget.selected.isNotEmpty
                             ? widget.selected
                             : widget.hinttext,
-                        style: const TextStyle(
+                        style: GoogleFonts.poppins(
                             color: ColorManager.kblackColor, fontSize: 10),
                       ),
                     ),
@@ -112,7 +113,7 @@ class _CustomDropDownWidgetState extends State<CustomAlertDropDownWidget> {
                         child: Center(
                           child: Text(
                             e.toString(),
-                            style: const TextStyle(
+                            style: GoogleFonts.poppins(
                               color: ColorManager.kblackColor,
                               fontSize: 10,
                             ),

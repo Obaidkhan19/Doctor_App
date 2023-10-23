@@ -241,7 +241,8 @@ class SignupOrLoginText extends StatelessWidget {
         Text(
           '$pre',
           //  style: Theme.of(context).textTheme.bodyMedium,
-          style: const TextStyle(fontSize: 15, color: ColorManager.kblackColor),
+          style: GoogleFonts.poppins(
+              fontSize: 15, color: ColorManager.kblackColor),
         ),
         InkWell(
           onTap: onTap,
@@ -251,7 +252,7 @@ class SignupOrLoginText extends StatelessWidget {
             //     .textTheme
             //     .bodySmall!
             //     .copyWith(color: ColorManager.kPrimaryColor),
-            style: const TextStyle(
+            style: GoogleFonts.poppins(
                 fontSize: 15,
                 color: ColorManager.kPrimaryColor,
                 fontWeight: FontWeight.bold),
@@ -307,7 +308,7 @@ class AuthTextField extends StatelessWidget {
         hintText: hintText,
 
         hintStyle:
-            const TextStyle(color: ColorManager.kGreyColor, fontSize: 12),
+            GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
         // const TextStyle(
         //     color: Color(0xfff000000),
         //     fontSize: 16,
