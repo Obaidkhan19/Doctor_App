@@ -23,10 +23,6 @@ class NotificationsRepo {
       log('saved token is $value');
       LocalDb().saveDeviceToken(value);
     });
-
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-    //   await firebaseMessagingBackgroundHandler(message);
-    // });
   }
 
   Future<void> showNotifications(RemoteMessage message) async {
