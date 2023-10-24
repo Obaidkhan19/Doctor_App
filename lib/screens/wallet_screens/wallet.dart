@@ -28,7 +28,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
   _getimagepath() async {
     path = (await LocalDb().getDoctorUserImagePath())!;
-    String baseurl = AppConstants.baseURL;
+    String baseurl = baseURL;
     imagepath = baseurl + path;
     //  dit = LocalDb().getDoctorId().toString();
   }
@@ -71,7 +71,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             imageUrl: ProfileController
                                         .i.selectedbasicInfo?.picturePath !=
                                     null
-                                ? AppConstants.baseURL +
+                                ? baseURL +
                                     ProfileController
                                         .i.selectedbasicInfo?.picturePath
                                 : "",

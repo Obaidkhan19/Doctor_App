@@ -309,7 +309,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 call() async{
    var options = JitsiMeetConferenceOptions(room:widget.title);
-   await jitsiMeet.join(options);
+   await jitsiMeet.join(options,JitsiMeetEventListener());
    Get.back();
 }
   @override
@@ -332,6 +332,8 @@ call() async{
       body: const Center(
         child: CircularProgressIndicator(color: Colors.blue,),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: FloatingActionButton(onPressed: (){}),
     );
   }
 }

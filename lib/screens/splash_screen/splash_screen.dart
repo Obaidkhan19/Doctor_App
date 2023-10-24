@@ -1,10 +1,13 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/welcome_screen/welcome_screen.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,8 +22,36 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+instance() async
+{
+      final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 10),
+        minimumFetchInterval: const Duration(minutes: 2),
+      ),
+    );
+    await remoteConfig.fetchAndActivate();
+ String? doctorid= await LocalDb().getDoctorId();
+log(doctorid??"");
+ 
+  //  baseURL = remoteConfig.getString('URLQA');
+  //   if (baseURL == "") {
+      baseURL = 'http://demo.patient.ihealthcure.com/';
+    // }
+    // baseURL = remoteConfig.getString('URL');
+    // if (baseURL == "") {
+    //   baseURL = 'http://192.168.88.254:324';
+    // }
+
+}
+
+
   @override
   void initState() {
+
+    instance();
     Timer(const Duration(milliseconds: 3500), () async {
       bool? isFirstStatus = await LocalDb().getIsFirstTime();
       bool? LoginStatus = await LocalDb().getLoginStatus();

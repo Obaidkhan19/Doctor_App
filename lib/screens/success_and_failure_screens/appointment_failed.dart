@@ -21,7 +21,7 @@ class AppointmentFailed extends StatelessWidget {
           children: [
             ListView(
               padding: const EdgeInsets.all(AppPadding.p20),
-              children: const [
+              children:  [
                 AppointSuccessfulOrFailedWidget(
                   image: Images.cross,
                   successOrFailedHeader: 'OOPS, Failed!',
