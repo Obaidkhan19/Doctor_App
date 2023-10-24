@@ -97,7 +97,8 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
               color: Theme.of(context).scaffoldBackgroundColor,
               child: SafeArea(
                 child: SingleChildScrollView(
-                  child: Column(children: [
+                  child: Column(
+                    children: [
                     SingleChildScrollView(
                       child: Visibility(
                         visible: true,

@@ -24,7 +24,7 @@ class SuccessFulAppointScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(AppPadding.p20),
             child: ListView(
-              children:  const [
+              children:   [
                 AppointSuccessfulOrFailedWidget(
                   image: Images.correct,
                   successOrFailedHeader: 'Congratulations!',

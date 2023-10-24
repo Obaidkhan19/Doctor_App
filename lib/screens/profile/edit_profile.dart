@@ -191,7 +191,7 @@ class _EditProfileState extends State<EditProfile> {
                                 )
                               : cont.selectedbasicInfo!.picturePath != null
                                   ? DecorationImage(
-                                      image: NetworkImage(AppConstants.baseURL +
+                                      image: NetworkImage(baseURL +
                                           cont.selectedbasicInfo!.picturePath),
                                       fit: BoxFit.cover,
                                     )

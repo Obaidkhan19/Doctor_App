@@ -52,7 +52,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   _getimagepath() async {
     path = (await LocalDb().getDoctorUserImagePath())!;
-    String baseurl = AppConstants.baseURL;
+    String baseurl = baseURL;
     if (path != null) {
       imagepath = baseurl + path!;
     }
@@ -105,7 +105,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       imageUrl: ProfileController
                                   .i.selectedbasicInfo?.picturePath !=
                               null
-                          ? AppConstants.baseURL +
+                          ? baseURL +
                               ProfileController.i.selectedbasicInfo?.picturePath
                           : "",
                       fit: BoxFit.fill,

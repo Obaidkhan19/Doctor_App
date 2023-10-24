@@ -37,7 +37,7 @@ class pdfviewconsulted extends StatelessWidget {
           child: SizedBox(
             height: Get.height * 0.8,
             width: Get.width * 1,
-            child: SfPdfViewer.network(AppConstants.baseURL + url),
+            child: SfPdfViewer.network(baseURL + url),
           ),
         ));
   }

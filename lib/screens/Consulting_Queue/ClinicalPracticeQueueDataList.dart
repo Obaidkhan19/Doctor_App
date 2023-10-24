@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/utils/callwaiting.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
@@ -172,8 +173,8 @@ class _ClinicalPracticeQueueDataListState
                                                                       .patientImagePath !=
                                                                   null
                                                               ? CachedNetworkImage(
-                                                                  imageUrl: AppConstants
-                                                                          .baseURL +
+                                                                  imageUrl: 
+                                                                          baseURL +
                                                                       manageAppointment
                                                                           .patientImagePath,
                                                                   fit: BoxFit
@@ -292,8 +293,8 @@ class _ClinicalPracticeQueueDataListState
                                                                       onTap:
                                                                           () {
                                                                         Get.to(() =>
-                                                                            MyHomePage(
-                                                                              title: manageAppointment.chatURL,
+                                                                            Callwatingscreen(
+                                                                              data: manageAppointment,
                                                                             ));
                                                                         //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
                                                                       },
