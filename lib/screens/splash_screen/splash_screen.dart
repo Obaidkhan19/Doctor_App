@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
@@ -32,11 +33,13 @@ instance() async
       ),
     );
     await remoteConfig.fetchAndActivate();
+ String? doctorid= await LocalDb().getDoctorId();
+log(doctorid??"");
  
-   baseURL = remoteConfig.getString('URLQA');
-    if (baseURL == "") {
-      baseURL = 'https://patient.helpful.ihealthcure.com';
-    }
+  //  baseURL = remoteConfig.getString('URLQA');
+  //   if (baseURL == "") {
+      baseURL = 'http://demo.patient.ihealthcure.com/';
+    // }
     // baseURL = remoteConfig.getString('URL');
     // if (baseURL == "") {
     //   baseURL = 'http://192.168.88.254:324';

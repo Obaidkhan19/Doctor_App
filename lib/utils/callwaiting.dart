@@ -16,11 +16,15 @@ class Callwatingscreen extends StatefulWidget {
 }
 
 class _CallwatingscreenState extends State<Callwatingscreen> {
+int val=0;
+
+opencall() async{
+ val = Callrepo().CallOpenPrescription(context, widget.data!);
+}
 
   @override
   void initState() {
-    // TODO: implement initState
-    Callrepo().CallOpenPrescription(context, widget.data!);
+  opencall();
         super.initState();
   }
   @override
