@@ -182,31 +182,42 @@ class _ConfigureAppointmentScreenState
                                         ),
                                       ],
                                     ),
-                                    child: ListTile(
-                                      onTap: () {},
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      leading: Image.asset(
-                                        AppImages.locations,
-                                        color: ColorManager.kWhiteColor,
-                                        alignment: Alignment.centerLeft,
-                                        scale: 2.5,
-                                      ),
-                                      minLeadingWidth: 0,
-                                      title: Text(
-                                        worklocation!.workLocationName ?? "",
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: ColorManager.kWhiteColor,
-                                        ),
-                                      ),
-                                      trailing: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.more_vert_outlined,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 6),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Image.asset(
+                                            AppImages.locations,
                                             color: ColorManager.kWhiteColor,
-                                          )),
+                                            alignment: Alignment.centerLeft,
+                                            scale: 2.5,
+                                          ),
+                                          SizedBox(
+                                            width: Get.width * 0.55,
+                                            child: Text(
+                                              worklocation!.workLocationName ??
+                                                  "",
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color: ColorManager.kWhiteColor,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: Get.width * 0.1,
+                                            child: IconButton(
+                                                onPressed: () {},
+                                                icon: const Icon(
+                                                  Icons.more_vert_outlined,
+                                                  color:
+                                                      ColorManager.kWhiteColor,
+                                                )),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 )
@@ -1093,7 +1104,6 @@ class _ConfigureAppointmentScreenState
                         }
                         print(contr.consultancyfeeController.text);
                         print("${_time.hour}:${_time.minute}");
-
                         print(contr.followupfeeController.text);
                         print(contr.followupdayController.text);
                         String? dit = await LocalDb().getDoctorId();
@@ -1104,8 +1114,8 @@ class _ConfigureAppointmentScreenState
                             contr.selectedApprovalCriteria!.id,
                             hid,
                             dit,
-                            "fromtime",
-                            "totime",
+                            "${_fromtime.hour}:${_fromtime.minute}",
+                            "${_tilltime.hour}:${_tilltime.minute}",
                             contr.consultancyfeeController.text,
                             "${_time.hour}:${_time.minute}",
                             contr.followupfeeController.text,

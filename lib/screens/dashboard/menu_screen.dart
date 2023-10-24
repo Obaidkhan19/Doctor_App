@@ -106,7 +106,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           imageUrl: ProfileController
                                       .i.selectedbasicInfo?.picturePath !=
                                   null
-                              ? AppConstants.baseURL +
+                              ? baseURL +
                                   ProfileController
                                       .i.selectedbasicInfo?.picturePath
                               : "",

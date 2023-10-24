@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   imageUrl: ProfileController.i
                                               .selectedbasicInfo?.picturePath !=
                                           null
-                                      ? AppConstants.baseURL +
+                                      ? baseURL +
                                           ProfileController
                                               .i.selectedbasicInfo?.picturePath
                                       : "",

@@ -9,8 +9,6 @@ class AppConstants {
   // Base Url
   static const String testing = 'http://192.168.88.254:324'; // for testing QA
 
-  static const String baseURL = 'http://192.168.88.254:324';
-
   // static const String baseURL = 'https://patient.helpful.ihealthcure.com';
 
   // Branch ID
@@ -66,7 +64,7 @@ class AppConstants {
 
   static String getBranch = "$baseURL/api/ddl/GetUserBranches";
 
-  static const String getHospital = "$baseURL/api/ddl/GetHospitalORClinics";
+  static String getHospital = "$baseURL/api/ddl/GetHospitalORClinics";
 
   static String getProcedures = "$baseURL/api/doctor/GetProcedures";
 

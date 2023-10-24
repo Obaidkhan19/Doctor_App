@@ -107,7 +107,7 @@ class _ProfileState extends State<Profile> {
                               imageUrl: ProfileController
                                           .i.selectedbasicInfo?.picturePath !=
                                       null
-                                  ? AppConstants.baseURL +
+                                  ? baseURL +
                                       ProfileController
                                           .i.selectedbasicInfo?.picturePath
                                   : "",

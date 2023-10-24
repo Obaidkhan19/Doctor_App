@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,19 +48,19 @@ class ConfigureAppointmentRepo {
       'Content-Type': 'application/json',
     };
     var body = {
-      "Id": "E02F9E89-E261-4906-9B33-F49802DDEA5F",
-      "ApprovalCriteria": "",
-      "WorkLocationId": "",
-      "DoctorId": "",
-      "FromTime": "",
-      "ToTime": "",
-      "ConsultancyFee": "",
-      "SlotDuration": "",
-      "FollowupFee": "",
-      "NoofFollowupDays": "",
-      "WeekDays": "",
-      "IsOnlineConfiguration": "",
-      "IsActive": ""
+      "Id": doctorid,
+      "ApprovalCriteria": approvalcrieteriaid,
+      "WorkLocationId": worklocationid,
+      "DoctorId": doctorid,
+      "FromTime": fromtime,
+      "ToTime": totime,
+      "ConsultancyFee": consultancyfee,
+      "SlotDuration": slotduration,
+      "FollowupFee": followupfee,
+      "NoofFollowupDays": nooffollowupdays,
+      "WeekDays": weekdays,
+      "IsOnlineConfiguration": isolineconfiguratation,
+      "IsActive": isactive,
     };
     try {
       var response = await http.post(

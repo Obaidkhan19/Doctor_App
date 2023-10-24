@@ -22,10 +22,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-instance() async
-{
-      final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+  instance() async {
+    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
@@ -33,24 +31,21 @@ instance() async
       ),
     );
     await remoteConfig.fetchAndActivate();
- String? doctorid= await LocalDb().getDoctorId();
-log(doctorid??"");
- 
-  //  baseURL = remoteConfig.getString('URLQA');
-  //   if (baseURL == "") {
-      baseURL = 'http://demo.patient.ihealthcure.com/';
-    // }
-    // baseURL = remoteConfig.getString('URL');
-    // if (baseURL == "") {
-    //   baseURL = 'http://192.168.88.254:324';
-    // }
+    String? doctorid = await LocalDb().getDoctorId();
+    log(doctorid ?? "");
 
-}
-
+    //  baseURL = remoteConfig.getString('URL');
+    //   if (baseURL == "") {
+    // baseURL = 'https://patient.helpful.ihealthcure.com/';
+    // }
+    baseURL = remoteConfig.getString('URLQA');
+    if (baseURL == "") {
+      baseURL = 'http://192.168.88.254:324';
+    }
+  }
 
   @override
   void initState() {
-
     instance();
     Timer(const Duration(milliseconds: 3500), () async {
       bool? isFirstStatus = await LocalDb().getIsFirstTime();
