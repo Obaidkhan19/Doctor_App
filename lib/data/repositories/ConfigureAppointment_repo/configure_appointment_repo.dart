@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
 import 'dart:convert';
@@ -62,9 +64,10 @@ class ConfigureAppointmentRepo {
       "IsOnlineConfiguration": isolineconfiguratation,
       "IsActive": isactive,
     };
+    log(body.toString());
     try {
       var response = await http.post(
-          Uri.parse(AppConstants.updatedoctorprofile),
+          Uri.parse(AppConstants.appointconfiguration),
           body: jsonEncode(body),
           headers: headers);
       if (response.statusCode == 200) {

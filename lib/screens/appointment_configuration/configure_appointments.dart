@@ -375,16 +375,20 @@ class _ConfigureAppointmentScreenState
                     SizedBox(
                       height: Get.height * 0.01,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "selectdays".tr,
-                          style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: ColorManager.kPrimaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.03),
+                      child: Row(
+                        children: [
+                          Text(
+                            "selectdays".tr,
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: ColorManager.kPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: Get.height * 0.01,
@@ -441,6 +445,11 @@ class _ConfigureAppointmentScreenState
                                         activeColor: ColorManager.kPrimaryColor,
                                         onChanged: (value) {
                                           contr.toggleSwitch(index);
+                                          if (value) {
+                                            contr.addintodays(index);
+                                          } else {
+                                            contr.deletefromdays(index);
+                                          }
                                         },
                                       ),
                                     ),
@@ -507,11 +516,9 @@ class _ConfigureAppointmentScreenState
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            left: Get.width * 0.02,
-                            right: Get.width * 0.02,
-                            top: Get.height * 0.01,
-                            bottom: Get.height * 0.01),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Get.width * 0.01,
+                            vertical: Get.height * 0.02),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -542,7 +549,7 @@ class _ConfigureAppointmentScreenState
                                       height: Get.height * 0.005,
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.37,
+                                      width: Get.width * 0.39,
                                       child: InkWell(
                                         onTap: () {
                                           _fromselectTime();
@@ -602,7 +609,7 @@ class _ConfigureAppointmentScreenState
                                       height: Get.height * 0.005,
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.37,
+                                      width: Get.width * 0.39,
                                       child: InkWell(
                                         onTap: () {
                                           _tillselectTime();
@@ -658,17 +665,21 @@ class _ConfigureAppointmentScreenState
                     SizedBox(
                       height: Get.height * 0.01,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "feetimeSlot".tr,
-                          style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: ColorManager.kPrimaryColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.03),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "feetimeSlot".tr,
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: ColorManager.kPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
 
                     Card(
@@ -1120,7 +1131,7 @@ class _ConfigureAppointmentScreenState
                             "${_time.hour}:${_time.minute}",
                             contr.followupfeeController.text,
                             contr.followupdayController.text,
-                            "weekdays",
+                            contr.daylst.toString().split(']')[0].split('[')[1],
                             contr.isOnline,
                             true);
                       },

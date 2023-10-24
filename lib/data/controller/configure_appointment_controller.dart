@@ -95,6 +95,18 @@ class ConfigureAppointmentController extends GetxController
     }
   }
 
+  List<int> daylst = [];
+
+  addintodays(int index) {
+    daylst.add(index);
+    update();
+  }
+
+  deletefromdays(int index) {
+    daylst.removeAt(index);
+    update();
+  }
+
   List<bool> switchStates = [false, false, false, false, false, false, false];
   List<List<Widget>> dayRows = [
     [],
