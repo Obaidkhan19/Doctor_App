@@ -8,6 +8,7 @@ import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -173,7 +174,10 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                 .fromRGBO(
                                                                 0, 0, 0, 0),
                                                         radius: 30,
-                                                        child: ClipOval(
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(30),
                                                           child: manageAppointment
                                                                       .patientImagePath !=
                                                                   null
@@ -249,7 +253,6 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                         
                                                           Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -272,60 +275,62 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                         .fill,
                                                                     color: ColorManager
                                                                         .kPrimaryColor,
-                                                                    width:
-                                                                        Get.width *
-                                                                            0.09,
-                                                                    height: Get
-                                                                            .height *
-                                                                        0.055,
+                                                                    width: Get
+                                                                            .width *
+                                                                        0.097,
+                                                                    height:
+                                                                        Get.height *
+                                                                            0.06,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  Get.to(() =>
-                                                                      //  HistoryeRXConsultingQueue());
-
-                                                                      PrescribeMedicineScreen(
-                                                                        checkfirst:
-                                                                            false,
-                                                                        patientstatusvalue: manageAppointment
-                                                                            .patientStatusValue
-                                                                            .toString(),
-                                                                        patientid:
-                                                                            manageAppointment.patientId,
-                                                                        visitno:
-                                                                            manageAppointment.visitNo,
-                                                                        prescribedvalue:
-                                                                            manageAppointment.prescribedInValue,
-                                                                      ));
-                                                                  // print(AppConstants.baseURL+
-                                                                  //               manageAppointment.reportURL);
-                                                                  // Get.to(() =>
-                                                                  //  HistoryeRXConsultingQueue());
-
-                                                                  // const PrescribeMedicineScreen());
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  child: Image
-                                                                      .asset(
-                                                                    Images
-                                                                        .rxedit,
-                                                                    fit: BoxFit
-                                                                        .fill,
-                                                                    color: ColorManager
-                                                                        .kPrimaryColor,
-                                                                    width:
-                                                                        Get.width *
+                                                              manageAppointment
+                                                                          .isOnline !=
+                                                                      true
+                                                                  ? InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Get.to(() =>
+                                                                            PrescribeMedicineScreen(
+                                                                              checkfirst: false,
+                                                                              patientstatusvalue: manageAppointment.patientStatusValue.toString(),
+                                                                              patientid: manageAppointment.patientId,
+                                                                              visitno: manageAppointment.visitNo,
+                                                                              prescribedvalue: manageAppointment.prescribedInValue,
+                                                                            ));
+                                                                      },
+                                                                      child: Image
+                                                                          .asset(
+                                                                        Images
+                                                                            .rxedit,
+                                                                        color: ColorManager
+                                                                            .kPrimaryColor,
+                                                                        width: Get.width *
+                                                                            0.097,
+                                                                        height: Get.height *
+                                                                            0.06,
+                                                                      ),
+                                                                    )
+                                                                  : InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Get.to(() =>
+                                                                            MyHomePage(
+                                                                              title: manageAppointment.chatURL,
+                                                                            ));
+                                                                      },
+                                                                      child: Image
+                                                                          .asset(
+                                                                        Images
+                                                                            .videocall,
+                                                                        color: ColorManager
+                                                                            .kPrimaryColor,
+                                                                        width: Get.width *
                                                                             0.09,
-                                                                    height: Get
-                                                                            .height *
-                                                                        0.055,
-                                                                  ),
-                                                                ),
-                                                              ),
+                                                                        height: Get.height *
+                                                                            0.06,
+                                                                      ),
+                                                                    ),
                                                             ],
                                                           ),
                                                         ],

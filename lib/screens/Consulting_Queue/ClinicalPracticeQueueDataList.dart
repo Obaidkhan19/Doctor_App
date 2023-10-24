@@ -45,21 +45,21 @@ class _ClinicalPracticeQueueDataListState
 
   callback() async {
     ConsultingQueueRepo.GetConsultingQueuewaitinghold(consultingqueuepatients(
-        branchId: await LocalDb().getBranchId(),
-        doctorId: await LocalDb().getDoctorId(),
-        search: SearchFieldController.text.isEmpty
-            ? ""
-            : SearchFieldController.text,
-        workLocationId: "",
-        status: "1",
-        fromDate: DateTime.now().toString().split(' ')[0],
-        toDate: DateTime.now().toString().split(' ')[0],
-        isOnline: "false",
-        token: "",
-        start: "0",
-        length: length.toString(),
-        orderColumn: "0",
-        orderDir: "desc"));
+      branchId: await LocalDb().getBranchId(),
+      doctorId: await LocalDb().getDoctorId(),
+      search:
+          SearchFieldController.text.isEmpty ? "" : SearchFieldController.text,
+      workLocationId: "",
+      status: "1",
+      fromDate: DateTime.now().toString().split(' ')[0],
+      toDate: DateTime.now().toString().split(' ')[0],
+      isOnline: "false",
+      token: "",
+      start: "0",
+      length: length.toString(),
+      orderColumn: "0",
+      orderDir: "desc",
+    ));
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -167,7 +167,10 @@ class _ClinicalPracticeQueueDataListState
                                                                 .fromARGB(0,
                                                                 207, 166, 166),
                                                         radius: 30,
-                                                        child: ClipOval(
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(30),
                                                           child: manageAppointment
                                                                       .patientImagePath !=
                                                                   null
@@ -236,86 +239,60 @@ class _ClinicalPracticeQueueDataListState
                                                         ],
                                                       ),
                                                     ),
-                                                    trailing: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        SizedBox(
-                                                          width:
-                                                              Get.width * 0.16,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  Get.to(() =>
-                                                                      PrescribeMedicineScreen(
-                                                                        checkfirst:
-                                                                            true,
-                                                                        patientstatusvalue: manageAppointment
+                                                    trailing: manageAppointment
+                                                                .isOnline !=
+                                                            true
+                                                        ? InkWell(
+                                                            onTap: () {
+                                                              Get.to(() =>
+                                                                  PrescribeMedicineScreen(
+                                                                    checkfirst:
+                                                                        true,
+                                                                    patientstatusvalue:
+                                                                        manageAppointment
                                                                             .patientStatusValue
                                                                             .toString(),
-                                                                        patientid:
-                                                                            manageAppointment.patientId,
-                                                                        visitno:
-                                                                            manageAppointment.visitNo,
-                                                                        // ernsbit: manageAppointment.er,
-                                                                        // currentvisit: manageAppointment.,
-                                                                        // checkintypevalue: manageAppointment.ch,
-                                                                        prescribedvalue:
-                                                                            manageAppointment.prescribedInValue,
-                                                                      ));
-                                                                },
-                                                                child:
-                                                                    Image.asset(
-                                                                  Images.rxedit,
-                                                                  color: ColorManager
-                                                                      .kPrimaryColor,
-                                                                  width:
-                                                                      Get.width *
-                                                                          0.06,
-                                                                  height:
-                                                                      Get.height *
-                                                                          0.05,
-                                                                ),
-                                                              ),
-                                                              manageAppointment
-                                                                          .chatURL !=
-                                                                      null
-                                                                  ? InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        Get.to(() =>
-                                                                            MyHomePage(
-                                                                              title: manageAppointment.chatURL,
-                                                                            ));
-                                                                        //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
-                                                                      },
-                                                                      child: Image
-                                                                          .asset(
-                                                                        Images
-                                                                            .videocall,
-                                                                        color: ColorManager
-                                                                            .kPrimaryColor,
-                                                                        width: Get.width *
-                                                                            0.06,
-                                                                        height: Get.height *
-                                                                            0.04,
-                                                                      ),
-                                                                    )
-                                                                  : const SizedBox
-                                                                      .shrink(),
-                                                            ],
+                                                                    patientid:
+                                                                        manageAppointment
+                                                                            .patientId,
+                                                                    visitno:
+                                                                        manageAppointment
+                                                                            .visitNo,
+                                                                    prescribedvalue:
+                                                                        manageAppointment
+                                                                            .prescribedInValue,
+                                                                  ));
+                                                            },
+                                                            child: Image.asset(
+                                                              Images.rxedit,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                              width: Get.width *
+                                                                  0.097,
+                                                              height:
+                                                                  Get.height *
+                                                                      0.09,
+                                                            ),
+                                                          )
+                                                        : InkWell(
+                                                            onTap: () {
+                                                              Get.to(() =>
+                                                                  MyHomePage(
+                                                                    title: manageAppointment
+                                                                        .chatURL,
+                                                                  ));
+                                                            },
+                                                            child: Image.asset(
+                                                              Images.videocall,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                              width: Get.width *
+                                                                  0.09,
+                                                              height:
+                                                                  Get.height *
+                                                                      0.09,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(

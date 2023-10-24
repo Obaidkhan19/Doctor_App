@@ -1,5 +1,6 @@
 import 'package:doctormobileapplication/components/Customrowdesign.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
+import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,6 +54,18 @@ class ConfigureAppointmentController extends GetxController
 
   void updateApprovalCriteria(ApprovalCriteria criteria) {
     selectedApprovalCriteria = criteria;
+  }
+
+  List<WorkLocations> workLocationsList = [];
+  WorkLocations? selectedWorkLocations;
+  updateWorkLocationslist(List<WorkLocations> wllist) {
+    workLocationsList = wllist;
+    update();
+  }
+
+  updateWorkLocations(WorkLocations wl) {
+    selectedWorkLocations = wl;
+    update();
   }
 
   bool isOnline = false;

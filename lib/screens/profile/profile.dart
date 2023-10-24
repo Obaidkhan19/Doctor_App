@@ -101,19 +101,20 @@ class _ProfileState extends State<Profile> {
                     return CircleAvatar(
                         backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                         radius: 30,
-                        child: ClipOval(
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
                             child: CachedNetworkImage(
-                          imageUrl: ProfileController
-                                      .i.selectedbasicInfo?.picturePath !=
-                                  null
-                              ? AppConstants.baseURL +
-                                  ProfileController
-                                      .i.selectedbasicInfo?.picturePath
-                              : "",
-                          fit: BoxFit.fill,
-                          errorWidget: (context, url, error) =>
-                              Image.asset(AppImages.doctorlogo),
-                        )));
+                              imageUrl: ProfileController
+                                          .i.selectedbasicInfo?.picturePath !=
+                                      null
+                                  ? AppConstants.baseURL +
+                                      ProfileController
+                                          .i.selectedbasicInfo?.picturePath
+                                  : "",
+                              fit: BoxFit.fill,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AppImages.doctorlogo),
+                            )));
                   }),
                   title: Text(
                     profile.selectedbasicInfo?.fullName ?? "",

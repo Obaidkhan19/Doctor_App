@@ -148,19 +148,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         return CircleAvatar(
                             backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                             radius: 30,
-                            child: ClipOval(
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
                                 child: CachedNetworkImage(
-                              imageUrl: ProfileController
-                                          .i.selectedbasicInfo?.picturePath !=
-                                      null
-                                  ? AppConstants.baseURL +
-                                      ProfileController
-                                          .i.selectedbasicInfo?.picturePath
-                                  : "",
-                              fit: BoxFit.fill,
-                              errorWidget: (context, url, error) =>
-                                  Image.asset(AppImages.doctorlogo),
-                            )));
+                                  imageUrl: ProfileController.i
+                                              .selectedbasicInfo?.picturePath !=
+                                          null
+                                      ? AppConstants.baseURL +
+                                          ProfileController
+                                              .i.selectedbasicInfo?.picturePath
+                                      : "",
+                                  fit: BoxFit.fill,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(AppImages.doctorlogo),
+                                )));
                       }),
                       SizedBox(
                         width: Get.width * 0.04,
@@ -320,7 +321,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             // crossAxisAlignment: CrossAxisAlignment.center,
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(Images.ConfiguationAppointment,height: Get.height*0.1,),
+                              Image.asset(
+                                Images.ConfiguationAppointment,
+                                height: Get.height * 0.1,
+                              ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
@@ -377,7 +381,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(Images.ManagementAppointment,height: Get.height*0.1,),
+                              Image.asset(
+                                Images.ManagementAppointment,
+                                height: Get.height * 0.1,
+                              ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
@@ -437,7 +444,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(Images.ConsultedVault,height: Get.height*0.1,),
+                              Image.asset(
+                                Images.ConsultedVault,
+                                height: Get.height * 0.1,
+                              ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
@@ -496,7 +506,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(Images.HealthSummry,height: Get.height*0.1,),
+                              Image.asset(
+                                Images.HealthSummry,
+                                height: Get.height * 0.1,
+                              ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),

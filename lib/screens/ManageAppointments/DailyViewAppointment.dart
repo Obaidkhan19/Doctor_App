@@ -127,8 +127,8 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                               : ColorManager.kWhiteColor,
                                           border: Border.all(
                                             color: const Color(0xfff1272d3),
-                                            width: 2, // 2px border width
-                                          ), // Set the background color of the container
+                                            width: 2,
+                                          ),
                                           borderRadius: const BorderRadius.only(
                                             topLeft: Radius.circular(15),
                                             bottomLeft: Radius.circular(15),
@@ -143,7 +143,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                         child: Center(
                                             child: Text('daily'.tr,
                                                 style: GoogleFonts.poppins(
-                                                    color: cont.index == 0
+                                                    color: cont.index == 1
                                                         ? const Color(
                                                             0xfff1272d3)
                                                         : ColorManager
@@ -161,28 +161,14 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                           color: cont.index == 1
                                               ? const Color(0xfff1272d3)
                                               : ColorManager.kWhiteColor,
-                                          // color: Color(
-                                          //     0xfff1272D3), // Set the background color of the container
                                           borderRadius: const BorderRadius.only(
                                             bottomRight: Radius.circular(15),
                                             topRight: Radius.circular(15),
                                           ),
                                           border: Border.all(
                                             color: const Color(0xfff1272d3),
-                                            width: 2, // 2px border width
+                                            width: 2,
                                           ),
-                                          // boxShadow: [
-                                          //   BoxShadow(
-                                          //     color: Colors.grey
-                                          //         .withOpacity(0.3), // Shadow color
-                                          //     spreadRadius:
-                                          //         2, // Spread radius of the shadow
-                                          //     blurRadius:
-                                          //         2, // Blur radius of the shadow
-                                          //     offset: Offset(
-                                          //         0, 2), // Offset of the shadow
-                                          //   ),
-                                          // ],
                                         ),
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -190,9 +176,6 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.08,
-                                        // decoration: BoxDecoration(
-                                        //   color: Colors.blue,
-                                        // ),
                                         child: Center(
                                             child: Text('monthly'.tr,
                                                 style: GoogleFonts.poppins(

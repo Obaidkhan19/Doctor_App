@@ -100,18 +100,20 @@ class _MenuScreenState extends State<MenuScreen> {
                 return CircleAvatar(
                     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                     radius: 30,
-                    child: ClipOval(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
                         child: CachedNetworkImage(
-                      imageUrl: ProfileController
-                                  .i.selectedbasicInfo?.picturePath !=
-                              null
-                          ? AppConstants.baseURL +
-                              ProfileController.i.selectedbasicInfo?.picturePath
-                          : "",
-                      fit: BoxFit.fill,
-                      errorWidget: (context, url, error) =>
-                          Image.asset(AppImages.doctorlogo),
-                    )));
+                          imageUrl: ProfileController
+                                      .i.selectedbasicInfo?.picturePath !=
+                                  null
+                              ? AppConstants.baseURL +
+                                  ProfileController
+                                      .i.selectedbasicInfo?.picturePath
+                              : "",
+                          fit: BoxFit.fill,
+                          errorWidget: (context, url, error) =>
+                              Image.asset(AppImages.doctorlogo),
+                        )));
               }),
 
               SizedBox(
@@ -422,7 +424,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         DoctorId: id,
                         token: token,
                         DeviceToken: DeviceToken,
-                        IsLogOffAllDevice: 'true');
+                        IsLogOffAllDevice: 'false');
                   } else {
                     showSnackbar(context, 'You are not Logged in');
                   }

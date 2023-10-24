@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 
 class AppConstants {
   // Base Url
-  static const String testing = 'http://192.168.88.254:324'; // for testing QA
+  //static const String testing = 'http://192.168.88.254:324'; // for testing QA
 
   static const String baseURL = 'http://192.168.88.254:324';
+  // static const String baseURL = 'demo.patient.ihealthcure.com';
 
-  // static const String baseURL = 'https://patient.helpful.ihealthcure.com';
+  //static const String baseURL = 'https://patient.helpful.ihealthcure.com';
 
   // Branch ID
   //static const String branchID = "D8340ED5-AF5D-4F68-895B-0350114AAB09";
@@ -70,6 +71,7 @@ class AppConstants {
   static const String getBranch = "$baseURL/api/ddl/GetUserBranches";
 
   static const String getHospital = "$baseURL/api/ddl/GetHospitalORClinics";
+  static const String getWorklocation = "$baseURL/api/ddl/GetWorkLocation";
 
   static const String getProcedures = "$baseURL/api/doctor/GetProcedures";
 
