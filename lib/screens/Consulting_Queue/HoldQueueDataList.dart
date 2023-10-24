@@ -186,8 +186,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                         .patientImagePath !=
                                                                     null
                                                                 ? CachedNetworkImage(
-                                                                    imageUrl: AppConstants
-                                                                            .baseURL +
+                                                                    imageUrl:baseURL +
                                                                         manageAppointment
                                                                             .patientImagePath,
                                                                     fit: BoxFit

@@ -36,6 +36,7 @@ class AppConstants {
 
   static String getDoctorBasicInfo = "$baseURL/api/account/GetDoctorDetail";
   static String updatedoctorprofile = "$baseURL/api/doctor/UpdatePersonalInfo";
+  static String getWorklocation = "$baseURL/api/ddl/GetWorkLocation";
 
   static String signupdoctor =
       "$baseURL/api/doctor/SignUp"; //http://58.65.158.107:64

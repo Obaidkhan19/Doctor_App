@@ -176,8 +176,7 @@ class _ClinicalPracticeQueueDataListState
                                                                       .patientImagePath !=
                                                                   null
                                                               ? CachedNetworkImage(
-                                                                  imageUrl: 
-                                                                          baseURL +
+                                                                  imageUrl: baseURL +
                                                                       manageAppointment
                                                                           .patientImagePath,
                                                                   fit: BoxFit
@@ -253,61 +252,47 @@ class _ClinicalPracticeQueueDataListState
                                                                         manageAppointment
                                                                             .patientStatusValue
                                                                             .toString(),
-                                                                        patientid:
-                                                                            manageAppointment.patientId,
-                                                                        visitno:
-                                                                            manageAppointment.visitNo,
-                                                                        // ernsbit: manageAppointment.er,
-                                                                        // currentvisit: manageAppointment.,
-                                                                        // checkintypevalue: manageAppointment.ch,
-                                                                        prescribedvalue:
-                                                                            manageAppointment.prescribedInValue,
-                                                                      ));
-                                                                },
-                                                                child:
-                                                                    Image.asset(
-                                                                  Images.rxedit,
-                                                                  color: ColorManager
-                                                                      .kPrimaryColor,
-                                                                  width:
-                                                                      Get.width *
-                                                                          0.06,
-                                                                  height:
-                                                                      Get.height *
-                                                                          0.05,
-                                                                ),
-                                                              ),
-                                                              manageAppointment
-                                                                          .chatURL !=
-                                                                      null
-                                                                  ? InkWell(
-                                                                      onTap:
-                                                                          () {
-                                                                        Get.to(() =>
-                                                                            MyHomePage(
-                                                                              title: manageAppointment.chatURL,
-                                                                            ));
-                                                                        //  launchUrl(Uri.parse( manageAppointment.chatURL),mode: LaunchMode.inAppWebView);
-                                                                      },
-                                                                      child: Image
-                                                                          .asset(
-                                                                        Images
-                                                                            .videocall,
-                                                                        color: ColorManager
-                                                                            .kPrimaryColor,
-                                                                        width: Get.width *
-                                                                            0.06,
-                                                                        height: Get.height *
-                                                                            0.04,
-                                                                      ),
-                                                                    )
-                                                                  : const SizedBox
-                                                                      .shrink(),
-                                                            ],
+                                                                    patientid:
+                                                                        manageAppointment
+                                                                            .patientId,
+                                                                    visitno:
+                                                                        manageAppointment
+                                                                            .visitNo,
+                                                                    prescribedvalue:
+                                                                        manageAppointment
+                                                                            .prescribedInValue,
+                                                                  ));
+                                                            },
+                                                            child: Image.asset(
+                                                              Images.rxedit,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                              width: Get.width *
+                                                                  0.097,
+                                                              height:
+                                                                  Get.height *
+                                                                      0.09,
+                                                            ),
+                                                          )
+                                                        : InkWell(
+                                                            onTap: () {
+                                                              Get.to(() =>
+                                                                  MyHomePage(
+                                                                    title: manageAppointment
+                                                                        .chatURL,
+                                                                  ));
+                                                            },
+                                                            child: Image.asset(
+                                                              Images.videocall,
+                                                              color: ColorManager
+                                                                  .kPrimaryColor,
+                                                              width: Get.width *
+                                                                  0.09,
+                                                              height:
+                                                                  Get.height *
+                                                                      0.09,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(
@@ -382,7 +367,7 @@ class _ClinicalPracticeQueueDataListState
                                         : 0) ==
                                     0
                                 ? const Center(
-                                    child = const Text('No Record Found!'),
+                                    child: Text('No Record Found!'),
                                   )
                                 : Container(),
                       ),

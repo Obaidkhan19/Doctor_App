@@ -45,6 +45,40 @@ class _ConfigureAppointmentScreenState
     }
   }
 
+  TimeOfDay _fromtime = const TimeOfDay(hour: 00, minute: 00);
+  final int _frominterval = 5;
+  final VisibleStep _fromvisibleStep = VisibleStep.fifths;
+  void _fromselectTime() async {
+    final TimeOfDay? newTime = await showIntervalTimePicker(
+      context: context,
+      initialTime: _fromtime,
+      interval: _frominterval,
+      visibleStep: _fromvisibleStep,
+    );
+    if (newTime != null) {
+      setState(() {
+        _fromtime = newTime;
+      });
+    }
+  }
+
+  TimeOfDay _tilltime = const TimeOfDay(hour: 00, minute: 00);
+  final int _tillinterval = 5;
+  final VisibleStep _tillvisibleStep = VisibleStep.fifths;
+  void _tillselectTime() async {
+    final TimeOfDay? newTime = await showIntervalTimePicker(
+      context: context,
+      initialTime: _tilltime,
+      interval: _tillinterval,
+      visibleStep: _tillvisibleStep,
+    );
+    if (newTime != null) {
+      setState(() {
+        _tilltime = newTime;
+      });
+    }
+  }
+
   late BuildContext _context;
 
   _getHospital() async {
@@ -500,7 +534,7 @@ class _ConfigureAppointmentScreenState
                                       width: Get.width * 0.37,
                                       child: InkWell(
                                         onTap: () {
-                                          _selectTime();
+                                          _fromselectTime();
                                         },
                                         child: TextField(
                                           enabled: false,
@@ -518,7 +552,7 @@ class _ConfigureAppointmentScreenState
                                                   const Icon(
                                                       CupertinoIcons.clock),
                                                   Text(
-                                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                                    "${_fromtime.hour.toString().padLeft(2, '0')}:${_fromtime.minute.toString().padLeft(2, '0')}",
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 12,
                                                         color: ColorManager
@@ -560,7 +594,7 @@ class _ConfigureAppointmentScreenState
                                       width: Get.width * 0.37,
                                       child: InkWell(
                                         onTap: () {
-                                          _selectTime();
+                                          _tillselectTime();
                                         },
                                         child: TextField(
                                           enabled: false,
@@ -578,7 +612,7 @@ class _ConfigureAppointmentScreenState
                                                   const Icon(
                                                       CupertinoIcons.clock),
                                                   Text(
-                                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                                    "${_tilltime.hour.toString().padLeft(2, '0')}:${_tilltime.minute.toString().padLeft(2, '0')}",
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 12,
                                                         color: ColorManager
