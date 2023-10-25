@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/components/Customrowdesign.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,23 @@ class ConfigureAppointmentController extends GetxController
   TextEditingController consultancyfeeController = TextEditingController();
   TextEditingController followupfeeController = TextEditingController();
   TextEditingController followupdayController = TextEditingController();
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  updateIsloading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
+  updatedispose() {
+    switchStates = [false, false, false, false, false, false, false];
+    isOnline = false;
+    followupdayController.clear();
+    followupfeeController.clear();
+    consultancyfeeController.clear();
+    initializeSelectedApprovalCriteria();
+    updatehospital(HospitalORClinics());
+  }
 
   bool isHospitalExpanded = false;
 
@@ -68,9 +86,27 @@ class ConfigureAppointmentController extends GetxController
     update();
   }
 
+  List<AppointmentConfigurations> appointmentconfigurationList = [];
+  AppointmentConfigurations? selectedappointmentconfiguration;
+  updateAppointmentConfigurationsList(List<AppointmentConfigurations> aflist) {
+    appointmentconfigurationList = aflist;
+
+    update();
+  }
+
+  updateAppointmentConfigurations(AppointmentConfigurations af) {
+    selectedappointmentconfiguration = af;
+    update();
+  }
+
   bool isOnline = false;
   updateoOnline(value) {
-    isOnline = value;
+    if (value) {
+      isOnline = true;
+      selectedhospital = null;
+    } else {
+      isOnline = false;
+    }
     update();
   }
 

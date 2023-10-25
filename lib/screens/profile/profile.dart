@@ -142,12 +142,7 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                       children: [
                         RecordWidget(
-                            //   title: 'fullName'.tr,
                             title: "fullName".tr,
-                            // name:
-                            //     ProfileController.i.selectedbasicInfo?.fullName ??
-                            //         "",
-                            // name: EditProfileController.i.name),
                             name: profile.selectedbasicInfo?.fullName ?? ""),
                         SizedBox(
                           height: Get.height * 0.01,

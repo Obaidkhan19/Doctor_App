@@ -22,12 +22,8 @@ class ManageAppointmentRepo {
 
     String? userId = await LocalDb().getDoctorId();
     String? userToken = await LocalDb().getToken();
-    print(Date);
-    print(userId);
-    print(userToken);
     var body = {"Date": Date, "DoctorId": "$userId", "Token": "$userToken"};
     var headers = {'Content-Type': 'application/json'};
-    print("$body  a");
     try {
       ManageAppointmentController.i.updateIsloadingScreen(true);
       var response = await http.post(
@@ -75,7 +71,6 @@ class ManageAppointmentRepo {
       "IsOnline": "false"
     };
     var headers = {'Content-Type': 'application/json'};
-    print("$body  a");
     try {
       var response = await http.post(
           Uri.parse(AppConstants.GetMonthlyAppointment),
@@ -158,9 +153,6 @@ class ManageAppointmentRepo {
       "BranchId": BranchId,
       "Appointments": Appointments,
     };
-    print(jsonEncode(body));
-    print(Appointments[0]);
-    print("$body  c");
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.RescheduleApi),
@@ -193,9 +185,6 @@ class ManageAppointmentRepo {
       "BranchId": BranchId,
       "Appointments": Appointments,
     };
-    print("$body  d");
-    print(jsonEncode(body));
-    print(Appointments[0]);
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.ApproveApi),
