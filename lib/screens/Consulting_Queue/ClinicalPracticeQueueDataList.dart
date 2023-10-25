@@ -277,8 +277,8 @@ class _ClinicalPracticeQueueDataListState
                                                         : InkWell(
                                                             onTap: () {
                                                               Get.to(() =>
-                                                                  MyHomePage(
-                                                                    title: manageAppointment.chatURL,
+                                                                  Callwatingscreen(
+                                                                    data: manageAppointment,
                                                                   ));
                                                             },
                                                             child: Image.asset(
