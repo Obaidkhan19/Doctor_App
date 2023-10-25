@@ -937,7 +937,7 @@ addMedicine(
                                       ERXController.i.medicineRoutes != null
                                           ? ERXController.i.medicineRoutes!
                                               .englishDefinition!
-                                          : "Medicine",
+                                          : "Routes",
                                       style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
