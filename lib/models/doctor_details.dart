@@ -793,25 +793,25 @@ class BankAccounts {
 }
 
 class AppointmentConfigurations {
-  String? id;
-  String? workLocation;
-  bool? isDefault;
-  int? approvalCriteria;
-  String? workLocationId;
-  String? address;
-  String? doctorId;
-  String? branchId;
-  String? branchName;
-  String? fromTime;
-  String? toTime;
-  String? weekDays;
-  int? consultancyFee;
-  int? followupFee;
-  String? slotDuration;
+  dynamic id;
+  dynamic workLocation;
+  dynamic isDefault;
+  dynamic approvalCriteria;
+  dynamic workLocationId;
+  dynamic address;
+  dynamic doctorId;
+  dynamic branchId;
+  dynamic branchName;
+  dynamic fromTime;
+  dynamic toTime;
+  dynamic weekDays;
+  double? consultancyFee;
+  double? followupFee;
+  dynamic slotDuration;
   int? noofFollowupDays;
-  bool? isOnlineConfiguration;
-  bool? isActive;
-  String? actionDate;
+  dynamic isOnlineConfiguration;
+  dynamic isActive;
+  dynamic actionDate;
 
   AppointmentConfigurations(
       {this.id,

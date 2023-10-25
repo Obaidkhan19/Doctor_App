@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/data/controller/configure_appointment_controller.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
 import 'dart:convert';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -20,6 +22,7 @@ class ConfigureAppointmentRepo {
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      ConfigureAppointmentController.i.workLocationsList.clear();
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['WorkLocations'];
       List<WorkLocations> worklocationList =
@@ -27,6 +30,43 @@ class ConfigureAppointmentRepo {
 
       return worklocationList;
     } else {
+      throw Exception('Failed to fetch details');
+    }
+  }
+
+  Future<String> getAppointmentConfiguration() async {
+    String doctorid = await LocalDb().getDoctorId() ?? "";
+    String url = AppConstants.getappointconfiguration;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "DoctorId": doctorid,
+    });
+    ConfigureAppointmentController.i.updateIsloading(true);
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      ConfigureAppointmentController.i.appointmentconfigurationList.clear();
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+
+      // here
+      if (status == 1) {
+        Iterable rawafData = responseData['AppointmentConfigurations'] ?? [];
+        List<AppointmentConfigurations> af = rawafData
+            .map((item) => AppointmentConfigurations.fromJson(item))
+            .toList();
+        ConfigureAppointmentController.i
+            .updateAppointmentConfigurationsList(af);
+        await ConfigureAppointmentController.i.updateIsloading(false);
+        return 'true';
+      } else {
+        await ConfigureAppointmentController.i.updateIsloading(false);
+        return 'false';
+      }
+    } else {
+      await ConfigureAppointmentController.i.updateIsloading(false);
       throw Exception('Failed to fetch details');
     }
   }
@@ -48,7 +88,7 @@ class ConfigureAppointmentRepo {
       'Content-Type': 'application/json',
     };
     var body = {
-      "Id": doctorid,
+      "Id": "",
       "ApprovalCriteria": approvalcrieteriaid,
       "WorkLocationId": worklocationid,
       "DoctorId": doctorid,
@@ -71,12 +111,12 @@ class ConfigureAppointmentRepo {
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
         var status = responseData['Status'];
-
+        var msg = responseData['ErrorMessage'];
         if (status == 1) {
-          // showSnackbar(Get.context!, msg);
-          // Get.back(result: true);
+          showSnackbar(Get.context!, msg);
           return 'true';
-        } else {
+        } else if (status == -5) {
+          showSnackbar(Get.context!, msg);
           return 'false';
         }
       }
