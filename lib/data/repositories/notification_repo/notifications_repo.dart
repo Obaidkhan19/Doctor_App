@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as dm;
 
+import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -57,12 +58,18 @@ class NotificationsRepo {
 
   firebaseInit() {
     FirebaseMessaging.onMessage.listen((message) async {
-      log(message.notification!.body.toString());
-      log(message.data.toString());
+      // log(message.notification!.body.toString());
+
+      // log(message.data.toString());
+      log(message.notification!.title.toString());
       if (Platform.isAndroid) {
         initLocalNotifications(message);
       }
       await showNotifications(message);
+      if(message.notification!.title.toString().toLowerCase().replaceAll(' ', '')=='Accepted Consulatation'.toLowerCase().replaceAll(' ', ''))
+      {
+        ConsultingQueueController.i.updatecallresponse(true);
+      }
     });
     // // Check if the app was terminated and opened by tapping the notification
     // FirebaseMessaging.instance.getInitialMessage().then((initialMessage) {

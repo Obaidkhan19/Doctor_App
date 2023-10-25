@@ -14,7 +14,12 @@ class ConsultingQueueController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   int tabindex = 0;
-
+  bool checkcallresponse= false;
+  updatecallresponse(bool x)
+  {
+    checkcallresponse=x;
+    update();
+  }
   updateselectedindex(int ind) {
     tabindex = ind;
     update();

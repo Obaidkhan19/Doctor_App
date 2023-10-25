@@ -292,10 +292,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 
 
+import 'package:webview_flutter/webview_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -308,15 +308,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
 call() async{
-   var options = JitsiMeetConferenceOptions(room:widget.title);
-   await jitsiMeet.join(options,JitsiMeetEventListener());
+ 
+   var options = JitsiMeetConferenceOptions(room:widget.title,);
+   
+   await jitsiMeet.join(options,JitsiMeetEventListener(),);
    Get.back();
 }
+
+  late final WebViewController controller0;
   @override
   void initState() {
-    log(widget.title);
-   call();
+  log(widget.title);
     
+   call();
     super.initState();
   }
   final meetingNameController = TextEditingController();
@@ -329,11 +333,11 @@ call() async{
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
-        child: CircularProgressIndicator(color: Colors.blue,),
+      body:  Center(
+        child:SizedBox(width:Get.height*0.7 ,child: WebViewWidget(controller: controller0),),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: FloatingActionButton(onPressed: (){}),
+      floatingActionButton: FloatingActionButton(onPressed: (){},child: const Icon(Icons.block)),
     );
   }
 }

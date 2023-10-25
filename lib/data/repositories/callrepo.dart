@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 class Callrepo{
 
-   CallOpenPrescription(context,consultingqueuewaitholdresponse data) async {
+   callOpenPrescription(context,consultingqueuewaitholdresponse data) async {
     var body = {
       
     "PatientId":data.patientId,

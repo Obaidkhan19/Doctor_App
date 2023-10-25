@@ -275,10 +275,28 @@ class _ClinicalPracticeQueueDataListState
                                                             ),
                                                           )
                                                         : InkWell(
-                                                            onTap: () {
-                                                              Get.to(() =>
+                                                            onTap: () async {
+                                                             await Get.to(() =>
                                                                   Callwatingscreen(
                                                                     data: manageAppointment,
+                                                                  ));
+                                                                  Get.to(() =>
+                                                                  PrescribeMedicineScreen(
+                                                                    checkfirst:
+                                                                        true,
+                                                                    patientstatusvalue:
+                                                                        manageAppointment
+                                                                            .patientStatusValue
+                                                                            .toString(),
+                                                                    patientid:
+                                                                        manageAppointment
+                                                                            .patientId,
+                                                                    visitno:
+                                                                        manageAppointment
+                                                                            .visitNo,
+                                                                    prescribedvalue:
+                                                                        manageAppointment
+                                                                            .prescribedInValue,
                                                                   ));
                                                             },
                                                             child: Image.asset(

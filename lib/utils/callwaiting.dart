@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/repositories/callrepo.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,17 +23,28 @@ class _CallwatingscreenState extends State<Callwatingscreen> {
 int val=0;
 
 opencall() async{
- val = Callrepo().CallOpenPrescription(context, widget.data!);
+ val = Callrepo().callOpenPrescription(context, widget.data!);
+
 }
 
   @override
   void initState() {
+
   opencall();
+   Timer.periodic(const Duration(seconds: 1), (timer) async { 
+  if(ConsultingQueueController.i.checkcallresponse==true)
+  {
+    timer.cancel();
+    ConsultingQueueController.i.updatecallresponse(false);
+    await Get.to( ()=> MyHomePage(title: widget.data!.chatURL));
+    Get.back();
+  }
+ });
         super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(     
       body: SizedBox(
         width: Get.width * 1,
         height: Get.height * 1,
