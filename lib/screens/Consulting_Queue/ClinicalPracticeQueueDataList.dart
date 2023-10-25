@@ -240,8 +240,8 @@ class _ClinicalPracticeQueueDataListState
                                                       ),
                                                     ),
                                                     trailing: manageAppointment
-                                                                .isOnline !=
-                                                            true
+                                                                  .chatURL ==
+                                                              null
                                                         ? InkWell(
                                                             onTap: () {
                                                               Get.to(() =>
@@ -278,8 +278,7 @@ class _ClinicalPracticeQueueDataListState
                                                             onTap: () {
                                                               Get.to(() =>
                                                                   MyHomePage(
-                                                                    title: manageAppointment
-                                                                        .chatURL,
+                                                                    title: manageAppointment.chatURL,
                                                                   ));
                                                             },
                                                             child: Image.asset(

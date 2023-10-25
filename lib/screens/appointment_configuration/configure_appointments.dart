@@ -6,7 +6,6 @@ import 'package:doctormobileapplication/data/repositories/ConfigureAppointment_r
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
-import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointment_listtile.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:interval_time_picker/interval_time_picker.dart';
-import 'package:intl/intl.dart';
 
 class ConfigureAppointmentScreen extends StatefulWidget {
   const ConfigureAppointmentScreen({super.key});
@@ -371,7 +369,6 @@ class _ConfigureAppointmentScreenState
                         )),
                       ),
                     ),
-
                     SizedBox(
                       height: Get.height * 0.01,
                     ),

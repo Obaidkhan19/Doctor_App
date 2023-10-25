@@ -7,6 +7,7 @@ import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
+import 'package:doctormobileapplication/utils/callwaiting.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
@@ -283,9 +284,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                   ),
                                                                 ),
                                                               ),
-                                                              manageAppointment
-                                                                          .isOnline !=
-                                                                      true
+                                                             manageAppointment
+                                                                  .chatURL ==
+                                                              null
                                                                   ? InkWell(
                                                                       onTap:
                                                                           () {
@@ -314,9 +315,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                       onTap:
                                                                           () {
                                                                         Get.to(() =>
-                                                                            MyHomePage(
-                                                                              title: manageAppointment.chatURL,
-                                                                            ));
+                                                                 MyHomePage(
+                                                                    title: manageAppointment.chatURL,
+                                                                  ));
                                                                       },
                                                                       child: Image
                                                                           .asset(

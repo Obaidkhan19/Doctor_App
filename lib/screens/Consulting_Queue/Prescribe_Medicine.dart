@@ -173,6 +173,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
   }
 
   String? performancestartdate;
+
   @override
   void initState() {
     performancestartdate = DateTime.now().toString().split('.')[0];
@@ -251,17 +252,21 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                       children: [
                         Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: Get.width * 0.04),
-                              child: SizedBox(
-                                height: Get.height * 0.05,
-                                width: Get.width * 0.1,
-                                child: ImageContainer(
-                                  imagePath: AppImages.recycle,
-                                  imageheight: Get.height * 0.05,
-                                  isSvg: false,
-                                  color: ColorManager.kWhiteColor,
-                                  backgroundColor: ColorManager.kPrimaryColor,
+                            InkWell(
+                              onTap: () {},
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.only(left: Get.width * 0.04),
+                                child: SizedBox(
+                                  height: Get.height * 0.05,
+                                  width: Get.width * 0.1,
+                                  child: ImageContainer(
+                                    imagePath: AppImages.recycle,
+                                    imageheight: Get.height * 0.05,
+                                    isSvg: false,
+                                    color: ColorManager.kWhiteColor,
+                                    backgroundColor: ColorManager.kPrimaryColor,
+                                  ),
                                 ),
                               ),
                             ),
