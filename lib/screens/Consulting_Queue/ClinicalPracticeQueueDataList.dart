@@ -244,6 +244,7 @@ class _ClinicalPracticeQueueDataListState
                                                                 onTap: () {
                                                                   Get.to(() =>
                                                                       PrescribeMedicineScreen(
+                                                                        
                                                                         checkfirst:
                                                                             true,
                                                                         patientstatusvalue: manageAppointment
@@ -273,14 +274,10 @@ class _ClinicalPracticeQueueDataListState
                                                             : InkWell(
                                                                 onTap:
                                                                     () async {
-                                                                  await Get.to(() =>
-                                                                      Callwatingscreen(
-                                                                        data:
-                                                                            manageAppointment,
-                                                                      ));
                                                                   Get.to(() =>
-                                                                      PrescribeMedicineScreen(
-                                                                        checkfirst:
+                                                                      MyHomePage( 
+                                                                        data: manageAppointment,
+                                                                         checkfirst:
                                                                             true,
                                                                         patientstatusvalue: manageAppointment
                                                                             .patientStatusValue
@@ -290,8 +287,11 @@ class _ClinicalPracticeQueueDataListState
                                                                         visitno:
                                                                             manageAppointment.visitNo,
                                                                         prescribedvalue:
-                                                                            manageAppointment.prescribedInValue,
+                                                                            manageAppointment.prescribedInValue.toString(),
+                                                                        title:
+                                                                            manageAppointment.chatURL,
                                                                       ));
+                                                                  
                                                                 },
                                                                 child:
                                                                     Image.asset(

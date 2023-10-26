@@ -31,15 +31,15 @@ opencall() async{
   void initState() {
 
   opencall();
-   Timer.periodic(const Duration(seconds: 1), (timer) async { 
-  if(ConsultingQueueController.i.checkcallresponse==true)
-  {
-    timer.cancel();
-    ConsultingQueueController.i.updatecallresponse(false);
-     Get.to( ()=> MyHomePage(title: widget.data!.chatURL));
-    Get.back();
-  }
- });
+  //  Timer.periodic(const Duration(seconds: 1), (timer) async { 
+  // if(ConsultingQueueController.i.checkcallresponse==true)
+  // {
+  //   timer.cancel();
+  //   ConsultingQueueController.i.updatecallresponse(false);
+    //  Get.to( ()=> MyHomePage(title: widget.data!.chatURL));
+    // Get.back();
+//   }
+//  });
         super.initState();
   }
   @override
