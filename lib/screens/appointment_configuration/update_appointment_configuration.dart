@@ -89,6 +89,19 @@ class _UpdateAppointmentConfigurationState
     EditConfigureAppointmentController.i.updateIsloading(false);
   }
 
+  bool checkSlotDuration(
+      TimeOfDay fromTime, TimeOfDay tillTime, TimeOfDay slotDuration) {
+    int timeDifference = tillTime.hour * 60 +
+        tillTime.minute -
+        (fromTime.hour * 60 + fromTime.minute);
+    int slotDurationMinutes = slotDuration.hour * 60 + slotDuration.minute;
+    if (slotDurationMinutes <= timeDifference) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -863,28 +876,34 @@ class _UpdateAppointmentConfigurationState
                           }
                           String mainId = widget.configureAppointment.id;
                           if (_time != const TimeOfDay(hour: 0, minute: 0)) {
-                            String? res =
-                                await car.editAppointmentConfiguration(
-                              mainId,
-                              contr.selectedApprovalCriteria!.id,
-                              widget.configureAppointment.workLocationId,
-                              dit,
-                              "${_fromtime.hour.toString().padLeft(2, '0')}:${_fromtime.minute.toString().padLeft(2, '0')}",
-                              "${_tilltime.hour.toString().padLeft(2, '0')}:${_tilltime.minute.toString().padLeft(2, '0')}",
-                              contr.consultancyfeeController.text,
-                              "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
-                              contr.followupfeeController.text,
-                              contr.followupdayController.text,
-                              contr.daylst
-                                  .toString()
-                                  .split(']')[0]
-                                  .split('[')[1],
-                              widget.configureAppointment.isOnlineConfiguration,
-                              true,
-                            );
-
-                            if (res == 'Successfully Updated') {
-                              Get.back(result: true);
+                            if (checkSlotDuration(
+                                _fromtime, _tilltime, _time)) {
+                              String? res =
+                                  await car.editAppointmentConfiguration(
+                                mainId,
+                                contr.selectedApprovalCriteria!.id,
+                                widget.configureAppointment.workLocationId,
+                                dit,
+                                "${_fromtime.hour.toString().padLeft(2, '0')}:${_fromtime.minute.toString().padLeft(2, '0')}",
+                                "${_tilltime.hour.toString().padLeft(2, '0')}:${_tilltime.minute.toString().padLeft(2, '0')}",
+                                contr.consultancyfeeController.text,
+                                "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                contr.followupfeeController.text,
+                                contr.followupdayController.text,
+                                contr.daylst
+                                    .toString()
+                                    .split(']')[0]
+                                    .split('[')[1],
+                                widget
+                                    .configureAppointment.isOnlineConfiguration,
+                                true,
+                              );
+                              if (res == 'Successfully Updated') {
+                                Get.back(result: true);
+                              }
+                            } else {
+                              showSnackbar(
+                                  context, "Slot Duration is incorrect");
                             }
                           }
                         } else {

@@ -146,23 +146,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       GetBuilder<ProfileController>(builder: (context) {
                         return CircleAvatar(
-                            backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                            radius: 30,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: CachedNetworkImage(
-                                  height: Get.width * 0.16,
-                                  imageUrl: ProfileController.i
-                                              .selectedbasicInfo?.picturePath !=
-                                          null
-                                      ? baseURL +
-                                          ProfileController
-                                              .i.selectedbasicInfo?.picturePath
-                                      : "",
-                                  fit: BoxFit.fill,
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(AppImages.doctorlogo),
-                                )));
+                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                          radius: 30,
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: ProfileController
+                                          .i.selectedbasicInfo?.picturePath !=
+                                      null
+                                  ? baseURL +
+                                      ProfileController
+                                          .i.selectedbasicInfo?.picturePath
+                                  : "",
+                              width: Get.width * 0.16,
+                              fit: BoxFit.cover,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AppImages.doctorlogo),
+                            ),
+                          ),
+                        );
+
+                        // CircleAvatar(
+                        //     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                        //     radius: 30,
+                        //     child: ClipRRect(
+                        //         borderRadius: BorderRadius.circular(30),
+                        //         child: CachedNetworkImage(
+                        //           imageUrl: ProfileController.i
+                        //                       .selectedbasicInfo?.picturePath !=
+                        //                   null
+                        //               ? baseURL +
+                        //                   ProfileController
+                        //                       .i.selectedbasicInfo?.picturePath
+                        //               : "",
+                        //           fit: BoxFit.fill,
+                        //           errorWidget: (context, url, error) =>
+                        //               Image.asset(AppImages.doctorlogo),
+                        //         )));
                       }),
                       SizedBox(
                         width: Get.width * 0.04,

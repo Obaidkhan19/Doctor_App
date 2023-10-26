@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
+import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:get/get.dart';
 
 import '../../models/DayViewAppointmentModel.dart';
@@ -53,10 +54,10 @@ class ManageAppointmentController extends GetxController
     update();
   }
 
-  getmonthlyoctorAppointment(date) async {
+  getmonthlyoctorAppointment(date, wlid) async {
     try {
       monthlyappintment =
-          await ManageAppointmentRepo.GetmonthlyDoctorAppointment(date);
+          await ManageAppointmentRepo.GetmonthlyDoctorAppointment(date, wlid);
       isLoadingDailyDoctorAppointment = false;
       update();
     } catch (e) {
@@ -108,7 +109,6 @@ class ManageAppointmentController extends GetxController
               Dates, IsOnline, WorkLocationId);
       isLoadingDailyDoctorAppointmentSlots = false;
     } catch (e) {
-      print('Error : $e');
       isLoadingDailyDoctorAppointmentSlots = false;
     }
     isLoadingDailyDoctorAppointmentSlots = false;

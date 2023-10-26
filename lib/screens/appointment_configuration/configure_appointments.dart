@@ -131,6 +131,19 @@ class _ConfigureAppointmentScreenState
     super.didChangeDependencies();
   }
 
+  bool checkSlotDuration(
+      TimeOfDay fromTime, TimeOfDay tillTime, TimeOfDay slotDuration) {
+    int timeDifference = tillTime.hour * 60 +
+        tillTime.minute -
+        (fromTime.hour * 60 + fromTime.minute);
+    int slotDurationMinutes = slotDuration.hour * 60 + slotDuration.minute;
+    if (slotDurationMinutes <= timeDifference) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -1318,7 +1331,10 @@ class _ConfigureAppointmentScreenState
                       ),
                       InkWell(
                         onTap: () async {
+                          print(
+                              'contr.daylstcontr.daylstcontr.daylstcontr.daylst');
                           print(contr.daylst);
+
                           String? hospitalid = contr.selectedhospital?.id;
                           String hid = '';
                           if (contr.daylst.isNotEmpty) {
@@ -1354,34 +1370,40 @@ class _ConfigureAppointmentScreenState
                               if (_time !=
                                   const TimeOfDay(hour: 0, minute: 0)) {
                                 hospitalid ??= "";
-                                String? res =
-                                    await car.addAppointmentConfiguration(
-                                  contr.selectedApprovalCriteria!.id,
-                                  hospitalid,
-                                  dit,
-                                  "${_fromtime.hour.toString().padLeft(2, '0')}:${_fromtime.minute.toString().padLeft(2, '0')}",
-                                  "${_tilltime.hour.toString().padLeft(2, '0')}:${_tilltime.minute.toString().padLeft(2, '0')}",
-                                  contr.consultancyfeeController.text,
-                                  "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
-                                  contr.followupfeeController.text,
-                                  contr.followupdayController.text,
-                                  contr.daylst
-                                      .toString()
-                                      .split(']')[0]
-                                      .split('[')[1],
-                                  contr.isOnline,
-                                  true,
-                                );
+                                if (checkSlotDuration(
+                                    _fromtime, _tilltime, _time)) {
+                                  String? res =
+                                      await car.addAppointmentConfiguration(
+                                    contr.selectedApprovalCriteria!.id,
+                                    hospitalid,
+                                    dit,
+                                    "${_fromtime.hour.toString().padLeft(2, '0')}:${_fromtime.minute.toString().padLeft(2, '0')}",
+                                    "${_tilltime.hour.toString().padLeft(2, '0')}:${_tilltime.minute.toString().padLeft(2, '0')}",
+                                    contr.consultancyfeeController.text,
+                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                    contr.followupfeeController.text,
+                                    contr.followupdayController.text,
+                                    contr.daylst
+                                        .toString()
+                                        .split(']')[0]
+                                        .split('[')[1],
+                                    contr.isOnline,
+                                    true,
+                                  );
 
-                                if (res == 'true') {
-                                  await ConfigureAppointmentController.i
-                                      .updateIsloading(true);
-                                  await contr.updatedispose();
-                                  await disposedatepicker();
-                                  await _getWorklocation();
-                                  setState(() {});
-                                  await ConfigureAppointmentController.i
-                                      .updateIsloading(false);
+                                  if (res == 'true') {
+                                    await ConfigureAppointmentController.i
+                                        .updateIsloading(true);
+                                    await contr.updatedispose();
+                                    await disposedatepicker();
+                                    await _getAppointmentConfiguration();
+                                    setState(() {});
+                                    await ConfigureAppointmentController.i
+                                        .updateIsloading(false);
+                                  }
+                                } else {
+                                  showSnackbar(
+                                      context, "Slot Duration is incorrect");
                                 }
                               }
                             } else {

@@ -21,9 +21,9 @@ class ManageAppointmentRepo {
     String? Date = DateFormat('yyyy-MM-dd').format(now);
 
     String? userId = await LocalDb().getDoctorId();
-    String? userToken = await LocalDb().getToken();
-    var body = {"Date": Date, "DoctorId": "$userId", "Token": "$userToken"};
+    var body = {"Date": Date, "DoctorId": "$userId"};
     var headers = {'Content-Type': 'application/json'};
+
     try {
       ManageAppointmentController.i.updateIsloadingScreen(true);
       var response = await http.post(
@@ -49,27 +49,20 @@ class ManageAppointmentRepo {
     }
   }
 
-  static GetmonthlyDoctorAppointment(String date) async {
+  static GetmonthlyDoctorAppointment(String date, String worklocationid) async {
     ManageAppointmentController.i.paid =
         ManageAppointmentController.i.unpaid = 0;
 
     String? userId = await LocalDb().getDoctorId();
-    String? userToken = await LocalDb().getToken();
-
-//     {
-//     "DoctorId":"e02f9e89-e261-4906-9b33-f49802ddea5f",
-//     "MonthAndYear": "2023-10-17",
-//     "WorkLocationId":"49576ED4-49C9-EB11-80C2-F8BC123A0405",
-//     "IsOnline":"false"
-
-// }
 
     var body = {
       "MonthAndYear": date,
       "DoctorId": "$userId",
-      "49576ED4-49C9-EB11-80C2-F8BC123A0405": "$userToken",
+      "WorkLocationId": worklocationid,
       "IsOnline": "false"
     };
+    print('aaa');
+    print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(

@@ -1,5 +1,6 @@
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,7 +75,8 @@ class Meeting {
 }
 
 class DetailMonthlyAppointment extends StatefulWidget {
-  const DetailMonthlyAppointment({super.key});
+  String worklocationid;
+  DetailMonthlyAppointment({required this.worklocationid, super.key});
 
   @override
   State<DetailMonthlyAppointment> createState() =>
@@ -89,8 +91,8 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   }
 
   call() async {
-    ManageAppointmentController.i
-        .getmonthlyoctorAppointment(DateTime.now().toString().split(' ')[0]);
+    ManageAppointmentController.i.getmonthlyoctorAppointment(
+        DateTime.now().toString().split(' ')[0], widget.worklocationid);
   }
 
   @override

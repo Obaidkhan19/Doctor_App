@@ -353,6 +353,8 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         Row(
                                           children: [
                                             Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   children: [

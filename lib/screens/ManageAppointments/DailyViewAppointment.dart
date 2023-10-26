@@ -32,7 +32,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
           dateTime: widget.dateTime,
           IsOnline: widget.IsOnline,
           WorkLocationId: widget.WorkLocationId),
-      const DetailMonthlyAppointment()
+      DetailMonthlyAppointment(worklocationid: widget.WorkLocationId ?? "")
     ];
     super.initState();
   }
@@ -97,8 +97,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
               color: Theme.of(context).scaffoldBackgroundColor,
               child: SafeArea(
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
+                  child: Column(children: [
                     SingleChildScrollView(
                       child: Visibility(
                         visible: true,

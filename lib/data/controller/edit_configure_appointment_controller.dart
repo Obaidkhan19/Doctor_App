@@ -16,7 +16,6 @@ class EditConfigureAppointmentController extends GetxController
   TextEditingController consultancyfeeController = TextEditingController();
   TextEditingController followupfeeController = TextEditingController();
   TextEditingController followupdayController = TextEditingController();
-
   String getDayName(int index) {
     switch (index) {
       case 0:
@@ -41,12 +40,16 @@ class EditConfigureAppointmentController extends GetxController
   List<int> daylst = [];
 
   addintodays(int index) {
-    daylst.add(index);
+    if (!daylst.contains(index)) {
+      daylst.add(index);
+    }
     update();
   }
 
   deletefromdays(int index) {
-    daylst.removeAt(index);
+    if (daylst.contains(index)) {
+      daylst.remove(index);
+    }
     update();
   }
 

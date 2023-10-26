@@ -133,13 +133,27 @@ class ConfigureAppointmentController extends GetxController
 
   List<int> daylst = [];
 
+  // addintodays(int index) {
+  //   daylst.add(index);
+  //   update();
+  // }
+
+  // deletefromdays(int index) {
+  //   daylst.removeAt(index);
+  //   update();
+  // }
+
   addintodays(int index) {
-    daylst.add(index);
+    if (!daylst.contains(index)) {
+      daylst.add(index);
+    }
     update();
   }
 
   deletefromdays(int index) {
-    daylst.removeAt(index);
+    if (daylst.contains(index)) {
+      daylst.remove(index);
+    }
     update();
   }
 

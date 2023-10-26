@@ -166,45 +166,38 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                               child: Column(
                                                 children: [
                                                   ListTile(
-                                                    leading: SizedBox(
-                                                      child: CircleAvatar(
-                                                        backgroundColor:
-                                                            const Color
-                                                                .fromRGBO(
-                                                                0, 0, 0, 0),
-                                                        radius: 30,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          child: manageAppointment
-                                                                      .patientImagePath !=
-                                                                  null
-                                                              ? CachedNetworkImage(
-                                                                  height:
-                                                                      Get.width *
-                                                                          0.16,
-                                                                  imageUrl: baseURL +
-                                                                      manageAppointment
-                                                                          .patientImagePath,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Image.asset(
-                                                                          Images
-                                                                              .avator),
-                                                                )
-                                                              : Image.asset(
-                                                                  Images
-                                                                      .avator),
-                                                        ),
+                                                    leading: CircleAvatar(
+                                                      backgroundColor:
+                                                          const Color.fromRGBO(
+                                                              0, 0, 0, 0),
+                                                      radius: 30,
+                                                      child: ClipOval(
+                                                        child: manageAppointment
+                                                                    .patientImagePath !=
+                                                                null
+                                                            ? CachedNetworkImage(
+                                                                height:
+                                                                    Get.width *
+                                                                        0.16,
+                                                                imageUrl: baseURL +
+                                                                    manageAppointment
+                                                                        .patientImagePath,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        Images
+                                                                            .avator),
+                                                              )
+                                                            : Image.asset(
+                                                                Images.avator),
                                                       ),
                                                     ),
                                                     title: Transform.translate(
                                                       offset:
-                                                          const Offset(-16, 0),
+                                                          const Offset(-8, 0),
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -355,6 +348,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                       color: ColorManager
                                                           .kblackColor,
                                                     ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(
