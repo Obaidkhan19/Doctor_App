@@ -36,7 +36,7 @@ opencall() async{
   {
     timer.cancel();
     ConsultingQueueController.i.updatecallresponse(false);
-    await Get.to( ()=> MyHomePage(title: widget.data!.chatURL));
+     Get.to( ()=> MyHomePage(title: widget.data!.chatURL));
     Get.back();
   }
  });

@@ -309,17 +309,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
 call() async{
  
-   var options = JitsiMeetConferenceOptions(room:widget.title,);
-   
-   await jitsiMeet.join(options,JitsiMeetEventListener(),);
+  //  var options = JitsiMeetConferenceOptions(room:widget.title,);
+ JitsiMeetConferenceOptions options = JitsiMeetConferenceOptions(room: widget.title);
+   await jitsiMeet.join(options,listener,);
    Get.back();
 }
 
-  late final WebViewController controller0;
+   dynamic listener;
+
   @override
   void initState() {
   log(widget.title);
-    
+   listener = JitsiMeetEventListener(
+      conferenceJoined: (url) {
+        debugPrint("conferenceJoined: url: $url");
+      },
+      readyToClose: () {
+        debugPrint("readyToClose");
+      },
+    );
+
+  
    call();
     super.initState();
   }
@@ -334,7 +344,7 @@ call() async{
         title: Text(widget.title),
       ),
       body:  Center(
-        child:SizedBox(width:Get.height*0.7 ,child: WebViewWidget(controller: controller0),),
+        child:SizedBox(width:Get.height*0.7 ,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(onPressed: (){},child: const Icon(Icons.block)),
