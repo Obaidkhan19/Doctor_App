@@ -103,6 +103,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: CachedNetworkImage(
+                          height: Get.width * 0.16,
                           imageUrl: ProfileController
                                       .i.selectedbasicInfo?.picturePath !=
                                   null
@@ -378,6 +379,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
               Divider(
                 thickness: Get.height * 0.005,
+                color: ColorManager.kWhiteColor,
               ),
 
               SizedBox(

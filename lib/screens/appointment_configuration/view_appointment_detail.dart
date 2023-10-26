@@ -18,6 +18,7 @@ class AppointmentDetail extends StatefulWidget {
 class _AppointmentDetailState extends State<AppointmentDetail> {
   @override
   Widget build(BuildContext context) {
+    print(widget.configureAppointment.toJson());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

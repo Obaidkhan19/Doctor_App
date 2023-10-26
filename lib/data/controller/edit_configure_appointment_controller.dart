@@ -5,6 +5,14 @@ class EditConfigureAppointmentController extends GetxController
     implements GetxService {
   static EditConfigureAppointmentController get i =>
       Get.put(EditConfigureAppointmentController());
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  updateIsloading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
   TextEditingController consultancyfeeController = TextEditingController();
   TextEditingController followupfeeController = TextEditingController();
   TextEditingController followupdayController = TextEditingController();
@@ -66,8 +74,8 @@ class EditConfigureAppointmentController extends GetxController
 
   EditApprovalCriteria? selectedApprovalCriteria;
 
-  void initializeSelectedApprovalCriteria() {
-    selectedApprovalCriteria = approvalCriteriaList[0];
+  void initializeSelectedApprovalCriteria(index) {
+    selectedApprovalCriteria = approvalCriteriaList[index];
   }
 
   void updateApprovalCriteria(EditApprovalCriteria criteria) {

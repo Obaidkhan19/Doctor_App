@@ -151,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
                                 child: CachedNetworkImage(
+                                  height: Get.width * 0.16,
                                   imageUrl: ProfileController.i
                                               .selectedbasicInfo?.picturePath !=
                                           null

@@ -102,7 +102,6 @@ class ConfigureAppointmentRepo {
       "IsOnlineConfiguration": isolineconfiguratation,
       "IsActive": isactive,
     };
-    log(body.toString());
     try {
       var response = await http.post(
           Uri.parse(AppConstants.appointconfiguration),
@@ -118,6 +117,63 @@ class ConfigureAppointmentRepo {
         } else if (status == -5) {
           showSnackbar(Get.context!, msg);
           return 'false';
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> editAppointmentConfiguration(
+      mainid,
+      approvalcrieteriaid,
+      worklocationid,
+      doctorid,
+      fromtime,
+      totime,
+      consultancyfee,
+      slotduration,
+      followupfee,
+      nooffollowupdays,
+      weekdays,
+      isolineconfiguratation,
+      isactive) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "Id": mainid,
+      "ApprovalCriteria": approvalcrieteriaid,
+      "WorkLocationId": worklocationid,
+      "DoctorId": doctorid,
+      "FromTime": fromtime,
+      "ToTime": totime,
+      "ConsultancyFee": consultancyfee,
+      "SlotDuration": slotduration,
+      "FollowupFee": followupfee,
+      "NoofFollowupDays": nooffollowupdays,
+      "WeekDays": weekdays,
+      "IsOnlineConfiguration": isolineconfiguratation,
+      "IsActive": isactive,
+    };
+    log(body.toString());
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.editappointconfiguration),
+          body: jsonEncode(body),
+          headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          showSnackbar(Get.context!, msg);
+          return msg;
+        } else if (status == -5) {
+          showSnackbar(Get.context!, msg);
+          return msg;
         }
       }
     } catch (e) {
