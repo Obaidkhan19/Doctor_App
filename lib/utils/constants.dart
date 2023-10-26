@@ -38,6 +38,9 @@ class AppConstants {
   ///api/ddl/AppointmentConfiguration
   static String appointconfiguration =
       "$baseURL/api/doctor/AppointmentConfiguration";
+
+  static String editappointconfiguration =
+      "$baseURL/api/doctor/UpdateAppointmentConfiguration";
   static String getWorklocation = "$baseURL/api/ddl/GetWorkLocation";
 
   static String getappointconfiguration =

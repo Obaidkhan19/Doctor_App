@@ -125,6 +125,13 @@ class _ConfigureAppointmentScreenState
   }
 
   @override
+  void didChangeDependencies() {
+    _getAppointmentConfiguration();
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     ConfigureAppointmentController.i.clearrows();
@@ -223,7 +230,7 @@ class _ConfigureAppointmentScreenState
                                                 AppImages.online,
                                                 color: ColorManager.kWhiteColor,
                                                 alignment: Alignment.centerLeft,
-                                                scale: 2.5,
+                                                scale: 2,
                                               ),
                                             if (name !=
                                                 'Online Video Consultation')
@@ -289,8 +296,16 @@ class _ConfigureAppointmentScreenState
                                                             ));
                                                         break;
                                                       case _MenuValues.update:
-                                                        Get.to(() =>
-                                                            const UpdateAppointmentConfiguration());
+                                                        bool res = await Get.to(
+                                                            () =>
+                                                                UpdateAppointmentConfiguration(
+                                                                  configureAppointment:
+                                                                      worklocation,
+                                                                ));
+
+                                                        if (res == true) {
+                                                          didChangeDependencies();
+                                                        }
                                                         break;
                                                     }
                                                   }),

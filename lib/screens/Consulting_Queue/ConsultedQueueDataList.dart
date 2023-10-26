@@ -167,8 +167,6 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                 children: [
                                                   ListTile(
                                                     leading: SizedBox(
-                                                      height: 380,
-                                                      width: 71,
                                                       child: CircleAvatar(
                                                         backgroundColor:
                                                             const Color
@@ -183,7 +181,10 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                       .patientImagePath !=
                                                                   null
                                                               ? CachedNetworkImage(
-                                                                  imageUrl:baseURL +
+                                                                  height:
+                                                                      Get.width *
+                                                                          0.16,
+                                                                  imageUrl: baseURL +
                                                                       manageAppointment
                                                                           .patientImagePath,
                                                                   fit: BoxFit
@@ -284,9 +285,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                   ),
                                                                 ),
                                                               ),
-                                                             manageAppointment
-                                                                  .chatURL ==
-                                                              null
+                                                              manageAppointment
+                                                                          .chatURL ==
+                                                                      null
                                                                   ? InkWell(
                                                                       onTap:
                                                                           () {
@@ -314,28 +315,18 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                   : InkWell(
                                                                       onTap:
                                                                           () async {
-                                                                       await Get.to(() =>
-                                                                  Callwatingscreen(
-                                                                    data: manageAppointment,
-                                                                  ));
-                                                                  Get.to(() =>
-                                                                  PrescribeMedicineScreen(
-                                                                    checkfirst:
-                                                                        true,
-                                                                    patientstatusvalue:
-                                                                        manageAppointment
-                                                                            .patientStatusValue
-                                                                            .toString(),
-                                                                    patientid:
-                                                                        manageAppointment
-                                                                            .patientId,
-                                                                    visitno:
-                                                                        manageAppointment
-                                                                            .visitNo,
-                                                                    prescribedvalue:
-                                                                        manageAppointment
-                                                                            .prescribedInValue,
-                                                                  ));
+                                                                        await Get.to(() =>
+                                                                            Callwatingscreen(
+                                                                              data: manageAppointment,
+                                                                            ));
+                                                                        Get.to(() =>
+                                                                            PrescribeMedicineScreen(
+                                                                              checkfirst: true,
+                                                                              patientstatusvalue: manageAppointment.patientStatusValue.toString(),
+                                                                              patientid: manageAppointment.patientId,
+                                                                              visitno: manageAppointment.visitNo,
+                                                                              prescribedvalue: manageAppointment.prescribedInValue,
+                                                                            ));
                                                                       },
                                                                       child: Image
                                                                           .asset(

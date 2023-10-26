@@ -169,39 +169,38 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                 child: Column(
                                                   children: [
                                                     ListTile(
-                                                      leading: SizedBox(
-                                                        height: 380,
-                                                        width: 71,
-                                                        child: CircleAvatar(
-                                                          backgroundColor:
-                                                              const Color
-                                                                  .fromRGBO(
-                                                                  0, 0, 0, 0),
-                                                          radius: 30,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        30),
-                                                            child: manageAppointment
-                                                                        .patientImagePath !=
-                                                                    null
-                                                                ? CachedNetworkImage(
-                                                                    imageUrl:baseURL +
-                                                                        manageAppointment
-                                                                            .patientImagePath,
-                                                                    fit: BoxFit
-                                                                        .fill,
-                                                                    errorWidget: (context,
-                                                                            url,
-                                                                            error) =>
-                                                                        Image.asset(
-                                                                            Images.avator),
-                                                                  )
-                                                                : Image.asset(
-                                                                    Images
-                                                                        .avator),
-                                                          ),
+                                                      leading: CircleAvatar(
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromRGBO(
+                                                                0, 0, 0, 0),
+                                                        radius: 30,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(30),
+                                                          child: manageAppointment
+                                                                      .patientImagePath !=
+                                                                  null
+                                                              ? CachedNetworkImage(
+                                                                  height:
+                                                                      Get.width *
+                                                                          0.16,
+                                                                  imageUrl: baseURL +
+                                                                      manageAppointment
+                                                                          .patientImagePath,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Image.asset(
+                                                                          Images
+                                                                              .avator),
+                                                                )
+                                                              : Image.asset(
+                                                                  Images
+                                                                      .avator),
                                                         ),
                                                       ),
                                                       title:
@@ -289,27 +288,27 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                           : InkWell(
                                                               onTap: () async {
                                                                 await Get.to(() =>
-                                                                  Callwatingscreen(
-                                                                    data: manageAppointment,
-                                                                  ));
-                                                                  Get.to(() =>
-                                                                  PrescribeMedicineScreen(
-                                                                    checkfirst:
-                                                                        true,
-                                                                    patientstatusvalue:
-                                                                        manageAppointment
-                                                                            .patientStatusValue
-                                                                            .toString(),
-                                                                    patientid:
-                                                                        manageAppointment
-                                                                            .patientId,
-                                                                    visitno:
-                                                                        manageAppointment
-                                                                            .visitNo,
-                                                                    prescribedvalue:
-                                                                        manageAppointment
-                                                                            .prescribedInValue,
-                                                                  ));
+                                                                    Callwatingscreen(
+                                                                      data:
+                                                                          manageAppointment,
+                                                                    ));
+                                                                Get.to(() =>
+                                                                    PrescribeMedicineScreen(
+                                                                      checkfirst:
+                                                                          true,
+                                                                      patientstatusvalue: manageAppointment
+                                                                          .patientStatusValue
+                                                                          .toString(),
+                                                                      patientid:
+                                                                          manageAppointment
+                                                                              .patientId,
+                                                                      visitno:
+                                                                          manageAppointment
+                                                                              .visitNo,
+                                                                      prescribedvalue:
+                                                                          manageAppointment
+                                                                              .prescribedInValue,
+                                                                    ));
                                                               },
                                                               child:
                                                                   Image.asset(

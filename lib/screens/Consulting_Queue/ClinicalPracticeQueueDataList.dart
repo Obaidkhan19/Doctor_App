@@ -159,39 +159,36 @@ class _ClinicalPracticeQueueDataListState
                                               child: Column(
                                                 children: [
                                                   ListTile(
-                                                    leading: SizedBox(
-                                                      height: 380,
-                                                      width: 71,
-                                                      child: CircleAvatar(
-                                                        backgroundColor:
-                                                            const Color
-                                                                .fromARGB(0,
-                                                                207, 166, 166),
-                                                        radius: 30,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          child: manageAppointment
-                                                                      .patientImagePath !=
-                                                                  null
-                                                              ? CachedNetworkImage(
-                                                                  imageUrl: baseURL +
-                                                                      manageAppointment
-                                                                          .patientImagePath,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Image.asset(
-                                                                          Images
-                                                                              .avator),
-                                                                )
-                                                              : Image.asset(
-                                                                  Images
-                                                                      .avator),
-                                                        ),
+                                                    leading: CircleAvatar(
+                                                      backgroundColor:
+                                                          const Color.fromARGB(
+                                                              0, 207, 166, 166),
+                                                      radius: 30,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30),
+                                                        child: manageAppointment
+                                                                    .patientImagePath !=
+                                                                null
+                                                            ? CachedNetworkImage(
+                                                                height:
+                                                                    Get.width *
+                                                                        0.16,
+                                                                imageUrl: baseURL +
+                                                                    manageAppointment
+                                                                        .patientImagePath,
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        Images
+                                                                            .avator),
+                                                              )
+                                                            : Image.asset(
+                                                                Images.avator),
                                                       ),
                                                     ),
                                                     title: Transform.translate(
@@ -239,77 +236,77 @@ class _ClinicalPracticeQueueDataListState
                                                         ],
                                                       ),
                                                     ),
-                                                    trailing: manageAppointment
-                                                                  .chatURL ==
-                                                              null
-                                                        ? InkWell(
-                                                            onTap: () {
-                                                              Get.to(() =>
-                                                                  PrescribeMedicineScreen(
-                                                                    checkfirst:
-                                                                        true,
-                                                                    patientstatusvalue:
-                                                                        manageAppointment
-                                                                            .patientStatusValue
-                                                                            .toString(),
-                                                                    patientid:
-                                                                        manageAppointment
-                                                                            .patientId,
-                                                                    visitno:
-                                                                        manageAppointment
-                                                                            .visitNo,
-                                                                    prescribedvalue:
-                                                                        manageAppointment
-                                                                            .prescribedInValue,
-                                                                  ));
-                                                            },
-                                                            child: Image.asset(
-                                                              Images.rxedit,
-                                                              color: ColorManager
-                                                                  .kPrimaryColor,
-                                                              width: Get.width *
-                                                                  0.097,
-                                                              height:
-                                                                  Get.height *
-                                                                      0.09,
-                                                            ),
-                                                          )
-                                                        : InkWell(
-                                                            onTap: () async {
-                                                             await Get.to(() =>
-                                                                  Callwatingscreen(
-                                                                    data: manageAppointment,
-                                                                  ));
+                                                    trailing:
+                                                        manageAppointment
+                                                                    .chatURL ==
+                                                                null
+                                                            ? InkWell(
+                                                                onTap: () {
                                                                   Get.to(() =>
-                                                                  PrescribeMedicineScreen(
-                                                                    checkfirst:
-                                                                        true,
-                                                                    patientstatusvalue:
-                                                                        manageAppointment
+                                                                      PrescribeMedicineScreen(
+                                                                        checkfirst:
+                                                                            true,
+                                                                        patientstatusvalue: manageAppointment
                                                                             .patientStatusValue
                                                                             .toString(),
-                                                                    patientid:
-                                                                        manageAppointment
-                                                                            .patientId,
-                                                                    visitno:
-                                                                        manageAppointment
-                                                                            .visitNo,
-                                                                    prescribedvalue:
-                                                                        manageAppointment
-                                                                            .prescribedInValue,
-                                                                  ));
-                                                            },
-                                                            child: Image.asset(
-                                                              Images.videocall,
-                                                              color: ColorManager
-                                                                  .kPrimaryColor,
-                                                              width: Get.width *
-                                                                  0.09,
-                                                              height:
-                                                                  Get.height *
-                                                                      0.09,
-                                                            ),
-                                                          ),
+                                                                        patientid:
+                                                                            manageAppointment.patientId,
+                                                                        visitno:
+                                                                            manageAppointment.visitNo,
+                                                                        prescribedvalue:
+                                                                            manageAppointment.prescribedInValue,
+                                                                      ));
+                                                                },
+                                                                child:
+                                                                    Image.asset(
+                                                                  Images.rxedit,
+                                                                  color: ColorManager
+                                                                      .kPrimaryColor,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.097,
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.09,
+                                                                ),
+                                                              )
+                                                            : InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  await Get.to(() =>
+                                                                      Callwatingscreen(
+                                                                        data:
+                                                                            manageAppointment,
+                                                                      ));
+                                                                  Get.to(() =>
+                                                                      PrescribeMedicineScreen(
+                                                                        checkfirst:
+                                                                            true,
+                                                                        patientstatusvalue: manageAppointment
+                                                                            .patientStatusValue
+                                                                            .toString(),
+                                                                        patientid:
+                                                                            manageAppointment.patientId,
+                                                                        visitno:
+                                                                            manageAppointment.visitNo,
+                                                                        prescribedvalue:
+                                                                            manageAppointment.prescribedInValue,
+                                                                      ));
+                                                                },
+                                                                child:
+                                                                    Image.asset(
+                                                                  Images
+                                                                      .videocall,
+                                                                  color: ColorManager
+                                                                      .kPrimaryColor,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.09,
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.09,
+                                                                ),
+                                                              ),
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(
