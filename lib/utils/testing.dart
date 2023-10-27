@@ -346,14 +346,12 @@ class _MyHomePageState extends State<MyHomePage> {
     //       debugPrint("readyToClose");
     //     },
     //   );
-
     //  call();
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     ConsultingQueueController.i.updatecallresponse(false);
     super.dispose();
   }

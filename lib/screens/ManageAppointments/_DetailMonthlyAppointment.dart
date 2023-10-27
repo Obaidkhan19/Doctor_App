@@ -1,6 +1,5 @@
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

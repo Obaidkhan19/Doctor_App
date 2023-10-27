@@ -1,8 +1,5 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
-import 'package:doctormobileapplication/models/work_locations.dart';
-import 'package:doctormobileapplication/screens/family_screens/status_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
