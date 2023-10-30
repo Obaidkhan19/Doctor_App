@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -7,6 +8,7 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/auth_r
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
+import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -19,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/images.dart';
 
@@ -321,10 +324,10 @@ class _MenuScreenState extends State<MenuScreen> {
                           }
                           setState(() {});
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      "You declined the biometric login.")));
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //     const SnackBar(
+                          //         content: Text(
+                          //             "You declined the biometric login.")));
                         }
 
                         if (fingerprint) {
@@ -435,19 +438,27 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                 ),
                 onTap: () async {
-                  String? id = await LocalDb().getDoctorId();
-                  String? token = await LocalDb().getToken();
-                  bool? loginStatus = await LocalDb().getLoginStatus();
-                  String? DeviceToken = await LocalDb().getDeviceToken();
-                  if (loginStatus == true) {
-                    AuthRepo.logout(
-                        DoctorId: id,
-                        token: token,
-                        DeviceToken: DeviceToken,
-                        IsLogOffAllDevice: 'false');
-                  } else {
-                    showSnackbar(context, 'You are not Logged in');
-                  }
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.clear();
+
+                  AuthController.i.emailController.clear();
+                  AuthController.i.passwordController.clear();
+                  Get.offAll(() => const LoginScreen());
+
+                  // String? id = await LocalDb().getDoctorId();
+                  // String? token = await LocalDb().getToken();
+                  // bool? loginStatus = await LocalDb().getLoginStatus();
+                  // String? DeviceToken = await LocalDb().getDeviceToken();
+                  // if (loginStatus == true) {
+                  //   AuthRepo.logout(
+                  //       DoctorId: id,
+                  //       token: token,
+                  //       DeviceToken: DeviceToken,
+                  //       IsLogOffAllDevice: 'false');
+                  // } else {
+                  //   showSnackbar(context, 'You are not Logged in');
+                  // }
                   //Navigator.pop(context);
                 },
               ),

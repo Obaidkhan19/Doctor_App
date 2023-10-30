@@ -290,6 +290,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/data/repositories/callrepo.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
@@ -303,16 +304,15 @@ class MyHomePage extends StatefulWidget {
       {super.key,
       required this.data,
       required this.title,
-      
       required this.checkfirst,
       required this.patientstatusvalue,
       required this.patientid,
       required this.visitno,
       required this.prescribedvalue});
-      
-      consultingqueuewaitholdresponse data;
+
+  consultingqueuewaitholdresponse data;
   final String title;
-  bool checkfirst;
+  String checkfirst;
   String patientstatusvalue;
   String patientid;
   dynamic visitno;
@@ -323,6 +323,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  opencall() async {
+    Callrepo().callOpenPrescription(context, widget.data);
+  }
+
   call() async {
     //  var options = JitsiMeetConferenceOptions(room:widget.title,);
     JitsiMeetConferenceOptions options =
@@ -337,6 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    opencall();
     //  listener = JitsiMeetEventListener(
     //     conferenceJoined: (url) {
     //       debugPrint("conferenceJoined: url: $url");
@@ -363,117 +368,113 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ConsultingQueueController>(
-      builder: (cont) {
-        return Scaffold(
-          // appBar: AppBar(
-          //   automaticallyImplyLeading: false,
-          //   leading: IconButton(onPressed: (){
-          //     Get.back();
-          //   }, icon: const Icon(Icons.arrow_back_ios_new)),
-          //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          //   title: Text(widget.title),
-          // ),
-          body: ConsultingQueueController.i.checkcallresponse==false?Center(
-
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return GetBuilder<ConsultingQueueController>(builder: (cont) {
+      return Scaffold(
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   leading: IconButton(onPressed: (){
+        //     Get.back();
+        //   }, icon: const Icon(Icons.arrow_back_ios_new)),
+        //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        //   title: Text(widget.title),
+        // ),
+        body: ConsultingQueueController.i.checkcallresponse == false
+            ? Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   CircleAvatar(
-                    
-                  child: widget.data.patientImagePath !=
-                                                                      null
-                                                                  ? ClipRRect(
-                                                                    borderRadius: BorderRadius.circular(20),
-                                                                    child: CachedNetworkImage(
-                                                                      height: Get.width*0.2,
-                                                                        imageUrl:baseURL +
-                                                                            widget.data.
-                                                                                patientImagePath,
-                                                                        fit: BoxFit
-                                                                            .fill,
-                                                                        errorWidget: (context,
-                                                                                url,
-                                                                                error) =>
-                                                                            Image.asset(
-                                                                                Images
-                                                                                    .avator),
-                                                                      ),
-                                                                  ) : ClipRRect(
-                                                                    borderRadius: BorderRadius.circular(20),
-                                                                    child: Image.asset(
-                                                                      height: Get.width*0.2,
-                                                                        Images
-                                                                            .avator),
-                                                                  ),
+                  CircleAvatar(
+                    child: widget.data.patientImagePath != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: CachedNetworkImage(
+                              height: Get.width * 0.2,
+                              imageUrl: baseURL + widget.data.patientImagePath,
+                              fit: BoxFit.fill,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(Images.avator),
+                            ),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                                height: Get.width * 0.2, Images.avator),
+                          ),
                   ),
                   SizedBox(
-                    height: Get.height*0.05,
+                    height: Get.height * 0.05,
                   ),
-                  Text(widget.data.patientName??"Patient Name"),
+                  Text(widget.data.patientName ?? "Patient Name"),
                   SizedBox(
-                    height: Get.height*0.05,
+                    height: Get.height * 0.05,
                   ),
                   const Text("Waiting for the Patient...")
                 ],
-              )):Center(
-            child: SizedBox(
-              child: InAppWebView(
-                  initialUrlRequest: URLRequest(
-                      url: Uri.parse(
-                          "${widget.title}#config.disableDeepLinking=true")),
-                  initialOptions: InAppWebViewGroupOptions(
-                    crossPlatform: InAppWebViewOptions(
-                      mediaPlaybackRequiresUserGesture: false,
-                    ),
-                  ),
-                  onWebViewCreated: (InAppWebViewController controller) {
-                    controller;
-                  },
-                  androidOnPermissionRequest: (InAppWebViewController controller,
-                      String origin, List<String> resources) async {
-                    return PermissionRequestResponse(
-                        resources: resources,
-                        action: PermissionRequestResponseAction.GRANT);
-                  }),
-            ),
-          ),
+              ))
+            : Center(
+                child: SizedBox(
+                  child: InAppWebView(
+                      initialUrlRequest: URLRequest(
+                          url: Uri.parse(
+                              "${widget.title}#config.disableDeepLinking=true")),
+                      initialOptions: InAppWebViewGroupOptions(
+                        crossPlatform: InAppWebViewOptions(
+                          mediaPlaybackRequiresUserGesture: false,
+                        ),
+                      ),
+                      onWebViewCreated: (InAppWebViewController controller) {
+                        controller;
+                      },
+                      androidOnPermissionRequest:
+                          (InAppWebViewController controller, String origin,
+                              List<String> resources) async {
+                        return PermissionRequestResponse(
+                            resources: resources,
+                            action: PermissionRequestResponseAction.GRANT);
+                      }),
+                ),
+              ),
 
-          floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-          floatingActionButton: ConsultingQueueController.i.checkcallresponse==true?FloatingActionButton(
-            shape:  RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15)
-            ),
-              onPressed: () {
-                  showModalBottomSheet<void>(
-                   isDismissible: false, 
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    height: Get.height*0.5,
-                    color: Colors.amber,
-                    child:  PrescribeMedicineScreen(
-                                checkfirst: widget.checkfirst,
-                                patientid: widget.patientid,
-                                patientstatusvalue: widget.patientstatusvalue,
-                                prescribedvalue: widget.patientstatusvalue,
-                                visitno: widget.visitno,
-                              ),
-                  );
-                },
-              );
-                // Get.to(() => PrescribeMedicineScreen(
-                //       checkfirst: true,
-                //       patientstatusvalue: widget.patientstatusvalue.toString(),
-                //       patientid: widget.patientid,
-                //       visitno: widget.visitno,
-                //       prescribedvalue: widget.prescribedvalue,
-                //     ));
-              },
-              child:  Image.asset(Images.rxeditcall,color: Colors.white,height: Get.height*0.05,)):const SizedBox.shrink(),
-        );
-      }
-    );
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton:
+            ConsultingQueueController.i.checkcallresponse == true
+                ? FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        isDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: Get.height * 0.5,
+                            color: Colors.amber,
+                            child: PrescribeMedicineScreen(
+                              checkfirst: widget.checkfirst,
+                              patientid: widget.patientid,
+                              patientstatusvalue: widget.patientstatusvalue,
+                              prescribedvalue: widget.patientstatusvalue,
+                              visitno: widget.visitno,
+                            ),
+                          );
+                        },
+                      );
+                      // Get.to(() => PrescribeMedicineScreen(
+                      //       checkfirst: true,
+                      //       patientstatusvalue: widget.patientstatusvalue.toString(),
+                      //       patientid: widget.patientid,
+                      //       visitno: widget.visitno,
+                      //       prescribedvalue: widget.prescribedvalue,
+                      //     ));
+                    },
+                    child: Image.asset(
+                      Images.rxeditcall,
+                      color: Colors.white,
+                      height: Get.height * 0.05,
+                    ))
+                : const SizedBox.shrink(),
+      );
+    });
   }
 }
 
