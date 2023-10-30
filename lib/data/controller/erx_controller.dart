@@ -263,18 +263,15 @@ class ERXController extends GetxController implements GetxService {
     selectedinvestigationList.clear();
     selectedproceduresList.clear();
     selectedinstructionList.clear();
-
     selectedmedicineList.clear();
     selectedmedicine == '';
     complaintList.clear();
-
     findingsController.clear();
     adviceController.clear();
     complaintController.clear();
     noteController.clear();
     medicineController.clear();
     qtyController.clear();
-
     deletedComplaintsList.clear();
     deletedprimarydiagnosisList.clear();
     deletedsecondarydiagnosisList.clear();
@@ -282,6 +279,13 @@ class ERXController extends GetxController implements GetxService {
     deletedinstructionList.clear();
     deletedinvestigationList.clear();
     deletedproceduresList.clear();
+    deletedmedicineList.clear();
+    finalmedicinellist.clear();
+    selectedlst.dateList!.clear();
+    selectedlst.medicineFrequencies!.clear();
+    selectedlst.medicineRoutes!.clear();
+    selectedlst.medicineDosages!.clear();
+
     // medicine selecteed and deleted clear
 
     update();
