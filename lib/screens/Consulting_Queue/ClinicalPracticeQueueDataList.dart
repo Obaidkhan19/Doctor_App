@@ -271,7 +271,7 @@ class _ClinicalPracticeQueueDataListState
                                                                   Get.to(() =>
                                                                       PrescribeMedicineScreen(
                                                                         checkfirst:
-                                                                            true,
+                                                                            "1",
                                                                         patientstatusvalue: manageAppointment
                                                                             .patientStatusValue
                                                                             .toString(),
@@ -304,7 +304,7 @@ class _ClinicalPracticeQueueDataListState
                                                                         data:
                                                                             manageAppointment,
                                                                         checkfirst:
-                                                                            true,
+                                                                            "1",
                                                                         patientstatusvalue: manageAppointment
                                                                             .patientStatusValue
                                                                             .toString(),
