@@ -361,10 +361,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  opencall() async {
-    Callrepo().callOpenPrescription(context, widget.data);
-  }
-
   final meetingNameController = TextEditingController();
   final jitsiMeet = JitsiMeet();
 
