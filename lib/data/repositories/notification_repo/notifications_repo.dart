@@ -59,7 +59,7 @@ class NotificationsRepo {
   firebaseInit() {
     FirebaseMessaging.onMessage.listen((message) async {
       // log(message.notification!.body.toString());
-
+      log(message.data.toString());
       // log(message.data.toString());
       log(message.notification!.title.toString());
       if (Platform.isAndroid) {

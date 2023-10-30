@@ -19,6 +19,14 @@ class ConsultingQueue extends StatefulWidget {
 
 class _ConsultingQueueState extends State<ConsultingQueue>
     with TickerProviderStateMixin {
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+     ConsultingQueueController.i.updateselectedindex(0);
+    super.dispose();
+  }
+
   @override
   void initState() {
     ConsultingQueueController.i.updatedate(DateTime.now());

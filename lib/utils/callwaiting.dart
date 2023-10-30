@@ -17,10 +17,10 @@ class Callwatingscreen extends StatefulWidget {
 }
 
 class _CallwatingscreenState extends State<Callwatingscreen> {
-int val=0;
+// int val=0;
 
 opencall() async{
- val = Callrepo().callOpenPrescription(context, widget.data!);
+ Callrepo().callOpenPrescription(context, widget.data!);
 
 }
 

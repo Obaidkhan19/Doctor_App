@@ -290,6 +290,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/data/repositories/callrepo.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
@@ -337,6 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    opencall();
     //  listener = JitsiMeetEventListener(
     //     conferenceJoined: (url) {
     //       debugPrint("conferenceJoined: url: $url");
@@ -355,6 +357,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ConsultingQueueController.i.updatecallresponse(false);
     super.dispose();
   }
+  opencall() async{
+ Callrepo().callOpenPrescription(context, widget.data);
+}
 
   final meetingNameController = TextEditingController();
   final jitsiMeet = JitsiMeet();
@@ -475,8 +480,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
-
+// dyeh4X8GThWroZ4c8qK_em:APA91bHo1gXBNvMwloR0vxjpMLlZ5Lauzw-v6_Zqba9Eytkzs5AYXDjxJ5m_n3ZoJyHUFEdGyl0fHgDYmOXvEmPKV2dSOPzGlvEO9twbDeVZflhb8ccC5EMJ0dsePLF8xehpNDsAoBFT
+//  dQhtMIqHTcOUEcSC-UbkM8:APA91bHxglRAmbEBoWl8QgCX6e0dH_W-doUkwDAXpZtypY5EedEKdDHQedcLm78nkvb2JUtv0xg34MQ8vwlNoEVTLw5aY442f8ZO-mFwuPqq3JzQSOmnkkNply4ZRiD-sULJdDYBlfHW
 
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be

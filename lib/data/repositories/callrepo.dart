@@ -9,16 +9,14 @@ class Callrepo{
 
    callOpenPrescription(context,consultingqueuewaitholdresponse data) async {
     var body = {
-      
     "PatientId":data.patientId,
     "DoctorId": data.doctorId,
     "VisitNo":data.visitNo,
     "BranchId":data.branchId,
-    "DeviceToken":"fYhmi25ZTSuCOHryO-FdTX:APA91bFtgRXjkWFUhzGl57bR4_ZnJOQtTRtqbVK2Bm9q8exsrZegSxOcsTSXzxZZJ1ebr4ckUlL-a3w6yMSN_kCg6g5UDBSLYYC8KRnaCW3rao5FK1qyNyYjp8mS9fQd53AVp7A21RAU",
+    "DeviceToken":"dyeh4X8GThWroZ4c8qK_em:APA91bHo1gXBNvMwloR0vxjpMLlZ5Lauzw-v6_Zqba9Eytkzs5AYXDjxJ5m_n3ZoJyHUFEdGyl0fHgDYmOXvEmPKV2dSOPzGlvEO9twbDeVZflhb8ccC5EMJ0dsePLF8xehpNDsAoBFT",
     "PrescribedInValue":"2".toString(),
     "IsFirstTimeVisit":data.isFirstTimeVisit==1?"true":"false",
     "IsOnline":"true"
-
     };
 
     // var headers = {'Content-Type': 'application/json'};
