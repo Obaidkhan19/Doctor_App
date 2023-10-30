@@ -286,7 +286,7 @@ class ERXController extends GetxController implements GetxService {
     selectedlst.medicineRoutes!.clear();
     selectedlst.medicineDosages!.clear();
 
-    // medicine selecteed and deleted clear
+    // smoker and diabetic false
 
     update();
   }
@@ -332,6 +332,7 @@ class ERXController extends GetxController implements GetxService {
   // PRIMARY DIAGNOSIS DATA
   List<PrimaryDiagnosis1> primarydiagnosisList = [];
   List<PrimaryDiagnosis1> selectedprimarydiagnosisList = [];
+  List<PrimaryDiagnosis1> checkboxselectedprimarydiagnosisList = [];
   List<String> deletedprimarydiagnosisList = [];
   updatePrimarydiagnosislist(List<PrimaryDiagnosis1> pdlist) {
     primarydiagnosisList = pdlist;
@@ -346,8 +347,21 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
+// ON SAVE BUTTON
   updateselectedPrimarydiagnosislist(List<PrimaryDiagnosis1> pdlist) {
     selectedprimarydiagnosisList = pdlist;
+    update();
+  }
+
+  // ON CHECKBOX CLICK
+  addcheckboxselectedPrimarydiagnosislist(PrimaryDiagnosis1 pd) {
+    checkboxselectedprimarydiagnosisList.add(pd);
+    update();
+  }
+
+  deletecheckboxselectedPrimarydiagnosislist(PrimaryDiagnosis1 pd) {
+    checkboxselectedprimarydiagnosisList
+        .removeWhere((element) => element.id == pd.id);
     update();
   }
 

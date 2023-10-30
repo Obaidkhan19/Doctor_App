@@ -256,7 +256,21 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         Row(
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                controller.clearLists();
+                                _getErnsDetailHistory();
+                                _getErnsHistory();
+                                _getMediciness();
+                                _getInstructions();
+                                _getFollowup();
+                                _getProceduress();
+                                _getPrimaryDiagnosis();
+                                _getSecondaryDiagnosis();
+                                _getComplaints();
+                                _getInvestigations();
+                                _getDiagnostics();
+                                setState(() {});
+                              },
                               child: SizedBox(
                                 height: Get.height * 0.05,
                                 width: Get.width * 0.1,
@@ -773,14 +787,17 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                     child: CustomTextField(
                                       readonly: true,
                                       onTap: () async {
-                                        PrimaryDiagnosis1 generic =
-                                            await searchabledropdown(
+                                        List<PrimaryDiagnosis1> result =
+                                            await searchableDropdownCheckBox(
                                                 context,
+                                                controller.primarydiagnosisList,
                                                 controller
-                                                        .primarydiagnosisList ??
-                                                    []);
-                                        await controller.addPrimaryDiagnosis(
-                                            generic, BuildContext);
+                                                    .selectedprimarydiagnosisList,
+                                                true,
+                                                'primary');
+                                        await controller
+                                            .updateselectedPrimarydiagnosislist(
+                                                result);
                                         setState(() {});
                                       },
                                       prefixIcon: const Icon(
