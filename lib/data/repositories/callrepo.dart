@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,13 @@ import 'package:http/http.dart' as http;
 
 class Callrepo {
   callOpenPrescription(context, consultingqueuewaitholdresponse data) async {
+    String dt = await LocalDb().getDeviceToken();
     var body = {
       "PatientId": data.patientId,
       "DoctorId": data.doctorId,
       "VisitNo": data.visitNo,
       "BranchId": data.branchId,
-      "DeviceToken":
-          "fYhmi25ZTSuCOHryO-FdTX:APA91bFtgRXjkWFUhzGl57bR4_ZnJOQtTRtqbVK2Bm9q8exsrZegSxOcsTSXzxZZJ1ebr4ckUlL-a3w6yMSN_kCg6g5UDBSLYYC8KRnaCW3rao5FK1qyNyYjp8mS9fQd53AVp7A21RAU",
+      "DeviceToken": dt,
       "PrescribedInValue": "2".toString(),
       "IsFirstTimeVisit": data.isFirstTimeVisit == 1 ? "true" : "false",
       "IsOnline": "true"

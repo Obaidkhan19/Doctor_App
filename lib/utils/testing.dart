@@ -360,9 +360,10 @@ class _MyHomePageState extends State<MyHomePage> {
     ConsultingQueueController.i.updatecallresponse(false);
     super.dispose();
   }
-//   opencall() async{
-//  Callrepo().callOpenPrescription(context, widget.data);
-// }
+
+  opencall() async {
+    Callrepo().callOpenPrescription(context, widget.data);
+  }
 
   final meetingNameController = TextEditingController();
   final jitsiMeet = JitsiMeet();
