@@ -14,7 +14,7 @@ class Callrepo {
       "VisitNo": data.visitNo,
       "BranchId": data.branchId,
       "DeviceToken":
-          "f-mzFf6DS0aresVFECDjLq:APA91bGR-ns4FcG23u2cg0O3IWrK2AuM-CALvxv7cBlccXmNm2tSqu4XVDcdpYtSuBs23KbsOhBBO9GndMn4QLSEyeA4fL25L57S6Bpw-uH1GOZyTukqd5c1eOq9CyaYhYvHWKsCNIlQ",
+          "fYhmi25ZTSuCOHryO-FdTX:APA91bFtgRXjkWFUhzGl57bR4_ZnJOQtTRtqbVK2Bm9q8exsrZegSxOcsTSXzxZZJ1ebr4ckUlL-a3w6yMSN_kCg6g5UDBSLYYC8KRnaCW3rao5FK1qyNyYjp8mS9fQd53AVp7A21RAU",
       "PrescribedInValue": "2".toString(),
       "IsFirstTimeVisit": data.isFirstTimeVisit == 1 ? "true" : "false",
       "IsOnline": "true"

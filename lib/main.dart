@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:doctormobileapplication/data/controller/language_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/helpers/theme_manager.dart';
@@ -20,6 +22,8 @@ Future<void> main() async {
   await NotificationsRepo().firebaseInit();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      
+ HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -71,5 +75,14 @@ class _MyAppState extends State<MyApp> {
       home: const SplashScreen(),
       initialBinding: AppBindings(),
     );
+  }
+}
+
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }

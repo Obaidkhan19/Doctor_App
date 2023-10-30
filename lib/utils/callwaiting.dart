@@ -1,13 +1,10 @@
-import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/repositories/callrepo.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
-import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,10 +17,10 @@ class Callwatingscreen extends StatefulWidget {
 }
 
 class _CallwatingscreenState extends State<Callwatingscreen> {
-int val=0;
+// int val=0;
 
 opencall() async{
- val = Callrepo().callOpenPrescription(context, widget.data!);
+ Callrepo().callOpenPrescription(context, widget.data!);
 
 }
 

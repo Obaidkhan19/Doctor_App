@@ -11,6 +11,7 @@
         tools:replace="android:label"
         android:label="Helpful Doctor"
         android:name="${applicationName}"
+        
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

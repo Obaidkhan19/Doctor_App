@@ -351,17 +351,18 @@ class _MyHomePageState extends State<MyHomePage> {
     //       debugPrint("readyToClose");
     //     },
     //   );
-
     //  call();
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     ConsultingQueueController.i.updatecallresponse(false);
     super.dispose();
   }
+  opencall() async{
+ Callrepo().callOpenPrescription(context, widget.data);
+}
 
   final meetingNameController = TextEditingController();
   final jitsiMeet = JitsiMeet();
@@ -478,8 +479,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
-
+// dyeh4X8GThWroZ4c8qK_em:APA91bHo1gXBNvMwloR0vxjpMLlZ5Lauzw-v6_Zqba9Eytkzs5AYXDjxJ5m_n3ZoJyHUFEdGyl0fHgDYmOXvEmPKV2dSOPzGlvEO9twbDeVZflhb8ccC5EMJ0dsePLF8xehpNDsAoBFT
+//  dQhtMIqHTcOUEcSC-UbkM8:APA91bHxglRAmbEBoWl8QgCX6e0dH_W-doUkwDAXpZtypY5EedEKdDHQedcLm78nkvb2JUtv0xg34MQ8vwlNoEVTLw5aY442f8ZO-mFwuPqq3JzQSOmnkkNply4ZRiD-sULJdDYBlfHW
 
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be

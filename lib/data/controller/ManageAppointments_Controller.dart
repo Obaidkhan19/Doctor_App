@@ -1,5 +1,4 @@
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
-import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:get/get.dart';
 
 import '../../models/DayViewAppointmentModel.dart';
