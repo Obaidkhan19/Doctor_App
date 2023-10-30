@@ -73,9 +73,9 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                           .onlineAppointmentStatistics !=
                       null
                   ? SingleChildScrollView(
-                      child: SafeArea(
-                      minimum:
-                          const EdgeInsets.all(AppPadding.p22).copyWith(top: 0),
+                      child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.05),
                       child: Column(children: [
                         (ManageAppointmentController
                                     .i

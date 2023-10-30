@@ -40,9 +40,30 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
     return '$formattedDate | $formattedTime';
   }
 
-  callback() async {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  int length = 10;
+
+  Future<void> callback() async {
     await ConsultingQueueController.i.updateIsloading(true);
-    await ConsultingQueueController.i.getpastconsultation();
+    await ConsultingQueueController.i.getpastconsultation(length);
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        var isCallToFetchData =
+            ConsultingQueueController.i.SetStartToFetchNextData();
+        if (isCallToFetchData) {
+          length = length + 10;
+          callback();
+        }
+      }
+    });
     await ConsultingQueueController.i.updateIsloading(false);
   }
 
@@ -112,134 +133,97 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                 ),
               ],
             ),
-            body: BlurryModalProgressHUD(
-              inAsyncCall: ConsultingQueueController.i.isLoading,
-              blurEffectIntensity: 4,
-              progressIndicator: const SpinKitSpinningLines(
-                color: Color(0xfff1272d3),
-                size: 60,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.background_image),
-                      alignment: Alignment.centerLeft),
+            body: RefreshIndicator(
+              onRefresh: callback,
+              child: BlurryModalProgressHUD(
+                inAsyncCall: ConsultingQueueController.i.isLoading,
+                blurEffectIntensity: 4,
+                progressIndicator: const SpinKitSpinningLines(
+                  color: Color(0xfff1272d3),
+                  size: 60,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.04,
-                    right: Get.width * 0.04,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(AppImages.background_image),
+                        alignment: Alignment.centerLeft),
                   ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ConsultingQueueController
-                                .i.pastconsultation.isNotEmpty
-                            ? ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: ConsultingQueueController
-                                    .i.pastconsultation.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  String consultedtime =
-                                      ConsultingQueueController
-                                              .i
-                                              .pastconsultation[index]
-                                              .consultationDetails![0]
-                                              .consultedTime ??
-                                          "";
-                                  String formatedate =
-                                      formatDatabaseTime(consultedtime);
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                      top: Get.height * 0.01,
-                                    ),
-                                    child: Card(
-                                      color: ColorManager.kPrimaryColor,
-                                      elevation: 4,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Get.width * 0.05,
+                    ),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ConsultingQueueController
+                                  .i.pastconsultation.isNotEmpty
+                              ? ListView.builder(
+                                  controller: _scrollController,
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: ConsultingQueueController
+                                      .i.pastconsultation.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    String consultedtime =
+                                        ConsultingQueueController
+                                                .i
+                                                .pastconsultation[index]
+                                                .consultationDetails![0]
+                                                .consultedTime ??
+                                            "";
+                                    String formatedate =
+                                        formatDatabaseTime(consultedtime);
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        top: Get.height * 0.01,
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: Get.height * 0.02,
-                                            bottom: Get.height * 0.02,
-                                            left: Get.width * 0.04,
-                                            right: Get.width * 0.04),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Image.asset(
-                                                      Images.consuledlocation,
-                                                      fit: BoxFit.fill,
-                                                      height: Get.height * 0.03,
-                                                    ),
-                                                    Text(
-                                                      " | ",
-                                                      style: GoogleFonts.poppins(
-                                                          color: ColorManager
-                                                              .kWhiteColor),
-                                                    ),
-                                                    SizedBox(
-                                                      width: Get.width * 0.3,
-                                                      child: Text(
-                                                        ConsultingQueueController
-                                                                .i
-                                                                .pastconsultation[
-                                                                    index]
-                                                                .locationName ??
-                                                            "",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kWhiteColor,
-                                                        ),
+                                      child: Card(
+                                        color: ColorManager.kPrimaryColor,
+                                        elevation: 4,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: Get.height * 0.02,
+                                              bottom: Get.height * 0.02,
+                                              left: Get.width * 0.04,
+                                              right: Get.width * 0.04),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        Images.consuledlocation,
+                                                        fit: BoxFit.fill,
+                                                        height:
+                                                            Get.height * 0.03,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        // Text(
-                                                        //   DateFormat.yMMMM().format(
-                                                        //           DateTime.parse(
-                                                        //               "${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[0]} ${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[1]}")) ??
-                                                        //       "",
-                                                        //   style: GoogleFonts
-                                                        //       .poppins(
-                                                        //     fontSize: 10,
-                                                        //     color: ColorManager
-                                                        //         .kWhiteColor,
-                                                        //   ),
-                                                        // ),
-                                                        // Text(
-                                                        //   " | ${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[1].toString().split(':')[0]}:${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[1].toString().split(':')[1]}",
-                                                        //   style: GoogleFonts
-                                                        //       .poppins(
-                                                        //     fontSize: 10,
-                                                        //     color: ColorManager
-                                                        //         .kWhiteColor,
-                                                        //   ),
-                                                        // )
-                                                        Text(
-                                                          // ConsultingQueueController
-                                                          //         .i
-                                                          //         .pastconsultation[
-                                                          //             index]
-                                                          //         .locationName ??
-                                                          //     "",
-                                                          formatedate,
+                                                      Text(
+                                                        " | ",
+                                                        style: GoogleFonts.poppins(
+                                                            color: ColorManager
+                                                                .kWhiteColor),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.3,
+                                                        child: Text(
+                                                          ConsultingQueueController
+                                                                  .i
+                                                                  .pastconsultation[
+                                                                      index]
+                                                                  .locationName ??
+                                                              "",
                                                           style: GoogleFonts
                                                               .poppins(
                                                             fontSize: 10,
@@ -247,129 +231,182 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                                                 .kWhiteColor,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: Get.height * 0.03,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      ConsultingQueueController
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          // Text(
+                                                          //   DateFormat.yMMMM().format(
+                                                          //           DateTime.parse(
+                                                          //               "${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[0]} ${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[1]}")) ??
+                                                          //       "",
+                                                          //   style: GoogleFonts
+                                                          //       .poppins(
+                                                          //     fontSize: 10,
+                                                          //     color: ColorManager
+                                                          //         .kWhiteColor,
+                                                          //   ),
+                                                          // ),
+                                                          // Text(
+                                                          //   " | ${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[1].toString().split(':')[0]}:${ConsultingQueueController.i.pastconsultation[index].consultationDetails![0].consultedTime.toString().split('T')[1].toString().split(':')[1]}",
+                                                          //   style: GoogleFonts
+                                                          //       .poppins(
+                                                          //     fontSize: 10,
+                                                          //     color: ColorManager
+                                                          //         .kWhiteColor,
+                                                          //   ),
+                                                          // )
+                                                          Text(
+                                                            // ConsultingQueueController
+                                                            //         .i
+                                                            //         .pastconsultation[
+                                                            //             index]
+                                                            //         .locationName ??
+                                                            //     "",
+                                                            formatedate,
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kWhiteColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.03,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        ConsultingQueueController
+                                                                .i
+                                                                .pastconsultation[
+                                                                    index]
+                                                                .patientName ??
+                                                            "",
+                                                        style: GoogleFonts.poppins(
+                                                            fontSize: 12,
+                                                            color: ColorManager
+                                                                .kWhiteColor,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        "${'mrno'.tr}${ConsultingQueueController.i.pastconsultation[index].mRNo}",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 11,
+                                                          color: ColorManager
+                                                              .kWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        'visitno'.tr,
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kWhiteColor,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        ' ${ConsultingQueueController.i.pastconsultation[index].consultationDetails?[0].visitNo}',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 10,
+                                                          color: ColorManager
+                                                              .kWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.01,
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(
+                                                    () => pdfviewconsulted(
+                                                      url: ConsultingQueueController
+                                                              .i
+                                                              .pastconsultation[
+                                                                  index]
+                                                              .consultationDetails?[
+                                                                  0]
+                                                              .uRL ??
+                                                          "",
+                                                      name: ConsultingQueueController
                                                               .i
                                                               .pastconsultation[
                                                                   index]
                                                               .patientName ??
                                                           "",
+                                                    ),
+                                                  );
+                                                },
+                                                child: Container(
+                                                  height: Get.height * 0.05,
+                                                  width: Get.width * 1,
+                                                  decoration: BoxDecoration(
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'erx'.tr,
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 12,
-                                                          color: ColorManager
-                                                              .kWhiteColor,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                              FontWeight.bold,
+                                                          color: ColorManager
+                                                              .kPrimaryColor),
                                                     ),
-                                                    Text(
-                                                      "${'mrno'.tr}${ConsultingQueueController.i.pastconsultation[index].mRNo}",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontSize: 11,
-                                                        color: ColorManager
-                                                            .kWhiteColor,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      'visitno'.tr,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kWhiteColor,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      ' ${ConsultingQueueController.i.pastconsultation[index].consultationDetails?[0].visitNo}',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontSize: 10,
-                                                        color: ColorManager
-                                                            .kWhiteColor,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: Get.height * 0.01,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(
-                                                  () => pdfviewconsulted(
-                                                    url: ConsultingQueueController
-                                                            .i
-                                                            .pastconsultation[
-                                                                index]
-                                                            .consultationDetails?[
-                                                                0]
-                                                            .uRL ??
-                                                        "",
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                height: Get.height * 0.05,
-                                                width: Get.width * 1,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      ColorManager.kWhiteColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'erx'.tr,
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: ColorManager
-                                                            .kPrimaryColor),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                })
-                            : Center(
-                                child: Text(
-                                  "No Record Found",
-                                  style: GoogleFonts.poppins(fontSize: 16),
+                                    );
+                                  })
+                              : Center(
+                                  child: Text(
+                                    "No Record Found",
+                                    style: GoogleFonts.poppins(fontSize: 16),
+                                  ),
                                 ),
-                              ),
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -451,7 +488,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                   ),
                                   prefix: Padding(
                                     padding:
-                                        EdgeInsets.only(left: Get.width * 0.03),
+                                        EdgeInsets.only(left: Get.width * 0.02),
                                     child: const Icon(
                                       Icons.calendar_month,
                                       color: CupertinoColors.black,
@@ -514,7 +551,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                                 ),
                                 prefix: Padding(
                                   padding:
-                                      EdgeInsets.only(left: Get.width * 0.03),
+                                      EdgeInsets.only(left: Get.width * 0.02),
                                   child: const Icon(
                                     Icons
                                         .calendar_month, // You can replace this with your desired icon

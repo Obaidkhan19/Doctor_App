@@ -60,7 +60,7 @@ class PrescribeMedicinRepo {
       dynamic data = jsonData['ErrorMessage'];
       return data;
     } else {
-      throw Exception('Failed to fetch patient details');
+      throw Exception('Failed');
     }
   }
 
@@ -411,15 +411,9 @@ class PrescribeMedicinRepo {
       "currentVisit": visitno,
       "CheckInTypeValue": 3,
       "ERNSBit": 3,
-      // "DoctorId": "E02F9E89-E261-4906-9B33-F49802DDEA5F",
-      // "BranchId": "d8340ed5-af5d-4f68-895b-0350114aab09",
-      // "PatientId": "eb85794a-cd8c-420e-899a-5c5115b5dd49",
-      // "VisitNo": "231005-A008",
-      // "ERNSBit": 1,
-      // "currentVisit": "231005-A008",
-      // "PrescribedInValue": 2,
-      // "CheckInTypeValue": 3
     });
+
+    print(body);
     try {
       ERXController.i.updateIsloading(true);
       var response = await http.post(uri,
@@ -452,6 +446,11 @@ class PrescribeMedicinRepo {
             .map((item) => Instructions1.fromJson(item))
             .toList();
 
+        List<dynamic> rawproceduresData = responseData['Procedures'] ?? [];
+        List<Procedures1> procedures = rawproceduresData
+            .map((item) => Procedures1.fromJson(item))
+            .toList();
+
         List<dynamic> followUpsData = responseData['FollowUps'] ?? [];
 
         FollowUps1 followUp = FollowUps1(
@@ -470,7 +469,7 @@ class PrescribeMedicinRepo {
           );
         }
 
-        List<dynamic> rawsdData = responseData['Diagnosis'] ?? [];
+        List<dynamic> rawsdData = responseData['SecondaryDiagnosis'] ?? [];
         List<SecondaryDiagnosis1> secondarydiagnosis = rawsdData
             .map((item) => SecondaryDiagnosis1.fromJson(item))
             .toList();
@@ -519,6 +518,7 @@ class PrescribeMedicinRepo {
           ERXController.i
               .updateselectedsecondaryDiagnosisList(secondarydiagnosis);
           ERXController.i.updateselectedInstructionList(instruction);
+          ERXController.i.updateselectedProceduresList(procedures);
           ERXController.i.addfollowup(followUp);
           ERXController.i.addadvice(advices);
           ERXController.i.addfindings(findings);

@@ -1,3 +1,4 @@
+import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/advice.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
@@ -94,6 +95,19 @@ class ERXController extends GetxController implements GetxService {
 
   updatemedindex() {
     medindex += 1;
+    update();
+  }
+
+  List<String> deletedmedicineList = [];
+  removefinalmedindex(int index) {
+    deletedmedicineList.add(finalmedicinellist[index].id!);
+    selectedlst.dateList?.removeAt(index);
+    selectedlst.dayList?.removeAt(index);
+    selectedlst.medicineRoutes?.removeAt(index);
+    selectedlst.medicineFrequencies?.removeAt(index);
+    selectedlst.medicineDosages?.removeAt(index);
+    finalmedicinellist.removeAt(index);
+
     update();
   }
 
@@ -261,6 +275,15 @@ class ERXController extends GetxController implements GetxService {
     medicineController.clear();
     qtyController.clear();
 
+    deletedComplaintsList.clear();
+    deletedprimarydiagnosisList.clear();
+    deletedsecondarydiagnosisList.clear();
+    deleteddiagnosticsList.clear();
+    deletedinstructionList.clear();
+    deletedinvestigationList.clear();
+    deletedproceduresList.clear();
+    // medicine selecteed and deleted clear
+
     update();
   }
 
@@ -274,6 +297,7 @@ class ERXController extends GetxController implements GetxService {
   // COMPLAINT DATA
   List<Complaints1> complaintsList = [];
   List<Complaints1> selectedComplaintsList = [];
+  List<String> deletedComplaintsList = [];
 
   updatecomplaintdata(List<Complaints1> clist) {
     complaintsList = clist;
@@ -295,6 +319,7 @@ class ERXController extends GetxController implements GetxService {
 
   deleteSelectedComplaintsList(String id) {
     selectedComplaintsList.removeWhere((element) => element.id == id);
+    deletedComplaintsList.add(id);
     update();
   }
 
@@ -303,6 +328,7 @@ class ERXController extends GetxController implements GetxService {
   // PRIMARY DIAGNOSIS DATA
   List<PrimaryDiagnosis1> primarydiagnosisList = [];
   List<PrimaryDiagnosis1> selectedprimarydiagnosisList = [];
+  List<String> deletedprimarydiagnosisList = [];
   updatePrimarydiagnosislist(List<PrimaryDiagnosis1> pdlist) {
     primarydiagnosisList = pdlist;
     update();
@@ -338,12 +364,14 @@ class ERXController extends GetxController implements GetxService {
 
   deleteselectedprimarydiagnosisList(String id) {
     selectedprimarydiagnosisList.removeWhere((element) => element.id == id);
+    deletedprimarydiagnosisList.add(id);
     update();
   }
 
   // SECONDAY DIAGNOSIS DATA
   List<SecondaryDiagnosis1> secondaryDiagnosisList = [];
   List<SecondaryDiagnosis1> selectedsecondaryDiagnosisList = [];
+  List<String> deletedsecondarydiagnosisList = [];
   updateSecondarydiagnosislist(List<SecondaryDiagnosis1> sdlist) {
     secondaryDiagnosisList = sdlist;
     update();
@@ -364,6 +392,7 @@ class ERXController extends GetxController implements GetxService {
 
   deleteselectedsecondaryDiagnosisList(String id) {
     selectedsecondaryDiagnosisList.removeWhere((element) => element.id == id);
+    deletedsecondarydiagnosisList.add(id);
     update();
   }
 
@@ -382,23 +411,32 @@ class ERXController extends GetxController implements GetxService {
   // INVESTIGATION DATA
   List<Investigations1> investigationList = [];
   List<Investigations1> selectedinvestigationList = [];
-  Investigations1? selectedinvestigation;
+  // Investigations1? selectedinvestigation;
+  List<String> deletedinvestigationList = [];
   updateInvestigationlist(List<Investigations1> ilist) {
     investigationList = ilist;
     update();
   }
 
-  addInvestigation() {
-    if (selectedinvestigationList.contains(selectedinvestigation)) {
-      showSnackbar(Get.context!, ' Already Selected');
-    } else {
-      selectedinvestigationList.add(selectedinvestigation!);
-    }
-    update();
-  }
+  // addInvestigation() {
+  //   if (selectedinvestigationList.contains(selectedinvestigation)) {
+  //     showSnackbar(Get.context!, ' Already Selected');
+  //   } else {
+  //     selectedinvestigationList.add(selectedinvestigation!);
+  //   }
+  //   update();
+  // }
 
-  updateinvestigation(Investigations1 investigations1) {
-    selectedinvestigation = investigations1;
+  // updateinvestigation(Investigations1 investigations1) {
+  //   selectedinvestigation = investigations1;
+  //   update();
+  // }
+
+  addInvestigation(Investigations1 c, ctx) {
+    if (selectedinvestigationList.contains(c)) {
+      showSnackbar(ctx, "Already Added");
+    }
+    selectedinvestigationList.add(c);
     update();
   }
 
@@ -409,12 +447,14 @@ class ERXController extends GetxController implements GetxService {
 
   deleteselectedInvestigationList(String id) {
     selectedinvestigationList.removeWhere((element) => element.id == id);
+    deletedinvestigationList.add(id);
     update();
   }
 
   // PROCEDURES DATA
   List<Procedures1> proceduresList = [];
   List<Procedures1> selectedproceduresList = [];
+  List<String> deletedproceduresList = [];
   updateProcedureslist(List<Procedures1> plist) {
     proceduresList = plist;
     update();
@@ -435,12 +475,14 @@ class ERXController extends GetxController implements GetxService {
 
   deleteSelectedProceduresList(String id) {
     selectedproceduresList.removeWhere((element) => element.id == id);
+    deletedproceduresList.add(id);
     update();
   }
 
   // INSTRUCTION DATA
   List<Instructions1> instructionList = [];
   List<Instructions1> selectedinstructionList = [];
+  List<String> deletedinstructionList = [];
   updateInstructionlist(List<Instructions1> ilist) {
     instructionList = ilist;
     update();
@@ -461,6 +503,7 @@ class ERXController extends GetxController implements GetxService {
 
   deleteSelectedinstructionList(String id) {
     selectedinstructionList.removeWhere((element) => element.id == id);
+    deletedinstructionList.add(id);
     update();
   }
 
@@ -516,19 +559,28 @@ class ERXController extends GetxController implements GetxService {
   // DIAGNOSTICS DATA
   List<Diagnostics1> diagnosticsList = [];
   List<Diagnostics1> selecteddiagnosticslist = [];
-  Diagnostics1? selecteddiagnostics;
+  List<String> deleteddiagnosticsList = [];
+  //Diagnostics1? selecteddiagnostics;
 
-  updatediagnostics(Diagnostics1 diagnostics1) {
-    selecteddiagnostics = diagnostics1;
-    update();
-  }
+  // updatediagnostics(Diagnostics1 diagnostics1) {
+  //   selecteddiagnostics = diagnostics1;
+  //   update();
+  // }
 
-  addDiagnostics() {
-    if (selecteddiagnosticslist.contains(selecteddiagnostics)) {
-      showSnackbar(Get.context!, ' Already Selected');
-    } else {
-      selecteddiagnosticslist.add(selecteddiagnostics!);
+  // addDiagnostics() {
+  //   if (selecteddiagnosticslist.contains(selecteddiagnostics)) {
+  //     showSnackbar(Get.context!, ' Already Selected');
+  //   } else {
+  //     selecteddiagnosticslist.add(selecteddiagnostics!);
+  //   }
+  //   update();
+  // }
+
+  addDiagnostics(Diagnostics1 c, ctx) {
+    if (selecteddiagnosticslist.contains(c)) {
+      showSnackbar(ctx, "Already Added");
     }
+    selecteddiagnosticslist.add(c);
     update();
   }
 
@@ -544,6 +596,7 @@ class ERXController extends GetxController implements GetxService {
 
   deleteSelecteddiagnosticsList(String id) {
     selecteddiagnosticslist.removeWhere((element) => element.id == id);
+    deleteddiagnosticsList.add(id);
     update();
   }
 
@@ -552,16 +605,6 @@ class ERXController extends GetxController implements GetxService {
   List<Medicines1> selectedmedicineList = [];
 
   List<Medicines1> finalmedicinellist = [];
-
-  removefinalmedindex(int index) {
-    selectedlst.dateList?.removeAt(index);
-    selectedlst.dayList?.removeAt(index);
-    selectedlst.medicineRoutes?.removeAt(index);
-    selectedlst.medicineFrequencies?.removeAt(index);
-    selectedlst.medicineDosages?.removeAt(index);
-    finalmedicinellist.removeAt(index);
-    update();
-  }
 
   updatefinalmed(Medicines1 m1) {
     finalmedicinellist.add(m1);
@@ -578,6 +621,7 @@ class ERXController extends GetxController implements GetxService {
       showSnackbar(ctx, "Already Added");
     }
     selectedmedicineList.add(c);
+
     update();
   }
 
@@ -588,6 +632,7 @@ class ERXController extends GetxController implements GetxService {
 
   deleteSelectedmedicineList(String id) {
     selectedmedicineList.removeWhere((element) => element.id == id);
+
     update();
   }
 

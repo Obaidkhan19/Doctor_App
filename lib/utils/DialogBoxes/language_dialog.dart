@@ -64,10 +64,14 @@ Future<String?> languageSelector(
               children: [
                 Expanded(
                   child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorManager.kPrimaryColor),
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: Text('cancel'.tr)),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorManager.kPrimaryColor),
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: Text(
+                      'cancel'.tr,
+                      style: const TextStyle(color: ColorManager.kWhiteColor),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
@@ -76,7 +80,7 @@ Future<String?> languageSelector(
                   return Expanded(
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorManager.kPrimaryLightColor),
+                            backgroundColor: ColorManager.kPrimaryColor),
                         onPressed: () {
                           Navigator.pop(context, 'ok'.tr);
                           cont.updateLocale(cont.selected!.locale!);
@@ -84,7 +88,8 @@ Future<String?> languageSelector(
                         },
                         child: Text(
                           'ok'.tr,
-                          style: const TextStyle(color: Colors.black),
+                          style:
+                              const TextStyle(color: ColorManager.kWhiteColor),
                         )),
                   );
                 })

@@ -775,7 +775,7 @@ addMedicine(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             content: SingleChildScrollView(
               child: SizedBox(
-                height: Get.height * 0.6,
+                height: Get.height * 0.54,
                 width: Get.width * 1,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -784,16 +784,16 @@ addMedicine(
                     SizedBox(
                       height: Get.height * 0.01,
                     ),
-                    Center(
-                      child: Text(
-                        "Medicines",
-                        style: GoogleFonts.poppins(
-                            fontSize: 12, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
+                    // Center(
+                    //   child: Text(
+                    //     "Medicines",
+                    //     style: GoogleFonts.poppins(
+                    //         fontSize: 12, fontWeight: FontWeight.w600),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: Get.height * 0.01,
+                    // ),
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding:
@@ -938,6 +938,8 @@ addMedicine(
                                           ? ERXController.i.medicineRoutes!
                                               .englishDefinition!
                                           : "Routes",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,

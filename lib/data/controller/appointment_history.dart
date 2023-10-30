@@ -23,8 +23,8 @@ class AppointmentHistoryController extends GetxController {
   }
 
   final dateFormatalert = DateFormat('yyyy-MM-dd');
-//  DateTime dateTimealert = DateTime.now().subtract(const Duration(days: 30));
-  DateTime dateTimealert = DateTime.now();
+  DateTime dateTimealert = DateTime.now().subtract(const Duration(days: 30));
+  // DateTime dateTimealert = DateTime.now();
   DateTime dateTime2alert = DateTime.now();
 
   List<BranchData> branchList = [];

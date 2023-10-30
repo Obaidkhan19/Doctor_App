@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
@@ -14,12 +13,12 @@ class ConsultingQueueController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   int tabindex = 0;
-  bool checkcallresponse= false;
-  updatecallresponse(bool x)
-  {
-    checkcallresponse=x;
+  bool checkcallresponse = false;
+  updatecallresponse(bool x) {
+    checkcallresponse = x;
     update();
   }
+
   updateselectedindex(int ind) {
     tabindex = ind;
     update();
@@ -45,6 +44,7 @@ class ConsultingQueueController extends GetxController implements GetxService {
 
   updateconsultingqueuewait(List<consultingqueuewaitholdresponse> wait) {
     consultingqueuewait = wait;
+
     update();
   }
 
@@ -127,8 +127,8 @@ class ConsultingQueueController extends GetxController implements GetxService {
     }
   }
 
-  getpastconsultation() async {
-    await ConsultingQueueRepo.GetConsultingQueue();
+  getpastconsultation(int length) async {
+    await ConsultingQueueRepo.GetConsultingQueue(length);
   }
 
   // getConsultingQueueData(String? Search, String? Status) async {

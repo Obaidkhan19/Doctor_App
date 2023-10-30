@@ -49,6 +49,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
               icon: const Icon(Icons.arrow_back_ios),
               color: ColorManager.kPrimaryColor,
               onPressed: () {
+                contr.tabindex = 0;
                 Navigator.pop(context);
               },
             ),

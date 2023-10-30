@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import '../../localDB/local_db.dart';
 
 class ConsultingQueueRepo {
-  static GetConsultingQueue() async {
+  static GetConsultingQueue(lenght) async {
     String? userId = await LocalDb().getDoctorId();
     String? branchId = await LocalDb().getBranchId();
     var body = {
@@ -34,12 +34,10 @@ class ConsultingQueueRepo {
       "IsOnline": AppointmentHistoryController.i.isOnline,
       "Token": "",
       "Start": "0",
-      "Length": "10",
+      "Length": lenght,
       "OrderColumn": "0",
       "OrderDir": "desc"
     };
-    print("pastconsultationbody");
-    print(body);
 
     var headers = {'Content-Type': 'application/json'};
     try {
@@ -113,6 +111,7 @@ class ConsultingQueueRepo {
           Uri.parse(AppConstants.consultingqueuewait),
           headers: headers,
           body: jsonEncode(body));
+      print(body);
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 0) {
