@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     // baseURL = remoteConfig.getString('URLQA');
     // if (baseURL == "") {
-    baseURL = 'http://192.168.88.254:324';
+    // baseURL = 'http://192.168.88.254:324';
     // }
   }
 
