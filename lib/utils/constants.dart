@@ -14,6 +14,8 @@ class AppConstants {
   // Branch ID
   //static  String branchID = "D8340ED5-AF5D-4F68-895B-0350114AAB09";
   // API Endpoints
+
+  static String updateimage = '$baseURL/api/doctor/UpdateImage';
   static String getLabs = '$baseURL/api/labs/GetLabs';
   static String getLabTests = '$baseURL/api/labs/GetLabTests';
   static String getPackages =
@@ -26,14 +28,35 @@ class AppConstants {
   static String login = '$baseURL/api/doctor/Signin';
   static String getGenders = '$baseURL/api/ddl/GetGenders';
   static String getMaritalStatus = '$baseURL/api/ddl/GetMaritalStatuses';
+
+  static String getbloodgroup = '$baseURL/api/ddl/GetBloodGroups';
+  static String getdesignation = '$baseURL/api/ddl/GetDesignations';
+  static String getreligion = '$baseURL/api/ddl/GetReligion';
+  static String getrelation = '$baseURL/api/ddl/GetRelationshipTypes';
+  static String getnokrelation = '$baseURL/api/ddl/GetNOKRelations';
+
   static String getTitle = '$baseURL/api/ddl/GetPersonTitle';
   static String getCountries = '$baseURL/api/ddl/GetCountries';
+
+  static String getDegree = '$baseURL/api/ddl/GetDegrees';
+  static String getLocations = '$baseURL/api/ddl/Location';
+
+  static String getBank = '$baseURL/api/ddl/GetBanks';
+  static String getfieldofstudy = '$baseURL/api/ddl/GetFieldOfStudies';
+
+  static String getinstitution = '$baseURL/api/ddl/GetInstitutions';
   static String getStatesOrProvince = '$baseURL/api/ddl/GetStateOrProvinces';
   static String getCities = '$baseURL/api/ddl/GetCities';
   static String deleteAccountURI = '$baseURL/api/account/DeletePatientAccount';
 
   static String getDoctorBasicInfo = "$baseURL/api/account/GetDoctorDetail";
+  static String updatedoctorpersonalinfo =
+      "$baseURL/api/doctor/UpdatePersonalInfo";
   static String updatedoctorprofile = "$baseURL/api/doctor/UpdatePersonalInfo";
+
+  static String updatedoctorcontact = "$baseURL/api/doctor/UpdateContact";
+
+  static String cancelcall = "$baseURL/api/doctor/DropCall";
 
   ///api/ddl/AppointmentConfiguration
   static String appointconfiguration =
@@ -119,6 +142,8 @@ class AppConstants {
   static String consultingqueuepatient = '$baseURL/api/doctor/GetConsultations';
 
   static String consultingqueuewait = '$baseURL/api/doctor/WaitingQueue';
+
+  static String notification = '$baseURL/api/account/GetUserNotifications';
 
   static const int maximumDataTobeFetched = 25;
   static int myrownumber = 0;

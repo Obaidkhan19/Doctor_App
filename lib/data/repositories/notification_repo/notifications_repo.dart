@@ -1,13 +1,19 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as dm;
 
+import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/data/controller/notification_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/models/notification_model.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../screens/Consulting_Queue/ConsultingQueue.dart';
 
 class NotificationsRepo {
@@ -66,8 +72,11 @@ class NotificationsRepo {
         initLocalNotifications(message);
       }
       await showNotifications(message);
-      if(message.notification!.title.toString().toLowerCase().replaceAll(' ', '')=='Accepted Consulatation'.toLowerCase().replaceAll(' ', ''))
-      {
+      if (message.notification!.title
+              .toString()
+              .toLowerCase()
+              .replaceAll(' ', '') ==
+          'Accepted Consulatation'.toLowerCase().replaceAll(' ', '')) {
         ConsultingQueueController.i.updatecallresponse(true);
       }
     });
@@ -131,4 +140,47 @@ class NotificationsRepo {
   //
   // @pragma('vm:entry-point')
   // Future<void> terminatedSatae(RemoteMessage message) async {}
+
+  Getnotification(fromdate, todate, length, search) async {
+    String? userId = await LocalDb().getDoctorId();
+    String? branchId = await LocalDb().getBranchId();
+    String? DeviceToken = await LocalDb().getDeviceToken();
+
+    var body = {
+      'UserId': userId,
+      'BranchId': branchId,
+      'FromDate': fromdate,
+      'ToDate': todate,
+      'length': length,
+      'start': 0,
+      'Search': search,
+      'OrderDir': "desc",
+      'OrderColumn': 0,
+      'Token': DeviceToken,
+    };
+    print(body);
+    var headers = {'Content-Type': 'application/json'};
+    try {
+      var response = await http.post(Uri.parse(AppConstants.notification),
+          headers: headers, body: jsonEncode(body));
+      // print(body);
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+
+        if (result['Status'] == 0) {
+          showSnackbar(Get.context!, 'Failed to get');
+        } else if (result['Status'] == 1) {
+          Iterable lst = result['data'];
+          List<NotificationModel> rep =
+              lst.map((e) => NotificationModel.fromJson(e)).toList();
+
+          NotificationController.i.updatenotificationlist(rep);
+        }
+      } else {
+        log(response.statusCode.toString());
+      }
+    } catch (e) {
+      log('$e exception caught');
+    }
+  }
 }

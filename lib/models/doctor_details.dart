@@ -445,10 +445,10 @@ class Educations {
   String? endDate;
   String? issueDate;
   String? gradingCriteria;
-  int? totalMarks;
-  int? obtainedMarks;
-  int? obtainedPercentage;
-  String? userGrade;
+  dynamic totalMarks;
+  dynamic obtainedMarks;
+  dynamic obtainedPercentage;
+  dynamic userGrade;
 
   Educations(
       {this.id,
@@ -524,7 +524,7 @@ class Expereinces {
   String? locatioName;
   String? fromDate;
   String? toDate;
-  bool? isCurrentWorking;
+  dynamic isCurrentWorking;
   String? description;
   String? path;
 
@@ -579,8 +579,8 @@ class Specialities {
   String? specialityId;
   String? subSpecialityId;
   String? modifiedOn;
-  int? isDefault;
-  int? isSubSpecilityDefault;
+  dynamic isDefault;
+  dynamic isSubSpecilityDefault;
 
   Specialities(
       {this.id,
@@ -626,7 +626,7 @@ class Memberships {
   String? locationId;
   String? fromDate;
   String? toDate;
-  bool? isCurrent;
+  dynamic isCurrent;
   String? organizationName;
   String? location;
   String? description;
@@ -747,9 +747,9 @@ class BankAccounts {
   String? doctorId;
   String? bankId;
   String? bankName;
-  bool? isDefault;
+  dynamic isDefault;
   String? path;
-  int? isActive;
+  dynamic isActive;
 
   BankAccounts(
       {this.id,
@@ -808,7 +808,7 @@ class AppointmentConfigurations {
   double? consultancyFee;
   double? followupFee;
   dynamic slotDuration;
-  int? noofFollowupDays;
+  dynamic noofFollowupDays;
   dynamic isOnlineConfiguration;
   dynamic isActive;
   dynamic actionDate;

@@ -350,6 +350,9 @@ class ERXController extends GetxController implements GetxService {
 // ON SAVE BUTTON
   updateselectedPrimarydiagnosislist(List<PrimaryDiagnosis1> pdlist) {
     selectedprimarydiagnosisList = pdlist;
+
+    checkboxselectedprimarydiagnosisList = pdlist;
+
     update();
   }
 
@@ -362,21 +365,19 @@ class ERXController extends GetxController implements GetxService {
   deletecheckboxselectedPrimarydiagnosislist(PrimaryDiagnosis1 pd) {
     checkboxselectedprimarydiagnosisList
         .removeWhere((element) => element.id == pd.id);
+
+    // also add items in removing list
+    deletedprimarydiagnosisList.add(pd.id!);
     update();
   }
 
   void updateprimarycomments(String id, String comment) {
-    final itemToUpdate = selectedprimarydiagnosisList.firstWhere(
+    final itemToUpdate = checkboxselectedprimarydiagnosisList.firstWhere(
       (item) => item.id == id,
       orElse: () => PrimaryDiagnosis1(),
     );
     itemToUpdate.comments = comment;
     trailingtextController.clear();
-    update();
-  }
-
-  updateprimaryDiagnosis(List<PrimaryDiagnosis1> pdlist) {
-    selectedprimarydiagnosisList = pdlist;
     update();
   }
 

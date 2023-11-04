@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
@@ -42,24 +43,176 @@ class ConsultingQueueController extends GetxController implements GetxService {
   List<consultingqueuewaitholdresponse> consultingqueuewait = [];
   List<consultingqueuewaitholdresponse> consultingqueuehold = [];
 
-  updateconsultingqueuewait(List<consultingqueuewaitholdresponse> wait) {
-    consultingqueuewait = wait;
-
-    update();
-  }
-
-  updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait) {
-    consultingqueuehold = wait;
-    update();
-  }
-
   getPageIndexofAll() {
     return _index;
   }
 
+// WAITING
+
+  RxList<String> startTimeswait = <String>[].obs;
+  List<Timer> timerswait = [];
+  List<String> stwait = [];
+
+  updateconsultingqueuewait(List<consultingqueuewaitholdresponse> wait) {
+    consultingqueuewait = wait;
+
+    stopAndClearTimerswait();
+    stwait.clear();
+    for (int i = 0; i < wait.length; i++) {
+      stwait.add(wait[i].waitingTime);
+    }
+    starttimerswait();
+    update();
+
+    update();
+  }
+
+  starttimerswait() {
+    startTimeswait.assignAll(stwait);
+    startTimerswait();
+  }
+
+  void stopAndClearTimerswait() {
+    for (var timer in timerswait) {
+      timer.cancel();
+    }
+    timerswait.clear();
+  }
+
+  void startTimerswait() {
+    stopAndClearTimerswait();
+    for (int i = 0; i < startTimeswait.length; i++) {
+      timerswait.add(Timer.periodic(const Duration(seconds: 1), (timer) {
+        startTimeswait[i] = incrementTimeByOneSecondwait(startTimeswait[i]);
+        update();
+      }));
+    }
+  }
+
+  String incrementTimeByOneSecondwait(String time) {
+    final timeParts = time.split(':');
+    final hours = int.parse(timeParts[0]);
+    final minutes = int.parse(timeParts[1]);
+    final seconds = int.parse(timeParts[2]);
+
+    final newSeconds = seconds + 1;
+    if (newSeconds >= 60) {
+      final newMinutes = minutes + 1;
+      final newHours = hours + (newMinutes ~/ 60);
+      return '${(newHours % 24).toString().padLeft(2, '0')}:${(newMinutes % 60).toString().padLeft(2, '0')}:${(newSeconds % 60).toString().padLeft(2, '0')}';
+    } else {
+      return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${newSeconds.toString().padLeft(2, '0')}';
+    }
+  }
+
+// HOLD
+
+  RxList<String> startTimeshold = <String>[].obs;
+  List<Timer> timershold = [];
+  List<String> sthold = [];
+
+  updateconsultingqueuehold(List<consultingqueuewaitholdresponse> wait) {
+    consultingqueuehold = wait;
+    stopAndClearTimersHold();
+    sthold.clear();
+    for (int i = 0; i < wait.length; i++) {
+      sthold.add(wait[i].waitingTime);
+    }
+    starttimershold();
+    update();
+  }
+
+  starttimershold() {
+    startTimeshold.assignAll(sthold);
+    startTimershold();
+  }
+
+  void stopAndClearTimersHold() {
+    for (var timer in timersconsulted) {
+      timer.cancel();
+    }
+    timersconsulted.clear();
+  }
+
+  void startTimershold() {
+    stopAndClearTimersHold();
+    for (int i = 0; i < startTimeshold.length; i++) {
+      timershold.add(Timer.periodic(const Duration(seconds: 1), (timer) {
+        startTimeshold[i] = incrementTimeByOneSecondHold(startTimeshold[i]);
+        update();
+      }));
+    }
+  }
+
+  String incrementTimeByOneSecondHold(String time) {
+    final timeParts = time.split(':');
+    final hours = int.parse(timeParts[0]);
+    final minutes = int.parse(timeParts[1]);
+    final seconds = int.parse(timeParts[2]);
+
+    final newSeconds = seconds + 1;
+    if (newSeconds >= 60) {
+      final newMinutes = minutes + 1;
+      final newHours = hours + (newMinutes ~/ 60);
+      return '${(newHours % 24).toString().padLeft(2, '0')}:${(newMinutes % 60).toString().padLeft(2, '0')}:${(newSeconds % 60).toString().padLeft(2, '0')}';
+    } else {
+      return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${newSeconds.toString().padLeft(2, '0')}';
+    }
+  }
+
+  //CONSULTED
+  RxList<String> startTimesconsulted = <String>[].obs;
+  List<Timer> timersconsulted = [];
+  List<String> stconsulted = [];
   updateconsultinglist(List<consultingqueuewaitholdresponse> data) {
     response = data;
+    stopAndClearTimersConsulted();
+    stconsulted.clear();
+    for (int i = 0; i < data.length; i++) {
+      stconsulted.add(data[i].waitingTime);
+    }
+    starttimersconsulted();
     update();
+  }
+
+  starttimersconsulted() {
+    startTimesconsulted.assignAll(stconsulted);
+    startTimersconsulted();
+  }
+
+  void stopAndClearTimersConsulted() {
+    for (var timer in timersconsulted) {
+      timer.cancel();
+    }
+    timersconsulted.clear();
+  }
+
+  void startTimersconsulted() {
+    stopAndClearTimersConsulted();
+
+    for (int i = 0; i < startTimesconsulted.length; i++) {
+      timersconsulted.add(Timer.periodic(const Duration(seconds: 1), (timer) {
+        startTimesconsulted[i] =
+            incrementTimeByOneSecondconsulted(startTimesconsulted[i]);
+        update();
+      }));
+    }
+  }
+
+  String incrementTimeByOneSecondconsulted(String time) {
+    final timeParts = time.split(':');
+    final hours = int.parse(timeParts[0]);
+    final minutes = int.parse(timeParts[1]);
+    final seconds = int.parse(timeParts[2]);
+
+    final newSeconds = seconds + 1;
+    if (newSeconds >= 60) {
+      final newMinutes = minutes + 1;
+      final newHours = hours + (newMinutes ~/ 60);
+      return '${(newHours % 24).toString().padLeft(2, '0')}:${(newMinutes % 60).toString().padLeft(2, '0')}:${(newSeconds % 60).toString().padLeft(2, '0')}';
+    } else {
+      return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${newSeconds.toString().padLeft(2, '0')}';
+    }
   }
 
 // CONSULTED VAULT

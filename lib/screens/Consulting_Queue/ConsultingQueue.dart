@@ -19,11 +19,10 @@ class ConsultingQueue extends StatefulWidget {
 
 class _ConsultingQueueState extends State<ConsultingQueue>
     with TickerProviderStateMixin {
-
-@override
+  @override
   void dispose() {
     // TODO: implement dispose
-     ConsultingQueueController.i.updateselectedindex(0);
+    ConsultingQueueController.i.updateselectedindex(0);
     super.dispose();
   }
 
@@ -33,8 +32,6 @@ class _ConsultingQueueState extends State<ConsultingQueue>
 
     super.initState();
   }
-
-  String? SelectedDate;
 
   @override
   Widget build(BuildContext context) {

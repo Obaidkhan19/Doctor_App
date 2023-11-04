@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
                                       .i.selectedbasicInfo?.picturePath
                               : "",
                           width: Get.width * 0.16,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           errorWidget: (context, url, error) =>
                               Image.asset(AppImages.doctorlogo),
                         ),

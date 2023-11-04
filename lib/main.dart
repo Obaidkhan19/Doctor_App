@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:doctormobileapplication/data/controller/language_controller.dart';
@@ -5,6 +6,7 @@ import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/helpers/theme_manager.dart';
 import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:doctormobileapplication/screens/splash_screen/splash_screen.dart';
+import 'package:doctormobileapplication/screens/wallet_screens/test_timer.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/init/init.dart';
 import 'package:doctormobileapplication/utils/languages.dart';
@@ -22,8 +24,8 @@ Future<void> main() async {
   await NotificationsRepo().firebaseInit();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-      
- HttpOverrides.global = MyHttpOverrides();
+
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -78,11 +80,11 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
- class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

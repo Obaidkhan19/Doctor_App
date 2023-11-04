@@ -39,6 +39,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
   void dispose() {
     _scrollController.dispose();
     ConsultingQueueController.i.clearAllLists(widget.Status.toString());
+
     super.dispose();
   }
 
@@ -61,7 +62,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         length: "10",
         orderColumn: "0",
         orderDir: "desc"));
-    ConsultingQueueController.i.clearAllLists(widget.Status.toString());
+    await ConsultingQueueController.i.clearAllLists(widget.Status.toString());
 
     SearchFieldController.clear();
     _scrollController.addListener(() {
@@ -82,11 +83,9 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
   @override
   void initState() {
     callback();
-
     super.initState();
   }
 
-//ConsultedDataList
   @override
   Widget build(BuildContext context) {
     var contr = Get.put<ConsultingQueueController>(ConsultingQueueController());
@@ -393,7 +392,8 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                                'Waiting Since ${contr.startTimesconsulted[index] ?? ""}',
+                                                                //'Waiting Since ${contr.startTimes[index] }',
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(

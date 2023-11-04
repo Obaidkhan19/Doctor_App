@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:doctormobileapplication/components/primary_button.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
+import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -171,7 +173,7 @@ Future<String?> searchableDropdownRadioButton(
 Future<dynamic> searchableDropdownCheckBox(
   BuildContext context,
   List<dynamic> list,
-  List<dynamic> selectedItems,
+  List<dynamic> checkboxselectedItems,
   bool trailingvisibility,
   String listname,
 ) async {
@@ -183,188 +185,211 @@ Future<dynamic> searchableDropdownCheckBox(
     barrierDismissible: false,
     context: context,
     builder: (context) {
-      return StatefulBuilder(
-        builder: (context, setState) {
-          return SizedBox(
-            width: Get.width,
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: AlertDialog(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              content: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(width: Get.width * 0.05),
-                        Text(
-                          'Search',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            textStyle: GoogleFonts.poppins(
-                              fontSize: 12,
+      return GetBuilder<ERXController>(
+        builder: (contx) => StatefulBuilder(
+          builder: (context, setState) {
+            return SizedBox(
+              width: Get.width,
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: AlertDialog(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: Get.width * 0.25,
+                          ),
+                          Text(
+                            'Search',
+                            style: GoogleFonts.poppins(
+                              textStyle: GoogleFonts.poppins(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.back();
+                          SizedBox(
+                            width: Get.width * 0.15,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: const Icon(
+                              Icons.close_outlined,
+                              size: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.03,
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.07,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 10),
+                            hintStyle: GoogleFonts.poppins(
+                                color: ColorManager.kPrimaryColor),
+                            hintText: 'Search',
+                            filled: true,
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: ColorManager.kPrimaryLightColor),
+                                borderRadius: BorderRadius.circular(8)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryLightColor),
+                            ),
+                            fillColor: ColorManager.kPrimaryLightColor,
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: ColorManager.kPrimaryColor,
+                            ),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorManager.kPrimaryLightColor),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(0.0),
+                              ),
+                            ),
+                          ),
+                          controller: search,
+                          onChanged: (val) {
+                            title = val;
+                            setState(() {
+                              title = val;
+                            });
                           },
-                          child: const Icon(
-                            Icons.close_outlined,
-                            size: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.03,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 20),
-                        hintStyle: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w900,
-                            color: ColorManager.kPrimaryColor),
-                        hintText: 'Search',
-                        filled: true,
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryLightColor),
-                            borderRadius: BorderRadius.circular(8)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(
-                              color: ColorManager.kPrimaryLightColor),
-                        ),
-                        fillColor: ColorManager.kPrimaryLightColor,
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: ColorManager.kPrimaryColor,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: ColorManager.kPrimaryLightColor),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(0.0),
-                          ),
                         ),
                       ),
-                      controller: search,
-                      onChanged: (val) {
-                        title = val;
-                        setState(() {
-                          title = val;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.4,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: list.length,
-                        itemBuilder: ((context, index) {
-                          final isChecked = selectedItems.contains(list[index]);
-                          if (search.text.isEmpty ||
-                              list[index]
-                                  .name!
-                                  .toLowerCase()
-                                  .contains(title.toLowerCase())) {
-                            return ListTile(
-                              dense: true,
-                              minVerticalPadding: 0,
-                              contentPadding: EdgeInsets.zero,
-                              visualDensity: const VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              title: Row(
-                                children: [
-                                  Checkbox(
-                                    visualDensity: const VisualDensity(
-                                        horizontal: 0.01, vertical: 0.0),
-                                    value: isChecked,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        if (value != null) {
-                                          if (value) {
-                                            selectedItems.add(list[index]);
-                                          } else {
-                                            selectedItems.remove(list[index]);
-                                          }
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  if (trailingvisibility == false)
-                                    SizedBox(
-                                      width: Get.width * 0.42,
-                                      child: Text(
-                                        list[index].name.toString(),
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 10,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ),
-                                  if (trailingvisibility == true)
-                                    SizedBox(
-                                      width: Get.width * 0.32,
-                                      child: Text(
-                                        list[index].name.toString(),
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 10,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    )
-                                ],
-                              ),
-                              trailing: Visibility(
-                                visible: trailingvisibility,
-                                child: IconButton(
-                                  onPressed: () {
-                                    addComment(
-                                        context, list[index].id, listname);
-                                  },
-                                  icon: const Icon(Icons.add_box_outlined),
-                                ),
-                              ),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    PrimaryButton(
-                      title: 'Save',
-                      fontSize: 12,
-                      height: Get.height * 0.07,
-                      width: Get.width * 0.5,
-                      onPressed: () {
-                        Get.back();
-                        completer.complete(selectedItems);
+                      SizedBox(
+                        height: Get.height * 0.4,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: list.length,
+                          itemBuilder: ((context, index) {
+                            bool isSelected = checkboxselectedItems.any(
+                                (selectedItem) =>
+                                    selectedItem.id == list[index].id);
 
-                        // Navigator.of(context).pop(selectedItems);
-                      },
-                      color: ColorManager.kPrimaryColor,
-                      textcolor: ColorManager.kWhiteColor,
-                    ),
-                  ],
+                            if (search.text.isEmpty ||
+                                list[index]
+                                    .name!
+                                    .toLowerCase()
+                                    .contains(title.toLowerCase())) {
+                              return ListTile(
+                                dense: true,
+                                minVerticalPadding: 0,
+                                contentPadding: EdgeInsets.zero,
+                                visualDensity: const VisualDensity(
+                                    horizontal: 0, vertical: -4),
+                                title: Row(
+                                  children: [
+                                    Checkbox(
+                                      activeColor: ColorManager.kPrimaryColor,
+                                      visualDensity: const VisualDensity(
+                                          horizontal: 0.01, vertical: 0.0),
+                                      value: isSelected,
+                                      // onChanged: (bool? value) {
+                                      //   if (value != null) {
+                                      //     if (value) {
+                                      //       ERXController.i
+                                      //           .addcheckboxselectedPrimarydiagnosislist(
+                                      //               list[index]);
+                                      //     } else {
+                                      //       ERXController.i
+                                      //           .deletecheckboxselectedPrimarydiagnosislist(
+                                      //               list[index]);
+                                      //     }
+                                      //   }
+                                      // },
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          if (value != null) {
+                                            if (value) {
+                                              checkboxselectedItems
+                                                  .add(list[index]);
+                                            } else {
+                                              checkboxselectedItems
+                                                  .remove(list[index]);
+                                            }
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    if (trailingvisibility == false)
+                                      SizedBox(
+                                        width: Get.width * 0.42,
+                                        child: Text(
+                                          list[index].name.toString(),
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 10,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    if (trailingvisibility == true)
+                                      SizedBox(
+                                        width: Get.width * 0.32,
+                                        child: Text(
+                                          list[index].name.toString(),
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 10,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      )
+                                  ],
+                                ),
+                                trailing: Visibility(
+                                  visible: trailingvisibility,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      addComment(context, list[index].id ?? "",
+                                          listname);
+                                    },
+                                    icon: const Icon(Icons.add_box_outlined),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+                      PrimaryButton(
+                        title: 'Save',
+                        fontSize: 12,
+                        height: Get.height * 0.05,
+                        width: Get.width * 0.55,
+                        onPressed: () {
+                          Get.back();
+                          completer.complete(checkboxselectedItems);
+                        },
+                        color: ColorManager.kPrimaryColor,
+                        textcolor: ColorManager.kWhiteColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       );
     },
   );
@@ -540,6 +565,8 @@ deleteSelected(
                       controller.deleteFindingList(id);
                     } else if (name == 'complaints') {
                       controller.deleteSelectedComplaintsList(id);
+                    } else if (name == 'designation') {
+                      EditProfileController.i.deleteSelectedComplaintsList(id);
                     }
 
                     Get.back();
@@ -718,14 +745,14 @@ addComment(BuildContext context, String id, String listname) async {
                   onPressed: () {
                     //  print(object)
                     if (listname == "primary") {
-                      controller.updateprimarycomments(
-                          id, controller.trailingtextController.text);
+                      controller.updateprimarycomments(id,
+                          controller.trailingtextController.text.toString());
                       Get.back();
                     }
 
                     if (listname == "secondary") {
-                      controller.updatesecondartcomments(
-                          id, controller.trailingtextController.text);
+                      controller.updatesecondartcomments(id,
+                          controller.trailingtextController.text.toString());
                       Get.back();
                     }
                   },

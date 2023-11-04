@@ -142,7 +142,7 @@ class _EditProfileState extends State<EditProfile> {
           icon: const Icon(Icons.arrow_back_ios),
           color: ColorManager.kPrimaryColor,
           onPressed: () {
-            Navigator.pop(context);
+            Get.back(result: true);
           },
         ),
         // InkWell(
@@ -206,8 +206,14 @@ class _EditProfileState extends State<EditProfile> {
                               radius: 15,
                               backgroundColor: Colors.green,
                               child: IconButton(
-                                  onPressed: () {
-                                    edit.pickImage();
+                                  onPressed: () async {
+                                    edit.file = null;
+                                    await edit.pickImage();
+                                    if (edit.file != null) {
+                                      ProfileRepo pr = ProfileRepo();
+                                      pr.updatePicture(edit.file!,
+                                          cont.selectedbasicInfo!.picturePath);
+                                    }
                                   },
                                   icon: const Icon(
                                     Icons.camera_alt_outlined,

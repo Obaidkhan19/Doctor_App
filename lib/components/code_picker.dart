@@ -219,6 +219,10 @@ class CustomIntlPhoneField extends StatefulWidget {
   /// Whether to show cursor.
   final bool? showCursor;
 
+  final Color? fieldsborderColor;
+  final Color? fieldsColor;
+  final bool? fieldfilled;
+
   /// The padding of the Flags Button.
   ///
   /// The amount of insets that are applied to the Flags Button.
@@ -246,6 +250,9 @@ class CustomIntlPhoneField extends StatefulWidget {
   const CustomIntlPhoneField({
     Key? key,
     this.initialCountryCode,
+    this.fieldfilled,
+    this.fieldsColor,
+    this.fieldsborderColor,
     this.languageCode = 'en',
     this.disableAutoFillHints = false,
     this.obscureText = false,
@@ -399,12 +406,16 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
       showCursor: widget.showCursor,
       onFieldSubmitted: widget.onSubmitted,
       decoration: InputDecoration(
+        filled: widget.fieldfilled,
+        fillColor: widget.fieldsColor,
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: ColorManager.kGreyColor)),
+            borderSide: BorderSide(
+                color: widget.fieldsborderColor ?? ColorManager.kGreyColor)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: ColorManager.kGreyColor)),
+            borderSide: BorderSide(
+                color: widget.fieldsborderColor ?? ColorManager.kGreyColor)),
         border: InputBorder.none,
         prefixIcon: _buildFlagsButton(),
         counterText: !widget.enabled ? '' : null,

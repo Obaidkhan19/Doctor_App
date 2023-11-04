@@ -787,17 +787,28 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                     child: CustomTextField(
                                       readonly: true,
                                       onTap: () async {
-                                        List<PrimaryDiagnosis1> result =
-                                            await searchableDropdownCheckBox(
+                                        // List<PrimaryDiagnosis1> result =
+                                        //     await searchableDropdownCheckBox(
+                                        //         context,
+                                        //         controller.primarydiagnosisList,
+                                        //         controller
+                                        //             .checkboxselectedprimarydiagnosisList,
+                                        //         true,
+                                        //         'primary');
+
+                                        // controller
+                                        //     .updateselectedPrimarydiagnosislist(
+                                        //         result);
+                                        // setState(() {});
+
+                                        PrimaryDiagnosis1 generic =
+                                            await searchabledropdown(
                                                 context,
-                                                controller.primarydiagnosisList,
                                                 controller
-                                                    .selectedprimarydiagnosisList,
-                                                true,
-                                                'primary');
-                                        await controller
-                                            .updateselectedPrimarydiagnosislist(
-                                                result);
+                                                        .primarydiagnosisList ??
+                                                    []);
+                                        await controller.addPrimaryDiagnosis(
+                                            generic, BuildContext);
                                         setState(() {});
                                       },
                                       prefixIcon: const Icon(
@@ -820,8 +831,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                     child: Column(
                                       children: <Widget>[
                                         Wrap(
-                                          direction: Axis
-                                              .horizontal, // Make sure items are laid out horizontally
+                                          direction: Axis.horizontal,
                                           runSpacing: 8.0,
                                           children: <Widget>[
                                             for (int index = 0;
@@ -1726,8 +1736,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         // medicine visisbility
                         GetBuilder<ERXController>(
                           builder: (cont) => Visibility(
-                            //  visible: controller.selectedinvestigationList.isNotEmpty,
-                            visible: true,
+                            visible: controller.selectedmedicineList.isNotEmpty,
+                            // visible: true,
                             child: Card(
                               elevation: 4,
                               child: Container(
@@ -2039,9 +2049,6 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           height: Get.height * 0.01,
                         ),
 
-                        SizedBox(
-                          height: Get.height * 0.015,
-                        ),
                         Center(
                           child: Text(
                             'finding'.tr,
@@ -2544,7 +2551,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
         i++) {
       diagnosislst.add(pm.Diagnosis(
           id: ERXController.i.selectedprimarydiagnosisList[i].id ?? "",
-          comments: "",
+          comments:
+              ERXController.i.selectedprimarydiagnosisList[i].comments ?? "",
           ophthType: ""));
     }
     List<String> complaintlst = [];
@@ -2563,7 +2571,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
         i++) {
       secondarydiagnosislst.add(pm.SecondayDiagnosis(
           id: ERXController.i.selectedsecondaryDiagnosisList[i].id ?? "",
-          comments: "",
+          comments:
+              ERXController.i.selectedsecondaryDiagnosisList[i].comments ?? "",
           ophthType: ""));
     }
 // ERXController.i.selectedprimarydiagnosisList

@@ -41,7 +41,6 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
           : DateFormat('yyyy-MM-dd').format(tempDate).toString();
     }
 
-    print('dkkkkkk');
     super.initState();
   }
 

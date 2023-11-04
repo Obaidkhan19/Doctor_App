@@ -6,12 +6,16 @@ import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/models/blood_group.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
+import 'package:doctormobileapplication/models/designation.dart';
 import 'package:doctormobileapplication/models/genders_model.dart';
 import 'package:doctormobileapplication/models/marital_status.dart';
 import 'package:doctormobileapplication/models/person_title.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
+import 'package:doctormobileapplication/models/relation.dart';
+import 'package:doctormobileapplication/models/religion.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/auth_screens/otp_screen.dart';
@@ -368,6 +372,7 @@ class AuthRepo {
       "AppVersion": AppVersion,
       "DeviceVersion": DeviceVersion
     };
+    log(jsonEncode(body.toString()));
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.login),
@@ -796,5 +801,115 @@ class AuthRepo {
       return false;
     }
     return false;
+  }
+
+  Future<List<bloodGroupData>> getBloodGroup() async {
+    String url = AppConstants.getbloodgroup;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Data']; //Data
+
+      List<bloodGroupData> bloodGroupDataList =
+          data.map((json) => bloodGroupData.fromJson(json)).toList();
+      return bloodGroupDataList;
+    } else {
+      throw Exception('Failed to fetch bloodGroupData details');
+    }
+  }
+
+  Future<List<bloodGroupData>> getBloodGroupDetail() async {
+    String url = AppConstants.getbloodgroup;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Data']; //Data
+
+      List<bloodGroupData> bloodGroupDataList =
+          data.map((json) => bloodGroupData.fromJson(json)).toList();
+      return bloodGroupDataList;
+    } else {
+      throw Exception('Failed to fetch bloodGroupData details');
+    }
+  }
+
+  Future<List<Religion>> getReligion() async {
+    String url = AppConstants.getreligion;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Religion']; //Data
+      List<Religion> ReligionList =
+          data.map((json) => Religion.fromJson(json)).toList();
+      return ReligionList;
+    } else {
+      throw Exception('Failed to fetch Religion details');
+    }
+  }
+
+  Future<List<RelationData>> getRelation() async {
+    String url = AppConstants.getrelation;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Data']; //Data
+      List<RelationData> RelationDataList =
+          data.map((json) => RelationData.fromJson(json)).toList();
+      return RelationDataList;
+    } else {
+      throw Exception('Failed to fetch RelationData details');
+    }
+  }
+
+  Future<List<RelationData>> getNOKRelation() async {
+    String url = AppConstants.getnokrelation;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Data']; //Data
+      List<RelationData> RelationDataList =
+          data.map((json) => RelationData.fromJson(json)).toList();
+      return RelationDataList;
+    } else {
+      throw Exception('Failed to fetch RelationData details');
+    }
+  }
+
+  Future<List<Designations>> getDesignation() async {
+    String url = AppConstants.getdesignation;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Designations']; //Data
+      List<Designations> DesignationsList =
+          data.map((json) => Designations.fromJson(json)).toList();
+      return DesignationsList;
+    } else {
+      throw Exception('Failed to fetch Designations details');
+    }
   }
 }

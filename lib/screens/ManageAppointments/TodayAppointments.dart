@@ -268,8 +268,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 scale: 2,
                                               ),
                                               title: Text(
-                                                manageAppointment.location ??
-                                                    "",
+                                                "${manageAppointment.location ?? ''}  ${manageAppointment.address ?? ''}",
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   color: ColorManager
@@ -689,7 +688,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                       ColorManager.kblackColor,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                            SizedBox(width: Get.width * 0.1),
+                                            SizedBox(width: Get.width * 0.105),
                                             ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
@@ -712,7 +711,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                             FontWeight.w700),
                                                   )
                                                 : const Text("0"),
-                                            SizedBox(width: Get.width * 0.12),
+                                            SizedBox(width: Get.width * 0.11),
                                             Text(
                                               ManageAppointmentController
                                                       .i

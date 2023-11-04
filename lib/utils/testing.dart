@@ -286,7 +286,10 @@
 //     );
 //   }
 // }
-
+import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
@@ -368,47 +371,151 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return GetBuilder<ConsultingQueueController>(builder: (cont) {
       return Scaffold(
-        // appBar: AppBar(
-        //   automaticallyImplyLeading: false,
-        //   leading: IconButton(onPressed: (){
-        //     Get.back();
-        //   }, icon: const Icon(Icons.arrow_back_ios_new)),
-        //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        //   title: Text(widget.title),
-        // ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: ColorManager.kPrimaryColor,
+              )),
+          title: Text(
+            'Online Consultation',
+            style: GoogleFonts.poppins(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              color: ColorManager.kPrimaryColor,
+            ),
+          ),
+        ),
         body: ConsultingQueueController.i.checkcallresponse == false
             ? Center(
                 child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    child: widget.data.patientImagePath != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: CachedNetworkImage(
-                              height: Get.width * 0.2,
-                              imageUrl: baseURL + widget.data.patientImagePath,
-                              fit: BoxFit.fill,
-                              errorWidget: (context, url, error) =>
-                                  Image.asset(Images.avator),
-                            ),
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                                height: Get.width * 0.2, Images.avator),
+                  children: [
+                    SizedBox(
+                      height: Get.height * 0.05,
+                    ),
+                    Text(
+                      'Waiting for Patient...',
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.kblackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.04,
+                    ),
+                    SizedBox(
+                        width: Get.width * 0.5,
+                        child: Image.asset(Images.logo)),
+                    SizedBox(
+                      height: Get.height * 0.04,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 20),
+                      child: Container(
+                        height: Get.height * 0.15,
+                        width: Get.height * 0.15,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ColorManager.kPrimaryColor,
+                            width: 3,
                           ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.05,
-                  ),
-                  Text(widget.data.patientName ?? "Patient Name"),
-                  SizedBox(
-                    height: Get.height * 0.05,
-                  ),
-                  const Text("Waiting for the Patient...")
-                ],
-              ))
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: widget.data.patientImagePath != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      baseURL + widget.data.patientImagePath,
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    Images.avator,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              )
+                            : Image.asset(Images.avator),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
+                    Text(
+                      widget.data.patientName ?? "Patient Name",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.kblackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.01,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          color: ColorManager.kblackColor,
+                          fontSize: 12,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'regno'.tr,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: widget.data.mRNO ?? "",
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.1,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        Callrepo cr = Callrepo();
+                        int res = await cr.cancelcall(
+                            widget.data.doctorId,
+                            widget.data.branchId,
+                            widget.data.patientId,
+                            widget.data.visitNo);
+                        if (res == 1) {
+                          Get.back();
+                        } else {
+                          showSnackbar(context, "Something went wrong");
+                        }
+                      },
+                      child: Container(
+                        height: Get.height * 0.06,
+                        width: Get.width * 0.7,
+                        decoration: BoxDecoration(
+                          color: ColorManager.kPrimaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Cancel',
+                            style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: ColorManager.kWhiteColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             : Center(
                 child: SizedBox(
                   child: InAppWebView(
@@ -420,7 +527,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           mediaPlaybackRequiresUserGesture: false,
                         ),
                       ),
-                      onWebViewCreated: (InAppWebViewController controller) {
+                      onWebViewCreated:
+                          (InAppWebViewController controller) async {
+                        await Permission.camera.request();
+                        await Permission.microphone.request();
                         controller;
                       },
                       androidOnPermissionRequest:
@@ -432,31 +542,49 @@ class _MyHomePageState extends State<MyHomePage> {
                       }),
                 ),
               ),
-
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton:
             ConsultingQueueController.i.checkcallresponse == true
                 ? FloatingActionButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    onPressed: () {
-                      showModalBottomSheet<void>(
-                        isDismissible: false,
+                    onPressed: () async {
+                      await showDialog(
                         context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            height: Get.height * 0.5,
-                            color: Colors.amber,
-                            child: PrescribeMedicineScreen(
-                              checkfirst: widget.checkfirst,
-                              patientid: widget.patientid,
-                              patientstatusvalue: widget.patientstatusvalue,
-                              prescribedvalue: widget.patientstatusvalue,
-                              visitno: widget.visitno,
-                            ),
+                        builder: (context) {
+                          return StatefulBuilder(
+                            builder: (context, setState) {
+                              return AlertDialog(
+                                content: PrescribeMedicineScreen(
+                                  checkfirst: widget.checkfirst,
+                                  patientid: widget.patientid,
+                                  patientstatusvalue: widget.patientstatusvalue,
+                                  prescribedvalue: widget.patientstatusvalue,
+                                  visitno: widget.visitno,
+                                ),
+                              );
+                            },
                           );
                         },
                       );
+                      // showModalBottomSheet<void>(
+                      //   isScrollControlled: true,
+                      //   isDismissible: false,
+                      //   context: context,
+                      //   builder: (BuildContext context) {
+                      //     return Container(
+                      //       height: Get.height * 0.9,
+                      //       color: Colors.amber,
+                      //       child: PrescribeMedicineScreen(
+                      //         checkfirst: widget.checkfirst,
+                      //         patientid: widget.patientid,
+                      //         patientstatusvalue: widget.patientstatusvalue,
+                      //         prescribedvalue: widget.patientstatusvalue,
+                      //         visitno: widget.visitno,
+                      //       ),
+                      //     );
+                      //   },
+                      // );
                       // Get.to(() => PrescribeMedicineScreen(
                       //       checkfirst: true,
                       //       patientstatusvalue: widget.patientstatusvalue.toString(),

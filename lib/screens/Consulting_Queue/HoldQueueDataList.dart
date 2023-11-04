@@ -365,7 +365,8 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                 children: [
                                                                   Expanded(
                                                                     child: Text(
-                                                                      'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                                      //   'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                                      'Waiting Since ${contr.startTimeshold[index] ?? ""}',
                                                                       style: GoogleFonts
                                                                           .poppins(
                                                                         fontSize:

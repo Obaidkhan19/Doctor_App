@@ -9,6 +9,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
+import 'package:doctormobileapplication/screens/profile/edit_personal.dart';
 import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -22,6 +23,8 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../components/images.dart';
 
@@ -112,7 +115,7 @@ class _MenuScreenState extends State<MenuScreen> {
                               ProfileController.i.selectedbasicInfo?.picturePath
                           : "",
                       width: Get.width * 0.16,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       errorWidget: (context, url, error) =>
                           Image.asset(AppImages.doctorlogo),
                     ),
@@ -174,22 +177,24 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(() => EditProfile(
-                            imagepath: imagepath != '' ? imagepath : "",
-                            fullName: profile.selectedbasicInfo?.fullName,
-                            dob: profile.selectedbasicInfo?.dateofBirth,
-                            cellNumber:
-                                profile.selectedbasicInfo?.contactPublic,
-                            email: profile.selectedbasicInfo?.email,
-                            country: profile.selectedbasicInfo?.countryName,
-                            province: profile.selectedbasicInfo?.stateName,
-                            city: profile.selectedbasicInfo?.cityName,
-                            address: profile.selectedbasicInfo?.address,
-                            cityid: profile.selectedbasicInfo?.cityId,
-                            countryid: profile.selectedbasicInfo?.countryId,
-                            provinceid:
-                                profile.selectedbasicInfo?.stateOrProvinceId,
-                          ));
+                      // Get.to(() => EditProfile(
+                      //       imagepath: imagepath != '' ? imagepath : "",
+                      //       fullName: profile.selectedbasicInfo?.fullName,
+                      //       dob: profile.selectedbasicInfo?.dateofBirth,
+                      //       cellNumber:
+                      //           profile.selectedbasicInfo?.contactPublic,
+                      //       email: profile.selectedbasicInfo?.email,
+                      //       country: profile.selectedbasicInfo?.countryName,
+                      //       province: profile.selectedbasicInfo?.stateName,
+                      //       city: profile.selectedbasicInfo?.cityName,
+                      //       address: profile.selectedbasicInfo?.address,
+                      //       cityid: profile.selectedbasicInfo?.cityId,
+                      //       countryid: profile.selectedbasicInfo?.countryId,
+                      //       provinceid:
+                      //           profile.selectedbasicInfo?.stateOrProvinceId,
+                      //     ));
+
+                      Get.to(() => const EditPersonal());
                     },
                     child: Image.asset(
                       Images.edit,
@@ -268,10 +273,18 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                 ),
                 onTap: () {
-                  //Navigator.pop(context);
-                  Get.to(() => WalletScreen(
-                        index: 1,
-                      ));
+                  // COMING SOON
+                  Fluttertoast.showToast(
+                      msg: "Coming Soon",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: ColorManager.kPrimaryLightColor,
+                      textColor: ColorManager.kPrimaryColor,
+                      fontSize: 14.0);
+                  // Get.to(() => WalletScreen(
+                  //       index: 1,
+                  //     ));
                 },
               ),
               ListTile(

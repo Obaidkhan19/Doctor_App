@@ -263,76 +263,78 @@ class _ClinicalPracticeQueueDataListState
                                                             ],
                                                           ),
                                                         ),
-                                                        trailing: manageAppointment
-                                                                    .chatURL ==
-                                                                null
-                                                            ? InkWell(
-                                                                onTap: () {
-                                                                  Get.to(() =>
-                                                                      PrescribeMedicineScreen(
-                                                                        checkfirst:
-                                                                            "1",
-                                                                        patientstatusvalue: manageAppointment
-                                                                            .patientStatusValue
-                                                                            .toString(),
-                                                                        patientid:
-                                                                            manageAppointment.patientId,
-                                                                        visitno:
-                                                                            manageAppointment.visitNo,
-                                                                        prescribedvalue:
-                                                                            manageAppointment.prescribedInValue,
-                                                                      ));
-                                                                },
-                                                                child:
-                                                                    Image.asset(
-                                                                  Images.rxedit,
-                                                                  color: ColorManager
-                                                                      .kPrimaryColor,
-                                                                  width:
-                                                                      Get.width *
+                                                        trailing:
+                                                            manageAppointment
+                                                                        .chatURL ==
+                                                                    null
+                                                                ? InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      bool res =
+                                                                          await Get.to(() =>
+                                                                              PrescribeMedicineScreen(
+                                                                                checkfirst: "1",
+                                                                                patientstatusvalue: manageAppointment.patientStatusValue.toString(),
+                                                                                patientid: manageAppointment.patientId,
+                                                                                visitno: manageAppointment.visitNo,
+                                                                                prescribedvalue: manageAppointment.prescribedInValue,
+                                                                              ));
+                                                                      if (res ==
+                                                                          true) {
+                                                                        callback();
+                                                                        setState(
+                                                                            () {});
+                                                                      }
+                                                                    },
+                                                                    child: Image
+                                                                        .asset(
+                                                                      Images
+                                                                          .rxedit,
+                                                                      color: ColorManager
+                                                                          .kPrimaryColor,
+                                                                      width: Get
+                                                                              .width *
                                                                           0.097,
-                                                                  height:
-                                                                      Get.height *
+                                                                      height: Get
+                                                                              .height *
                                                                           0.09,
-                                                                ),
-                                                              )
-                                                            : InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  Get.to(() =>
-                                                                      MyHomePage(
-                                                                        data:
-                                                                            manageAppointment,
-                                                                        checkfirst:
-                                                                            "1",
-                                                                        patientstatusvalue: manageAppointment
-                                                                            .patientStatusValue
-                                                                            .toString(),
-                                                                        patientid:
-                                                                            manageAppointment.patientId,
-                                                                        visitno:
-                                                                            manageAppointment.visitNo,
-                                                                        prescribedvalue: manageAppointment
-                                                                            .prescribedInValue
-                                                                            .toString(),
-                                                                        title: manageAppointment
-                                                                            .chatURL,
-                                                                      ));
-                                                                },
-                                                                child:
-                                                                    Image.asset(
-                                                                  Images
-                                                                      .videocall,
-                                                                  color: ColorManager
-                                                                      .kPrimaryColor,
-                                                                  width:
-                                                                      Get.width *
+                                                                    ),
+                                                                  )
+                                                                : InkWell(
+                                                                    onTap:
+                                                                        () async {
+                                                                      Get.to(() =>
+                                                                          MyHomePage(
+                                                                            data:
+                                                                                manageAppointment,
+                                                                            checkfirst:
+                                                                                "1",
+                                                                            patientstatusvalue:
+                                                                                manageAppointment.patientStatusValue.toString(),
+                                                                            patientid:
+                                                                                manageAppointment.patientId,
+                                                                            visitno:
+                                                                                manageAppointment.visitNo,
+                                                                            prescribedvalue:
+                                                                                manageAppointment.prescribedInValue.toString(),
+                                                                            title:
+                                                                                manageAppointment.chatURL,
+                                                                          ));
+                                                                    },
+                                                                    child: Image
+                                                                        .asset(
+                                                                      Images
+                                                                          .videocall,
+                                                                      color: ColorManager
+                                                                          .kPrimaryColor,
+                                                                      width: Get
+                                                                              .width *
                                                                           0.09,
-                                                                  height:
-                                                                      Get.height *
+                                                                      height: Get
+                                                                              .height *
                                                                           0.09,
-                                                                ),
-                                                              ),
+                                                                    ),
+                                                                  ),
                                                       ),
                                                       Padding(
                                                         padding:
@@ -369,7 +371,8 @@ class _ClinicalPracticeQueueDataListState
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                                // 'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                                'Waiting Since ${contr.startTimeswait[index] ?? ""}',
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(

@@ -164,15 +164,16 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
                             Navigator.pop(context);
                           },
                         ),
-                        Center(
-                          child: Text(
-                            widget.name,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                  color: ColorManager.kPrimaryColor),
-                            ),
+                        SizedBox(
+                          width: Get.width * 0.17,
+                        ),
+                        Text(
+                          widget.name,
+                          style: GoogleFonts.poppins(
+                            textStyle: GoogleFonts.poppins(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.kPrimaryColor),
                           ),
                         ),
                       ],

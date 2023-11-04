@@ -12,6 +12,7 @@ import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
 
 import 'package:doctormobileapplication/screens/book_your_appointment/book_your_appointment.dart';
+import 'package:doctormobileapplication/screens/dashboard/notification.dart';
 import 'package:doctormobileapplication/screens/health_summary/health_summary_Screen.dart';
 import 'package:doctormobileapplication/screens/consulted_vault/appointment_history.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointments.dart';
@@ -109,9 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               InkWell(
                   onTap: () {
-                    Get.to(() => NoDataFound(
-                          Title: 'Notification',
-                        ));
+                    Get.to(() => const NotificationScreen());
                   },
                   child: Image.asset(
                     Images.notification,
@@ -158,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .i.selectedbasicInfo?.picturePath
                                   : "",
                               width: Get.width * 0.16,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                               errorWidget: (context, url, error) =>
                                   Image.asset(AppImages.doctorlogo),
                             ),
@@ -207,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Text(
-                              '${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                              '${'    '}${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
                               style: GoogleFonts.poppins(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 10,

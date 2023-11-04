@@ -5,6 +5,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/ManageAppointments/TodayAppointments.dart';
 import 'package:doctormobileapplication/screens/dashboard/home.dart';
+import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart';
 import 'package:doctormobileapplication/screens/profile/profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   bool isKeyboardVisible = false;
   final List<Widget> pages = [
     const HomeScreen(),
-    const Profile(),
+    const ProfileDetailMain(),
     const TodayAppointments(),
     WalletScreen(
       index: 0,

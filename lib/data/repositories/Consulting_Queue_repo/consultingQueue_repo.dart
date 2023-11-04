@@ -39,6 +39,7 @@ class ConsultingQueueRepo {
       "OrderDir": "desc"
     };
 
+    print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(
@@ -111,7 +112,7 @@ class ConsultingQueueRepo {
           Uri.parse(AppConstants.consultingqueuewait),
           headers: headers,
           body: jsonEncode(body));
-      print(body);
+
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 0) {
