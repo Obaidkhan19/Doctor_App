@@ -11,10 +11,12 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/profil
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
+import 'package:doctormobileapplication/screens/profile/awards_detail.dart';
 import 'package:doctormobileapplication/screens/profile/bank_detail.dart';
 import 'package:doctormobileapplication/screens/profile/contact_detail.dart';
 import 'package:doctormobileapplication/screens/profile/education_detail.dart';
 import 'package:doctormobileapplication/screens/profile/experience_detail.dart';
+import 'package:doctormobileapplication/screens/profile/membership.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
 import 'package:doctormobileapplication/screens/profile/prescription_configuration_detail.dart';
 import 'package:doctormobileapplication/screens/profile/specilization.dart';
@@ -89,7 +91,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
           size: 60,
         ),
         child: DefaultTabController(
-          length: 9,
+          length: 10,
           child: Scaffold(
             appBar: AppBar(
               leading: IconButton(
@@ -229,7 +231,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                       child: SizedBox(
                                         width: Get.width * 0.17,
                                         child: Center(
-                                          child: Text('Personal',
+                                          child: Text('personal'.tr,
                                               style: GoogleFonts.poppins(
                                                   color: cont.tabindex == 0
                                                       ? ColorManager.kWhiteColor
@@ -243,7 +245,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                       child: SizedBox(
                                         width: Get.width * 0.17,
                                         child: Center(
-                                          child: Text('Contact',
+                                          child: Text('onlyContact'.tr,
                                               style: GoogleFonts.poppins(
                                                   color: cont.tabindex == 1
                                                       ? ColorManager.kWhiteColor
@@ -258,7 +260,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                         width: Get.width * 0.2,
                                         child: Center(
                                           child: Text(
-                                            'Education',
+                                            'education'.tr,
                                             style: GoogleFonts.poppins(
                                                 color: cont.tabindex == 2
                                                     ? ColorManager.kWhiteColor
@@ -273,7 +275,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                         width: Get.width * 0.22,
                                         child: Center(
                                           child: Text(
-                                            'Experience',
+                                            'experience'.tr,
                                             style: GoogleFonts.poppins(
                                                 color: cont.tabindex == 3
                                                     ? ColorManager.kWhiteColor
@@ -288,24 +290,9 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                         width: Get.width * 0.26,
                                         child: Center(
                                           child: Text(
-                                            'Specialization',
+                                            'specialization'.tr,
                                             style: GoogleFonts.poppins(
                                                 color: cont.tabindex == 4
-                                                    ? ColorManager.kWhiteColor
-                                                    : ColorManager.kWhiteColor,
-                                                fontSize: 12),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Tab(
-                                      child: SizedBox(
-                                        width: Get.width * 0.45,
-                                        child: Center(
-                                          child: Text(
-                                            'Membership and Awards',
-                                            style: GoogleFonts.poppins(
-                                                color: cont.tabindex == 5
                                                     ? ColorManager.kWhiteColor
                                                     : ColorManager.kWhiteColor,
                                                 fontSize: 12),
@@ -318,9 +305,39 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                         width: Get.width * 0.22,
                                         child: Center(
                                           child: Text(
-                                            'Bank Detail',
+                                            'membership'.tr,
+                                            style: GoogleFonts.poppins(
+                                                color: cont.tabindex == 5
+                                                    ? ColorManager.kWhiteColor
+                                                    : ColorManager.kWhiteColor,
+                                                fontSize: 12),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Tab(
+                                      child: SizedBox(
+                                        width: Get.width * 0.17,
+                                        child: Center(
+                                          child: Text(
+                                            'awards'.tr,
                                             style: GoogleFonts.poppins(
                                                 color: cont.tabindex == 6
+                                                    ? ColorManager.kWhiteColor
+                                                    : ColorManager.kWhiteColor,
+                                                fontSize: 12),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Tab(
+                                      child: SizedBox(
+                                        width: Get.width * 0.22,
+                                        child: Center(
+                                          child: Text(
+                                            'bankDetail'.tr,
+                                            style: GoogleFonts.poppins(
+                                                color: cont.tabindex == 7
                                                     ? ColorManager.kWhiteColor
                                                     : ColorManager.kWhiteColor,
                                                 fontSize: 12),
@@ -333,9 +350,9 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                         width: Get.width * 0.48,
                                         child: Center(
                                           child: Text(
-                                            'Prescription Configuration',
+                                            'prescriptionConfiguration'.tr,
                                             style: GoogleFonts.poppins(
-                                                color: cont.tabindex == 7
+                                                color: cont.tabindex == 8
                                                     ? ColorManager.kWhiteColor
                                                     : ColorManager.kWhiteColor,
                                                 fontSize: 12),
@@ -348,9 +365,9 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                         width: Get.width * 0.3,
                                         child: Center(
                                           child: Text(
-                                            'Work Locations',
+                                            'workLocations'.tr,
                                             style: GoogleFonts.poppins(
-                                                color: cont.tabindex == 8
+                                                color: cont.tabindex == 9
                                                     ? ColorManager.kWhiteColor
                                                     : ColorManager.kWhiteColor,
                                                 fontSize: 12),
@@ -372,7 +389,8 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                     EducationDetail(),
                                     ExperienceDetail(),
                                     SpecilizationDetail(),
-                                    BankDetail(), // membership and award
+                                    MemberShip(),
+                                    AwardsDetail(),
                                     BankDetail(),
                                     PrescriptionConfiguration(),
                                     WorkLocation(),

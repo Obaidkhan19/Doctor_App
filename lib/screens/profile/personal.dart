@@ -32,7 +32,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
           child: Column(
             children: [
               ProfileRecordWidget(
-                title: "Name",
+                title: "name".tr,
                 name: profile.selectedbasicInfo?.fullName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.fullName == null
@@ -53,7 +53,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Age",
+                title: "age".tr,
                 name: profile.selectedbasicInfo?.age == ""
                     ? "-"
                     : profile.selectedbasicInfo?.age == null
@@ -64,7 +64,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Marital Status",
+                title: "maritalStatus".tr,
                 name: profile.selectedbasicInfo?.maritalStatusName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.maritalStatusName == null
@@ -75,7 +75,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Gender",
+                title: "gender".tr,
                 name: profile.selectedbasicInfo?.genderName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.genderName == null
@@ -86,7 +86,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "ID Number",
+                title: "idnumber".tr,
                 name: profile.selectedbasicInfo?.cNICNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.cNICNumber == null
@@ -97,7 +97,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Passport Number",
+                title: "passportNumber".tr,
                 name: profile.selectedbasicInfo?.passportNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.passportNumber == null
@@ -108,7 +108,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "DHA NO.",
+                title: "DHANO".tr,
                 name: profile.selectedbasicInfo?.pMDCNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.pMDCNumber == null
@@ -119,7 +119,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "NTN Number",
+                title: "NTNNumber".tr,
                 name: profile.selectedbasicInfo?.nTNNo == ""
                     ? "-"
                     : profile.selectedbasicInfo?.nTNNo == null
@@ -130,7 +130,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Blood Group",
+                title: "bloodGroup".tr,
                 name: profile.selectedbasicInfo?.bloodGroupName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.bloodGroupName == null
@@ -141,7 +141,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Religion",
+                title: "religion".tr,
                 name: profile.selectedbasicInfo?.religionName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.religionName == null
@@ -152,7 +152,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Consultancy Fee",
+                title: "consultancyFee".tr,
                 name:
                     profile.selectedbasicInfo?.consultationFee.toString() == ""
                         ? "-"
@@ -162,7 +162,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Follow Up Fee",
+                title: "followupfee".tr,
                 name: profile.selectedbasicInfo?.followUpFee.toString() == ""
                     ? "-"
                     : profile.selectedbasicInfo?.followUpFee.toString(),
@@ -171,7 +171,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Designation(s)",
+                title: "designation(s)".tr,
                 name: profile.selectedbasicInfo?.designation == ""
                     ? "-"
                     : profile.selectedbasicInfo?.designation == null
@@ -185,7 +185,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                   width: Get.width * 0.6,
                   height: Get.height * 0.06,
                   fontSize: 15,
-                  title: "Edit",
+                  title: "edit".tr,
                   onPressed: () async {
                     var result = await Get.to(() => const EditPersonal());
                     if (result == true) {

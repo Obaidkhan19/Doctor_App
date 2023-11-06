@@ -110,7 +110,6 @@ class ManageAppointmentRepo {
       "Date": Date,
       "DoctorId": "$userId",
     };
-    print("$body  b");
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.GetDayAppointment),

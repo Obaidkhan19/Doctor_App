@@ -26,7 +26,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
           },
         ),
         title: Text(
-          'View Configuration',
+          'viewConfiguration'.tr,
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
             fontSize: 17,
@@ -42,27 +42,27 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
         child: Column(
           children: [
             RecordWidgetConfiguration(
-                title: "Location",
+                title: "location".tr,
                 name: widget.configureAppointment.workLocation ?? ""),
             SizedBox(
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Address",
+              title: "address".tr,
               name: widget.configureAppointment.address ?? "",
             ),
             SizedBox(
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Days",
+              title: 'days'.tr,
               name: widget.configureAppointment.weekDays ?? "",
             ),
             SizedBox(
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Time Duration",
+              title: "timeDuration".tr,
               name: widget.configureAppointment.fromTime != null &&
                       widget.configureAppointment.fromTime != null
                   ? "${"${widget.configureAppointment.fromTime.toString().split(':')[0]}:${widget.configureAppointment.fromTime.toString().split(':')[1]}"} To ${"${widget.configureAppointment.toTime.toString().split(':')[0]}:${widget.configureAppointment.toTime.toString().split(':')[1]}"}"
@@ -72,14 +72,14 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Consultancy Fee",
+              title: "consultancyfee".tr,
               name: widget.configureAppointment.consultancyFee.toString(),
             ),
             SizedBox(
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Slot Duration (HH:MM)",
+              title: "slotduration".tr,
               name:
                   "${widget.configureAppointment.slotDuration.toString().split(':')[0]}:${widget.configureAppointment.slotDuration.toString().split(':')[1]}" ??
                       "",
@@ -88,14 +88,14 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Follow Up Fee",
+              title: "followupfee".tr,
               name: widget.configureAppointment.followupFee.toString(),
             ),
             SizedBox(
               height: Get.height * 0.01,
             ),
             RecordWidgetConfiguration(
-              title: "Follow Up Days",
+              title: "followupdays".tr,
               name: widget.configureAppointment.noofFollowupDays.toString(),
             ),
             SizedBox(

@@ -118,7 +118,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                             tabs: [
                               Tab(
                                 child: Text(
-                                  'Clinical Practice',
+                                  'clinicalPractice'.tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
@@ -132,7 +132,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                               ),
                               Tab(
                                 child: Text(
-                                  'Hold',
+                                  'hold'.tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
@@ -146,7 +146,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                               ),
                               Tab(
                                 child: Text(
-                                  'Consulted',
+                                  'consulted'.tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge

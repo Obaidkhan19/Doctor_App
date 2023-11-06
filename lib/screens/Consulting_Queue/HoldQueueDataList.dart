@@ -63,6 +63,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
         length: length.toString(),
         orderColumn: "0",
         orderDir: "desc"));
+    await ConsultingQueueController.i.clearAllLists(widget.Status.toString());
     SearchFieldController.clear();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -130,7 +131,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                           size: 35,
                         ),
                         controller: SearchFieldController,
-                        hintText: 'Search',
+                        hintText: 'search'.tr,
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.66,
@@ -259,7 +260,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                       ),
                                                                     ),
                                                                     Text(
-                                                                      'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                                      '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
                                                                       style: GoogleFonts
                                                                           .poppins(
                                                                         fontSize:
@@ -366,7 +367,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                   Expanded(
                                                                     child: Text(
                                                                       //   'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                                      'Waiting Since ${contr.startTimeshold[index] ?? ""}',
+                                                                      '${'waitingSince'.tr} ${contr.startTimeshold[index] ?? ""}',
                                                                       style: GoogleFonts
                                                                           .poppins(
                                                                         fontSize:

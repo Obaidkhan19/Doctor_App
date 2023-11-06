@@ -111,7 +111,7 @@ class _AddExperienceState extends State<AddExperience> {
                   hintText:
                       edit.formattedexperiencefrom.toString().split("T")[0] ==
                               DateTime.now().toString().split(" ")[0]
-                          ? "Select Start Date"
+                          ? "Select From Date"
                           : DateFormat('MM-dd-y').format(DateTime.parse(edit
                               .formattedexperiencefrom
                               .toString()
@@ -151,7 +151,7 @@ class _AddExperienceState extends State<AddExperience> {
                     hintText:
                         edit.formattedexperienceto.toString().split("T")[0] ==
                                 DateTime.now().toString().split(" ")[0]
-                            ? "Select Start Date"
+                            ? "Select To Date"
                             : DateFormat('MM-dd-y').format(DateTime.parse(edit
                                 .formattedexperienceto
                                 .toString()

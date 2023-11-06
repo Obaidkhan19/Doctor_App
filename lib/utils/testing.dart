@@ -371,6 +371,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return GetBuilder<ConsultingQueueController>(builder: (cont) {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: IconButton(
@@ -382,7 +383,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: ColorManager.kPrimaryColor,
               )),
           title: Text(
-            'Online Consultation',
+            'onlineconsultation'.tr,
             style: GoogleFonts.poppins(
               fontSize: 17,
               fontWeight: FontWeight.w600,
@@ -398,7 +399,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: Get.height * 0.05,
                     ),
                     Text(
-                      'Waiting for Patient...',
+                      'waitingforpatient'.tr,
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -448,7 +449,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: Get.height * 0.02,
                     ),
                     Text(
-                      widget.data.patientName ?? "Patient Name",
+                      widget.data.patientName ?? "",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontSize: 17,
@@ -504,7 +505,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: Center(
                           child: Text(
-                            'Cancel',
+                            'cancel'.tr,
                             style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,

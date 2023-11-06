@@ -502,7 +502,7 @@ deleteSelected(
                   children: [
                     SizedBox(width: Get.width * 0.05),
                     Text(
-                      'Delete',
+                      'delete'.tr,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
@@ -525,7 +525,7 @@ deleteSelected(
                   height: Get.height * 0.03,
                 ),
                 Text(
-                  'Do you want to delete it?',
+                  'doyouwanttodeleteit'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                       fontSize: 12,
@@ -536,7 +536,7 @@ deleteSelected(
                   height: Get.height * 0.04,
                 ),
                 PrimaryButton(
-                  title: 'Yes',
+                  title: 'yes'.tr,
                   fontSize: 14,
                   height: Get.height * 0.06,
                   width: Get.width * 0.5,
@@ -607,7 +607,7 @@ deleteSelectedObject(
                   children: [
                     SizedBox(width: Get.width * 0.05),
                     Text(
-                      'Delete',
+                      'delete'.tr,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
@@ -630,7 +630,7 @@ deleteSelectedObject(
                   height: Get.height * 0.03,
                 ),
                 Text(
-                  'Do you want to delete it?',
+                  'doyouwanttodeleteit'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                       fontSize: 12,
@@ -641,7 +641,7 @@ deleteSelectedObject(
                   height: Get.height * 0.04,
                 ),
                 PrimaryButton(
-                  title: 'Yes',
+                  title: 'yes'.tr,
                   fontSize: 14,
                   height: Get.height * 0.06,
                   width: Get.width * 0.5,
@@ -684,7 +684,7 @@ addComment(BuildContext context, String id, String listname) async {
                   children: [
                     SizedBox(width: Get.width * 0.05),
                     Text(
-                      'Comment',
+                      'comment'.tr,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
@@ -707,7 +707,7 @@ addComment(BuildContext context, String id, String listname) async {
                   height: Get.height * 0.03,
                 ),
                 Text(
-                  'Add Comments',
+                  'addcomments'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                       fontSize: 12,
@@ -723,14 +723,14 @@ addComment(BuildContext context, String id, String listname) async {
                 TextField(
                   controller: controller.trailingtextController,
                   maxLines: 4,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0,
                       ),
                     ),
-                    hintText: 'Type your comment here',
+                    hintText: 'typeyourcommenthere'.tr,
                   ),
                 ),
 
@@ -738,7 +738,7 @@ addComment(BuildContext context, String id, String listname) async {
                   height: Get.height * 0.04,
                 ),
                 PrimaryButton(
-                  title: 'Save',
+                  title: 'save'.tr,
                   fontSize: 14,
                   height: Get.height * 0.06,
                   width: Get.width * 0.5,
@@ -827,7 +827,7 @@ addMedicine(
                             const EdgeInsets.symmetric(horizontal: 20),
                         hintStyle: GoogleFonts.poppins(
                             color: ColorManager.kPrimaryColor),
-                        hintText: 'Search',
+                        hintText: 'search'.tr,
                         filled: true,
                         disabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8)),
@@ -930,7 +930,7 @@ addMedicine(
                               height: Get.height * 0.01,
                             ),
                             Text(
-                              'Routes',
+                              'route'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
                                   fontSize: 12,
@@ -980,7 +980,7 @@ addMedicine(
                               height: Get.height * 0.01,
                             ),
                             Text(
-                              'Duration',
+                              'duration'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
                                   fontSize: 12,
@@ -1038,7 +1038,7 @@ addMedicine(
                               height: Get.height * 0.01,
                             ),
                             Text(
-                              'Frequency',
+                              'frequency'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
                                   fontSize: 12,
@@ -1087,7 +1087,7 @@ addMedicine(
                               height: Get.height * 0.01,
                             ),
                             Text(
-                              'Dosage',
+                              'dosage'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
                                   fontSize: 12,
@@ -1139,7 +1139,7 @@ addMedicine(
                     SizedBox(height: Get.height * 0.04),
                     Center(
                       child: PrimaryButton(
-                        title: 'Save',
+                        title: 'save'.tr,
                         fontSize: 14,
                         height: Get.height * 0.06,
                         onPressed: () {

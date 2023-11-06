@@ -240,6 +240,15 @@ class ProfileRepo {
         List<BankAccounts> bankdetail =
             rawsbankdetail.map((item) => BankAccounts.fromJson(item)).toList();
 
+        List<dynamic> rawmembershipdetail = responseData['Memberships'] ?? [];
+        List<Memberships> membershipdetail = rawmembershipdetail
+            .map((item) => Memberships.fromJson(item))
+            .toList();
+
+        List<dynamic> rawawardsdetail = responseData['Memberships'] ?? [];
+        List<Awards> awardsdetail =
+            rawawardsdetail.map((item) => Awards.fromJson(item)).toList();
+
         List<dynamic> rawsappointmentconfig =
             responseData['AppointmentConfigurations'] ?? [];
         List<AppointmentConfigurations> appointmentconfig =
@@ -247,8 +256,10 @@ class ProfileRepo {
                 .map((item) => AppointmentConfigurations.fromJson(item))
                 .toList();
 
+        prf.updatedDoctorawards(awardsdetail);
         prf.updatedDoctorEducation(education);
         prf.updatedDoctorexperienceList(experience);
+        prf.updatedDoctormembership(membershipdetail);
         prf.updatedDoctorspecilizationList(specilization);
         prf.updatedDoctorbankDetailList(bankdetail);
         prf.updatedappointmentConfigurationList(appointmentconfig);

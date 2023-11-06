@@ -133,7 +133,7 @@ class _ClinicalPracticeQueueDataListState
                           size: 35,
                         ),
                         controller: SearchFieldController,
-                        hintText: 'Search',
+                        hintText: 'search'.tr,
                       ),
                       SizedBox(
                         height: Get.height * 0.68,
@@ -251,7 +251,7 @@ class _ClinicalPracticeQueueDataListState
                                                                 ),
                                                               ),
                                                               Text(
-                                                                'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                                '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(
@@ -372,7 +372,7 @@ class _ClinicalPracticeQueueDataListState
                                                             Expanded(
                                                               child: Text(
                                                                 // 'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                                'Waiting Since ${contr.startTimeswait[index] ?? ""}',
+                                                                '${'waitingSince'.tr} ${contr.startTimeswait[index] ?? ""}',
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(

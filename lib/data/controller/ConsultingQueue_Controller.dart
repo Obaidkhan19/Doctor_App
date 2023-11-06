@@ -128,10 +128,10 @@ class ConsultingQueueController extends GetxController implements GetxService {
   }
 
   void stopAndClearTimersHold() {
-    for (var timer in timersconsulted) {
+    for (var timer in timershold) {
       timer.cancel();
     }
-    timersconsulted.clear();
+    timershold.clear();
   }
 
   void startTimershold() {

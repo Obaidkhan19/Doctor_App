@@ -186,7 +186,7 @@ class _UpdateAppointmentConfigurationState
           },
         ),
         title: Text(
-          'Edit Configuration',
+          'editConfiguration'.tr,
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
             fontSize: 17,
@@ -299,7 +299,7 @@ class _UpdateAppointmentConfigurationState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Time Duration',
+                              'timeDuration'.tr,
                               style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   color: ColorManager.kPrimaryColor,
@@ -315,7 +315,7 @@ class _UpdateAppointmentConfigurationState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'From',
+                                      'from'.tr,
                                       style: GoogleFonts.poppins(
                                         fontSize: 12,
                                         color: ColorManager.kPrimaryColor,
@@ -375,7 +375,7 @@ class _UpdateAppointmentConfigurationState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Till',
+                                      'till'.tr,
                                       style: GoogleFonts.poppins(
                                         fontSize: 12,
                                         color: ColorManager.kPrimaryColor,
@@ -919,7 +919,7 @@ class _UpdateAppointmentConfigurationState
                         ),
                         child: Center(
                           child: Text(
-                            'Update',
+                            'update'.tr,
                             style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,

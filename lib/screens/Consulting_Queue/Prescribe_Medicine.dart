@@ -38,6 +38,57 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+class HistoryRecordWidget extends StatelessWidget {
+  final String? title;
+  final String? name;
+
+  const HistoryRecordWidget({Key? key, this.title, this.name})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                '$title',
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Text(
+              ':',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(
+              width: Get.width * 0.03,
+            ),
+            Expanded(
+              child: Text(
+                '$name',
+                style: GoogleFonts.poppins(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class Item {
   final String name;
   final String age;
@@ -287,7 +338,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               width: Get.width * 0.28,
                             ),
                             Text(
-                              'History',
+                              'history'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 12,
@@ -319,12 +370,15 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "Complaints:       ",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.bold,
-                                              color: ColorManager.kblackColor,
+                                          SizedBox(
+                                            width: Get.width * 0.25,
+                                            child: Text(
+                                              "complaints".tr,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorManager.kblackColor,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
@@ -347,12 +401,15 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "Diagnosis:           ",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.bold,
-                                              color: ColorManager.kblackColor,
+                                          SizedBox(
+                                            width: Get.width * 0.25,
+                                            child: Text(
+                                              "diagnosis".tr,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorManager.kblackColor,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
@@ -391,13 +448,16 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Procedures:        ",
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.bold,
-                                                  color:
-                                                      ColorManager.kblackColor,
+                                              SizedBox(
+                                                width: Get.width * 0.25,
+                                                child: Text(
+                                                  'procedures'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: ColorManager
+                                                        .kblackColor,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -420,13 +480,16 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Diagnostics:       ",
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.bold,
-                                                  color:
-                                                      ColorManager.kblackColor,
+                                              SizedBox(
+                                                width: Get.width * 0.25,
+                                                child: Text(
+                                                  "diagnosticscolon".tr,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: ColorManager
+                                                        .kblackColor,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -449,13 +512,16 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Investigations:   ",
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.bold,
-                                                  color:
-                                                      ColorManager.kblackColor,
+                                              SizedBox(
+                                                width: Get.width * 0.25,
+                                                child: Text(
+                                                  'investigations'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: ColorManager
+                                                        .kblackColor,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -479,13 +545,16 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Vitals:                       ",
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.bold,
-                                                  color:
-                                                      ColorManager.kblackColor,
+                                              SizedBox(
+                                                width: Get.width * 0.25,
+                                                child: Text(
+                                                  "vitals".tr,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: ColorManager
+                                                        .kblackColor,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -509,7 +578,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         Row(
                           children: [
                             Text(
-                              'Smoker  ',
+                              '${'smoker'.tr}${'  '}',
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 12,
@@ -528,7 +597,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               ),
                             ),
                             Text(
-                              'Yes',
+                              'yes'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 10,
@@ -547,7 +616,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               ),
                             ),
                             Text(
-                              'No',
+                              'no'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 10,
@@ -562,7 +631,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         Row(
                           children: [
                             Text(
-                              'Diabetic',
+                              'diabetic'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 12,
@@ -582,7 +651,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               ),
                             ),
                             Text(
-                              'Yes',
+                              'yes'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 10,
@@ -602,7 +671,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               ),
                             ),
                             Text(
-                              'No',
+                              'no'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 10,
@@ -660,7 +729,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -767,7 +836,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   height: Get.height * 0.01,
                                 ),
                                 Text(
-                                  'Primary Diagnosis',
+                                  'primaryDiagnosis'.tr,
                                   style: GoogleFonts.poppins(
                                     textStyle: GoogleFonts.poppins(
                                       fontSize: 12,
@@ -816,7 +885,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -924,7 +993,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   height: Get.height * 0.01,
                                 ),
                                 Text(
-                                  'Secondary Diagnosis',
+                                  'secondaryDiagnosis'.tr,
                                   style: GoogleFonts.poppins(
                                     textStyle: GoogleFonts.poppins(
                                       fontSize: 12,
@@ -959,7 +1028,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -1101,7 +1170,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -1431,7 +1500,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -1541,7 +1610,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   height: Get.height * 0.01,
                                 ),
                                 Text(
-                                  'Procedures',
+                                  'procedures'.tr,
                                   style: GoogleFonts.poppins(
                                     textStyle: GoogleFonts.poppins(
                                       fontSize: 12,
@@ -1575,7 +1644,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -1686,7 +1755,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         height: Get.height * 0.01,
                                       ),
                                       Text(
-                                        'Medicines',
+                                        'medicines'.tr,
                                         style: GoogleFonts.poppins(
                                           textStyle: GoogleFonts.poppins(
                                             fontSize: 12,
@@ -1723,7 +1792,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                               color: ColorManager.kPrimaryColor,
                                               size: 35,
                                             ),
-                                            hintText: 'Search',
+                                            hintText: 'search'.tr,
                                           ),
                                         ),
                                       ),
@@ -1831,7 +1900,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Freq",
+                                            "freq".tr,
                                             style: GoogleFonts.poppins(
                                               textStyle: GoogleFonts.poppins(
                                                 fontSize: 10,
@@ -1889,7 +1958,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Dos",
+                                            "dos".tr,
                                             style: GoogleFonts.poppins(
                                               textStyle: GoogleFonts.poppins(
                                                 fontSize: 10,
@@ -1942,7 +2011,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Dur",
+                                            "dur".tr,
                                             style: GoogleFonts.poppins(
                                               textStyle: GoogleFonts.poppins(
                                                 fontSize: 10,
@@ -1986,7 +2055,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Route",
+                                            "route".tr,
                                             style: GoogleFonts.poppins(
                                               textStyle: GoogleFonts.poppins(
                                                 fontSize: 10,
@@ -2089,7 +2158,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   height: Get.height * 0.01,
                                 ),
                                 Text(
-                                  'Follow Up',
+                                  'followUp'.tr,
                                   style: GoogleFonts.poppins(
                                     textStyle: GoogleFonts.poppins(
                                       fontSize: 12,
@@ -2120,7 +2189,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),
@@ -2212,7 +2281,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   height: Get.height * 0.01,
                                 ),
                                 Text(
-                                  'Instructions',
+                                  'instructions'.tr,
                                   style: GoogleFonts.poppins(
                                     textStyle: GoogleFonts.poppins(
                                       fontSize: 12,
@@ -2246,7 +2315,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         color: ColorManager.kPrimaryColor,
                                         size: 35,
                                       ),
-                                      hintText: 'Search',
+                                      hintText: 'search'.tr,
                                     ),
                                   ),
                                 ),

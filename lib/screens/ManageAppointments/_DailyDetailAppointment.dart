@@ -121,9 +121,9 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return CustomDialog(
-                                    title: 'Error',
-                                    content: 'No item is selected!',
-                                    footer: 'Ok',
+                                    title: 'error'.tr,
+                                    content: 'noitemisselected'.tr,
+                                    footer: 'ok'.tr,
                                     onClosePressed: () {
                                       // print('Dialog closed');
                                     },
@@ -185,7 +185,7 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
                             ),
                             child: Center(
                                 child: Text(
-                              'Reschedule',
+                              'reschedule'.tr,
                               style: GoogleFonts.poppins(
                                 color: ColorManager.kPrimaryColor,
                                 fontSize: 10,
@@ -203,10 +203,10 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return CustomDialog(
-                                    title: 'Error',
+                                    title: 'error'.tr,
                                     content:
-                                        'No pending appointment is selected!',
-                                    footer: 'Ok',
+                                        'nopendingappointmentisselected'.tr,
+                                    footer: 'ok'.tr,
                                     onClosePressed: () {
                                       // print('Dialog closed');
                                     },
@@ -246,7 +246,7 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
                             ),
                             child: Center(
                                 child: Text(
-                              'Approve',
+                              'approve'.tr,
                               style: GoogleFonts.poppins(
                                 color: ColorManager.kPrimaryColor,
                                 fontSize: 10,
@@ -283,7 +283,7 @@ class DailyDetailAppointmentState extends State<DailyDetailAppointment> {
                               children: [
                                 Center(
                                     child: Text(
-                                  'Select All',
+                                  'selectAll'.tr,
                                   style: GoogleFonts.poppins(
                                     color: ColorManager.kPrimaryColor,
                                     fontSize: 10,

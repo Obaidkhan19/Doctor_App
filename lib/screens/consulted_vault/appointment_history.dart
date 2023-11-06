@@ -660,9 +660,9 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${(controller.selectedbranch != null && controller.selectedbranch?.name != null) ? (controller.selectedbranch!.name!.length > 50 ? ('${controller.selectedbranch?.name!.substring(0, 50 > controller.selectedbranch!.name!.length ? controller.selectedbranch!.name!.length : 50)}...') : controller.selectedbranch?.name) : "Select Branch"}",
+                                  "${(controller.selectedbranch != null && controller.selectedbranch?.name != null) ? (controller.selectedbranch!.name!.length > 50 ? ('${controller.selectedbranch?.name!.substring(0, 50 > controller.selectedbranch!.name!.length ? controller.selectedbranch!.name!.length : 50)}...') : controller.selectedbranch?.name) : "selectBranch".tr}",
                                   semanticsLabel:
-                                      "${(controller.selectedbranch != null) ? (controller.selectedbranch!.name!.length > 50 ? ('${controller.selectedbranch?.name!.substring(0, 50 > controller.selectedbranch!.name!.length ? controller.selectedbranch!.name!.length : 50)}...') : controller.selectedbranch) : "Select Branch"}",
+                                      "${(controller.selectedbranch != null) ? (controller.selectedbranch!.name!.length > 50 ? ('${controller.selectedbranch?.name!.substring(0, 50 > controller.selectedbranch!.name!.length ? controller.selectedbranch!.name!.length : 50)}...') : controller.selectedbranch) : "selectBranch".tr}",
                                   style: GoogleFonts.poppins(
                                     fontSize: 10,
                                     color:
@@ -718,9 +718,9 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${(controller.selectedhospital != null && controller.selectedhospital?.name != null) ? (controller.selectedhospital!.name!.length > 50 ? ('${controller.selectedhospital?.name!.substring(0, 50 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 50)}...') : controller.selectedhospital?.name) : "Select Hospital/Clinic"}",
+                                  "${(controller.selectedhospital != null && controller.selectedhospital?.name != null) ? (controller.selectedhospital!.name!.length > 50 ? ('${controller.selectedhospital?.name!.substring(0, 50 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 50)}...') : controller.selectedhospital?.name) : "selectHospitalClinic".tr}",
                                   semanticsLabel:
-                                      "${(controller.selectedhospital != null) ? (controller.selectedhospital!.name!.length > 50 ? ('${controller.selectedhospital?.name!.substring(0, 50 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 50)}...') : controller.selectedhospital) : "Select Hospital/Clinic"}",
+                                      "${(controller.selectedhospital != null) ? (controller.selectedhospital!.name!.length > 50 ? ('${controller.selectedhospital?.name!.substring(0, 50 > controller.selectedhospital!.name!.length ? controller.selectedhospital!.name!.length : 50)}...') : controller.selectedhospital) : "selectHospitalClinic".tr}",
                                   style: GoogleFonts.poppins(
                                     fontSize: 10,
                                     color: controller.selectedhospital?.name !=

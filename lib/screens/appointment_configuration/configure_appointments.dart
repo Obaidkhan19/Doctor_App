@@ -287,7 +287,7 @@ class _ConfigureAppointmentScreenState
                                                               value: _MenuValues
                                                                   .view,
                                                               child: Text(
-                                                                'View',
+                                                                'view'.tr,
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(
@@ -300,7 +300,7 @@ class _ConfigureAppointmentScreenState
                                                               value: _MenuValues
                                                                   .update,
                                                               child: Text(
-                                                                'Edit',
+                                                                'edit'.tr,
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(
@@ -575,7 +575,7 @@ class _ConfigureAppointmentScreenState
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                "${(contr.selectedhospital != null && contr.selectedhospital?.name != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital?.name) : "Select Hospital/Clinic"}",
+                                                "${(contr.selectedhospital != null && contr.selectedhospital?.name != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital?.name) : "selectHospitalClinic".tr}",
                                                 // semanticsLabel:
                                                 //     "${(contr.selectedhospital != null) ? (contr.selectedhospital!.name!.length > 50 ? ('${contr.selectedhospital?.name!.substring(0, 50 > contr.selectedhospital!.name!.length ? contr.selectedhospital!.name!.length : 50)}...') : contr.selectedhospital) : "Select Hospital/Clinic"}",
                                                 style: GoogleFonts.poppins(
@@ -759,7 +759,7 @@ class _ConfigureAppointmentScreenState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Time Duration',
+                                  'timeDuration'.tr,
                                   style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       color: ColorManager.kPrimaryColor,
@@ -777,7 +777,7 @@ class _ConfigureAppointmentScreenState
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'From',
+                                          'from'.tr,
                                           style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: ColorManager.kPrimaryColor,
@@ -841,7 +841,7 @@ class _ConfigureAppointmentScreenState
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Till',
+                                          'till'.tr,
                                           style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: ColorManager.kPrimaryColor,
@@ -967,32 +967,32 @@ class _ConfigureAppointmentScreenState
                                         ),
                                         child: Row(
                                           children: [
-                                            SizedBox(
-                                              width: Get.width * 0.03,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                              ),
-                                              height: 25,
-                                              width: 40,
-                                              child: Center(
-                                                child: Text(
-                                                  "aed".tr,
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            // SizedBox(
+                                            //   width: Get.width * 0.03,
+                                            // ),
+                                            // Container(
+                                            //   decoration: BoxDecoration(
+                                            //     border: Border.all(
+                                            //       color: Colors.black,
+                                            //       width: 1.0,
+                                            //     ),
+                                            //     borderRadius:
+                                            //         BorderRadius.circular(7),
+                                            //   ),
+                                            //   height: 25,
+                                            //   width: 40,
+                                            //   child: Center(
+                                            //     child: Text(
+                                            //       "aed".tr,
+                                            //       style: GoogleFonts.poppins(
+                                            //         fontSize: 12,
+                                            //         color: ColorManager
+                                            //             .kblackColor,
+                                            //         fontWeight: FontWeight.bold,
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
                                             Expanded(
                                               child: Padding(
                                                 padding: EdgeInsets.only(
@@ -1059,32 +1059,32 @@ class _ConfigureAppointmentScreenState
                                         ),
                                         child: Row(
                                           children: [
-                                            SizedBox(
-                                              width: Get.width * 0.03,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Colors.black,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                              ),
-                                              height: 25,
-                                              width: 40,
-                                              child: Center(
-                                                child: Text(
-                                                  "aed".tr,
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            // SizedBox(
+                                            //   width: Get.width * 0.03,
+                                            // ),
+                                            // Container(
+                                            //   decoration: BoxDecoration(
+                                            //     border: Border.all(
+                                            //       color: Colors.black,
+                                            //       width: 1.0,
+                                            //     ),
+                                            //     borderRadius:
+                                            //         BorderRadius.circular(7),
+                                            //   ),
+                                            //   height: 25,
+                                            //   width: 40,
+                                            //   child: Center(
+                                            //     child: Text(
+                                            //       "aed".tr,
+                                            //       style: GoogleFonts.poppins(
+                                            //         fontSize: 12,
+                                            //         color: ColorManager
+                                            //             .kblackColor,
+                                            //         fontWeight: FontWeight.bold,
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
                                             Expanded(
                                               child: Padding(
                                                 padding: EdgeInsets.only(
@@ -1212,9 +1212,9 @@ class _ConfigureAppointmentScreenState
                                         ),
                                         child: Row(
                                           children: [
-                                            SizedBox(
-                                              width: Get.width * 0.06,
-                                            ),
+                                            // SizedBox(
+                                            //   width: Get.width * 0.06,
+                                            // ),
                                             Expanded(
                                               child: Padding(
                                                 padding: EdgeInsets.only(
@@ -1455,7 +1455,7 @@ class _ConfigureAppointmentScreenState
                             ),
                             child: Center(
                               child: Text(
-                                'Save',
+                                'save'.tr,
                                 style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
