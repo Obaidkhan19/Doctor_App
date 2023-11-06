@@ -36,6 +36,18 @@ class ProfileController extends GetxController implements GetxService {
     update();
   }
 
+  List<Memberships> membershipList = [];
+  updatedDoctormembership(List<Memberships> membership) {
+    membershipList = membership;
+    update();
+  }
+
+  List<Awards> awardsList = [];
+  updatedDoctorawards(List<Awards> awards) {
+    awardsList = awards;
+    update();
+  }
+
   List<Expereinces> experienceList = [];
   updatedDoctorexperienceList(List<Expereinces> exp) {
     experienceList = exp;

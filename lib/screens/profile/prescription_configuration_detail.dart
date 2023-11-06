@@ -35,7 +35,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
           child: Column(
             children: [
               ProfileRecordWidget(
-                title: "Education",
+                title: "education".tr,
                 name: profile.selectedbasicInfo?.userDisplayEducation == ""
                     ? "-"
                     : profile.selectedbasicInfo?.userDisplayEducation == null
@@ -47,7 +47,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Designation",
+                title: "designation".tr,
                 name: profile.selectedbasicInfo?.userDisplayDesignation == ""
                     ? "-"
                     : profile.selectedbasicInfo?.userDisplayDesignation == null
@@ -59,7 +59,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Stamp",
+                title: "stamp".tr,
                 name: profile.selectedbasicInfo?.stamp == ""
                     ? "-"
                     : profile.selectedbasicInfo?.stamp == null
@@ -70,7 +70,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Professional Summary",
+                title: "professionalSummary".tr,
                 name: profile.selectedbasicInfo?.professionalSummary == ""
                     ? "-"
                     : profile.selectedbasicInfo?.professionalSummary == null
@@ -82,7 +82,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
               ),
               Center(
                 child: Text(
-                  'ERX Configuration',
+                  'ERXConfiguration'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 12,
@@ -106,7 +106,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.02,
               ),
               ProfileRecordWidget(
-                title: "Top Margin",
+                title: "topMargin".tr,
                 name: profile.selectedbasicInfo?.marginTop.toString() == ""
                     ? "-"
                     : profile.selectedbasicInfo?.marginTop.toString() == null
@@ -118,7 +118,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Bottom Margin",
+                title: "bottomMargin".tr,
                 name: profile.selectedbasicInfo?.marginBottom.toString() == ""
                     ? "-"
                     : profile.selectedbasicInfo?.marginBottom.toString() == null
@@ -131,7 +131,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
               ),
               Center(
                 child: Text(
-                  'English',
+                  'english'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 12,
@@ -155,7 +155,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.02,
               ),
               ProfileRecordWidget(
-                title: "Education",
+                title: "education".tr,
                 name: profile.selectedbasicInfo?.educationEnglish == ""
                     ? "-"
                     : profile.selectedbasicInfo?.educationEnglish == null
@@ -166,7 +166,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Designation",
+                title: "designation".tr,
                 name: profile.selectedbasicInfo?.designationEnglish == ""
                     ? "-"
                     : profile.selectedbasicInfo?.designationEnglish == null
@@ -177,7 +177,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Others",
+                title: "others".tr,
                 name: profile.selectedbasicInfo?.othersEnglish == ""
                     ? "-"
                     : profile.selectedbasicInfo?.othersEnglish == null
@@ -189,7 +189,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
               ),
               Center(
                 child: Text(
-                  'Arabic',
+                  'arabic'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 12,
@@ -213,7 +213,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.02,
               ),
               ProfileRecordWidget(
-                title: "Education",
+                title: "education".tr,
                 name: profile.selectedbasicInfo?.educationUrdu == ""
                     ? "-"
                     : profile.selectedbasicInfo?.educationUrdu == null
@@ -224,7 +224,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Designation",
+                title: "designation".tr,
                 name: profile.selectedbasicInfo?.designationUrdu == ""
                     ? "-"
                     : profile.selectedbasicInfo?.designationUrdu == null
@@ -235,7 +235,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Others",
+                title: "others".tr,
                 name: profile.selectedbasicInfo?.othersUrdu == ""
                     ? "-"
                     : profile.selectedbasicInfo?.othersUrdu == null
@@ -249,7 +249,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                   width: Get.width * 0.6,
                   height: Get.height * 0.06,
                   fontSize: 15,
-                  title: "Edit",
+                  title: "edit".tr,
                   onPressed: () async {
                     var result = await Get.to(
                         () => const EditPrescriptionConfiguration());

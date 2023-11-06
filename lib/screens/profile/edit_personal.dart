@@ -107,7 +107,7 @@ class _EditPersonalState extends State<EditPersonal> {
           },
         ),
         title: Text(
-          'Edit Personal',
+          'editPersonal'.tr,
           style: GoogleFonts.poppins(
               fontSize: 17,
               fontWeight: FontWeight.w600,
@@ -152,7 +152,7 @@ class _EditPersonalState extends State<EditPersonal> {
                         }
                         return null;
                       },
-                      hintText: 'Title Prefix',
+                      hintText: 'titlePrefix'.tr,
                       controller: edit.customprefixtitle,
                     ),
                   ),
@@ -164,7 +164,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       }
                       return null;
                     },
-                    hintText: 'First Name',
+                    hintText: 'firstname'.tr,
                     controller: edit.firstname,
                   ),
 
@@ -175,7 +175,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       }
                       return null;
                     },
-                    hintText: 'Middle Name',
+                    hintText: 'middleName'.tr,
                     controller: edit.middlename,
                   ),
 
@@ -186,7 +186,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       }
                       return null;
                     },
-                    hintText: 'Last Name',
+                    hintText: 'lastname'.tr,
                     controller: edit.lastname,
                   ),
 
@@ -284,7 +284,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       return null;
                     },
                     controller: edit.idnumber,
-                    hintText: 'ID Number'.tr,
+                    hintText: 'idnumber'.tr,
                   ),
 
                   EditProfileCustomTextField(
@@ -295,7 +295,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       return null;
                     },
                     controller: edit.passportno,
-                    hintText: 'Passport Number'.tr,
+                    hintText: 'passportNumber'.tr,
                   ),
 
                   EditProfileCustomTextField(
@@ -322,7 +322,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       ),
                       child: Center(
                         child: Text(
-                          'Add LMPC',
+                          'addLMPC'.tr,
                           style: GoogleFonts.poppins(
                             color: ColorManager.kWhiteColor,
                             fontSize: 15,
@@ -340,7 +340,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       return null;
                     },
                     controller: edit.ntnnumber,
-                    hintText: 'NTN Number',
+                    hintText: 'NTNNumber'.tr,
                   ),
 
                   EditProfileCustomTextField(
@@ -350,7 +350,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       }
                       return null;
                     },
-                    hintText: 'Consultancy Fee',
+                    hintText: 'consultancyfee'.tr,
                     controller: edit.consultancyfee,
                   ),
 
@@ -361,7 +361,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       }
                       return null;
                     },
-                    hintText: 'Follow UP Fee',
+                    hintText: 'followupfee'.tr,
                     controller: edit.followupfee,
                   ),
 
@@ -429,7 +429,7 @@ class _EditPersonalState extends State<EditPersonal> {
                         setState(() {});
                       },
                       readonly: true,
-                      hintText: 'Designations'),
+                      hintText: 'designations'.tr),
 
                   SizedBox(
                     height: Get.height * 0.01,
@@ -520,7 +520,7 @@ class _EditPersonalState extends State<EditPersonal> {
                       }
                       return null;
                     },
-                    hintText: 'Guardian Name',
+                    hintText: 'guardianName'.tr,
                     controller: edit.guardianname,
                   ),
 

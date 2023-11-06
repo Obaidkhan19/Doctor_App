@@ -85,7 +85,7 @@ class _EditContactState extends State<EditContact> {
           },
         ),
         title: Text(
-          'Edit Contact',
+          'editContact'.tr,
           style: GoogleFonts.poppins(
               fontSize: 17,
               fontWeight: FontWeight.w600,
@@ -103,7 +103,7 @@ class _EditContactState extends State<EditContact> {
                 children: [
                   Center(
                     child: Text(
-                      'Contact Information',
+                      'contactInformation'.tr,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
                             fontSize: 12,
@@ -345,11 +345,11 @@ class _EditContactState extends State<EditContact> {
                       return null;
                     },
                     controller: edit.emailController,
-                    hintText: 'Email',
+                    hintText: 'email'.tr,
                   ),
                   Center(
                     child: Text(
-                      'Next of Kin',
+                      'nextofKin'.tr,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
                             fontSize: 12,
@@ -396,7 +396,7 @@ class _EditContactState extends State<EditContact> {
                       return null;
                     },
                     controller: edit.nokfirstname,
-                    hintText: 'First Name',
+                    hintText: 'firstname'.tr,
                   ),
                   EditProfileCustomTextField(
                     validator: (p0) {
@@ -406,7 +406,7 @@ class _EditContactState extends State<EditContact> {
                       return null;
                     },
                     controller: edit.noklastname,
-                    hintText: 'Last Name',
+                    hintText: 'lastname'.tr,
                   ),
                   EditProfileCustomTextField(
                     validator: (p0) {
@@ -416,7 +416,7 @@ class _EditContactState extends State<EditContact> {
                       return null;
                     },
                     controller: edit.nokidno,
-                    hintText: 'ID Number',
+                    hintText: 'idnumber'.tr,
                   ),
                   CustomIntlPhoneField(
                     onChanged: (phone) {

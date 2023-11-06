@@ -128,7 +128,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                         size: 35,
                       ),
                       controller: SearchFieldController,
-                      hintText: 'Search',
+                      hintText: 'search'.tr,
                     ),
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.66,
@@ -238,7 +238,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                'Visit No: ${manageAppointment.visitNo ?? ""}',
+                                                                '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
                                                                 style:
                                                                     GoogleFonts
                                                                         .poppins(
@@ -392,7 +392,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                'Waiting Since ${contr.startTimesconsulted[index] ?? ""}',
+                                                                '${'waitingSince'.tr} ${contr.startTimesconsulted[index] ?? ""}',
                                                                 //'Waiting Since ${contr.startTimes[index] }',
                                                                 style:
                                                                     GoogleFonts

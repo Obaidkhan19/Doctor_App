@@ -319,7 +319,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                 .isEmpty
                             ? const SizedBox.shrink()
                             : Text(
-                                'Appointments Time Overview'.tr,
+                                'appointmentstimeoverview'.tr,
                                 style: GoogleFonts.poppins(
                                     fontSize: 15,
                                     color: ColorManager.kPrimaryColor,
@@ -358,7 +358,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'Time Slot',
+                                                      'timeSlot'.tr,
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 9,
                                                           color: ColorManager
@@ -418,7 +418,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'Booked',
+                                                      'booked'.tr,
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 9,
                                                           color: ColorManager
@@ -486,7 +486,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'Arrived',
+                                                      'arrived'.tr,
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 9,
                                                           color: ColorManager
@@ -554,7 +554,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'Waiting',
+                                                      'waiting'.tr,
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 9,
                                                           color: ColorManager
@@ -622,7 +622,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'No show',
+                                                      'noshow'.tr,
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 9,
                                                           color: ColorManager
@@ -681,7 +681,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         Row(
                                           children: [
                                             Text(
-                                              'Total Appointments',
+                                              'totalAppointments'.tr,
                                               style: GoogleFonts.poppins(
                                                   fontSize: 8,
                                                   color:

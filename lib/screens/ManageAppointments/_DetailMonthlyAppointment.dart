@@ -162,7 +162,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       GetBuilder<ManageAppointmentController>(
                           builder: (context) {
                         return Text(
-                          'Paid Appointments |  ${ManageAppointmentController.i.paid}'
+                          '${'paidappointments'.tr} |  ${ManageAppointmentController.i.paid}'
                           '',
                           style: GoogleFonts.poppins(
                             fontSize: 9,
@@ -181,7 +181,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       GetBuilder<ManageAppointmentController>(
                           builder: (context) {
                         return Text(
-                          'UnPaid Appointments |  ${ManageAppointmentController.i.unpaid}'
+                          '${'unPaidappointments'.tr} |  ${ManageAppointmentController.i.unpaid}'
                           '',
                           style: GoogleFonts.poppins(
                             fontSize: 9,

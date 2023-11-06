@@ -394,8 +394,199 @@ class Localization extends Translations {
           'daily': 'Daily',
           'monthly': 'Monthly',
           'waitingqueue': 'Waiting Queue',
+          'clinicalPractice': 'Clinical Practice',
+          'consulted': 'Consulted',
+          'waitingSince': 'Waiting Since',
+          'visitNumber': 'Visit No:',
+          'complaints': 'Complaints:',
+          'diagnosis': 'Diagnosis:',
+          'procedures': 'Procedures:',
+          'diagnosticscolon': "Diagnostics:",
+          'investigations': 'Investigations:',
+          'vitals': 'Vitals:',
+          'smoker': 'Smoker',
+          'yes': 'Yes',
+          'no': 'No',
+          'diabetic': 'Diabetic',
+          'primaryDiagnosis': 'Primary Diagnosis',
+          'secondaryDiagnosis': 'Secondary Diagnosis',
+          'medicines': 'Medicines',
+          'dos': 'Dos',
+          'route': 'Route',
+          'followUp': 'Follow Up',
+          'instructions': 'Instructions',
+          'delete': 'Delete',
+          'doyouwanttodeleteit': 'Do you want to delete it?',
+          'comment': 'Comment',
+          'addcomments': 'Add Comments',
+          'typeyourcommenthere': 'Type your comment here',
+          'save': 'Save',
+          'dosage': 'Dosage',
+          'onlineconsultation': 'Online Consultation',
+          'waitingforpatient': 'Waiting for Patient...',
+          'timeDuration': 'Time Duration',
+          'till': 'Till',
+          'from': 'From',
+          'selectHospitalClinic': 'Select Hospital/Clinic',
+          'edit': 'Edit',
+          'viewConfiguration': 'View Configuration',
+          'days': 'Days',
+          'editConfiguration': 'Edit Configuration',
+          'appointmentstimeoverview': 'Appointments Time Overview',
+          'timeSlot': 'Time Slot',
+          'booked': 'Booked',
+          'arrived': 'Arrived',
+          'waiting': 'Waiting',
+          'noshow': 'No show',
+          'totalAppointments': 'Total Appointments',
+          'approve': 'Approve',
+          'selectAll': 'Select All',
+          'paidappointments': 'Paid Appointments',
+          'unPaidappointments': 'UnPaid Appointments',
+          'selectBranch': 'Select Branch',
+          'onlyContact': 'Contact',
+          'education': 'Education',
+          'specialization': 'Specialization',
+          'membership': 'Membership',
+          'awards': 'Awards',
+          'bankDetail': 'Bank Detail',
+          'prescriptionConfiguration': 'Prescription Configuration',
+          'workLocations': 'Work Locations',
+          'name': 'Name',
+          'maritalStatus': 'Marital Status',
+          'passportNumber': 'Passport Number',
+          'DHANO': 'DHA NO.',
+          'NTNNumber': 'NTN Number',
+          'bloodGroup': 'Blood Group',
+          'religion': 'Religion',
+          'consultancyFee': 'Consultancy Fee',
+          'designation(s)': 'Designation(s)',
+          'contactInformation': 'Contact Information',
+          'mobileNumber(Private)': 'Mobile Number (Private)',
+          'mobileNumber(Public)': 'Mobile Number (Public)',
+          'telephoneNumber': 'Telephone Number',
+          'nextofKin': 'Next of Kin',
+          'NOKName': 'NOK Name',
+          'NOKIDNumber': 'NOK ID Number',
+          'NOKRelation': 'NOK Relation',
+          'NOKMobileNumber': 'NOK Mobile Number',
+          'designation': 'Designation',
+          'stamp': 'Stamp',
+          'professionalSummary': 'Professional Summary',
+          'ERXConfiguration': 'ERX Configuration',
+          'topMargin': 'Top Margin',
+          'bottomMargin': 'Bottom Margin',
+          'others': 'Others',
+          'notification': 'Notification',
+          'editContact': 'Edit Contact',
+          'editPersonal': 'Edit Personal',
+          'titlePrefix': 'Title Prefix',
+          'middleName': 'Middle Name',
+          'designations': 'Designations',
+          'addLMPC': 'Add LMPC',
+          'guardianName': 'Guardian Name',
+          'error': 'Error',
+          'noitemisselected': 'No item is selected!',
+          'nopendingappointmentisselected':
+              'No pending appointment is selected!',
         },
         "ar_SA": {
+          'error': 'خطأ',
+          'noitemisselected': 'لم يتم تحديد أي عنصر!',
+          'nopendingappointmentisselected': 'لم يتم تحديد موعد معلق!',
+          'guardianName': 'اسم الوصي',
+          'designations': 'التسميات',
+          'addLMPC': 'إضافة إل إم بي سي',
+          'middleName': 'الاسم الأوسط',
+          'titlePrefix': 'بادئة العنوان',
+          'editPersonal': 'تحرير الشخصية',
+          'editContact': 'تحرير جهة الاتصال',
+          'english': 'إنجليزي',
+          'arabic': 'عربي',
+          'notification': 'إشعار',
+          'designation': 'تعيين',
+          'stamp': 'ختم',
+          'professionalSummary': 'خلاصة احترافية',
+          'ERXConfiguration': 'تكوين إي آر إكس',
+          'topMargin': 'الهامش العلوي',
+          'bottomMargin': 'الهامش السفلي',
+          'others': 'آحرون',
+          'contactInformation': 'معلومات الاتصال',
+          'mobileNumber(Private)': 'رقم الجوال (خاص)',
+          'mobileNumber(Public)': 'رقم الجوال (عام)',
+          'telephoneNumber': 'رقم هاتف',
+          'nextofKin': 'التالي من القربى',
+          'NOKName': 'اسم نوك',
+          'NOKIDNumber': 'رقم معرف NOK',
+          'NOKRelation': 'علاقة NOK',
+          'NOKMobileNumber': 'رقم الجوال نوك',
+          'name': 'اسم',
+          'maritalStatus': 'الحالة الاجتماعية',
+          'passportNumber': 'رقم جواز السفر',
+          'DHANO': 'رقم هيئة الصحة بدبي',
+          'NTNNumber': 'رقم إن تي إن',
+          'bloodGroup': 'فصيلة الدم',
+          'religion': 'دِين',
+          'consultancyFee': 'رسوم الاستشارة',
+          'designation(s)': 'التعيين (التسميات)',
+          'membership': 'عضوية',
+          'awards': 'الجوائز',
+          'bankDetail': 'تفاصيل البنك',
+          'prescriptionConfiguration': 'تكوين الوصفة الطبية',
+          'workLocations': 'مواقع العمل',
+          'education': 'تعليم',
+          'specialization': 'تخصص',
+          'onlyContact': 'اتصال',
+          'selectBranch': 'حدد الفرع',
+          'unPaidappointments': 'المواعيد غير المدفوعة',
+          'paidappointments': 'المواعيد المدفوعة',
+          'selectAll': 'اختر الكل',
+          'approve': 'يعتمد',
+          'totalAppointments': 'إجمالي التعيينات',
+          'noshow': 'لا تظهر',
+          'waiting': 'منتظر',
+          'arrived': 'وصل',
+          'booked': 'حجز',
+          'timeSlot': 'فسحة زمنية',
+          'appointmentstimeoverview': 'نظرة عامة على وقت المواعيد',
+          'editConfiguration': 'تحرير التكوين',
+          'days': 'أيام',
+          'viewConfiguration': 'عرض التكوين',
+          'edit': 'يحرر',
+          'selectHospitalClinic': 'اختر المستشفى/العيادة',
+          'till': 'حتى',
+          'from': 'من',
+          'timeDuration': 'المدة الزمنية',
+          'waitingforpatient': 'انتظار المريض...',
+          'onlineconsultation': 'التشاور عبر الإنترنت',
+          'dosage': 'الجرعة',
+          'save': 'يحفظ',
+          'typeyourcommenthere': 'اكتب تعليقك هنا',
+          'addcomments': 'أضف تعليقات',
+          'comment': 'تعليق',
+          'doyouwanttodeleteit': 'هل تريد حذفه؟',
+          'delete': 'يمسح',
+          'instructions': 'تعليمات',
+          'followUp': 'متابعة',
+          'route': 'طريق',
+          'dos': 'دوس',
+          'medicines': 'الأدوية',
+          'secondaryDiagnosis': 'التشخيص الثانوي',
+          'primaryDiagnosis': 'التشخيص الأولي',
+          'diabetic': 'مريض بالسكر',
+          'smoker': 'المدخن',
+          'yes': 'نعم',
+          'no': 'لا',
+          'vitals': 'العناصر الحيوية:',
+          'investigations': 'التحقيقات:',
+          'diagnosticscolon': "التشخيص:",
+          'procedures': 'إجراءات:',
+          'diagnosis': 'تشخبص:',
+          'complaints': 'شكاوي:',
+          'visitNumber': 'رقم زيارة:',
+          'waitingSince': 'في انتظار منذ',
+          'consulted': 'استشارة',
+          'clinicalPractice': 'الممارسة السريرية',
           'waitingqueue': 'طابور الانتظار',
           'daily': 'يوميًا',
           'monthly': 'شهريا',
@@ -778,6 +969,493 @@ class Localization extends Translations {
           'iamoffline': 'أنا غير متصل',
           'regno': 'رقم هيئة الصحة بدبي . ',
           'configureappointments': 'تكوين \n المواعيد'
+        },
+        "ur_PK": {
+          'error': 'خرابی',
+          'noitemisselected': 'کوئی آئٹم منتخب نہیں کیا گیا ہے!',
+          'nopendingappointmentisselected':
+              'کوئی زیر التواء ملاقات منتخب نہیں ہے!',
+          "welcometo": "خوش آمدید",
+          "takecareofyourhealth": "اپنی صحت کا خیال رکھیں",
+          "manageYourHealth": "ہمارے ساتھ اپنی صحت کا انتظام کریں",
+          "with": "ساتھ",
+          "goodmorning": "صبح بخیر",
+          "goodEvening": "شام بخیر",
+          "goodNight": "شب بخیر",
+          "goodAfterNoon": "دوپہر بخیر",
+          "onlineOffline": "آن لائن اور آف لائن",
+          "consultations": "مشورے",
+          "booknow": "اب کتاب کریں",
+          "selectservices": "خدمات منتخب کریں",
+          "homeSample": "گھر کا نمونہ",
+          "imageBooking": "تصویر کتاب کریں",
+          "doctorConsultation": "ڈاکٹر کی مشورہ",
+          "reports": "رپورٹیں",
+          "healthSummary": "صحت کا خلاصہ",
+          "healthAnalysis": "صحت کا تجزیہ",
+          "todayAvailable": "آج دستیاب ہے",
+          "generalConsultation": "عام مشورہ",
+          "getAppointment": "ملاقات کریں",
+          "home": "ہوم",
+          "profile": "پروفائل",
+          "schedule": "شیڈول",
+          "help": "مدد",
+          "history": "تاریخچہ",
+          "familyMembers": "خاندان کے اراکین",
+          "location": "مقام",
+          "wallet": "پرس",
+          "packages": "پیکیجز",
+          "forgotPassword": "پاسورڈ بھول گئے؟",
+          "biometric": "بائیومیٹرک",
+          "privacyPolicy": "رازداری کی پالیسی",
+          "termsAndConditions": "شرائط و ضوابط",
+          "logout": "لاگ آوٹ",
+          "labInvestions": "لیب انویسٹی گیشنز",
+          "selectTest": "ٹیسٹ منتخب کریں",
+          "description": "تفصیل",
+          "address": "پتہ",
+          "paymentMethod": "ادائیگی کا طریقہ",
+          "prescribedBy": "مشورہ دینے والا",
+          "self": "خود",
+          "doctor": "ڈاکٹر",
+          "outdoorDoctor": "آؤٹ ڈور ڈاکٹر",
+          "select Doctor": "ڈاکٹر منتخب کریں",
+          "summary": "خلاصہ",
+          "datehour": "تاریخ اور گھنٹہ",
+          "package": "پیکیج",
+          "test": "ٹیسٹ",
+          "price": "قیمت",
+          "grandTotal": "کل مجموعی",
+          "appointmentConfirm": "ملاقات کی تصدیق",
+          "attachPrescription": "تحفظ لینے کی تصدیق",
+          "login": "لاگ ان",
+          "Login": "لاگ ان",
+          "donthaveanAccount": "کیا آپ کا اکاؤنٹ نہیں ہے؟",
+          "register": "رجسٹر",
+          "registerNow": "اب رجسٹر کریں",
+          "fullName": "پورا نام",
+          "yourMobNumber": "آپ کا موبائل نمبر",
+          "email": "ای میل",
+          "dateOfBirth": "پیدائش کی تاریخ",
+          "gender": "صنف",
+          "password": "پاسورڈ",
+          "retypePassword": "پاسورڈ دوبارہ درج کریں",
+          "changePassword": "پاسورڈ تبدیل کریں",
+          "country": "ملک",
+          "state": "ریاست",
+          "city": "شہر",
+          "street": "سڑک",
+          "alreadyHaveAnAccount": "کیا آپ کا پہلے سے اکاؤنٹ ہے؟",
+          "signin": "سائن ان",
+          "registered": "رجسٹرڈ",
+          "registrationCompleted":
+              "تصدیق کے لئے منتظر ہے، آپ کو جلد اطلاع دی جائے گی۔",
+          "ok": "ٹھیک ہے",
+          "payfromYourWallet": "اپنے پرس سے ادائیگی کریں",
+          "payOnline": "آن لائن ادائیگی کریں",
+          "payAtClinic": "کلینک میں ادائیگی کریں",
+          "congratulations": "مبارک ہو",
+          "myAppointments": "میری ملاقاتیں",
+          "bookyourAppointments": "اپنی ملاقاتیں کتاب کریں",
+          "searchDoctor": "ڈاکٹر تلاش کریں",
+          "patients": "مریض",
+          "yearExperience": "تجربے کے سال",
+          "rating": "ریٹنگ",
+          "reviews": "جائزے",
+          "descriptions": "تفصیلات",
+          "workingTime": "کام کا وقت",
+          "online&Clinic": "آن لائن اور کلینک مشورہ کی کرایہ",
+          "bookAppointment": "ملاقات کتاب کریں",
+          "welcomeTo": "خوش آمدید",
+          "username": "صارف کا نام",
+          "oopsFailed": "اوہ، ناکامی",
+          "appointmentFailed": "ملاقات ناکام ہوئی",
+          "checkInternet":
+              "براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں",
+          "appointmentBooked": "ملاقات کامیابی سے کتاب کرلی گئی ہے",
+          "viewAppointment": "ملاقات دیکھیں",
+          "cancel": "منسوخ کریں",
+          "glucose": "گلوکوز",
+          "bloodPressure": "رقبے کی فشار کی قیمتیں",
+          "measurements": "پیمائشیں",
+          "connect": "منسلک کریں",
+          "pulse": "پلس",
+          "temperature": "حرارت",
+          "labTestResult": "لیب ٹیسٹ کا نتیجہ",
+          "status": "حالت",
+          "pending": "زیر التوا",
+          "allergies": "الرجی",
+          "addGlucose": "گلوکوز شامل کریں",
+          "normal": "عام",
+          "fasting": "روزے کے اوقات",
+          "values": "قیمتیں",
+          "condition": "حالت",
+          "saveRecord": "ریکارڈ محفوظ کریں",
+          "calculate": "حساب لگائیں",
+          "bmiCalculator": "BMI کیلکولیٹر",
+          "BMI": "BMI",
+          "glucoseLevelMonitor": "گلوکوز کی سطح کی مانٹرنگ",
+          "enterValue": "قدر درج کریں",
+          "goodAfternoon": "دوپہر بخیر",
+          "collectLocationData":
+              "تابیب البیت پیشینٹ کیئر وقت بھی بند ہونے یا استعمال میں نہیں ہوتا ہے، تو گھریلو نمونہ کاری خدمات کو فعال کرنے کے لئے مقام ڈیٹا جمع کرتا ہے",
+          "permissions": "اجازتیں",
+          "deleteAccount": "اکاؤنٹ کو حذف کریں",
+          "languages": "زبانیں",
+          "identityNumber": "شناختی نمبر",
+          "signup": "سائن اپ؟",
+          "BPM": "بی پی ایم",
+          "date": "تاریخ",
+          "time": "وقت",
+          "searchForSpecialities": "خصوصیات کی تلاش کریں",
+          "consultNow": "اب مشورہ کریں",
+          "specialists": "ماہرین",
+          "upcomingAppointments": "آیندہ ملاقاتیں",
+          "dateAndTime": "تاریخ اور وقت",
+          "reschedule": "دوبارہ تنظیم کریں",
+          "onlineConsultation": "آن لائن مشورہ",
+          'information1':
+              'ہمارا نظام اور ایپس بشری صحت اور طبی کو مرکوز کر کے بنائے گئے ہیں۔ ہم اپنی ایپس میں صارف کی تجربہ اور ایپ کی فعالیت کو بہتر بنانے کے لئے کچھ دوسری معلومات اور اجازتیں جمع کر رہے ہیں۔ ہم جمع کردہ معلومات معمولاً عارضی طور پر پروسیس کرتے ہیں، یعنی انہیں صرف ایپلیکیشن کے اندر شامل کرنے اور بند کرنے کے لئے استعمال کیا جاتا ہے۔ اس کی استعمال کے بعد ان کو استعمال نہیں کیا جاتا ہے۔ ان میں سے کچھ اہم معلومات نیچے ظاہر کی گئی ہیں جن کی وضاحت اور جمع کرنے کے وجوہات بھی دی گئی ہیں۔',
+          'information2':
+              'موقع کے ڈاکٹروں کو دیکھانے کے لئے، ایپ کو صارف سے اس کی اجازت حاصل کرنی ہوتی ہے۔ اپنی ڈیوائس پر موقع کی معلوماتی خدمات کو فعال کرنے کے لئے، آپ تصدیق کرتے ہیں اور اقرار کرتے ہیں کہ (الف) آپ کی طرف سے جمع کی گئی ڈیوائس ڈیٹا آپ کی ایپ کے استعمال کے سیدھے متعلق ہے، (ب) ہم موقع کی معلوماتی خدمات موقع کی موجودہ جگہ کے مطابق موقعیت کے متعلق فراہم کرتے ہیں، اور (ج) ہم اس کی فراہمی کے تعلق میں جمع کردہ معلومات کو استعمال کرتے ہیں۔ ڈاکٹر اور مریض کے درمیان ویڈیو کال کے لئے، صوتی کال کے لئے (الف) صارف/مریض اپنی پروفائل تصویر اپ لوڈ کر سکتے ہیں (ب) صارف/مریض صحتی ریکارڈز اور فائلز ڈاکٹر کی جائزہ لینے کے لئے اپ لوڈ کر سکتے ہیں (ج) صارف/مریض گزشتہ رپورٹس کو ڈاؤنلوڈ اور دیکھ سکتے ہیں۔',
+          'usage':
+              'ہم جمع کردہ معلومات کو مختلف طریقوں سے استعمال کرتے ہیں، ان میں سے چند مواد کی تیاری، عمل و توقعات (a) فراہم کرنے، چلانے اور برقرار رکھنے کے لئے (b) آپ کے استعمال کے طریقے کو سمجھنا اور تجزیہ کرنا (c) نئے پروڈکٹ، خدمات کی خصوصیات اور فعالیت کی تیاری (d) آپ کے ساتھ منفیت کے آپڈیٹس اور دوسری معلومات موصول کرنے کے لئے، سیدھے یا ہمارے کسی شراکاء کے ذریعے، شاولینگ یا پیشہ ورانہ مقاصد کے لئے آپ کے ساتھ بات چیت کرنے کے لئے (f) ای میلز بھیجنا (g) فراڈ کو تلاش کرنا اور روکنا۔',
+          'disclosure':
+              'ہم شخصی معلومات کو ہماریلئے اڈٹ، قانونی، عاملی یا دوسری خدمات کرنے والے کسی بھی شخص کو فاش کر سکتے ہیں۔ جب ممکن ہو تو ہم ان خدمات کے لئے جو شخص کو شناخت دینے والی نہ ہوں ان معلومات کا استعمال کریں گے۔ CCPA کے تحت، دوسرے حقوقوں کے علاوہ، کیلیفورنیا کی شریفوں کا حق ہوتا ہے کہ وہ کسی بھی کاروبار سے جمع کی گئی شخصی معلومات کی کیٹیگریز اور خصوصی پیسز کو آپ کے بارے میں جمع کردی ہے وہ معلومات فاش کرنے کا حق ہوتا ہے، کسی بھی شخصی معلومات کو حذف کرنے کا حق رکھتا ہے، شریفوں کی شخصی معلومات کو فروخت نہیں کرتا۔ اگر آپ کو کوئی درخواست کرنی ہو تو، ہمیں آپ کو جواب دینے کے لئے ایک مہینے کا وقت ہوتا ہے۔ اگر آپ ان میں سے کسی بھی حق کو انفعال دینا چاہتے ہیں، تو براہ کرم ہم سے رابطہ کریں۔ GDPR ڈیٹا پروٹیکشن حقوق کے تحت، ہر صارف کو اپنی شخصی معلومات کی کاپیوں کا حق ہوتا ہے۔ ہم آپ سے اس خدمے کے لئے ایک چھوٹی سی فیس حصول کر سکتے ہیں، آپ کو وقتنا ہوتا ہے کہ ہم سے ایک مہینے کے اندر جواب دینا چاہتے ہیں۔ اگر آپ ان میں سے کسی بھی حق کو انفعال دینا چاہتے ہیں، تو براہ کرم ہم سے رابطہ کریں۔',
+          'consent':
+              'ہماری ویب سائٹ، خدمات اور مصنوعات کا استعمال کر کے آپ یہاں اپنی رضاکارانہ پالیسی کی رضا ہو گی اور اس کی شرائط کو قبول کرتے ہیں۔ اگر آپ ایک ڈاکٹر یا طبی پیشہ ور ہیں جو اس ایپ پر رجسٹر کر رہے ہیں، تو اس خدمت کا استعمال آپ کو خود پر ہوتا ہے اور آپ ان پیدا کرنے والوں، ڈویلپرز، اور نشر کنندگان کو نقصان سے معاف کرتے ہیں اور آپ تاثر پیدا کرنے والے کسی بھی نتائج، شامل ہیں لیکن ان میں سے کم سے کم دائرہ کار کی طرف سے کسی تیسرے طرف کی دعویٰ، اعمال یا قانونی کاروائیوں کی طرف سے نقصان یا توڑا پھوڑ کے مقدموں کی طرف منفی تاثر پیدا ہونے سے معاف کرتے ہیں۔',
+          'consentTitle': 'رضا',
+          'usageTitle': 'استعمال',
+          'disclosureTitle': 'فاشیہ',
+          'informationWeCollect': 'ہم جو معلومات جمع کرتے ہیں',
+          'iHaveRead': 'میں نے پڑھا اور سمجھا ہے',
+          'theTermsAndCondition': 'شرائط اور ضوابط',
+          'accept': 'منظور کریں',
+          'decline': 'انکار کریں',
+          'height': 'قد',
+          'weight': 'وزن',
+          'add': 'شامل کریں',
+          'servicesHome': 'خدمات (ہوم)',
+          'teleconsultation': 'ٹیلی کنسلٹیشن',
+          'diagnostics': 'تشخیصی',
+          'physio': 'فزیو',
+          'nursing': 'نرسنگ',
+          'caregiver': 'کیر گیور',
+          'respiratoryTherapy': 'تنفسی تھراپی',
+          'dietitian': 'غذائیاتی',
+          'serviceSelected': 'منتخب کی خدمت',
+          'collectesData':
+              'خدمات ہوم کو فعال کرنے کیلئے لوکیشن ڈیٹا جمع کرتا ہے، چاہے وہ بند ہو یا استعمال میں نہ ہو',
+          'agree': 'متفق ہوں',
+          'appointmentNotes': 'ملاقات کی نوٹس',
+          'deny': 'انکار کریں',
+          'search': 'تلاش کریں',
+          'homeVisit': 'گھر پر ملاقات',
+          'online': 'آن لائن',
+          'subTotal': 'ذیلی کل',
+          'minFee': 'کم از کم فیس',
+          'doctorSchedule': 'ڈاکٹر کا شیڈول',
+          'fee': 'فیس',
+          'charges': 'چارجز',
+          'selectAddress': 'پتہ منتخب کریں',
+          'selectLocation': 'لوکیشن منتخب کریں',
+          'goodMorning': 'صبح بخیر',
+          'token': 'ٹوکن',
+          'ecg': 'ای سی جی',
+          'selectLanguage': 'زبان منتخب کریں',
+          'english': 'انگریزی',
+          'arabic': 'عربی',
+          'hour': 'گھنٹہ',
+          'homeService': 'ہوم سروس',
+          'labInvestigationBooking': 'لیب تحقیقات کی بکنگ',
+          'experience': 'تجربہ',
+          'paying': 'ادائیگی',
+          'serviceBooked': 'خدمت کامیابی سے بک گئی ہے۔',
+          'appointmentSuccessful':
+              'ملاقات کامیابی سے بکی گئی ہے۔ آپ کو ایک اطلاع ملے گی',
+          'failedAppointment':
+              'ملاقات میں ناکامی، براہ کرم اپنی انٹرنیٹ کنکشن کی جانچ کریں اور دوبارہ کوشش کریں۔',
+          'favorites': 'پسندیدہ',
+          'noFavorites': 'کوئی پسندیدہ ڈاکٹر شامل نہیں کیا گیا',
+          'contact': 'رابطہ نمبر',
+          'c': 'صوبہ/ریاست',
+          'editProfile': 'پروفائل ترتیب دیں',
+          'update': 'تازہ کریں',
+          'healthanalysis': 'صحت کی تجزیہ',
+          'herearesomehealth': 'یہاں کچھ صحت کے حقائق ہیں ',
+          'men': 'آدمی',
+          'In': 'میں',
+          'dubai': 'ڈبئی، یو اے ای',
+          'doctorName': 'ڈاکٹر کا نام',
+          'careGivers': 'کیئر گیور',
+          'disclaimer': 'تنبیہ',
+          'services': 'خدمات',
+          'go': 'جائیں',
+          'patienthistory': 'مریض کی تاریخ',
+          'iamonline': 'میں آن لائن ہوں',
+          'iamoffline': 'میں آف لائن ہوں',
+          'regno': 'ڈی ایچ اے نمبر',
+          'consultingqueue': 'مشورہ قطار',
+          'configureappointments': 'اپائنٹمنٹس کو ترتیب دیں',
+          'adjustyourschedule': 'اپنا شیڈول ترتیب دیں',
+          'manageappointments': 'اپائنٹمنٹس کا منظر عام کریں',
+          'approve/aisapproveappointments':
+              'اپروو/منظور کرنے/منظوری دینے کے اپائنٹمنٹس',
+          'consultedvault': 'مشورہ دی گئی چیڸ کی سندان',
+          'viewconsultations': 'مشورے کو دیکھیں',
+          'healthsummary': 'صحت کا خلاصہ',
+          'patientmonitoring': 'مریض کی نگرانی',
+          'assessmentform': 'موازنہ فارم',
+          'pleaseenteryourname': 'براہ کرم اپنا نام درج کریں',
+          'pleaseenteryourmobilenumber': 'براہ کرم اپنا موبائل نمبر درج کریں',
+          'mobilenumber': 'موبائل نمبر',
+          'pleaseenteryouremail': 'براہ کرم اپنا ای میل درج کریں',
+          'pleaseselectyourcountry': 'براہ کرم اپنے ملک کا انتخاب کریں',
+          'pleaseselectyourprovince': 'براہ کرم اپنے صوبے کا انتخاب کریں',
+          'pleaseselectyourcity': 'براہ کرم اپنے شہر کا انتخاب کریں',
+          'province': 'صوبہ',
+          'pleaseselectyouraddress': 'براہ کرم اپنا پتہ منتخب کریں',
+          'successfullyupdate': 'کامیابی سے تازہ کیا گیا',
+          'failedtoupdate': 'اپ ڈیٹ نہ کرنے میں ناکامی',
+          'personal': 'ذاتی',
+          'security': 'حفاظت',
+          'title': 'عنوان',
+          'enteryourfirstname': 'اپنا پہلا نام درج کریں',
+          'firstname': 'پہلا نام',
+          'enteryourlastname': 'اپنا آخری نام درج کریں',
+          'lastname': 'آخری نام',
+          'maritalstatus': 'ازدواجی حالت',
+          'prescribedby': 'نسخے دی گئی',
+          'nationalid': 'قومی شناختی کارڈ',
+          'passport': 'پاسپورٹ',
+          'enteryouridnumber': 'اپنا شناختی کارڈ نمبر درج کریں',
+          'idnumber': 'شناختی کارڈ نمبر',
+          'enteryourimcno': 'اپنا اے ایم سی نمبر درج کریں',
+          'imcno': 'ایم سی نمبر',
+          'addpmccertificate': 'پی ایم سی سرٹیفکیٹ شامل کریں',
+          'speciality': 'خصوصیت',
+          'subspeciality': 'ذیلی خصوصیت',
+          'dateofbirth': 'پیدائش کی تاریخ',
+          'age': 'عمر',
+          'enteryouremail': 'اپنا ای میل درج کریں',
+          'saveandproceed': 'محفوظ کریں اور جاری رہیں',
+          'addpicture': 'تصویر شامل کریں',
+          'selecttitle': 'عنوان منتخب کریں',
+          'selectgender': 'جنس منتخب کریں',
+          'enteryourfullname': 'اپنا پورا نام درج کریں',
+          'enteryourpassword': 'اپنا پاسورڈ درج کریں',
+          'enteryourconfirmationpassword': 'اپنا تصدیقی پاسورڈ درج کریں',
+          'confirmationpassword': 'تصدیقی پاسورڈ',
+          'pleasesavepersonaldetails': 'براہ کرم ذاتی تفصیلات محفوظ کریں',
+          'forgottenpassword': 'پاسورڈ بھول گئے ہیں',
+          'ithappenkindlyenterthemobilenumberassociatedwithyouraccount':
+              'یہ واقع ہوتا ہے، براہ کرم اپنے اکاؤنٹ سے منسلک موبائل نمبر درج کریں',
+          'verifycode': 'کوڈ کی تصدیق کریں',
+          'enteryourmobilenumber': 'اپنا موبائل نمبر درج کریں',
+          'entercode': 'کوڈ درج کریں',
+          'kindlyenterthecodesenttoyournumber':
+              'براہ کرم اپنے نمبر پر بھیجا گیا کوڈ درج کریں',
+          'enternumber': 'نمبر درج کریں',
+          'expirein': 'ختم ہونے میں',
+          'codeexpire': 'کوڈ ختم ہونے میں',
+          'expire': 'ختم ہونے میں',
+          'createnewpassword': 'نیا پاسورڈ بنائیں',
+          'kindlyenterauniquepassword': 'براہ کرم ایک یونیک پاسورڈ درج کریں',
+          'changepassword': 'پاسورڈ تبدیل کریں',
+          'oldpassword': 'پرانا پاسورڈ',
+          'enteryouroldpassword': 'اپنا پرانا پاسورڈ درج کریں',
+          'newpasswordsshouldmatch': 'نئے پاسورڈ مماثل ہونے چاہئیں',
+          'worngemail': 'غلط ای میل',
+          'wrongcode': 'غلط تصدیقی کوڈ',
+          'view': 'دیکھیں',
+          'all': 'سب',
+          'upcoming': 'آنے والی',
+          'configureappointmentappbar': 'اپائنٹمنٹ کی تشکیل',
+          'setyouravailabilitytostartattendingpatients':
+              'مریضوں کی تلاش شروع کرنے کیلئے اپنی دستیابی ترتیب دیں',
+          'hospitalclinic': 'ہسپتال/کلینک',
+          'onlinevideoconsultation': 'آن لائن ویڈیو مشاورت',
+          'selectdays': 'دنوں کا انتخاب کریں',
+          'addhoursofyouravailability': 'آپ کی دستیابی کے گھنٹے شامل کریں',
+          'addmorehours': 'مزید گھنٹے شامل کریں',
+          'feetimeSlot': 'فیس اور وقت کا اسلوٹ',
+          'consultancyfee': 'مشاورتی فیس',
+          'aed': 'ای ڈی',
+          'followupfee': 'فالو اپ فیس',
+          'slotduration': 'اسلوٹ کی مدت (HH:MM)',
+          'followupdays': 'فالو اپ دن',
+          'nonpaidappointmentapproval': 'غیر ادائیگی میں ملاقات منظوری',
+          'approvalcriteria': 'منظوری کی شرائط',
+          'monday': 'پیر',
+          'tuesday': 'منگل',
+          'wednesday': 'بدھ',
+          'thursday': 'جمعرات',
+          'friday': 'جمعہ',
+          'saturday': 'ہفتہ',
+          'sunday': 'اتوار',
+          'recenttransections': 'حالیہ لین دین',
+          'receivedamount': 'موصول رقم',
+          'withdraw': 'نکالنا',
+          'availablebalance': 'دستیاب موازنہ',
+          'addtopupcredit': 'ٹوپ اپ کریڈٹ شامل کریں',
+          'chooseyourtopupamount': 'آپ کی ٹوپ اپ رقم منتخب کریں',
+          'enterotheramount': 'دوسری رقم درج کریں',
+          'otheramount': 'دوسری رقم',
+          'addcard': 'کارڈ شامل کریں',
+          'paymentmethod': 'ادائیگی کا طریقہ',
+          'card': 'کارڈ',
+          'entercardnumber': 'کارڈ نمبر درج کریں',
+          'expirydate': 'میعاد ختم ہونے کی تاریخ (mm/yy)',
+          'cvv': 'CVV',
+          'cardholdername': 'کارڈ ہولڈر کا نام',
+          'amount': 'رقم',
+          'addamount': 'رقم شامل کریں',
+          'toverifyyourcredit/debitcard,asmallamountwillbechargedfromyou,afterverificationamountwillbeaddedtoyourwallet':
+              'آپ کے کریڈٹ/ڈیبٹ کارڈ کی تصدیق کے لئے آپ سے ایک چھوٹی رقم کا معاونت کیا جائے گا، تصدیق کے بعد رقم آپ کے والیٹ میں شامل کی جائے گی',
+          'topupyourwallet': 'آپ کے والیٹ میں رقم شامل کریں',
+          'appointmentshistory': 'ملاقاتوں کی تاریخ',
+          'to': 'سے',
+          'mrno': 'آقا نمبر : ',
+          'visitno': 'وزٹ نمبر ',
+          'address|': 'پتہ | ',
+          'erx': 'eRX',
+          'selectbranch': 'شاخ منتخب کریں',
+          'selecthospitalclinic': 'ہسپتال/کلینک منتخب کریں',
+          'healthsummaryappbar': 'صحت کا خلاصہ',
+          'Mrno': 'آقا، نمبر ',
+          'Mrnospace': '  آقا، نمبر ',
+          'deviceconnected': 'آلہ منسلک ہے',
+          'devicedisconnect': 'آلہ منسلک نہیں ہے',
+          'random': 'بے ترتیب',
+          'bloodpressure': 'بلڈ پریشر',
+          'attendsession': 'سیشن میں شرکت کریں',
+          'prescribemedicinetests': 'دوائیں / ٹیسٹس مقرر کریں',
+          'complains': 'شکایات',
+          'labinvestigation': 'تحقیق',
+          'medicine': 'دوائی',
+          'type': ' قسم',
+          'qty': 'مقدار',
+          'frequency': ' تعداد',
+          'duration': 'مدت',
+          'freq': 'تعداد',
+          'dur': 'مدت',
+          'finding': 'نتائج',
+          'notes': 'نوٹس',
+          'writenotes': 'نوٹس لکھیں',
+          'prescribe': 'مقرر کریں',
+          'yoursessionwith': 'آپ کی ملاقات ',
+          'iscomplete': 'مکمل ہوگئی ہے! 🎉',
+          'completed': 'مکمل',
+          'wewouldlovetohearfromyou': 'ہمیں آپ سے سننا پسند ہوگا',
+          'writeyourfeedbackhere': 'یہاں اپنی رائے لکھیں',
+          'feedback': 'رائے',
+          'pleaseenterfeedback': 'براہ کرم رائے دیں',
+          'submit': 'جمع کرائیں',
+          'skipgotoconsultingqueue': 'چھوڑ دیں اور مشاورت کی قطار میں جائیں',
+          'thankyouforthefeedback': 'رائے دینے کا شکریہ!',
+          'gotoconsultingqueue': 'مشاورت کی قطار میں جائیں',
+          'todayappointment': 'آج کی ملاقاتیں',
+          'pastconsultation': 'پچھلی مشاورت',
+          'searchconsultancy': 'مشاورت تلاش کریں',
+          'advice': 'مشورہ',
+          'hold': 'روک',
+          'consult': 'مشورہ دیں',
+          'dayviewappointments': 'دن کی ملاقاتیں دیکھیں',
+          'monthlyviewappointments': 'مہینے کی ملاقاتیں دیکھیں',
+          'daily': 'روزانہ',
+          'monthly': 'مہینوار',
+          'waitingqueue': 'انتظار کی قطار',
+          'clinicalPractice': 'کلینکل عمل',
+          'consulted': 'مشورہ کیا گیا',
+          'waitingSince': 'انتظار کے بعد',
+          'visitNumber': 'وزٹ نمبر:',
+          'complaints': 'شکایات:',
+          'diagnosis': 'تشخیص:',
+          'procedures': 'عمل:',
+          'diagnosticscolon': "تشخیص:",
+          'investigations': 'تحقیقات:',
+          'vitals': 'حیاتیات:',
+          'smoker': 'شیشہ پینے والا',
+          'yes': 'ہاں',
+          'no': 'نہیں',
+          'diabetic': 'شوگر کا مریض',
+          'primaryDiagnosis': 'اولین تشخیص',
+          'secondaryDiagnosis': 'دوسری تشخیص',
+          'medicines': 'دوائیں',
+          'dos': 'مقدار',
+          'route': 'راہ',
+          'followUp': 'فالو اپ',
+          'instructions': 'ہدایات',
+          'delete': 'حذف کریں',
+          'doyouwanttodeleteit': 'کیا آپ اسے حذف کرنا چاہتے ہیں؟',
+          'comment': 'تبصرہ',
+          'addcomments': 'تبصرے شامل کریں',
+          'typeyourcommenthere': 'یہاں اپنا تبصرہ لکھیں',
+          'save': 'محفوظ کریں',
+          'dosage': 'ڈوز',
+          'onlineconsultation': 'آن لائن مشاورت',
+          'waitingforpatient': 'مریض کا منتظر ہوں...',
+          'timeDuration': 'وقت کی مدت',
+          'till': 'تک',
+          'from': 'سے',
+          'selectHospitalClinic': 'ہسپتال/کلینک منتخب کریں',
+          'edit': 'ترتیب دیں',
+          'viewConfiguration': 'تشکیل دیکھیں',
+          'days': 'دن',
+          'editConfiguration': 'ترتیب ترتیب کریں',
+          'appointmentstimeoverview': 'ملاقاتوں کا وقت کا جائزہ',
+          'timeSlot': 'وقت کا اسلوٹ',
+          'booked': 'رزرو کی گئی',
+          'arrived': 'پہنچ گیا',
+          'waiting': 'انتظار کر رہا ہے',
+          'noshow': 'دکھائی نہیں دیتا',
+          'totalAppointments': 'کل ملاقاتیں',
+          'approve': 'منظوری دیں',
+          'selectAll': 'سب منتخب کریں',
+          'paidappointments': 'ادائیگی ہوئی ملاقاتیں',
+          'unPaidappointments': 'ادائیگی نہیں ہوئی ملاقاتیں',
+          'selectBranch': 'شاخ منتخب کریں',
+          'onlyContact': 'رابطہ کریں',
+          'education': 'تعلیم',
+          'specialization': 'اختصاص',
+          'membership': 'ممبر شپ',
+          'awards': 'اعزازات',
+          'bankDetail': 'بینک کی تفصیلات',
+          'prescriptionConfiguration': 'پریسکرپشن کنفیگریشن',
+          'workLocations': 'کام کی جگہیں',
+          'name': 'نام',
+          'maritalStatus': 'شادی شدہ حالت',
+          'passportNumber': 'پاسپورٹ نمبر',
+          'DHANO': 'DHA نمبر',
+          'NTNNumber': 'NTN نمبر',
+          'bloodGroup': 'بلڈ گروپ',
+          'religion': 'مذہب',
+          'consultancyFee': 'مشاورتی فیس',
+          'designation(s)': 'منصب(ات)',
+          'contactInformation': 'رابطہ معلومات',
+          'mobileNumber(Private)': 'موبائل نمبر (ذاتی)',
+          'mobileNumber(Public)': 'موبائل نمبر (عوامی)',
+          'telephoneNumber': 'ٹیلیفون نمبر',
+          'nextofKin': 'اگلا رشتہ دار',
+          'NOKName': 'NOK نام',
+          'NOKIDNumber': 'NOK شناخ',
+          'NOKRelation': 'NOK تعلق',
+          'NOKMobileNumber': 'NOK موبائل نمبر',
+          'designation': 'عہدہ',
+          'stamp': 'ڈاک ٹکٹ',
+          'professionalSummary': 'پیشہ ورانہ خلاصہ',
+          'ERXConfiguration': 'ERX تشکیل',
+          'topMargin': 'اوپری حاشیہ',
+          'bottomMargin': 'نچلی حاشیہ',
+          'others': 'دیگر',
+          'notification': 'اطلاع',
+          'editContact': 'رابطہ ترتیب دینا',
+          'editPersonal': 'ذاتی ترتیب دینا',
+          'titlePrefix': 'عنوان سابقہ',
+          'middleName': 'وسط کا نام',
+          'designations': 'عہدے',
+          'addLMPC': 'LMPC شامل کریں',
+          'guardianName': 'سرپرست کا نام',
         }
       };
 }

@@ -405,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: Get.height * 0.1,
                               ),
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.005,
                               ),
                               Text('manageappointments'.tr,
                                   textAlign: TextAlign.center,

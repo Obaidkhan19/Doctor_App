@@ -19,7 +19,7 @@ class _WorkLocationState extends State<WorkLocation> {
     await pr.getDoctorBasicInfo();
   }
 
-  var bankdetail = Get.put<ProfileController>(ProfileController());
+  var worklocation = Get.put<ProfileController>(ProfileController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
@@ -28,10 +28,10 @@ class _WorkLocationState extends State<WorkLocation> {
           padding: EdgeInsets.only(
             top: Get.height * 0.04,
           ),
-          child: bankdetail.bankDetailList.isNotEmpty
+          child: worklocation.appointmentConfigurationList.isNotEmpty
               ? ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: bankdetail.bankDetailList.length,
+                  itemCount: worklocation.appointmentConfigurationList.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 4,
@@ -91,7 +91,7 @@ class _WorkLocationState extends State<WorkLocation> {
                                     // ProfileController
                                     //         .i.bankDetailList[index].bankName ??
                                     //     "",
-                                    "Add preference value",
+                                    "Add preference value from DB",
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       color: ColorManager.kWhiteColor,

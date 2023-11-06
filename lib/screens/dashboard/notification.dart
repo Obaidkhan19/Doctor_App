@@ -81,7 +81,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               },
             ),
             title: Text(
-              'Notification',
+              'notification'.tr,
               style: GoogleFonts.poppins(
                 textStyle: GoogleFonts.poppins(
                     fontSize: 17,

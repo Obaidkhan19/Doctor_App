@@ -35,7 +35,7 @@ class _ContactDetailState extends State<ContactDetail> {
             children: [
               Center(
                 child: Text(
-                  'Contact Information',
+                  'contactInformation'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 12,
@@ -56,7 +56,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 ),
               ),
               ProfileRecordWidget(
-                title: "Country",
+                title: "country".tr,
                 name: profile.selectedbasicInfo?.countryName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.countryName == null
@@ -67,7 +67,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "State",
+                title: "state".tr,
                 name: profile.selectedbasicInfo?.stateName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.stateName == null
@@ -78,7 +78,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "City",
+                title: "city".tr,
                 name: profile.selectedbasicInfo?.cityName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.cityName == null
@@ -89,7 +89,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Address",
+                title: "address".tr,
                 name: profile.selectedbasicInfo?.address == ""
                     ? "-"
                     : profile.selectedbasicInfo?.address == null
@@ -100,7 +100,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Mobile Number (Private)",
+                title: "mobileNumber(Private)".tr,
                 name: profile.selectedbasicInfo?.cellNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.cellNumber == null
@@ -111,7 +111,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Mobile Number (Public)",
+                title: "mobileNumber(Public)".tr,
                 name: profile.selectedbasicInfo?.contactPublic == ""
                     ? "-"
                     : profile.selectedbasicInfo?.contactPublic == null
@@ -122,7 +122,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Telephone Number",
+                title: "telephoneNumber".tr,
                 name: profile.selectedbasicInfo?.telephoneNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.telephoneNumber == null
@@ -133,7 +133,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "Email",
+                title: "email".tr,
                 name: profile.selectedbasicInfo?.email == ""
                     ? "-"
                     : profile.selectedbasicInfo?.email == null
@@ -145,7 +145,7 @@ class _ContactDetailState extends State<ContactDetail> {
               ),
               Center(
                 child: Text(
-                  'Next of Kin',
+                  'nextofKin'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
                         fontSize: 12,
@@ -166,7 +166,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 ),
               ),
               ProfileRecordWidget(
-                title: "NOK Name",
+                title: "NOKName".tr,
                 name: profile.selectedbasicInfo?.nOKFirstName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.nOKFirstName == null
@@ -177,7 +177,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "NOK ID Number",
+                title: "NOKIDNumber".tr,
                 name: profile.selectedbasicInfo?.nOKCNICNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.nOKCNICNumber == null
@@ -188,7 +188,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "NOK Relation",
+                title: "NOKRelation".tr,
                 name: profile.selectedbasicInfo?.nOKRelationName == ""
                     ? "-"
                     : profile.selectedbasicInfo?.nOKRelationName == null
@@ -199,7 +199,7 @@ class _ContactDetailState extends State<ContactDetail> {
                 height: Get.height * 0.01,
               ),
               ProfileRecordWidget(
-                title: "NOK Mobile Number",
+                title: "NOKMobileNumber".tr,
                 name: profile.selectedbasicInfo?.nOKCellNumber == ""
                     ? "-"
                     : profile.selectedbasicInfo?.nOKCellNumber == null
@@ -213,7 +213,7 @@ class _ContactDetailState extends State<ContactDetail> {
                   width: Get.width * 0.6,
                   height: Get.height * 0.06,
                   fontSize: 15,
-                  title: "Edit",
+                  title: "edit".tr,
                   onPressed: () async {
                     var result = await Get.to(() => const EditContact());
                     if (result == true) {
