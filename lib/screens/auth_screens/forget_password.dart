@@ -27,129 +27,125 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: ColorManager.kPrimaryColor,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         automaticallyImplyLeading: false,
         toolbarHeight: 50,
         title: Image.asset(
           Images.logo,
-          height: Get.height * 0.08,
+          height: Get.height * 0.07,
         ),
       ),
       body: GetBuilder<AuthController>(
-        builder: (cont) => Stack(
-          children: [
-            Positioned(
-              top: 100,
-              right: 0,
-              child: Container(
-                height: Get.height * 0.8,
-                width: Get.width,
-                alignment: Alignment.centerLeft,
-                child: Image.asset(
-                  Images.logoBackground,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            BlurryModalProgressHUD(
-              inAsyncCall: controller.isotpLoading,
-              blurEffectIntensity: 4,
-              progressIndicator: const SpinKitSpinningLines(
-                color: Color(0xfff1272d3),
-                size: 60,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: Get.width * 0.08, right: Get.width * 0.08),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.to(() => const LoginScreen());
-                            },
-                            child: Image.asset(
-                              AppImages.arrowback,
-                              color: ColorManager.kblackColor,
-                              width: Get.width * 0.1,
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.02,
-                          ),
-                          Text(
-                            'forgottenpassword'.tr,
+        builder: (cont) => BlurryModalProgressHUD(
+          inAsyncCall: controller.isotpLoading,
+          blurEffectIntensity: 4,
+          progressIndicator: const SpinKitSpinningLines(
+            color: Color(0xfff1272d3),
+            size: 60,
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Row(
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {
+                  //         Get.to(() => const LoginScreen());
+                  //       },
+                  //       child: Image.asset(
+                  //         AppImages.arrowback,
+                  //         color: ColorManager.kblackColor,
+                  //         width: Get.width * 0.1,
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: Get.width * 0.02,
+                  //     ),
+                  //     Text(
+                  //       'forgottenpassword'.tr,
+                  //       style: GoogleFonts.poppins(
+                  //           fontSize: 25,
+                  //           color: ColorManager.kblackColor,
+                  //           fontWeight: FontWeight.w500),
+                  //     ),
+                  //   ],
+                  // ),
+                  Text(
+                    'forgottenpassword'.tr,
+                    style: GoogleFonts.poppins(
+                        fontSize: 25,
+                        color: ColorManager.kblackColor,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'ithappenkindlyenterthemobilenumberassociatedwithyouraccount'
+                        .tr,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: ColorManager.kblackColor,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  AuthTextField(
+                    validator: (p0) {
+                      if (p0!.isEmpty) {
+                        return 'pleaseenteryouremail'.tr;
+                      }
+                      return null;
+                    },
+                    controller: emailController,
+                    hintText: 'email'.tr,
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          AuthRepo ar = AuthRepo();
+                          ar.otpCode(emailController.text);
+                        }
+                      },
+                      child: Container(
+                        height: Get.height * 0.07,
+                        width: Get.width * 0.65,
+                        decoration: BoxDecoration(
+                          color: ColorManager.kPrimaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'verifycode'.tr,
                             style: GoogleFonts.poppins(
-                                fontSize: 25,
-                                color: ColorManager.kblackColor,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.03,
-                      ),
-                      Text(
-                        'ithappenkindlyenterthemobilenumberassociatedwithyouraccount'
-                            .tr,
-                        style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            color: ColorManager.kblackColor,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.03,
-                      ),
-                      AuthTextField(
-                        validator: (p0) {
-                          if (p0!.isEmpty) {
-                            return 'pleaseenteryouremail'.tr;
-                          }
-                          return null;
-                        },
-                        controller: emailController,
-                        hintText: 'email'.tr,
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.03,
-                      ),
-                      Center(
-                        child: InkWell(
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              AuthRepo ar = AuthRepo();
-                              ar.otpCode(emailController.text);
-                            }
-                          },
-                          child: Container(
-                            height: Get.height * 0.07,
-                            width: Get.width * 0.65,
-                            decoration: BoxDecoration(
-                              color: ColorManager.kPrimaryColor,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'verifycode'.tr,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
+                                fontSize: 20,
+                                color: ColorManager.kWhiteColor,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

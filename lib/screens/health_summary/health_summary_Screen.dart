@@ -1,3 +1,4 @@
+import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
@@ -14,6 +15,7 @@ class HealthSummaryScreen extends StatefulWidget {
 }
 
 class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
+  TextEditingController SearchFieldController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +42,18 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
         ),
         child: Column(
           children: [
-            // Center(
-            //   child: Text(
-            //     'No Record Found!',
-            //     style: GoogleFonts.poppins(
-            //         fontSize: 17,
-            //         fontWeight: FontWeight.w600,
-            //         color: ColorManager.kPrimaryColor),
-            //   ),
-            // ),
+            CustomTextField(
+              onSubmitted: (String value) {
+                SearchFieldController.text = value;
+              },
+              prefixIcon: const Icon(
+                Icons.search_outlined,
+                color: ColorManager.kPrimaryColor,
+                size: 35,
+              ),
+              controller: SearchFieldController,
+              hintText: 'search'.tr,
+            ),
             ListView.builder(
                 shrinkWrap: true,
                 itemCount: 1,
@@ -152,7 +157,7 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'online'.tr,
+                                          'Offline'.tr,
                                           style: GoogleFonts.poppins(
                                               fontSize: 10,
                                               color: ColorManager.kWhiteColor),

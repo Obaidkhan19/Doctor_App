@@ -29,6 +29,8 @@ class AppConstants {
   static String getGenders = '$baseURL/api/ddl/GetGenders';
   static String getMaritalStatus = '$baseURL/api/ddl/GetMaritalStatuses';
 
+  static String uploadimage = '$baseURL/api/account/UploadPicture';
+
   static String getbloodgroup = '$baseURL/api/ddl/GetBloodGroups';
   static String getdesignation = '$baseURL/api/ddl/GetDesignations';
   static String getreligion = '$baseURL/api/ddl/GetReligion';

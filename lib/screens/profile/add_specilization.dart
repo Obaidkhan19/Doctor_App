@@ -28,6 +28,7 @@ class _AddSpecilizationState extends State<AddSpecilization> {
 
   _getSubSpeciality(id) async {
     AuthRepo ar = AuthRepo();
+    EditProfileController.i.selectedsubspecialities = null;
     EditProfileController.i.updatesubspecialitiesList(
       await ar.getSubSpecialities(id),
     );
@@ -35,7 +36,6 @@ class _AddSpecilizationState extends State<AddSpecilization> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _getSpeciality();
     super.initState();
   }

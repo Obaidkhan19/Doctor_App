@@ -126,6 +126,9 @@ class ConsultingQueueRepo {
           if (consult.status == "1") {
             ConsultingQueueController.i.updateconsultingqueuewait(rep);
           } else if (consult.status == "2") {
+            // print('waiting wueeeer');
+            // print(rep);
+            // print(result);
             ConsultingQueueController.i.updateconsultingqueuehold(rep);
           } else if (consult.status == "3") {
             ConsultingQueueController.i.updateconsultinglist(rep);

@@ -163,6 +163,13 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                 elevation: 4,
                                                 surfaceTintColor:
                                                     ColorManager.kWhiteColor,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10.0)),
+                                                ),
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
                                                       top: Get.height * 0.02,

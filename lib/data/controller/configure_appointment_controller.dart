@@ -18,13 +18,21 @@ class ConfigureAppointmentController extends GetxController
     update();
   }
 
+  bool hasOnlineConsultation = false;
+  updatehasOnlineConsultation() {
+    hasOnlineConsultation = true;
+    update();
+  }
+
   updatedispose() {
     switchStates = [false, false, false, false, false, false, false];
     isOnline = false;
     followupdayController.clear();
     followupfeeController.clear();
     consultancyfeeController.clear();
+    hasOnlineConsultation = false;
     initializeSelectedApprovalCriteria();
+
     updatehospital(HospitalORClinics());
   }
 
@@ -58,10 +66,10 @@ class ConfigureAppointmentController extends GetxController
   }
 
   List<ApprovalCriteria> approvalCriteriaList = [
-    ApprovalCriteria(1, 'Approved By PA Only'),
-    ApprovalCriteria(2, 'Approved By Doctor Only'),
-    ApprovalCriteria(3, 'Approved By PA and Doctor'),
-    ApprovalCriteria(4, 'Auto Approved'),
+    ApprovalCriteria(1, 'approvedByPAOnly'.tr),
+    ApprovalCriteria(2, 'approvedByDoctorOnly'.tr),
+    ApprovalCriteria(3, 'approvedByPAandDoctor'.tr),
+    ApprovalCriteria(4, 'autoApproved'.tr),
   ];
 
   ApprovalCriteria? selectedApprovalCriteria;
@@ -90,7 +98,11 @@ class ConfigureAppointmentController extends GetxController
   AppointmentConfigurations? selectedappointmentconfiguration;
   updateAppointmentConfigurationsList(List<AppointmentConfigurations> aflist) {
     appointmentconfigurationList = aflist;
-
+    for (int i = 0; i < aflist.length; i++) {
+      if (aflist[i].isOnlineConfiguration == true) {
+        updatehasOnlineConsultation();
+      }
+    }
     update();
   }
 

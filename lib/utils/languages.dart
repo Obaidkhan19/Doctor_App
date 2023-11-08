@@ -283,7 +283,7 @@ class Localization extends Translations {
           'enteryourmobilenumber': 'Enter your Mobile Number',
           'entercode': 'Enter Code',
           'kindlyenterthecodesenttoyournumber':
-              'Kindly enter the code sent to your number',
+              'Kindly enter the code sent to your email',
           'enternumber': 'Enter Number',
           'expirein': 'Expires in',
           'codeexpire': 'Code Expire',
@@ -489,8 +489,14 @@ class Localization extends Translations {
           'noitemisselected': 'No item is selected!',
           'nopendingappointmentisselected':
               'No pending appointment is selected!',
+          'approvedByPAOnly': 'Approved By PA Only',
+          'approvedByDoctorOnly': 'Approved By Doctor Only',
+          'approvedByPAandDoctor': 'Approved By PA and Doctor',
+          'autoApproved': 'Auto Approved',
+          'SelectApprovalCriteria': 'Select Approval Criteria',
         },
         "ar_SA": {
+          'SelectApprovalCriteria': 'منظوری کے معیار کو منتخب کریں۔',
           'error': 'خطأ',
           'noitemisselected': 'لم يتم تحديد أي عنصر!',
           'nopendingappointmentisselected': 'لم يتم تحديد موعد معلق!',
@@ -698,7 +704,7 @@ class Localization extends Translations {
           'enternumber': 'أدخل رقم',
           'entercode': 'ادخل الرمز',
           'kindlyenterthecodesenttoyournumber':
-              'يرجى إدخال الرمز المرسل إلى رقمك',
+              'يرجى إدخال الرمز المرسل إلى بريدك الإلكتروني',
           'enteryourmobilenumber': 'أدخل رقم هاتفك المحمول',
           'forgottenpassword': 'كلمة سر منسية',
           'ithappenkindlyenterthemobilenumberassociatedwithyouraccount':
@@ -968,9 +974,19 @@ class Localization extends Translations {
           'iamonline': 'انا متصل بالنت',
           'iamoffline': 'أنا غير متصل',
           'regno': 'رقم هيئة الصحة بدبي . ',
-          'configureappointments': 'تكوين \n المواعيد'
+          'configureappointments': 'تكوين \n المواعيد',
+          'approvedByPAOnly': 'تمت الموافقة عليه من قبل السلطة الفلسطينية فقط',
+          'approvedByDoctorOnly': 'تمت الموافقة عليه من قبل الطبيب فقط',
+          'approvedByPAandDoctor':
+              'تمت الموافقة عليه من قبل السلطة الفلسطينية والطبيب',
+          'autoApproved': 'تمت الموافقة عليه تلقائيًا',
         },
         "ur_PK": {
+          'SelectApprovalCriteria': 'منظوری کے معیار کو منتخب کریں۔',
+          'approvedByPAOnly': 'صرف PA کے ذریعہ منظور شدہ',
+          'approvedByDoctorOnly': 'صرف ڈاکٹر کے ذریعہ منظور شدہ',
+          'approvedByPAandDoctor': 'PA اور ڈاکٹر کے ذریعہ منظور شدہ',
+          'autoApproved': 'آٹو منظور شدہ',
           'error': 'خرابی',
           'noitemisselected': 'کوئی آئٹم منتخب نہیں کیا گیا ہے!',
           'nopendingappointmentisselected':
@@ -1254,7 +1270,7 @@ class Localization extends Translations {
           'enteryourmobilenumber': 'اپنا موبائل نمبر درج کریں',
           'entercode': 'کوڈ درج کریں',
           'kindlyenterthecodesenttoyournumber':
-              'براہ کرم اپنے نمبر پر بھیجا گیا کوڈ درج کریں',
+              'براہ کرم اپنے ای میل پر بھیجا گیا کوڈ درج کریں۔',
           'enternumber': 'نمبر درج کریں',
           'expirein': 'ختم ہونے میں',
           'codeexpire': 'کوڈ ختم ہونے میں',

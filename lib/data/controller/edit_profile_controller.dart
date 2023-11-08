@@ -240,6 +240,57 @@ class EditProfileController extends GetxController implements GetxService {
     }
   }
 
+  static DateTime? membershipfrom = DateTime.now();
+  String? formattedmembershipfrom = membershipfrom!.toIso8601String();
+  RxString? formatemembershipfrom =
+      DateFormat.yMMMd().format(membershipfrom!).obs;
+
+  static DateTime? membershipto = DateTime.now();
+  String? formattedmembershipto = membershipto!.toIso8601String();
+  RxString? formatemembershipto = DateFormat.yMMMd().format(membershipto!).obs;
+
+  Future<void> selectmembershipfromDateAndTime(
+    BuildContext context,
+    DateTime? date,
+    RxString? formattedDate,
+  ) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        confirmText: 'Ok',
+        initialDate: date!,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2024));
+    if (pickedDate != null && pickedDate != date) {
+      date = pickedDate;
+      formattedDate!.value = DateFormat.yMMMd().format(date);
+      formattedDate.value = DateFormat.yMMMd().format(date);
+      final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
+      formattedmembershipfrom = iso8601Format.format(date);
+      update();
+    }
+  }
+
+  Future<void> selectmembershiptoDateAndTime(
+    BuildContext context,
+    DateTime? date,
+    RxString? formattedDate,
+  ) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        confirmText: 'Ok',
+        initialDate: date!,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2024));
+    if (pickedDate != null && pickedDate != date) {
+      date = pickedDate;
+      formattedDate!.value = DateFormat.yMMMd().format(date);
+      formattedDate.value = DateFormat.yMMMd().format(date);
+      final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
+      formattedmembershipto = iso8601Format.format(date);
+      update();
+    }
+  }
+
   String radioselectedValue = "CGPA";
 
   updateradiovalue(value) {
@@ -273,6 +324,31 @@ class EditProfileController extends GetxController implements GetxService {
   static DateTime? experienceto = DateTime.now();
   String? formattedexperienceto = experienceto!.toIso8601String();
   RxString? formateexperienceto = DateFormat.yMMMd().format(experienceto!).obs;
+
+  static DateTime? awardeddate = DateTime.now();
+  String? formattedawardeddate = awardeddate!.toIso8601String();
+  RxString? formateawardeddate = DateFormat.yMMMd().format(awardeddate!).obs;
+
+  Future<void> selectformattedawardedDateAndTime(
+    BuildContext context,
+    DateTime? date,
+    RxString? formattedDate,
+  ) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        confirmText: 'Ok',
+        initialDate: date!,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2024));
+    if (pickedDate != null && pickedDate != date) {
+      date = pickedDate;
+      formattedDate!.value = DateFormat.yMMMd().format(date);
+      formattedDate.value = DateFormat.yMMMd().format(date);
+      final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
+      formattedawardeddate = iso8601Format.format(date);
+      update();
+    }
+  }
 
   String userage = '';
 
@@ -399,6 +475,32 @@ class EditProfileController extends GetxController implements GetxService {
   updateselectedlocation(Degrees ins) {
     selectedlocation = ins;
 
+    update();
+  }
+
+  List<Degrees> membershiplocationList = [];
+  Degrees? selectedmembershiplocation = Degrees();
+
+  updatemembershiplocationList(List<Degrees> dlist) {
+    membershiplocationList = dlist;
+    update();
+  }
+
+  updateselectedmembershiplocation(Degrees ins) {
+    selectedmembershiplocation = ins;
+    update();
+  }
+
+  List<Degrees> awardList = [];
+  Degrees? selectedawardlocation = Degrees();
+
+  updateawardList(List<Degrees> dlist) {
+    awardList = dlist;
+    update();
+  }
+
+  updateselectedaward(Degrees ins) {
+    selectedawardlocation = ins;
     update();
   }
 
@@ -745,10 +847,30 @@ class EditProfileController extends GetxController implements GetxService {
 
   // experience
   late TextEditingController jobtitle;
+
   late TextEditingController experienceDescription;
+
+  //membership
+  late TextEditingController membershiptitle;
+  late TextEditingController membershipcode;
+  late TextEditingController membershipdescription;
+
+  //award
+  late TextEditingController awardtitle;
+  late TextEditingController awardcode;
+  late TextEditingController awarddescription;
 
   @override
   void onInit() {
+    //award
+    awardcode = TextEditingController();
+    awardtitle = TextEditingController();
+    awarddescription = TextEditingController();
+
+    //membership
+    membershipcode = TextEditingController();
+    membershiptitle = TextEditingController();
+    membershipdescription = TextEditingController();
     // experience
     jobtitle = TextEditingController();
     experienceDescription = TextEditingController();

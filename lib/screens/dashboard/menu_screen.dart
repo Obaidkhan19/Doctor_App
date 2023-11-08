@@ -9,6 +9,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
+import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart';
 import 'package:doctormobileapplication/screens/profile/edit_personal.dart';
 import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
@@ -77,9 +78,8 @@ class _MenuScreenState extends State<MenuScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: Get.height * 0.14,
+                height: Get.height * 0.01,
               ),
-
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios),
                 color: ColorManager.kWhiteColor,
@@ -159,12 +159,14 @@ class _MenuScreenState extends State<MenuScreen> {
                         //     color: ColorManager.kWhiteColor,
                         //   ),
                         // ),
-                        disabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: ColorManager.kWhiteColor, width: 3.0),
-                        ),
+                        // disabledBorder: const UnderlineInputBorder(
+                        //   borderSide: BorderSide(
+                        //       color: ColorManager.kWhiteColor, width: 3.0),
+                        // ),
                         enabled: false,
-                        hintText: UserName,
+                        // hintText: UserName,
+                        hintText:
+                            ProfileController.i.selectedbasicInfo?.fullName,
                         hintStyle: Theme.of(context)
                             .textTheme
                             .bodyMedium!
@@ -194,7 +196,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       //           profile.selectedbasicInfo?.stateOrProvinceId,
                       //     ));
 
-                      Get.to(() => const EditPersonal());
+                      Get.to(() => const ProfileDetailMain());
                     },
                     child: Image.asset(
                       Images.edit,
@@ -203,6 +205,11 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ),
                 ],
+              ),
+
+              Divider(
+                thickness: Get.height * 0.002,
+                color: ColorManager.kWhiteColor,
               ),
 
               // customListTile(context, onTap: () {
@@ -256,7 +263,6 @@ class _MenuScreenState extends State<MenuScreen> {
               //     Get.to(() => const PatientHistory());
               //   },
               // ),
-
               ListTile(
                 visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                 contentPadding:
@@ -412,12 +418,12 @@ class _MenuScreenState extends State<MenuScreen> {
                 height: Get.height * 0.02,
               ),
               Divider(
-                thickness: Get.height * 0.005,
+                thickness: Get.height * 0.002,
                 color: ColorManager.kWhiteColor,
               ),
 
               SizedBox(
-                height: Get.height * 0.08,
+                height: Get.height * 0.15,
               ),
               ListTile(
                 contentPadding:

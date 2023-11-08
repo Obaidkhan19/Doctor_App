@@ -67,6 +67,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
 
   _getSubSpeciality(id) async {
     AuthRepo ar = AuthRepo();
+    RegistrationController.i.selectedsubspecialities = null;
     RegistrationController.i.updatesubspecialitiesList(
       await ar.getSubSpecialities(id),
     );
@@ -263,9 +264,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           ? 'maritalstatus'.tr
                           : controller.selectedmaritalStatus!.name.toString(),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
 
                     Center(
                       child: Row(
@@ -296,7 +294,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         ],
                       ),
                     ),
-                    SizedBox(height: Get.height * 0.02),
                     AuthTextField(
                       onChangedwidget: (value) {
                         AuthRepo ar = AuthRepo();
@@ -354,14 +351,35 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Center(
-                          child: Text(
-                            'Add LMPC',
-                            style: GoogleFonts.poppins(
-                              color: ColorManager.kWhiteColor,
-                              fontSize: 15,
-                            ),
+                            child: RichText(
+                          text: const TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Add ',
+                                style: TextStyle(
+                                    color: ColorManager.kWhiteColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: ' (legal medical practising certificate)',
+                                style: TextStyle(
+                                  color: ColorManager.kWhiteColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        )
+
+                            //  Text(
+                            //   'Add (legal medical practising certificate)',
+                            //   style: GoogleFonts.poppins(
+                            //     color: ColorManager.kWhiteColor,
+                            //     fontSize: 12,
+                            //   ),
+                            // ),
+                            ),
                       ),
                     ),
                     SizedBox(

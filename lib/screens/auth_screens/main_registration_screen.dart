@@ -42,7 +42,7 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
         toolbarHeight: 50,
         title: Image.asset(
           Images.logo,
-          height: Get.height * 0.08,
+          height: Get.height * 0.07,
         ),
       ),
       body: GetBuilder<RegistrationController>(builder: (cont) {
@@ -126,24 +126,27 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                           bottomLeft: Radius.circular(15),
                                         ),
                                       ),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.45,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.08,
+                                      width: Get.width * 0.43,
+                                      height: Get.height * 0.07,
                                       child: Center(
                                           child: Text(
                                         'personal'.tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: controller.indexp == 1
-                                                    ? const Color(0xfff1272d3)
-                                                    : ColorManager.kWhiteColor,
-                                                //     color: ColorManager.kWhiteColor,
-                                                fontWeight:
-                                                    FontWeightManager.bold),
+                                        style: GoogleFonts.poppins(
+                                            color: controller.indexp == 1
+                                                ? const Color(0xfff1272d3)
+                                                : ColorManager.kWhiteColor,
+                                            //     color: ColorManager.kWhiteColor,
+                                            fontWeight: FontWeight.w600),
+                                        //  Theme.of(context)
+                                        //     .textTheme
+                                        //     .bodyMedium!
+                                        //     .copyWith(
+                                        //         color: controller.indexp == 1
+                                        //             ? const Color(0xfff1272d3)
+                                        //             : ColorManager.kWhiteColor,
+                                        //         //     color: ColorManager.kWhiteColor,
+                                        //         fontWeight:
+                                        //             FontWeightManager.bold),
                                       )),
                                     ),
                                   ),
@@ -167,23 +170,25 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                           width: 2, // 2px border width
                                         ),
                                       ),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.45,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.08,
+                                      width: Get.width * 0.43,
+                                      height: Get.height * 0.07,
                                       child: Center(
                                           child: Text(
                                         'security'.tr,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: controller.indexp == 0
-                                                    ? const Color(0xfff1272d3)
-                                                    : ColorManager.kWhiteColor,
-                                                fontWeight:
-                                                    FontWeightManager.bold),
+                                        style: GoogleFonts.poppins(
+                                            color: controller.indexp == 0
+                                                ? const Color(0xfff1272d3)
+                                                : ColorManager.kWhiteColor,
+                                            fontWeight: FontWeight.w600),
+                                        // style: Theme.of(context)
+                                        //     .textTheme
+                                        //     .bodyMedium!
+                                        //     .copyWith(
+                                        //         color: controller.indexp == 0
+                                        //             ? const Color(0xfff1272d3)
+                                        //             : ColorManager.kWhiteColor,
+                                        //         fontWeight:
+                                        //             FontWeightManager.bold),
                                       )),
                                     ),
                                   ),
@@ -192,7 +197,9 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                         ),
 
                         // 400 height
-                        SizedBox(height: 400, child: pages[controller.indexp]),
+                        SizedBox(
+                            height: Get.height * 0.6,
+                            child: pages[controller.indexp]),
                       ],
                     ),
                   ],

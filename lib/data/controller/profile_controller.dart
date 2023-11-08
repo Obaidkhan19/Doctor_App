@@ -141,10 +141,10 @@ class ProfileController extends GetxController implements GetxService {
     } else {
       EditProfileController.i.selectedpersonalTitle?.name = "Other";
       EditProfileController.i.selectedpersonalTitle?.id = "";
-
-      EditProfileController.i.customprefixtitle.text =
-          selectedbasicInfo?.prefix ?? "";
     }
+
+    EditProfileController.i.customprefixtitle.text =
+        selectedbasicInfo?.prefix ?? "";
 
     EditProfileController.i.selectedgender?.name =
         selectedbasicInfo?.genderName ?? "";

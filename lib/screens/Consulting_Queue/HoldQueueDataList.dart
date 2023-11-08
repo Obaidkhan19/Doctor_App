@@ -177,6 +177,13 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                       surfaceTintColor:
                                                           ColorManager
                                                               .kWhiteColor,
+                                                      shape:
+                                                          const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10.0)),
+                                                      ),
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsets.only(

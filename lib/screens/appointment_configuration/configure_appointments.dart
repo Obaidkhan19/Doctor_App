@@ -214,6 +214,10 @@ class _ConfigureAppointmentScreenState
                                           .i.appointmentconfigurationList[index]
                                       : null;
                               String name = worklocation!.workLocation ?? "";
+                              // if (worklocation.isOnlineConfiguration) {
+                              //   ConfigureAppointmentController.i
+                              //       .updatehasOnlineConsultation();
+                              // }
                               return ((ConfigureAppointmentController.i
                                       .appointmentconfigurationList.isNotEmpty)
                                   ? Padding(
@@ -472,7 +476,7 @@ class _ConfigureAppointmentScreenState
                         ),
 
                         Card(
-                          elevation: 1,
+                          elevation: 4,
                           surfaceTintColor: ColorManager.kWhiteColor,
                           shape: const RoundedRectangleBorder(
                             borderRadius:
@@ -497,7 +501,16 @@ class _ConfigureAppointmentScreenState
                                     value: contr.isOnline,
                                     activeColor: ColorManager.kPrimaryColor,
                                     onChanged: (value) {
-                                      contr.updateoOnline(value);
+                                      if (value == true &&
+                                          ConfigureAppointmentController
+                                                  .i.hasOnlineConsultation ==
+                                              true) {
+                                        print('aaaaaaaaaaaaaaaaaaaaaa');
+                                        showSnackbar(context,
+                                            "Already have Online Consultation");
+                                      } else {
+                                        contr.updateoOnline(value);
+                                      }
                                     },
                                   ),
                                 ),
@@ -967,32 +980,6 @@ class _ConfigureAppointmentScreenState
                                         ),
                                         child: Row(
                                           children: [
-                                            // SizedBox(
-                                            //   width: Get.width * 0.03,
-                                            // ),
-                                            // Container(
-                                            //   decoration: BoxDecoration(
-                                            //     border: Border.all(
-                                            //       color: Colors.black,
-                                            //       width: 1.0,
-                                            //     ),
-                                            //     borderRadius:
-                                            //         BorderRadius.circular(7),
-                                            //   ),
-                                            //   height: 25,
-                                            //   width: 40,
-                                            //   child: Center(
-                                            //     child: Text(
-                                            //       "aed".tr,
-                                            //       style: GoogleFonts.poppins(
-                                            //         fontSize: 12,
-                                            //         color: ColorManager
-                                            //             .kblackColor,
-                                            //         fontWeight: FontWeight.bold,
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // ),
                                             Expanded(
                                               child: Padding(
                                                 padding: EdgeInsets.only(
@@ -1011,9 +998,6 @@ class _ConfigureAppointmentScreenState
                                                   ],
                                                   controller: contr
                                                       .consultancyfeeController,
-                                                  // keyboardType:
-                                                  //     TextInputType.number,
-
                                                   decoration:
                                                       const InputDecoration(
                                                     focusedBorder:
@@ -1059,32 +1043,6 @@ class _ConfigureAppointmentScreenState
                                         ),
                                         child: Row(
                                           children: [
-                                            // SizedBox(
-                                            //   width: Get.width * 0.03,
-                                            // ),
-                                            // Container(
-                                            //   decoration: BoxDecoration(
-                                            //     border: Border.all(
-                                            //       color: Colors.black,
-                                            //       width: 1.0,
-                                            //     ),
-                                            //     borderRadius:
-                                            //         BorderRadius.circular(7),
-                                            //   ),
-                                            //   height: 25,
-                                            //   width: 40,
-                                            //   child: Center(
-                                            //     child: Text(
-                                            //       "aed".tr,
-                                            //       style: GoogleFonts.poppins(
-                                            //         fontSize: 12,
-                                            //         color: ColorManager
-                                            //             .kblackColor,
-                                            //         fontWeight: FontWeight.bold,
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // ),
                                             Expanded(
                                               child: Padding(
                                                 padding: EdgeInsets.only(
@@ -1330,7 +1288,7 @@ class _ConfigureAppointmentScreenState
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "${(contr.selectedApprovalCriteria != null && contr.selectedApprovalCriteria?.name != null) ? (contr.selectedApprovalCriteria!.name.length > 50 ? ('${contr.selectedApprovalCriteria?.name.substring(0, 50 > contr.selectedApprovalCriteria!.name.length ? contr.selectedApprovalCriteria!.name.length : 50)}...') : contr.selectedApprovalCriteria?.name) : "Select Approval Criteria"}",
+                                              "${(contr.selectedApprovalCriteria != null && contr.selectedApprovalCriteria?.name != null) ? (contr.selectedApprovalCriteria!.name.length > 50 ? ('${contr.selectedApprovalCriteria?.name.substring(0, 50 > contr.selectedApprovalCriteria!.name.length ? contr.selectedApprovalCriteria!.name.length : 50)}...') : contr.selectedApprovalCriteria?.name) : "SelectApprovalCriteria".tr}",
                                               // semanticsLabel:
                                               //     "${(contr.selectedApprovalCriteria != null) ? (contr.selectedApprovalCriteria!.name.length > 50 ? ('${contr.selectedApprovalCriteria?.name.substring(0, 50 > contr.selectedApprovalCriteria!.name.length ? contr.selectedApprovalCriteria!.name.length : 50)}...') : contr.selectedApprovalCriteria) : "Select Approval Criteria"}",
                                               style: GoogleFonts.poppins(
@@ -1378,7 +1336,7 @@ class _ConfigureAppointmentScreenState
                                 if (_time ==
                                     const TimeOfDay(hour: 0, minute: 0)) {
                                   showSnackbar(
-                                      context, "Please select time Slot");
+                                      context, "Please select Slot Duration");
                                 }
                                 // else if (_fromtime ==
                                 //     const TimeOfDay(hour: 0, minute: 0)) {

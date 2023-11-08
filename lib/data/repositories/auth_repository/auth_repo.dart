@@ -30,7 +30,7 @@ import 'package:http/http.dart' as http;
 class AuthRepo {
   Future<String> uploadPicture(File file) async {
     String r = '';
-    var url = 'https://qa.homecare.ihealthcure.com/api/account/UploadPicture';
+    var url = AppConstants.uploadimage;
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.files.add(await http.MultipartFile.fromPath('image', file.path));
@@ -45,7 +45,8 @@ class AuthRepo {
 
   Future<String> uploadFile(PlatformFile file) async {
     String r = '';
-    var url = 'https://qa.homecare.ihealthcure.com/api/account/UploadPicture';
+
+    var url = AppConstants.uploadimage;
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.files
@@ -195,6 +196,7 @@ class AuthRepo {
       "DeviceToken": token,
     };
 
+    log(body.toString());
     try {
       var response = await http.post(
         Uri.parse(AppConstants.signupdoctor),

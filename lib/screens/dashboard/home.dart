@@ -100,10 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        title: Center(
-          child: SizedBox(
-              width: Get.width * 0.45, child: Image.asset(Images.logo)),
-        ),
+        centerTitle: true,
+        title: SizedBox(
+            width: Get.width * 0.4,
+            height: Get.height * 9.97,
+            child: Image.asset(Images.logo)),
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

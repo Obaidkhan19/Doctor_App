@@ -39,139 +39,105 @@ class _OtpScreenState extends State<OtpScreen> {
     var controller = Get.put<AuthController>(AuthController());
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: ColorManager.kPrimaryColor,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         automaticallyImplyLeading: false,
         toolbarHeight: 50,
         title: Image.asset(
           Images.logo,
-          height: Get.height * 0.08,
+          height: Get.height * 0.07,
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 100,
-            right: 0,
-            child: Container(
-              height: Get.height * 0.8,
-              width: Get.width,
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                Images.logoBackground,
-                fit: BoxFit.cover,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'entercode'.tr,
+              style: GoogleFonts.poppins(
+                  fontSize: 25,
+                  color: ColorManager.kblackColor,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: Get.height * 0.03,
+            ),
+            Text(
+              'kindlyenterthecodesenttoyournumber'.tr,
+              style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: ColorManager.kblackColor,
+                  fontWeight: FontWeight.w300),
+            ),
+            SizedBox(
+              height: Get.height * 0.03,
+            ),
+            OtpTextField(
+              numberOfFields: 6,
+              enabledBorderColor: ColorManager.kblackColor,
+              focusedBorderColor: ColorManager.kPrimaryColor,
+              showFieldAsBox: true,
+              onCodeChanged: (String code) {},
+              onSubmit: (String verificationCode) {
+                AuthController.i.updatecode(verificationCode);
+              },
+            ),
+            SizedBox(
+              height: Get.height * 0.03,
+            ),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  String usercode = AuthController.i.code;
+                  String verificationcode = AuthController.i.verificationcode;
+                  if (usercode == verificationcode) {
+                    Get.to(() => const CreateNewPasswordScreen());
+                  } else {
+                    showSnackbar(context, 'wrongcode'.tr);
+                  }
+                },
+                child: Container(
+                  height: Get.height * 0.07,
+                  width: Get.width * 0.65,
+                  decoration: BoxDecoration(
+                    color: ColorManager.kPrimaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'verifycode'.tr,
+                      style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          color: ColorManager.kWhiteColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: Get.width * 0.08, right: Get.width * 0.08),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(() => const ForgetPassword());
-                      },
-                      child: Image.asset(
-                        AppImages.arrowback,
-                        color: ColorManager.kblackColor,
-                        width: Get.width * 0.1,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.05,
-                    ),
-                    Text(
-                      'entercode'.tr,
-                      style: GoogleFonts.poppins(
-                          fontSize: 25,
-                          color: ColorManager.kblackColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: Get.height * 0.03,
-                ),
-                Text(
-                  'kindlyenterthecodesenttoyournumber'.tr,
-                  style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: ColorManager.kblackColor,
-                      fontWeight: FontWeight.w300),
-                ),
-                SizedBox(
-                  height: Get.height * 0.03,
-                ),
-                OtpTextField(
-                  numberOfFields: 6,
-                  enabledBorderColor: ColorManager.kblackColor,
-                  focusedBorderColor: ColorManager.kPrimaryColor,
-                  showFieldAsBox: true,
-                  onCodeChanged: (String code) {},
-                  onSubmit: (String verificationCode) {
-                    AuthController.i.updatecode(verificationCode);
-                  },
-                ),
-                SizedBox(
-                  height: Get.height * 0.03,
-                ),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      // also check if no are correct
-                      //   AuthController.i.updatecode(code);
-
-                      String usercode = AuthController.i.code;
-                      String verificationcode =
-                          AuthController.i.verificationcode;
-                      print('verificationcodeverificationcode');
-                      print(verificationcode);
-                      if (usercode == verificationcode) {
-                        Get.to(() => const CreateNewPasswordScreen());
-                      } else {
-                        showSnackbar(context, 'wrongcode'.tr);
-                      }
-                    },
-                    child: Container(
-                      height: Get.height * 0.07,
-                      width: Get.width * 0.65,
-                      decoration: BoxDecoration(
-                        color: ColorManager.kPrimaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'verifycode'.tr,
-                          style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              color: ColorManager.kWhiteColor,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.03,
-                ),
-                Obx(
-                  () => Center(
-                    child: Text(
-                      "${'expirein'.tr} ${controller.timer ~/ 60}:${controller.timer % 60}",
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: ColorManager.kblackColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: Get.height * 0.03,
             ),
-          ),
-        ],
+            Obx(
+              () => Center(
+                child: Text(
+                  "${'expirein'.tr} ${controller.timer ~/ 60}:${controller.timer % 60}",
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: ColorManager.kblackColor,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -66,11 +66,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.1,
+                                // height: Get.height * 0.1,
                                 child: Center(
                                   child: Image.asset(
                                     Images.logo,
-                                    height: Get.height * 0.08,
+                                    height: Get.height * 0.07,
                                   ),
                                 ),
                               ),
@@ -104,6 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: Get.height * 0.04,
                                     ),
                                     AuthTextField(
+                                      validator: (p0) {
+                                        if (p0!.isEmpty) {
+                                          return 'Enter UserName';
+                                        }
+                                        return null;
+                                      },
                                       // formatters: [Masks().maskFormatter],
                                       controller: login.emailController,
                                       hintText: 'username'.tr,
@@ -112,6 +118,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: Get.height * 0.02,
                                     ),
                                     AuthTextField(
+                                      validator: (p0) {
+                                        if (p0!.isEmpty) {
+                                          return 'Enter Password';
+                                        }
+                                        return null;
+                                      },
                                       obscureText: login.obsecure,
                                       suffixIcon: InkWell(
                                         onTap: () {
@@ -129,49 +141,57 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SizedBox(
                                       height: Get.height * 0.02,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: Get.width * 0.55),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.to(() => const ForgetPassword());
-                                        },
-                                        child: Text(
-                                          'forgotPassword'.tr,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: ColorManager.kPrimaryColor,
-                                              fontWeight: FontWeight.w600),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Get.to(
+                                                () => const ForgetPassword());
+                                          },
+                                          child: Text(
+                                            'forgotPassword'.tr,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color:
+                                                    ColorManager.kPrimaryColor,
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                     SizedBox(
                                       height: Get.height * 0.02,
                                     ),
                                     PrimaryButton(
                                         title: 'login'.tr,
+                                        fontSize: 15,
+                                        fontweight: FontWeight.bold,
                                         onPressed: () async {
-                                          FocusScope.of(context).unfocus();
-                                          setState(() {
-                                            isLoading = true;
-                                          });
-                                          try {
-                                            await AuthRepo.login(
-                                                cnic:
-                                                    login.emailController.text,
-                                                password: login
-                                                    .passwordController.text);
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            FocusScope.of(context).unfocus();
                                             setState(() {
-                                              isLoading = false;
+                                              isLoading = true;
                                             });
-                                          } catch (e) {
+                                            try {
+                                              await AuthRepo.login(
+                                                  cnic: login
+                                                      .emailController.text,
+                                                  password: login
+                                                      .passwordController.text);
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+                                            } catch (e) {
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+                                            }
                                             setState(() {
                                               isLoading = false;
                                             });
                                           }
-                                          setState(() {
-                                            isLoading = false;
-                                          });
                                         },
                                         color: ColorManager.kPrimaryColor,
                                         textcolor: ColorManager.kWhiteColor),

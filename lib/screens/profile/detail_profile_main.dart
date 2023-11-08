@@ -172,6 +172,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                     },
                                     icon: const Icon(
                                       Icons.camera_alt_outlined,
+                                      color: ColorManager.kWhiteColor,
                                       size: 15,
                                     )),
                               )),

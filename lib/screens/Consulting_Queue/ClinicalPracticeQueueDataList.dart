@@ -169,6 +169,13 @@ class _ClinicalPracticeQueueDataListState
                                                 elevation: 4,
                                                 surfaceTintColor:
                                                     ColorManager.kWhiteColor,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10.0)),
+                                                ),
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
                                                       top: Get.height * 0.02,
@@ -325,8 +332,6 @@ class _ClinicalPracticeQueueDataListState
                                                                         .asset(
                                                                       Images
                                                                           .videocall,
-                                                                      color: ColorManager
-                                                                          .kPrimaryColor,
                                                                       width: Get
                                                                               .width *
                                                                           0.09,
