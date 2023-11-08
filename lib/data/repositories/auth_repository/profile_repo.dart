@@ -6,7 +6,6 @@ import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/degree.dart';
-import 'package:doctormobileapplication/models/designation.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/institutes.dart';
 import 'package:get/get.dart';

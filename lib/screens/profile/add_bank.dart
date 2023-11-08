@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';

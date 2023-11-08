@@ -307,17 +307,27 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                       : InkWell(
                                                                           onTap:
                                                                               () async {
-                                                                            await Get.to(() =>
-                                                                                Callwatingscreen(
-                                                                                  data: manageAppointment,
-                                                                                ));
+                                                                            // await Get.to(() =>
+                                                                            //     Callwatingscreen(
+                                                                            //       data: manageAppointment,
+                                                                            //     ));
+                                                                            // Get.to(() =>
+                                                                            //     PrescribeMedicineScreen(
+                                                                            //       checkfirst: "0",
+                                                                            //       patientstatusvalue: manageAppointment.patientStatusValue.toString(),
+                                                                            //       patientid: manageAppointment.patientId,
+                                                                            //       visitno: manageAppointment.visitNo,
+                                                                            //       prescribedvalue: manageAppointment.prescribedInValue,
+                                                                            //     ));
                                                                             Get.to(() =>
-                                                                                PrescribeMedicineScreen(
-                                                                                  checkfirst: "0",
+                                                                                MyHomePage(
+                                                                                  data: manageAppointment,
+                                                                                  checkfirst: "1",
                                                                                   patientstatusvalue: manageAppointment.patientStatusValue.toString(),
                                                                                   patientid: manageAppointment.patientId,
                                                                                   visitno: manageAppointment.visitNo,
-                                                                                  prescribedvalue: manageAppointment.prescribedInValue,
+                                                                                  prescribedvalue: manageAppointment.prescribedInValue.toString(),
+                                                                                  title: manageAppointment.chatURL,
                                                                                 ));
                                                                           },
                                                                           child:

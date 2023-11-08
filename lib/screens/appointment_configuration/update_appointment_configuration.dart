@@ -492,31 +492,31 @@ class _UpdateAppointmentConfigurationState
                                     ),
                                     child: Row(
                                       children: [
-                                        SizedBox(
-                                          width: Get.width * 0.03,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.black,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                          ),
-                                          height: 25,
-                                          width: 40,
-                                          child: Center(
-                                            child: Text(
-                                              "aed".tr,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                color: ColorManager.kblackColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        // SizedBox(
+                                        //   width: Get.width * 0.03,
+                                        // ),
+                                        // Container(
+                                        //   decoration: BoxDecoration(
+                                        //     border: Border.all(
+                                        //       color: Colors.black,
+                                        //       width: 1.0,
+                                        //     ),
+                                        //     borderRadius:
+                                        //         BorderRadius.circular(7),
+                                        //   ),
+                                        //   height: 25,
+                                        //   width: 40,
+                                        //   child: Center(
+                                        //     child: Text(
+                                        //       "aed".tr,
+                                        //       style: GoogleFonts.poppins(
+                                        //         fontSize: 12,
+                                        //         color: ColorManager.kblackColor,
+                                        //         fontWeight: FontWeight.bold,
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                         Expanded(
                                           child: Padding(
                                             padding: EdgeInsets.only(
@@ -580,31 +580,31 @@ class _UpdateAppointmentConfigurationState
                                     ),
                                     child: Row(
                                       children: [
-                                        SizedBox(
-                                          width: Get.width * 0.03,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.black,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(7),
-                                          ),
-                                          height: 25,
-                                          width: 40,
-                                          child: Center(
-                                            child: Text(
-                                              "aed".tr,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                color: ColorManager.kblackColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        // SizedBox(
+                                        //   width: Get.width * 0.03,
+                                        // ),
+                                        // Container(
+                                        //   decoration: BoxDecoration(
+                                        //     border: Border.all(
+                                        //       color: Colors.black,
+                                        //       width: 1.0,
+                                        //     ),
+                                        //     borderRadius:
+                                        //         BorderRadius.circular(7),
+                                        //   ),
+                                        //   height: 25,
+                                        //   width: 40,
+                                        //   child: Center(
+                                        //     child: Text(
+                                        //       "aed".tr,
+                                        //       style: GoogleFonts.poppins(
+                                        //         fontSize: 12,
+                                        //         color: ColorManager.kblackColor,
+                                        //         fontWeight: FontWeight.bold,
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                         Expanded(
                                           child: Padding(
                                             padding: EdgeInsets.only(
