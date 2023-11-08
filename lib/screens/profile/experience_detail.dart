@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/screens/profile/add_experience.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class ExperienceDetail extends StatefulWidget {
   const ExperienceDetail({super.key});

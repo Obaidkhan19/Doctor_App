@@ -364,7 +364,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(5)),
                         color: ColorManager.kyellowContainer),
-                    child: const Text('AED: 100'),
+                    child: const Text('100'),
                   ),
                   SizedBox(
                     width: Get.width * 0.02,

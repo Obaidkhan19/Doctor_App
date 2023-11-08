@@ -1,3 +1,294 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/data/repositories/callrepo.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
+import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:flutter/material.dart';
+// import 'package:flutter_webview_pro/webview_flutter.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+// import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage(
+      {super.key,
+      required this.data,
+      required this.title,
+      required this.checkfirst,
+      required this.patientstatusvalue,
+      required this.patientid,
+      required this.visitno,
+      required this.prescribedvalue,
+      this.url});
+
+  consultingqueuewaitholdresponse data;
+  final String title;
+  String checkfirst;
+  String patientstatusvalue;
+  String patientid;
+  dynamic visitno;
+  dynamic prescribedvalue;
+
+  final String? url;
+  // const MyHomePage({super.key, this.url});
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool isLoading = false;
+  WebViewController? controller;
+
+  opencall() async {
+    Callrepo().callOpenPrescription(context, widget.data);
+  }
+
+  @override
+  void initState() {
+    opencall();
+    controller = WebViewController(
+      onPermissionRequest: (ctx) async {
+        await Permission.camera.request();
+        await Permission.microphone.request();
+        ctx.grant();
+      },
+    )
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {},
+          onPageStarted: (String url) async {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {
+            // showSnackbar(context, error.description, color: Colors.black);
+          },
+        ),
+      )
+      ..loadRequest(
+          Uri.parse("${widget.title}#config.disableDeepLinking=true"));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    ConsultingQueueController.i.updatecallresponse(false);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<ConsultingQueueController>(builder: (cnt) {
+      return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 40,
+        ),
+        body: ConsultingQueueController.i.checkcallresponse == false
+            ? Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: Get.height * 0.05,
+                    ),
+                    Text(
+                      'waitingforpatient'.tr,
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.kblackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.04,
+                    ),
+                    SizedBox(
+                        width: Get.width * 0.5,
+                        child: Image.asset(Images.logo)),
+                    SizedBox(
+                      height: Get.height * 0.04,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 20),
+                      child: Container(
+                        height: Get.height * 0.15,
+                        width: Get.height * 0.15,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ColorManager.kPrimaryColor,
+                            width: 3,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: widget.data.patientImagePath != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      baseURL + widget.data.patientImagePath,
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    Images.avator,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              )
+                            : Image.asset(Images.avator),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.02,
+                    ),
+                    Text(
+                      widget.data.patientName ?? "",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: ColorManager.kblackColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.01,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          color: ColorManager.kblackColor,
+                          fontSize: 12,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'regno'.tr,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: widget.data.mRNO ?? "",
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.1,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        Callrepo cr = Callrepo();
+                        int res = await cr.cancelcall(
+                            widget.data.doctorId,
+                            widget.data.branchId,
+                            widget.data.patientId,
+                            widget.data.visitNo);
+                        if (res == 1) {
+                          Get.back();
+                        } else {}
+                      },
+                      child: Container(
+                        height: Get.height * 0.06,
+                        width: Get.width * 0.7,
+                        decoration: BoxDecoration(
+                          color: ColorManager.kPrimaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'cancel'.tr,
+                            style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: ColorManager.kWhiteColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            :
+            // WebView(
+            //     initialUrl: "${widget.title}#config.disableDeepLinking=true",
+            //     javascriptMode: JavascriptMode.unrestricted,
+            //     onWebViewCreated: (ctx) async {
+            //       ctx.loadUrl(
+            //           "${widget.title}#config.disableDeepLinking=true");
+            //       await Permission.camera.request();
+            //       await Permission.microphone.request();
+            //     },
+            WebViewWidget(
+                controller: controller!,
+              ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        floatingActionButton:
+            ConsultingQueueController.i.checkcallresponse == false
+                ? FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    onPressed: () async {
+                      showModalBottomSheet<void>(
+                          isDismissible: false,
+                          enableDrag: true,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: Get.height * 0.8,
+                              color: Colors.amber,
+                              child: Center(
+                                child: PrescribeMedicineScreen(
+                                  checkfirst: widget.checkfirst,
+                                  patientid: widget.patientid,
+                                  patientstatusvalue: widget.patientstatusvalue,
+                                  prescribedvalue: widget.patientstatusvalue,
+                                  visitno: widget.visitno,
+                                ),
+                              ),
+                            );
+                            // await showDialog(
+                            //   context: context,
+                            //   builder: (context) {
+                            //     return AlertDialog(
+                            //       content: SingleChildScrollView(
+                            //         keyboardDismissBehavior:
+                            //             ScrollViewKeyboardDismissBehavior.onDrag,
+                            //         child: SizedBox(
+                            //           height: Get.height * 0.8,
+                            //           width: Get.width * 1,
+                            //           child:
+                            //           PrescribeMedicineScreen(
+                            //             checkfirst: widget.checkfirst,
+                            //             patientid: widget.patientid,
+                            //             patientstatusvalue: widget.patientstatusvalue,
+                            //             prescribedvalue: widget.patientstatusvalue,
+                            //             visitno: widget.visitno,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            // );
+                          });
+                    },
+                    child: Image.asset(
+                      Images.rxeditcall,
+                      color: Colors.white,
+                      height: Get.height * 0.05,
+                    ))
+                : const SizedBox.shrink(),
+      );
+    });
+  }
+}
+
 // // Copyright 2013 The Flutter Authors. All rights reserved.
 // // Use of this source code is governed by a BSD-style license that can be
 // // found in the LICENSE file.
@@ -286,324 +577,616 @@
 //     );
 //   }
 // }
-import 'package:doctormobileapplication/components/snackbar.dart';
-import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
-import 'package:doctormobileapplication/data/repositories/callrepo.dart';
-import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
-import 'package:doctormobileapplication/utils/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage(
-      {super.key,
-      required this.data,
-      required this.title,
-      required this.checkfirst,
-      required this.patientstatusvalue,
-      required this.patientid,
-      required this.visitno,
-      required this.prescribedvalue});
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
-  consultingqueuewaitholdresponse data;
-  final String title;
-  String checkfirst;
-  String patientstatusvalue;
-  String patientid;
-  dynamic visitno;
-  dynamic prescribedvalue;
+// class WebViewPlusExampleMainPage extends StatefulWidget {
+//   const WebViewPlusExampleMainPage({Key? key}) : super(key: key);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+//   @override
+//   _WebViewPlusExampleMainPageState createState() =>
+//       _WebViewPlusExampleMainPageState();
+// }
 
-class _MyHomePageState extends State<MyHomePage> {
-  opencall() async {
-    Callrepo().callOpenPrescription(context, widget.data);
-  }
+// class _WebViewPlusExampleMainPageState
+//     extends State<WebViewPlusExampleMainPage> {
+//   WebViewPlusController? _controller;
 
-  call() async {
-    //  var options = JitsiMeetConferenceOptions(room:widget.title,);
-    JitsiMeetConferenceOptions options =
-        JitsiMeetConferenceOptions(room: widget.title);
-    await jitsiMeet.join(
-      options,
-      listener,
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: ListView(
+//         children: [
+//           SizedBox(
+//             height: Get.height * 0.9,
+//             width: Get.width * 0.8,
+//             child: WebViewPlus(
+//               // serverPort: 5353,
+//               javascriptChannels: null,
+//               initialUrl: 'https://www.google.com.pk',
+//               onWebViewCreated: (controller) {
+//                 _controller = controller;
+//                 // _controller?.loadUrl('www.google.com.pk');
+//               },
+//               onPageFinished: (url) {},
+//               javascriptMode: JavascriptMode.unrestricted,
+//             ),
+//           )
+//         ],
+//       ),
+//       floatingActionButton: FloatingActionButton(onPressed: () {
+//         _showDialog();
+//       }),
+//     );
+//   }
 
-  dynamic listener;
+//   _showDialog() async {
+//     await showDialog<String>(
+//       context: context,
+//       builder: (build) => AlertDialog(
+//         contentPadding: const EdgeInsets.all(16.0),
+//         content: const Row(
+//           children: <Widget>[
+//             Expanded(
+//               child: TextField(
+//                 autofocus: true,
+//                 decoration: InputDecoration(
+//                     labelText: 'Full Name', hintText: 'eg. John Smith'),
+//               ),
+//             )
+//           ],
+//         ),
+//         actions: <Widget>[
+//           TextButton(
+//               child: const Text('CANCEL'),
+//               onPressed: () {
+//                 Get.back();
+//               }),
+//           TextButton(
+//               child: const Text('OPEN'),
+//               onPressed: () {
+//                 Get.back();
+//               })
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-  @override
-  void initState() {
-    opencall();
-    //  listener = JitsiMeetEventListener(
-    //     conferenceJoined: (url) {
-    //       debugPrint("conferenceJoined: url: $url");
-    //       Get.back();
-    //     },
-    //     readyToClose: () {
-    //       debugPrint("readyToClose");
-    //     },
-    //   );
-    //  call();
-    super.initState();
-  }
+// import 'package:doctormobileapplication/components/snackbar.dart';
+// import 'package:doctormobileapplication/helpers/color_manager.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// import 'package:permission_handler/permission_handler.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:doctormobileapplication/components/images.dart';
+// import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+// import 'package:doctormobileapplication/data/repositories/callrepo.dart';
+// import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
+// import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+// import 'package:doctormobileapplication/utils/constants.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
+// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 
-  @override
-  void dispose() {
-    ConsultingQueueController.i.updatecallresponse(false);
-    super.dispose();
-  }
+// import 'package:flutter/material.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
-  final meetingNameController = TextEditingController();
-  final jitsiMeet = JitsiMeet();
+// import 'package:flutter/material.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<ConsultingQueueController>(builder: (cont) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: ColorManager.kPrimaryColor,
-              )),
-          title: Text(
-            'onlineconsultation'.tr,
-            style: GoogleFonts.poppins(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              color: ColorManager.kPrimaryColor,
-            ),
-          ),
-        ),
-        body: ConsultingQueueController.i.checkcallresponse == false
-            ? Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: Get.height * 0.05,
-                    ),
-                    Text(
-                      'waitingforpatient'.tr,
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: ColorManager.kblackColor,
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.04,
-                    ),
-                    SizedBox(
-                        width: Get.width * 0.5,
-                        child: Image.asset(Images.logo)),
-                    SizedBox(
-                      height: Get.height * 0.04,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 20),
-                      child: Container(
-                        height: Get.height * 0.15,
-                        width: Get.height * 0.15,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: ColorManager.kPrimaryColor,
-                            width: 3,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: widget.data.patientImagePath != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      baseURL + widget.data.patientImagePath,
-                                  fit: BoxFit.cover,
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(
-                                    Images.avator,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
-                              )
-                            : Image.asset(Images.avator),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    Text(
-                      widget.data.patientName ?? "",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: ColorManager.kblackColor,
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          color: ColorManager.kblackColor,
-                          fontSize: 12,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'regno'.tr,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextSpan(
-                            text: widget.data.mRNO ?? "",
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.1,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        Callrepo cr = Callrepo();
-                        int res = await cr.cancelcall(
-                            widget.data.doctorId,
-                            widget.data.branchId,
-                            widget.data.patientId,
-                            widget.data.visitNo);
-                        if (res == 1) {
-                          Get.back();
-                        } else {
-                          showSnackbar(context, "Something went wrong");
-                        }
-                      },
-                      child: Container(
-                        height: Get.height * 0.06,
-                        width: Get.width * 0.7,
-                        decoration: BoxDecoration(
-                          color: ColorManager.kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'cancel'.tr,
-                            style: GoogleFonts.poppins(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: ColorManager.kWhiteColor),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : Center(
-                child: SizedBox(
-                  child: InAppWebView(
-                      initialUrlRequest: URLRequest(
-                          url: Uri.parse(
-                              "${widget.title}#config.disableDeepLinking=true")),
-                      initialOptions: InAppWebViewGroupOptions(
-                        crossPlatform: InAppWebViewOptions(
-                          mediaPlaybackRequiresUserGesture: false,
-                        ),
-                      ),
-                      onWebViewCreated:
-                          (InAppWebViewController controller) async {
-                        await Permission.camera.request();
-                        await Permission.microphone.request();
-                        controller;
-                      },
-                      androidOnPermissionRequest:
-                          (InAppWebViewController controller, String origin,
-                              List<String> resources) async {
-                        return PermissionRequestResponse(
-                            resources: resources,
-                            action: PermissionRequestResponseAction.GRANT);
-                      }),
-                ),
-              ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton:
-            ConsultingQueueController.i.checkcallresponse == true
-                ? FloatingActionButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    onPressed: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return AlertDialog(
-                                content: PrescribeMedicineScreen(
-                                  checkfirst: widget.checkfirst,
-                                  patientid: widget.patientid,
-                                  patientstatusvalue: widget.patientstatusvalue,
-                                  prescribedvalue: widget.patientstatusvalue,
-                                  visitno: widget.visitno,
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                      // showModalBottomSheet<void>(
-                      //   isScrollControlled: true,
-                      //   isDismissible: false,
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return Container(
-                      //       height: Get.height * 0.9,
-                      //       color: Colors.amber,
-                      //       child: PrescribeMedicineScreen(
-                      //         checkfirst: widget.checkfirst,
-                      //         patientid: widget.patientid,
-                      //         patientstatusvalue: widget.patientstatusvalue,
-                      //         prescribedvalue: widget.patientstatusvalue,
-                      //         visitno: widget.visitno,
-                      //       ),
-                      //     );
-                      //   },
-                      // );
-                      // Get.to(() => PrescribeMedicineScreen(
-                      //       checkfirst: true,
-                      //       patientstatusvalue: widget.patientstatusvalue.toString(),
-                      //       patientid: widget.patientid,
-                      //       visitno: widget.visitno,
-                      //       prescribedvalue: widget.prescribedvalue,
-                      //     ));
-                    },
-                    child: Image.asset(
-                      Images.rxeditcall,
-                      color: Colors.white,
-                      height: Get.height * 0.05,
-                    ))
-                : const SizedBox.shrink(),
-      );
-    });
-  }
-}
+// class videocalltest extends StatelessWidget {
+//   const videocalltest({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('WebView Example'),
+//         ),
+//         body: const WebView(
+//           initialUrl: 'https://www.example.com', // Replace with your URL
+//           javascriptMode: JavascriptMode.unrestricted,
+//         ),
+//         floatingActionButton: FloatingActionButton(onPressed: () async {
+//           await showDialog<String>(
+//             builder: (context) => AlertDialog(
+//               contentPadding: const EdgeInsets.all(16.0),
+//               content: const Row(
+//                 children: <Widget>[
+//                   Expanded(
+//                     child: TextField(
+//                       autofocus: true,
+//                       decoration: InputDecoration(
+//                           labelText: 'Full Name', hintText: 'eg. John Smith'),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//               actions: <Widget>[
+//                 TextButton(
+//                     child: const Text('CANCEL'),
+//                     onPressed: () {
+//                       Navigator.pop(context);
+//                     }),
+//                 TextButton(
+//                     child: const Text('OPEN'),
+//                     onPressed: () {
+//                       Navigator.pop(context);
+//                     })
+//               ],
+//             ),
+//             context: context,
+//           );
+//         }),
+//       ),
+//     );
+//   }
+// }
+
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:doctormobileapplication/components/images.dart';
+// import 'package:doctormobileapplication/components/snackbar.dart';
+// import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+// import 'package:doctormobileapplication/data/repositories/callrepo.dart';
+// import 'package:doctormobileapplication/helpers/color_manager.dart';
+// import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
+// import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+// import 'package:doctormobileapplication/utils/constants.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// import 'package:get/get.dart';
+// import 'package:google_fonts/google_fonts.dart';
+// // import 'package:in_app_webview/in_app_webview.dart';
+// import 'package:permission_handler/permission_handler.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
+
+// class MyHomePage extends StatefulWidget {
+//   MyHomePage(
+//       {super.key,
+//       required this.data,
+//       required this.title,
+//       required this.checkfirst,
+//       required this.patientstatusvalue,
+//       required this.patientid,
+//       required this.visitno,
+//       required this.prescribedvalue});
+
+//   consultingqueuewaitholdresponse data;
+//   final String title;
+//   String checkfirst;
+//   String patientstatusvalue;
+//   String patientid;
+//   dynamic visitno;
+//   dynamic prescribedvalue;
+
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+
+// class _MyHomePageState extends State<MyHomePage> {
+//   opencall() async {
+//     Callrepo().callOpenPrescription(context, widget.data);
+//   }
+
+//   // WebViewPlusController? webcontroller;
+//   // call() async {
+//   //   //  var options = JitsiMeetConferenceOptions(room:widget.title,);
+//   //   JitsiMeetConferenceOptions options =
+//   //       JitsiMeetConferenceOptions(room: widget.title);
+//   //   await jitsiMeet.join(
+//   //     options,
+//   //     listener,
+//   //   );
+//   // }
+
+//   dynamic listener;
+
+//   @override
+//   void initState() {
+//     opencall();
+//     //  listener = JitsiMeetEventListener(
+//     //     conferenceJoined: (url) {
+//     //       debugPrint("conferenceJoined: url: $url");
+//     //       Get.back();
+//     //     },
+//     //     readyToClose: () {
+//     //       debugPrint("readyToClose");
+//     //     },
+//     //   );
+//     //  call();
+//     super.initState();
+//   }
+
+//   @override
+//   void dispose() {
+//     ConsultingQueueController.i.updatecallresponse(false);
+//     super.dispose();
+//   }
+
+//   final meetingNameController = TextEditingController();
+//   // final jitsiMeet = JitsiMeet();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetBuilder<ConsultingQueueController>(builder: (cont) {
+//       return Scaffold(
+//         resizeToAvoidBottomInset: false,
+//         appBar: AppBar(
+//           automaticallyImplyLeading: false,
+//           leading: IconButton(
+//               onPressed: () {
+//                 Get.back();
+//               },
+//               icon: const Icon(
+//                 Icons.arrow_back_ios_new,
+//                 color: ColorManager.kPrimaryColor,
+//               )),
+//           title: Text(
+//             'onlineconsultation'.tr,
+//             style: GoogleFonts.poppins(
+//               fontSize: 17,
+//               fontWeight: FontWeight.w600,
+//               color: ColorManager.kPrimaryColor,
+//             ),
+//           ),
+//         ),
+//         body:
+//ConsultingQueueController.i.checkcallresponse == false
+//             ? Center(
+//                 child: Column(
+//                   children: [
+//                     SizedBox(
+//                       height: Get.height * 0.05,
+//                     ),
+//                     Text(
+//                       'waitingforpatient'.tr,
+//                       style: GoogleFonts.poppins(
+//                         fontSize: 15,
+//                         fontWeight: FontWeight.bold,
+//                         color: ColorManager.kblackColor,
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: Get.height * 0.04,
+//                     ),
+//                     SizedBox(
+//                         width: Get.width * 0.5,
+//                         child: Image.asset(Images.logo)),
+//                     SizedBox(
+//                       height: Get.height * 0.04,
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.symmetric(
+//                           vertical: 20.0, horizontal: 20),
+//                       child: Container(
+//                         height: Get.height * 0.15,
+//                         width: Get.height * 0.15,
+//                         decoration: BoxDecoration(
+//                           border: Border.all(
+//                             color: ColorManager.kPrimaryColor,
+//                             width: 3,
+//                           ),
+//                           borderRadius: BorderRadius.circular(10),
+//                         ),
+//                         child: widget.data.patientImagePath != null
+//                             ? ClipRRect(
+//                                 borderRadius: BorderRadius.circular(10),
+//                                 child: CachedNetworkImage(
+//                                   imageUrl:
+//                                       baseURL + widget.data.patientImagePath,
+//                                   fit: BoxFit.cover,
+//                                   errorWidget: (context, url, error) =>
+//                                       Image.asset(
+//                                     Images.avator,
+//                                     fit: BoxFit.fitHeight,
+//                                   ),
+//                                 ),
+//                               )
+//                             : Image.asset(Images.avator),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: Get.height * 0.02,
+//                     ),
+//                     Text(
+//                       widget.data.patientName ?? "",
+//                       textAlign: TextAlign.center,
+//                       style: GoogleFonts.poppins(
+//                         fontSize: 17,
+//                         fontWeight: FontWeight.bold,
+//                         color: ColorManager.kblackColor,
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: Get.height * 0.01,
+//                     ),
+//                     RichText(
+//                       text: TextSpan(
+//                         style: const TextStyle(
+//                           color: ColorManager.kblackColor,
+//                           fontSize: 12,
+//                         ),
+//                         children: <TextSpan>[
+//                           TextSpan(
+//                             text: 'regno'.tr,
+//                             style: const TextStyle(
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                           TextSpan(
+//                             text: widget.data.mRNO ?? "",
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: Get.height * 0.1,
+//                     ),
+//                     InkWell(
+//                       onTap: () async {
+//                         Callrepo cr = Callrepo();
+//                         int res = await cr.cancelcall(
+//                             widget.data.doctorId,
+//                             widget.data.branchId,
+//                             widget.data.patientId,
+//                             widget.data.visitNo);
+//                         if (res == 1) {
+//                           Get.back();
+//                         } else {
+//                           showSnackbar(context, "Something went wrong");
+//                         }
+//                       },
+//                       child: Container(
+//                         height: Get.height * 0.06,
+//                         width: Get.width * 0.7,
+//                         decoration: BoxDecoration(
+//                           color: ColorManager.kPrimaryColor,
+//                           borderRadius: BorderRadius.circular(10),
+//                         ),
+//                         child: Center(
+//                           child: Text(
+//                             'cancel'.tr,
+//                             style: GoogleFonts.poppins(
+//                                 fontSize: 15,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: ColorManager.kWhiteColor),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               )
+//             :
+
+//             // WebView(
+//             // initialOptions: InAppWebViewGroupOptions(
+//             //         crossPlatform: InAppWebViewOptions(
+//             //           mediaPlaybackRequiresUserGesture: false,
+//             //           debuggingEnabled: true,
+//             //         ),
+//             //       ),
+//             //       onWebViewCreated: (InAppWebViewController controller) {
+//             //         _webViewController = controller;
+//             //       },
+//             //       androidOnPermissionRequest: (
+//             //           InAppWebViewController controller, String origin,
+//             //           List<String> resources) async {
+//             //         return PermissionRequestResponse(resources: resources,
+//             //             action: PermissionRequestResponseAction.GRANT);
+//             //       }
+//             //   ),
+
+//             // allowsInlineMediaPlayback: false,
+
+//             //   onWebViewCreated: (WebViewController controller) async {
+//             //     controller;
+//             //     await Permission.camera.request();
+//             //     await Permission.microphone.request();
+//             //   },
+//             //   initialUrl:
+//             //       "${widget.title}#config.disableDeepLinking=true", // Replace with your URL
+//             //   javascriptMode: JavascriptMode.unrestricted,
+//             // ),
+//             Center(
+//                 child:
+//                     // InAppWebView(
+//                     //   "${widget.title}#config.disableDeepLinking=true",
+//                     //   mDirection: TextDirection.ltr,
+//                     //   appBarBGColor: const Color(0xFF262626),
+//                     //   bottomNavColor: const Color(0xFF262626),
+//                     //   // defaultTitle: true,
+//                     //   webViewAllowsInlineMediaPlayback: true,
+
+//                     //   backIcon:
+//                     //       const Icon(Icons.arrow_back_ios, color: Colors.white),
+//                     //   nextIcon:
+//                     //       const Icon(Icons.arrow_forward_ios, color: Colors.white),
+//                     //   closeIcon: const Icon(Icons.close, color: Colors.white),
+//                     //   shareIcon: const Icon(Icons.share, color: Colors.white),
+//                     //   refreshIcon: const Icon(Icons.refresh, color: Colors.white),
+//                     //   actionWidget: const [],
+//                     //   actionsIconTheme: const IconThemeData(),
+//                     //   // centerTitle: true,
+//                     //   titleTextStyle: const TextStyle(),
+//                     //   toolbarTextStyle: const TextStyle(),
+//                     //   // toolbarHeight: 56,
+//                     // ),
+//                     //  ListView(
+//                     //   children: [
+//                     //     SizedBox(
+//                     //       height: Get.height * 0.9,
+//                     //       width: Get.width * 0.8,
+//                     //       //                   child: WebviewScaffold(
+//                     //       //   appBar: CupertinoNavigationBar(
+//                     //       //     leading: CupertinoButton(
+//                     //       //       padding: EdgeInsets.zero,
+//                     //       //       child: Image.asset('assets/img/navigation/common/close-icon.png'),
+//                     //       //       onPressed: () => Navigator.of(context).pop(true),
+//                     //       //     ),
+//                     //       //   ),
+//                     //       //   url: widget.url,
+//                     //       //   clearCache: true,
+//                     //       //   appCacheEnabled: true,
+//                     //       //   withJavascript: true,
+//                     //       //   withLocalStorage: true,
+//                     //       //   hidden: true,
+//                     //       // );,
+//                     //       child: WebViewPlus(
+//                     //         // serverPort: 5353,
+//                     //         javascriptChannels: null,
+//                     //         initialUrl:
+//                     //             "${widget.title}#config.disableDeepLinking=true",
+//                     //         onWebViewCreated: (controller) async {
+//                     //           await Permission.camera.request();
+//                     //           await Permission.microphone.request();
+//                     //           webcontroller = controller;
+//                     //           webcontroller?.loadUrl(
+//                     //               "${widget.title}#config.disableDeepLinking=true");
+//                     //         },
+//                     //         onPageFinished: (url) {
+//                     //           // if (url.contains('https://meet.greenhost.net/')) {
+//                     //           //   Get.back();
+//                     //           // }
+//                     //         },
+//                     //         javascriptMode: JavascriptMode.unrestricted,
+//                     //       ),
+//                     //     )
+//                     //   ],
+//                     // ),
+//                     InAppWebView(
+//                   androidOnPermissionRequest:
+//                       (controller, origin, resources) async {
+//                     return PermissionRequestResponse(
+//                         resources: resources,
+//                         action: PermissionRequestResponseAction.GRANT);
+//                   },
+//                   initialUrlRequest: URLRequest(
+//                       url: Uri.parse(
+//                           "${widget.title}#config.disableDeepLinking=true")),
+//                   initialOptions: InAppWebViewGroupOptions(
+//                     crossPlatform: InAppWebViewOptions(
+//                       mediaPlaybackRequiresUserGesture: false,
+//                     ),
+//                   ),
+//                   onWebViewCreated: (InAppWebViewController controller) async {
+//                     await Permission.camera.request();
+//                     await Permission.microphone.request();
+//                     controller;
+//                   },
+//                   // androidOnPermissionRequest:
+//                   //     (InAppWebViewController controller, String origin,
+//                   //         List<String> resources) async {
+//                   //   return PermissionRequestResponse(
+//                   //       resources: resources,
+//                   //       action: PermissionRequestResponseAction.GRANT);
+//                   // }
+//                 ),
+//               ),
+//         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+//         floatingActionButton:
+//             ConsultingQueueController.i.checkcallresponse == true
+//                 ? FloatingActionButton(
+//                     shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(15)),
+//                     onPressed: () async {
+//                       // showDialog(
+//                       //   context: context,
+//                       //   builder: (context) {
+//                       //     return AlertDialog(
+//                       //       content: SingleChildScrollView(
+//                       //         keyboardDismissBehavior:
+//                       //             ScrollViewKeyboardDismissBehavior.onDrag,
+//                       //         child: SizedBox(
+//                       //           height: Get.height * 0.8,
+//                       //           width: Get.width * 0.8,
+//                       //           child: PrescribeMedicineScreen(
+//                       //             checkfirst: widget.checkfirst,
+//                       //             patientid: widget.patientid,
+//                       //             patientstatusvalue: widget.patientstatusvalue,
+//                       //             prescribedvalue: widget.patientstatusvalue,
+//                       //             visitno: widget.visitno,
+//                       //           ),
+//                       //         ),
+//                       //       ),
+//                       //     );
+//                       //   },
+//                       // );
+
+//                       // _s\howDialog() async {
+//                       // await showDialog<String>(
+//                       //   context: context,
+//                       //   builder: (build) => AlertDialog(
+//                       //     contentPadding: const EdgeInsets.all(16.0),
+//                       //     content: const Row(
+//                       //       children: <Widget>[
+//                       //         Expanded(
+//                       //           child: TextField(
+//                       //             autofocus: true,
+//                       //             decoration: InputDecoration(
+//                       //                 labelText: 'Full Name',
+//                       //                 hintText: 'eg. John Smith'),
+//                       //           ),
+//                       //         )
+//                       //       ],
+//                       //     ),
+//                       //     actions: <Widget>[
+//                       //       TextButton(
+//                       //           child: const Text('CANCEL'),
+//                       //           onPressed: () {
+//                       //             Get.back();
+//                       //           }),
+//                       //       TextButton(
+//                       //           child: const Text('OPEN'),
+//                       //           onPressed: () {
+//                       //             Get.back();
+//                       //           })
+//                       //     ],
+//                       //   ),
+//                       // );
+//                       // }
+
+//                       // showModalBottomSheet<void>(
+//                       //   isScrollControlled: true,
+//                       //   isDismissible: false,
+//                       //   context: context,
+//                       //   builder: (BuildContext context) {
+//                       //     return Container(
+//                       //       height: Get.height * 0.9,
+//                       //       color: Colors.amber,
+//                       //       child: PrescribeMedicineScreen(
+//                       //         checkfirst: widget.checkfirst,
+//                       //         patientid: widget.patientid,
+//                       //         patientstatusvalue: widget.patientstatusvalue,
+//                       //         prescribedvalue: widget.patientstatusvalue,
+//                       //         visitno: widget.visitno,
+//                       //       ),
+//                       //     );
+//                       //   },
+//                       // );
+//                       // Get.to(() => PrescribeMedicineScreen(
+//                       //       checkfirst: true,
+//                       //       patientstatusvalue: widget.patientstatusvalue.toString(),
+//                       //       patientid: widget.patientid,
+//                       //       visitno: widget.visitno,
+//                       //       prescribedvalue: widget.prescribedvalue,
+//                       //     ));
+//                     },
+//                     child: Image.asset(
+//                       Images.rxeditcall,
+//                       color: Colors.white,
+//                       height: Get.height * 0.05,
+//                     ))
+//                 : const SizedBox.shrink(),
+//       );
+//     });
+//   }
+// }
 
 // dyeh4X8GThWroZ4c8qK_em:APA91bHo1gXBNvMwloR0vxjpMLlZ5Lauzw-v6_Zqba9Eytkzs5AYXDjxJ5m_n3ZoJyHUFEdGyl0fHgDYmOXvEmPKV2dSOPzGlvEO9twbDeVZflhb8ccC5EMJ0dsePLF8xehpNDsAoBFT
 //  dQhtMIqHTcOUEcSC-UbkM8:APA91bHxglRAmbEBoWl8QgCX6e0dH_W-doUkwDAXpZtypY5EedEKdDHQedcLm78nkvb2JUtv0xg34MQ8vwlNoEVTLw5aY442f8ZO-mFwuPqq3JzQSOmnkkNply4ZRiD-sULJdDYBlfHW
@@ -628,8 +1211,6 @@ class _MyHomePageState extends State<MyHomePage> {
 // // Import for iOS features.
 // import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 // // #enddocregion platform_imports
-
-
 
 // const String kNavigationExamplePage = '''
 // <!DOCTYPE html><html>
@@ -1174,12 +1755,6 @@ class _MyHomePageState extends State<MyHomePage> {
 //   }
 // }
 
-
-
-
-
-
-
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
@@ -1279,8 +1854,3 @@ class _MyHomePageState extends State<MyHomePage> {
 //     );
 //   }
 // }
-
-
-
-
-

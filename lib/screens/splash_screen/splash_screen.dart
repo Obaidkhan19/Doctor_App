@@ -34,13 +34,15 @@ class _SplashScreenState extends State<SplashScreen> {
     String? doctorid = await LocalDb().getDoctorId();
     log(doctorid ?? "");
 
-    // baseURL = remoteConfig.getString('URL');
-    // if (baseURL == "") {
-    // baseURL = 'https://patient.helpful.ihealthcure.com/';
-    // }
+    baseURL = remoteConfig.getString('URL');
+    if (baseURL == "") {
+      baseURL = 'https://patient.helpful.ihealthcure.com/';
+
+      // baseURL = 'https://patient.helpful.ihealthcure.com/';
+    }
     // baseURL = remoteConfig.getString('URLQA');
     // if (baseURL == "") {
-    baseURL = 'http://192.168.88.254:324/';
+    // baseURL = 'http://192.168.88.254:324/';
     // }
   }
 
@@ -49,12 +51,12 @@ class _SplashScreenState extends State<SplashScreen> {
     instance();
     Timer(const Duration(milliseconds: 3500), () async {
       bool? isFirstStatus = await LocalDb().getIsFirstTime();
-      bool? LoginStatus = await LocalDb().getLoginStatus();
+      bool? loginStatus = await LocalDb().getLoginStatus();
       if (isFirstStatus != null &&
-          isFirstStatus != '' &&
+          // isFirstStatus != '' &&
           isFirstStatus == false) {
         //Goto Login Screen or dashboard screen
-        if (LoginStatus == true) {
+        if (loginStatus == true) {
           Get.offAll(() => const DrawerScreen());
           //    Get.to(() => const DrawerScreen());
         } else {

@@ -27,7 +27,6 @@ import '../../data/localDB/local_db.dart';
 import '../../data/repositories/specialities_repo/specialities_repo.dart';
 import '../../models/online_statuS.dart';
 import '../ManageAppointments/TodayAppointments.dart';
-import '../no_data_found/no_data_found.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -879,7 +878,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(5)),
                         color: ColorManager.kyellowContainer),
-                    child: const Text('AED: 100'),
+                    child: const Text('100'),
                   ),
                   SizedBox(
                     width: Get.width * 0.02,

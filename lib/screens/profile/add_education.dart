@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/images.dart';

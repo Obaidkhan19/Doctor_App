@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/advice.dart';
 import 'package:doctormobileapplication/models/complaints.dart';

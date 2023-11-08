@@ -6,7 +6,6 @@ import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
-import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

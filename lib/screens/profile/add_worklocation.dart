@@ -8,7 +8,6 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/profil
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
-import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';

@@ -6,7 +6,6 @@ import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/ManageAppointments/TodayAppointments.dart';
 import 'package:doctormobileapplication/screens/dashboard/home.dart';
 import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart';
-import 'package:doctormobileapplication/screens/profile/profile.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

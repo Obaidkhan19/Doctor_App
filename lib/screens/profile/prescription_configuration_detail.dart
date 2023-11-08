@@ -3,13 +3,11 @@ import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/profile/edit_personal.dart';
 import 'package:doctormobileapplication/screens/profile/edit_prescription_configuration.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class PrescriptionConfiguration extends StatefulWidget {
   const PrescriptionConfiguration({super.key});
