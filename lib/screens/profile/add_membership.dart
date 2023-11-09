@@ -5,9 +5,7 @@ import 'package:doctormobileapplication/data/controller/edit_profile_controller.
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/degree.dart';
-import 'package:doctormobileapplication/models/institutes.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
