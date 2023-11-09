@@ -1,6 +1,5 @@
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/screens/profile/add_education.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:doctormobileapplication/data/controller/profile_controller.dart'
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class EducationDetail extends StatefulWidget {
   const EducationDetail({super.key});

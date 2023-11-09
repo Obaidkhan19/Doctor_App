@@ -1,7 +1,6 @@
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/profile/add_bank.dart';
 import 'package:doctormobileapplication/screens/profile/add_membership.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
