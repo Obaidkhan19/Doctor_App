@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
@@ -12,7 +11,6 @@ import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/models/relation.dart';
-import 'package:doctormobileapplication/screens/profile/edit_contact.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

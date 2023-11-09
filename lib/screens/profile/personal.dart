@@ -14,7 +14,6 @@ import 'package:doctormobileapplication/models/marital_status.dart';
 import 'package:doctormobileapplication/models/person_title.dart';
 import 'package:doctormobileapplication/models/relation.dart';
 import 'package:doctormobileapplication/models/religion.dart';
-import 'package:doctormobileapplication/screens/profile/edit_personal.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
