@@ -66,426 +66,433 @@ class _MenuScreenState extends State<MenuScreen> {
     var profile = Get.put<ProfileController>(ProfileController());
     return Scaffold(
       backgroundColor: ColorManager.kPrimaryColor,
-      body: SafeArea(
-        minimum: const EdgeInsets.all(AppPadding.p20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: Get.height * 0.01,
-              ),
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                color: ColorManager.kWhiteColor,
-                onPressed: () {
-                  ZoomDrawer.of(context)!.close();
-                },
-              ),
-              // InkWell(
-              //   splashColor: Colors.transparent,
-              //   highlightColor: Colors.transparent,
-              //   onTap: () {
-              //     ZoomDrawer.of(context)!.close();
-              //   },
-              //   child: Image.asset(
-              //     AppImages.back,
-              //     color: ColorManager.kWhiteColor,
-              //   ),
-              // ),
-
-              SizedBox(
-                height: Get.height * 0.04,
-              ),
-              GetBuilder<ProfileController>(builder: (context) {
-                return CircleAvatar(
-                  backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                  radius: 30,
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: ProfileController
-                                  .i.selectedbasicInfo?.picturePath !=
-                              null
-                          ? baseURL +
-                              ProfileController.i.selectedbasicInfo?.picturePath
-                          : "",
-                      width: Get.width * 0.16,
-                      fit: BoxFit.fill,
-                      errorWidget: (context, url, error) =>
-                          Image.asset(AppImages.doctorlogo),
-                    ),
-                  ),
-                );
-                // CircleAvatar(
-                //     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                //     radius: 30,
-                //     child: ClipRRect(
-                //         borderRadius: BorderRadius.circular(30),
-                //         child: CachedNetworkImage(
-                //           height: Get.width * 0.16,
-                //           imageUrl: ProfileController
-                //                       .i.selectedbasicInfo?.picturePath !=
-                //                   null
-                //               ? baseURL +
-                //                   ProfileController
-                //                       .i.selectedbasicInfo?.picturePath
-                //               : "",
-                //           fit: BoxFit.fill,
-                //           errorWidget: (context, url, error) =>
-                //               Image.asset(AppImages.doctorlogo),
-                //         )));
-              }),
-
-              SizedBox(
-                height: Get.height * 0.01,
-              ),
-              SizedBox(
-                width: Get.width * 0.55,
-                child: Text(
-                  ProfileController.i.selectedbasicInfo?.fullName,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+      body: GetBuilder<ProfileController>(builder: (cntS) {
+        return SafeArea(
+          minimum: const EdgeInsets.all(AppPadding.p20),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: Get.height * 0.01,
                 ),
-                //  TextFormField(
-                //   decoration: InputDecoration(
-                //     enabled: false,
-                //     hintText: ProfileController.i.selectedbasicInfo?.fullName,
-                //     hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                //         fontSize: 15,
-                //         color: ColorManager.kWhiteColor,
-                //         fontWeight: FontWeight.bold),
+                IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  color: ColorManager.kWhiteColor,
+                  onPressed: () {
+                    ZoomDrawer.of(context)!.close();
+                  },
+                ),
+                // InkWell(
+                //   splashColor: Colors.transparent,
+                //   highlightColor: Colors.transparent,
+                //   onTap: () {
+                //     ZoomDrawer.of(context)!.close();
+                //   },
+                //   child: Image.asset(
+                //     AppImages.back,
+                //     color: ColorManager.kWhiteColor,
                 //   ),
                 // ),
-              ),
-              // Row(
-              //   children: [
-              //     SizedBox(
-              //       width: Get.width * 0.55,
-              //       child: TextFormField(
-              //         decoration: InputDecoration(
-              //           // suffixIcon: InkWell(
-              //           //   onTap: () {
-              //           //     Get.to(const EditProfile());
-              //           //   },
-              //           //   child: Image.asset(
-              //           //     Images.edit,
-              //           //     color: ColorManager.kWhiteColor,
-              //           //   ),
-              //           // ),
-              //           // disabledBorder: const UnderlineInputBorder(
-              //           //   borderSide: BorderSide(
-              //           //       color: ColorManager.kWhiteColor, width: 3.0),
-              //           // ),
-              //           enabled: false,
-              //           // hintText: UserName,
-              //           hintText:
-              //               ProfileController.i.selectedbasicInfo?.fullName,
-              //           hintStyle: Theme.of(context)
-              //               .textTheme
-              //               .bodyMedium!
-              //               .copyWith(
-              //                   fontSize: 15,
-              //                   color: ColorManager.kWhiteColor,
-              //                   fontWeight: FontWeight.bold),
-              //         ),
-              //       ),
-              //     ),
-              // InkWell(
-              //   onTap: () {
 
-              //     Get.to(() => const ProfileDetailMain());
-              //   },
-              //   child: Image.asset(
-              //     Images.edit,
-              //     height: Get.height * 0.035,
-              //     color: ColorManager.kWhiteColor,
-              //   ),
-              // ),
-              //   ],
-              // ),
-
-              Divider(
-                thickness: Get.height * 0.002,
-                color: ColorManager.kWhiteColor,
-              ),
-
-              // customListTile(context, onTap: () {
-              //   Get.to(() => const NoDataFound());
-              // }, imagePath: Images.family, title: 'Family Members'),
-              // customListTile(context, onTap: () {
-              //   Get.to(() => const NoDataFound());
-              // }, imagePath: Images.location, title: 'Location'),
-              // customListTile(context, onTap: () {
-              //   Get.to(() => const NoDataFound());
-              // }, imagePath: Images.wallet, title: 'Wallet'),
-              // customListTile(context, onTap: () {
-              //   Get.to(() => const NoDataFound());
-              // }, imagePath: Images.wifi, title: 'Forgot Password'),
-
-              // customListTile(context, onTap: () {
-              //   Get.to(() => const NoDataFound());
-              // },
-              //     imagePath: Images.fingerprint,
-              //     title: 'Finger Print',
-              //     togglebutton: true),
-
-              // const Divider(
-              //   height: 1,
-              //   thickness: 3,
-              //   color: ColorManager.kWhiteColor,
-              // ),
-              // customListTile(context,
-              // onTap: () {
-              //   Get.to(()=> const  RegisterScreen());
-              // },
-              //     imagePath: Images.family, title: 'Sign Up'),
-
-              SizedBox(
-                height: Get.height * 0.01,
-              ),
-              // ListTile(
-              //   visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              //   contentPadding:
-              //       const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-              //   leading: Image.asset(AppImages.vector),
-              //   title: Text(
-              //     'patienthistory'.tr,
-              //     style: GoogleFonts.poppins(
-              //       textStyle: GoogleFonts.poppins(
-              //           fontSize: 15, color: ColorManager.kWhiteColor),
-              //     ),
-              //   ),
-              //   onTap: () {
-              //     //Navigator.pop(context);
-              //     Get.to(() => const PatientHistory());
-              //   },
-              // ),
-              ListTile(
-                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(
-                  AppImages.walletimg,
-                  height: Get.height * 0.035,
+                SizedBox(
+                  height: Get.height * 0.04,
                 ),
-                title: Text(
-                  'wallet'.tr,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
+                GetBuilder<ProfileController>(builder: (context) {
+                  return CircleAvatar(
+                    backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                    radius: 30,
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: ProfileController
+                                    .i.selectedbasicInfo?.picturePath !=
+                                null
+                            ? baseURL +
+                                ProfileController
+                                    .i.selectedbasicInfo?.picturePath
+                            : "",
+                        width: Get.width * 0.16,
+                        fit: BoxFit.fill,
+                        errorWidget: (context, url, error) =>
+                            Image.asset(AppImages.doctorlogo),
+                      ),
+                    ),
+                  );
+                  // CircleAvatar(
+                  //     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                  //     radius: 30,
+                  //     child: ClipRRect(
+                  //         borderRadius: BorderRadius.circular(30),
+                  //         child: CachedNetworkImage(
+                  //           height: Get.width * 0.16,
+                  //           imageUrl: ProfileController
+                  //                       .i.selectedbasicInfo?.picturePath !=
+                  //                   null
+                  //               ? baseURL +
+                  //                   ProfileController
+                  //                       .i.selectedbasicInfo?.picturePath
+                  //               : "",
+                  //           fit: BoxFit.fill,
+                  //           errorWidget: (context, url, error) =>
+                  //               Image.asset(AppImages.doctorlogo),
+                  //         )));
+                }),
+
+                SizedBox(
+                  height: Get.height * 0.01,
+                ),
+                SizedBox(
+                  width: Get.width * 0.55,
+                  child: Text(
+                    ProfileController.i.selectedbasicInfo?.fullName ?? "",
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
+                  //  TextFormField(
+                  //   decoration: InputDecoration(
+                  //     enabled: false,
+                  //     hintText: ProfileController.i.selectedbasicInfo?.fullName,
+                  //     hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  //         fontSize: 15,
+                  //         color: ColorManager.kWhiteColor,
+                  //         fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                 ),
-                onTap: () {
-                  // COMING SOON
-                  Fluttertoast.showToast(
-                      msg: "Coming Soon",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: ColorManager.kPrimaryLightColor,
-                      textColor: ColorManager.kPrimaryColor,
-                      fontSize: 14.0);
-                  // Get.to(() => WalletScreen(
-                  //       index: 1,
-                  //     ));
-                },
-              ),
-              ListTile(
-                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(
-                  AppImages.forgetpassword,
-                  height: Get.height * 0.035,
-                ),
-                title: Text(
-                  'changePassword'.tr,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
-                  ),
-                ),
-                onTap: () {
-                  Get.to(() => const ChangePasswordScreen());
-                },
-              ),
-              ListTile(
-                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(
-                  AppImages.biometric,
-                  height: Get.height * 0.035,
-                ),
-                trailing: Transform.scale(
-                  scale: 0.55,
-                  child: Switch(
-                    value: isBiometric,
-                    activeColor: ColorManager.kWhiteColor,
-                    onChanged: (value) async {
-                      // print('namename');
-                      // print(EditProfileController.i.name);
-                      if (value) {
-                        authentication = await _authenticate();
-                        if (authentication) {
-                          if (EditProfileController.i.name == null) {
-                            fingerprint = authentication;
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text("You are already Logged in")));
-                            // Utils().toastmessage("You are already Logged in");
-                            fingerprint = true;
-                          }
-                          setState(() {});
-                        } else {
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     const SnackBar(
-                          //         content: Text(
-                          //             "You declined the biometric login.")));
-                        }
+                // Row(
+                //   children: [
+                //     SizedBox(
+                //       width: Get.width * 0.55,
+                //       child: TextFormField(
+                //         decoration: InputDecoration(
+                //           // suffixIcon: InkWell(
+                //           //   onTap: () {
+                //           //     Get.to(const EditProfile());
+                //           //   },
+                //           //   child: Image.asset(
+                //           //     Images.edit,
+                //           //     color: ColorManager.kWhiteColor,
+                //           //   ),
+                //           // ),
+                //           // disabledBorder: const UnderlineInputBorder(
+                //           //   borderSide: BorderSide(
+                //           //       color: ColorManager.kWhiteColor, width: 3.0),
+                //           // ),
+                //           enabled: false,
+                //           // hintText: UserName,
+                //           hintText:
+                //               ProfileController.i.selectedbasicInfo?.fullName,
+                //           hintStyle: Theme.of(context)
+                //               .textTheme
+                //               .bodyMedium!
+                //               .copyWith(
+                //                   fontSize: 15,
+                //                   color: ColorManager.kWhiteColor,
+                //                   fontWeight: FontWeight.bold),
+                //         ),
+                //       ),
+                //     ),
+                // InkWell(
+                //   onTap: () {
 
-                        if (fingerprint) {
+                //     Get.to(() => const ProfileDetailMain());
+                //   },
+                //   child: Image.asset(
+                //     Images.edit,
+                //     height: Get.height * 0.035,
+                //     color: ColorManager.kWhiteColor,
+                //   ),
+                // ),
+                //   ],
+                // ),
+
+                Divider(
+                  thickness: Get.height * 0.002,
+                  color: ColorManager.kWhiteColor,
+                ),
+
+                // customListTile(context, onTap: () {
+                //   Get.to(() => const NoDataFound());
+                // }, imagePath: Images.family, title: 'Family Members'),
+                // customListTile(context, onTap: () {
+                //   Get.to(() => const NoDataFound());
+                // }, imagePath: Images.location, title: 'Location'),
+                // customListTile(context, onTap: () {
+                //   Get.to(() => const NoDataFound());
+                // }, imagePath: Images.wallet, title: 'Wallet'),
+                // customListTile(context, onTap: () {
+                //   Get.to(() => const NoDataFound());
+                // }, imagePath: Images.wifi, title: 'Forgot Password'),
+
+                // customListTile(context, onTap: () {
+                //   Get.to(() => const NoDataFound());
+                // },
+                //     imagePath: Images.fingerprint,
+                //     title: 'Finger Print',
+                //     togglebutton: true),
+
+                // const Divider(
+                //   height: 1,
+                //   thickness: 3,
+                //   color: ColorManager.kWhiteColor,
+                // ),
+                // customListTile(context,
+                // onTap: () {
+                //   Get.to(()=> const  RegisterScreen());
+                // },
+                //     imagePath: Images.family, title: 'Sign Up'),
+
+                SizedBox(
+                  height: Get.height * 0.01,
+                ),
+                // ListTile(
+                //   visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                //   contentPadding:
+                //       const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                //   leading: Image.asset(AppImages.vector),
+                //   title: Text(
+                //     'patienthistory'.tr,
+                //     style: GoogleFonts.poppins(
+                //       textStyle: GoogleFonts.poppins(
+                //           fontSize: 15, color: ColorManager.kWhiteColor),
+                //     ),
+                //   ),
+                //   onTap: () {
+                //     //Navigator.pop(context);
+                //     Get.to(() => const PatientHistory());
+                //   },
+                // ),
+                ListTile(
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  leading: Image.asset(
+                    AppImages.walletimg,
+                    height: Get.height * 0.035,
+                  ),
+                  title: Text(
+                    'wallet'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
+                  ),
+                  onTap: () {
+                    // COMING SOON
+                    Fluttertoast.showToast(
+                        msg: "Coming Soon",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: ColorManager.kPrimaryLightColor,
+                        textColor: ColorManager.kPrimaryColor,
+                        fontSize: 14.0);
+                    // Get.to(() => WalletScreen(
+                    //       index: 1,
+                    //     ));
+                  },
+                ),
+                ListTile(
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  leading: Image.asset(
+                    AppImages.forgetpassword,
+                    height: Get.height * 0.035,
+                  ),
+                  title: Text(
+                    'changePassword'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
+                  ),
+                  onTap: () {
+                    Get.to(() => const ChangePasswordScreen());
+                  },
+                ),
+                ListTile(
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  leading: Image.asset(
+                    AppImages.biometric,
+                    height: Get.height * 0.035,
+                  ),
+                  trailing: Transform.scale(
+                    scale: 0.55,
+                    child: Switch(
+                      value: isBiometric,
+                      activeColor: ColorManager.kWhiteColor,
+                      onChanged: (value) async {
+                        // print('namename');
+                        // print(EditProfileController.i.name);
+                        if (value) {
+                          authentication = await _authenticate();
                           if (authentication) {
-                            if (EditProfileController.i.name != null) {
+                            if (EditProfileController.i.name == null) {
+                              fingerprint = authentication;
+                            } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content:
                                           Text("You are already Logged in")));
+                              // Utils().toastmessage("You are already Logged in");
+                              fingerprint = true;
+                            }
+                            setState(() {});
+                          } else {
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //     const SnackBar(
+                            //         content: Text(
+                            //             "You declined the biometric login.")));
+                          }
+
+                          if (fingerprint) {
+                            if (authentication) {
+                              if (EditProfileController.i.name != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text("You are already Logged in")));
+                                setState(() {
+                                  fingerprint = true;
+                                });
+                              }
+                              setState(() {
+                                profile;
+                              });
+                            } else {
                               setState(() {
                                 fingerprint = true;
                               });
                             }
-                            setState(() {
-                              profile;
-                            });
-                          } else {
-                            setState(() {
-                              fingerprint = true;
-                            });
+                            // LocalDb.set ('fingerprint', !fingerprint);
                           }
-                          // LocalDb.set ('fingerprint', !fingerprint);
+                          // setState(() {
+                          //   fingerprint = value;
+                          // });
+                        } else {
+                          // prefs!.setBool('fingerprint', !fingerprint);
+                          setState(() {
+                            fingerprint = false;
+                            // authentication = !fingerprint;
+                          });
                         }
-                        // setState(() {
-                        //   fingerprint = value;
-                        // });
-                      } else {
-                        // prefs!.setBool('fingerprint', !fingerprint);
-                        setState(() {
-                          fingerprint = false;
-                          // authentication = !fingerprint;
-                        });
-                      }
-                    },
+                      },
+                    ),
                   ),
-                ),
-                title: Text(
-                  'biometric'.tr,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  title: Text(
+                    'biometric'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
                   ),
+                  onTap: () {
+                    //Navigator.pop(context);
+                  },
                 ),
-                onTap: () {
-                  //Navigator.pop(context);
-                },
-              ),
 
-              ListTile(
-                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(
-                  AppImages.language,
-                  height: Get.height * 0.035,
-                ),
-                title: Text(
-                  'languages'.tr,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
+                ListTile(
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  leading: Image.asset(
+                    AppImages.language,
+                    height: Get.height * 0.035,
                   ),
-                ),
-                onTap: () async {
-                  await languageSelector(context, AppConstants.languages);
-                },
-              ),
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              Divider(
-                thickness: Get.height * 0.002,
-                color: ColorManager.kWhiteColor,
-              ),
-
-              SizedBox(
-                height: Get.height * 0.15,
-              ),
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(
-                  AppImages.bin,
-                  height: Get.height * 0.035,
-                ),
-                title: Text(
-                  'deleteAccount'.tr,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
+                  title: Text(
+                    'languages'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
                   ),
+                  onTap: () async {
+                    await languageSelector(context, AppConstants.languages);
+                  },
                 ),
-                onTap: () async {},
-              ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                Divider(
+                  thickness: Get.height * 0.002,
+                  color: ColorManager.kWhiteColor,
+                ),
 
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                leading: Image.asset(
-                  AppImages.logout,
-                  height: Get.height * 0.035,
+                SizedBox(
+                  height: Get.height * 0.15,
                 ),
-                title: Text(
-                  'logout'.tr,
-                  style: GoogleFonts.poppins(
-                    textStyle: GoogleFonts.poppins(
-                        fontSize: 15, color: ColorManager.kWhiteColor),
+                ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  leading: Image.asset(
+                    AppImages.bin,
+                    height: Get.height * 0.035,
                   ),
+                  title: Text(
+                    'deleteAccount'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
+                  ),
+                  onTap: () async {},
                 ),
-                onTap: () async {
-                  SharedPreferences preferences =
-                      await SharedPreferences.getInstance();
-                  await preferences.clear();
 
-                  AuthController.i.emailController.clear();
-                  AuthController.i.passwordController.clear();
-                  Get.offAll(() => const LoginScreen());
+                ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  leading: Image.asset(
+                    AppImages.logout,
+                    height: Get.height * 0.035,
+                  ),
+                  title: Text(
+                    'logout'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                          fontSize: 15, color: ColorManager.kWhiteColor),
+                    ),
+                  ),
+                  onTap: () async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    await preferences.clear();
 
-                  // String? id = await LocalDb().getDoctorId();
-                  // String? token = await LocalDb().getToken();
-                  // bool? loginStatus = await LocalDb().getLoginStatus();
-                  // String? DeviceToken = await LocalDb().getDeviceToken();
-                  // if (loginStatus == true) {
-                  //   AuthRepo.logout(
-                  //       DoctorId: id,
-                  //       token: token,
-                  //       DeviceToken: DeviceToken,
-                  //       IsLogOffAllDevice: 'false');
-                  // } else {
-                  //   showSnackbar(context, 'You are not Logged in');
-                  // }
-                  //Navigator.pop(context);
-                },
-              ),
-            ],
+                    AuthController.i.emailController.clear();
+                    AuthController.i.passwordController.clear();
+                    Get.offAll(() => const LoginScreen());
+
+                    // String? id = await LocalDb().getDoctorId();
+                    // String? token = await LocalDb().getToken();
+                    // bool? loginStatus = await LocalDb().getLoginStatus();
+                    // String? DeviceToken = await LocalDb().getDeviceToken();
+                    // if (loginStatus == true) {
+                    //   AuthRepo.logout(
+                    //       DoctorId: id,
+                    //       token: token,
+                    //       DeviceToken: DeviceToken,
+                    //       IsLogOffAllDevice: 'false');
+                    // } else {
+                    //   showSnackbar(context, 'You are not Logged in');
+                    // }
+                    //Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
