@@ -140,68 +140,74 @@ class _MenuScreenState extends State<MenuScreen> {
               SizedBox(
                 height: Get.height * 0.01,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: Get.width * 0.45,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        // suffixIcon: InkWell(
-                        //   onTap: () {
-                        //     Get.to(const EditProfile());
-                        //   },
-                        //   child: Image.asset(
-                        //     Images.edit,
-                        //     color: ColorManager.kWhiteColor,
-                        //   ),
-                        // ),
-                        // disabledBorder: const UnderlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //       color: ColorManager.kWhiteColor, width: 3.0),
-                        // ),
-                        enabled: false,
-                        // hintText: UserName,
-                        hintText:
-                            ProfileController.i.selectedbasicInfo?.fullName,
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(
-                                fontSize: 15,
-                                color: ColorManager.kWhiteColor,
-                                fontWeight: FontWeight.bold),
-                      ),
-                    ),
+              SizedBox(
+                width: Get.width * 0.55,
+                child: Text(
+                  ProfileController.i.selectedbasicInfo?.fullName,
+                  style: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 15, color: ColorManager.kWhiteColor),
                   ),
-                  InkWell(
-                    onTap: () {
-                      // Get.to(() => EditProfile(
-                      //       imagepath: imagepath != '' ? imagepath : "",
-                      //       fullName: profile.selectedbasicInfo?.fullName,
-                      //       dob: profile.selectedbasicInfo?.dateofBirth,
-                      //       cellNumber:
-                      //           profile.selectedbasicInfo?.contactPublic,
-                      //       email: profile.selectedbasicInfo?.email,
-                      //       country: profile.selectedbasicInfo?.countryName,
-                      //       province: profile.selectedbasicInfo?.stateName,
-                      //       city: profile.selectedbasicInfo?.cityName,
-                      //       address: profile.selectedbasicInfo?.address,
-                      //       cityid: profile.selectedbasicInfo?.cityId,
-                      //       countryid: profile.selectedbasicInfo?.countryId,
-                      //       provinceid:
-                      //           profile.selectedbasicInfo?.stateOrProvinceId,
-                      //     ));
-
-                      Get.to(() => const ProfileDetailMain());
-                    },
-                    child: Image.asset(
-                      Images.edit,
-                      height: Get.height * 0.035,
-                      color: ColorManager.kWhiteColor,
-                    ),
-                  ),
-                ],
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                //  TextFormField(
+                //   decoration: InputDecoration(
+                //     enabled: false,
+                //     hintText: ProfileController.i.selectedbasicInfo?.fullName,
+                //     hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                //         fontSize: 15,
+                //         color: ColorManager.kWhiteColor,
+                //         fontWeight: FontWeight.bold),
+                //   ),
+                // ),
               ),
+              // Row(
+              //   children: [
+              //     SizedBox(
+              //       width: Get.width * 0.55,
+              //       child: TextFormField(
+              //         decoration: InputDecoration(
+              //           // suffixIcon: InkWell(
+              //           //   onTap: () {
+              //           //     Get.to(const EditProfile());
+              //           //   },
+              //           //   child: Image.asset(
+              //           //     Images.edit,
+              //           //     color: ColorManager.kWhiteColor,
+              //           //   ),
+              //           // ),
+              //           // disabledBorder: const UnderlineInputBorder(
+              //           //   borderSide: BorderSide(
+              //           //       color: ColorManager.kWhiteColor, width: 3.0),
+              //           // ),
+              //           enabled: false,
+              //           // hintText: UserName,
+              //           hintText:
+              //               ProfileController.i.selectedbasicInfo?.fullName,
+              //           hintStyle: Theme.of(context)
+              //               .textTheme
+              //               .bodyMedium!
+              //               .copyWith(
+              //                   fontSize: 15,
+              //                   color: ColorManager.kWhiteColor,
+              //                   fontWeight: FontWeight.bold),
+              //         ),
+              //       ),
+              //     ),
+              // InkWell(
+              //   onTap: () {
+
+              //     Get.to(() => const ProfileDetailMain());
+              //   },
+              //   child: Image.asset(
+              //     Images.edit,
+              //     height: Get.height * 0.035,
+              //     color: ColorManager.kWhiteColor,
+              //   ),
+              // ),
+              //   ],
+              // ),
 
               Divider(
                 thickness: Get.height * 0.002,

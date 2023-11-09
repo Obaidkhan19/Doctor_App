@@ -74,7 +74,7 @@ class _AddWorklocationState extends State<AddWorklocation> {
           },
         ),
         title: Text(
-          'Add Bank',
+          'Add WorkLocation',
           style: GoogleFonts.poppins(
               fontSize: 17,
               fontWeight: FontWeight.w600,

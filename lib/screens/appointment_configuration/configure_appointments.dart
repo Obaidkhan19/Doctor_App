@@ -505,7 +505,6 @@ class _ConfigureAppointmentScreenState
                                           ConfigureAppointmentController
                                                   .i.hasOnlineConsultation ==
                                               true) {
-                                        print('aaaaaaaaaaaaaaaaaaaaaa');
                                         showSnackbar(context,
                                             "Already have Online Consultation");
                                       } else {
@@ -1390,6 +1389,12 @@ class _ConfigureAppointmentScreenState
                                       setState(() {});
                                       await ConfigureAppointmentController.i
                                           .updateIsloading(false);
+
+                                      ConfigureAppointmentController.i
+                                          .clearrows();
+                                      contr.disposefunction();
+                                      ConfigureAppointmentController.i
+                                          .falseSwitch();
                                     }
                                   } else {
                                     showSnackbar(

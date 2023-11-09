@@ -46,6 +46,7 @@ class ConfigureAppointmentRepo {
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
 
+    log(body);
     if (response.statusCode == 200) {
       ConfigureAppointmentController.i.appointmentconfigurationList.clear();
       var responseData = jsonDecode(response.body);

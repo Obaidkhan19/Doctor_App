@@ -93,395 +93,404 @@ class _EditContactState extends State<EditContact> {
         ),
         centerTitle: true,
       ),
-      body: GetBuilder<EditProfileController>(
-        builder: (contr) => Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Center(
-                    child: Text(
-                      'contactInformation'.tr,
-                      style: GoogleFonts.poppins(
-                        textStyle: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: ColorManager.kPrimaryColor),
+      body: Container(
+        height: Get.height * 1,
+        color: ColorManager.kPrimaryColor,
+        padding: EdgeInsets.only(
+          top: Get.height * 0.02,
+          left: Get.width * 0.02,
+          right: Get.width * 0.02,
+        ),
+        child: GetBuilder<EditProfileController>(
+          builder: (contr) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Center(
+                      child: Text(
+                        'contactInformation'.tr,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: ColorManager.kPrimaryColor),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Get.width * 0.02,
-                      right: Get.width * 0.02,
-                      top: Get.height * 0.01,
-                      bottom: Get.height * 0.03,
-                    ),
-                    child: const MySeparator(
-                      color: ColorManager.kPrimaryColor,
-                    ),
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (value) {
-                      if (value == "Country") {
-                        return 'pleaseselectyourcountry'.tr;
-                      }
-                      return null;
-                    },
-                    onTap: () async {
-                      edit.selectedcountry = null;
-                      edit.selectedcity = null;
-                      edit.citiesList.clear();
-                      edit.selectedprovince = null;
-
-                      Countries generic = await searchabledropdown(
-                          context, edit.countriesList ?? []);
-                      edit.selectedcountry = null;
-                      edit.updateselectedCountry(generic);
-
-                      if (generic != '') {
-                        edit.selectedcountry = generic;
-                        edit.selectedcountry =
-                            (generic == '') ? null : edit.selectedcountry;
-                      }
-                      String cid = edit.selectedcountry?.id.toString() ?? "";
-                      setState(() {
-                        _getProvinces(cid);
-                      });
-                    },
-                    readonly: true,
-                    hintText: edit.selectedcountry?.name == ""
-                        ? 'country'.tr
-                        : edit.selectedcountry?.name ?? "Select country",
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (value) {
-                      if (value == "Province") {
-                        return 'Please select your State'.tr;
-                      }
-                      return null;
-                    },
-                    readonly: true,
-                    onTap: () async {
-                      edit.selectedprovince = null;
-                      edit.selectedcity = null;
-                      Provinces generic = await searchabledropdown(
-                          context, edit.provinceList ?? []);
-                      edit.selectedprovince = null;
-                      edit.updateselectedprovince(generic);
-
-                      if (generic != '') {
-                        edit.selectedprovince = generic;
-                        edit.selectedprovince =
-                            (generic == '') ? null : edit.selectedprovince;
-                      }
-                      String cid = edit.selectedprovince?.id.toString() ?? "";
-                      setState(() {
-                        _getCities(cid);
-                      });
-                    },
-                    hintText: edit.selectedprovince?.name == ""
-                        ? 'State'
-                        : edit.selectedprovince?.name == null
-                            ? 'State'
-                            : edit.selectedprovince?.name ?? "",
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (value) {
-                      if (value == "City") {
-                        return 'pleaseselectyourcity'.tr;
-                      }
-                      return null;
-                    },
-                    readonly: true,
-                    onTap: () async {
-                      edit.selectedcity = null;
-                      Cities generic = await searchabledropdown(
-                          context, edit.citiesList ?? []);
-                      edit.selectedcity = null;
-                      edit.updateselectedcity(generic);
-
-                      if (generic != '') {
-                        edit.selectedcity = generic;
-                        edit.selectedcity =
-                            (generic == '') ? null : edit.selectedcity;
-                      }
-                      setState(() {});
-                    },
-                    hintText: edit.selectedcity?.name == ""
-                        ? 'City'
-                        : edit.selectedcity?.name == null
-                            ? 'City'
-                            : edit.selectedcity?.name ?? "",
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'pleaseselectyouraddress'.tr;
-                      }
-                      return null;
-                    },
-                    controller: edit.addressController,
-                    hintText: 'address'.tr,
-                  ),
-                  CustomIntlPhoneField(
-                    onChanged: (phone) {
-                      edit.updatepublicno(phone.completeNumber);
-                    },
-                    style: GoogleFonts.poppins(
-                        color: ColorManager.kPrimaryColor, fontSize: 12),
-                    showDropdownIcon: true,
-                    dropdownIcon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 10,
-                    ),
-                    dropdownTextStyle: GoogleFonts.poppins(
-                        fontSize: 12,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.02,
+                        right: Get.width * 0.02,
+                        top: Get.height * 0.01,
+                        bottom: Get.height * 0.03,
+                      ),
+                      child: const MySeparator(
                         color: ColorManager.kPrimaryColor,
-                        fontWeight: FontWeight.w700),
-                    showCountryFlag: false,
-                    initialCountryCode: 'AE',
-                    controller: edit.publicmobileno,
-                    disableLengthCheck: true,
-                    keyboardType: TextInputType.phone,
-                    fieldfilled: true,
-                    fieldsColor: ColorManager.kPrimaryLightColor,
-                    fieldsborderColor: ColorManager.kWhiteColor,
-                    decoration: InputDecoration(
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        border: InputBorder.none),
-                    languageCode: "en",
-                  ),
-                  SizedBox(height: Get.height * 0.02),
-                  CustomIntlPhoneField(
-                    onChanged: (phone) {
-                      edit.updateprivateno(phone.completeNumber);
-                    },
-                    style: GoogleFonts.poppins(
-                        color: ColorManager.kPrimaryColor, fontSize: 12),
-                    showDropdownIcon: true,
-                    dropdownIcon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 10,
-                    ),
-                    dropdownTextStyle: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: ColorManager.kPrimaryColor,
-                        fontWeight: FontWeight.w700),
-                    showCountryFlag: false,
-                    initialCountryCode: 'AE',
-                    controller: edit.privatemobileno,
-                    disableLengthCheck: true,
-                    keyboardType: TextInputType.phone,
-                    fieldfilled: true,
-                    fieldsColor: ColorManager.kPrimaryLightColor,
-                    fieldsborderColor: ColorManager.kWhiteColor,
-                    decoration: InputDecoration(
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        border: InputBorder.none),
-                    languageCode: "en",
-                  ),
-                  SizedBox(height: Get.height * 0.02),
-                  CustomIntlPhoneField(
-                    onChanged: (phone) {
-                      edit.updatetelephonenumber(phone.completeNumber);
-                    },
-                    style: GoogleFonts.poppins(
-                        color: ColorManager.kPrimaryColor, fontSize: 12),
-                    showDropdownIcon: true,
-                    dropdownIcon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 10,
-                    ),
-                    dropdownTextStyle: GoogleFonts.poppins(
-                        fontSize: 12,
-                        color: ColorManager.kPrimaryColor,
-                        fontWeight: FontWeight.w700),
-                    showCountryFlag: false,
-                    initialCountryCode: 'AE',
-                    controller: edit.telephone,
-                    disableLengthCheck: true,
-                    keyboardType: TextInputType.phone,
-                    fieldfilled: true,
-                    fieldsColor: ColorManager.kPrimaryLightColor,
-                    fieldsborderColor: ColorManager.kWhiteColor,
-                    decoration: InputDecoration(
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        border: InputBorder.none),
-                    languageCode: "en",
-                  ),
-                  SizedBox(height: Get.height * 0.02),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Email';
-                      }
-                      return null;
-                    },
-                    controller: edit.emailController,
-                    hintText: 'email'.tr,
-                  ),
-                  Center(
-                    child: Text(
-                      'nextofKin'.tr,
-                      style: GoogleFonts.poppins(
-                        textStyle: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: ColorManager.kPrimaryColor),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Get.width * 0.02,
-                      right: Get.width * 0.02,
-                      top: Get.height * 0.01,
-                      bottom: Get.height * 0.03,
-                    ),
-                    child: const MySeparator(
-                      color: ColorManager.kPrimaryColor,
-                    ),
-                  ),
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectednokrelation = null;
-                      RelationData generic = await searchabledropdown(
-                          context, edit.nokrelationList ?? []);
-                      edit.selectednokrelation = null;
-                      edit.updateselectednokrelation(generic);
+                    EditProfileCustomTextField(
+                      validator: (value) {
+                        if (value == "Country") {
+                          return 'pleaseselectyourcountry'.tr;
+                        }
+                        return null;
+                      },
+                      onTap: () async {
+                        edit.selectedcountry = null;
+                        edit.selectedcity = null;
+                        edit.citiesList.clear();
+                        edit.selectedprovince = null;
 
-                      if (generic != '') {
-                        edit.selectednokrelation = generic;
-                        edit.selectednokrelation =
-                            (generic == '') ? null : edit.selectednokrelation;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectednokrelation?.name == ""
-                        ? 'NOK Relation'
-                        : edit.selectednokrelation?.name.toString(),
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter NOK First Name';
-                      }
-                      return null;
-                    },
-                    controller: edit.nokfirstname,
-                    hintText: 'firstname'.tr,
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter NOK Last Name';
-                      }
-                      return null;
-                    },
-                    controller: edit.noklastname,
-                    hintText: 'lastname'.tr,
-                  ),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter NOK ID NO';
-                      }
-                      return null;
-                    },
-                    controller: edit.nokidno,
-                    hintText: 'idnumber'.tr,
-                  ),
-                  CustomIntlPhoneField(
-                    onChanged: (phone) {
-                      edit.updatenoknumber(phone.completeNumber);
-                    },
-                    style: GoogleFonts.poppins(
-                        color: ColorManager.kPrimaryColor, fontSize: 12),
-                    showDropdownIcon: true,
-                    dropdownIcon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                      size: 10,
+                        Countries generic = await searchabledropdown(
+                            context, edit.countriesList ?? []);
+                        edit.selectedcountry = null;
+                        edit.updateselectedCountry(generic);
+
+                        if (generic != '') {
+                          edit.selectedcountry = generic;
+                          edit.selectedcountry =
+                              (generic == '') ? null : edit.selectedcountry;
+                        }
+                        String cid = edit.selectedcountry?.id.toString() ?? "";
+                        setState(() {
+                          _getProvinces(cid);
+                        });
+                      },
+                      readonly: true,
+                      hintText: edit.selectedcountry?.name == ""
+                          ? 'country'.tr
+                          : edit.selectedcountry?.name ?? "Select country",
                     ),
-                    dropdownTextStyle: GoogleFonts.poppins(
-                        fontSize: 12,
+                    EditProfileCustomTextField(
+                      validator: (value) {
+                        if (value == "Province") {
+                          return 'Please select your State'.tr;
+                        }
+                        return null;
+                      },
+                      readonly: true,
+                      onTap: () async {
+                        edit.selectedprovince = null;
+                        edit.selectedcity = null;
+                        Provinces generic = await searchabledropdown(
+                            context, edit.provinceList ?? []);
+                        edit.selectedprovince = null;
+                        edit.updateselectedprovince(generic);
+
+                        if (generic != '') {
+                          edit.selectedprovince = generic;
+                          edit.selectedprovince =
+                              (generic == '') ? null : edit.selectedprovince;
+                        }
+                        String cid = edit.selectedprovince?.id.toString() ?? "";
+                        setState(() {
+                          _getCities(cid);
+                        });
+                      },
+                      hintText: edit.selectedprovince?.name == ""
+                          ? 'State'
+                          : edit.selectedprovince?.name == null
+                              ? 'State'
+                              : edit.selectedprovince?.name ?? "",
+                    ),
+                    EditProfileCustomTextField(
+                      validator: (value) {
+                        if (value == "City") {
+                          return 'pleaseselectyourcity'.tr;
+                        }
+                        return null;
+                      },
+                      readonly: true,
+                      onTap: () async {
+                        edit.selectedcity = null;
+                        Cities generic = await searchabledropdown(
+                            context, edit.citiesList ?? []);
+                        edit.selectedcity = null;
+                        edit.updateselectedcity(generic);
+
+                        if (generic != '') {
+                          edit.selectedcity = generic;
+                          edit.selectedcity =
+                              (generic == '') ? null : edit.selectedcity;
+                        }
+                        setState(() {});
+                      },
+                      hintText: edit.selectedcity?.name == ""
+                          ? 'City'
+                          : edit.selectedcity?.name == null
+                              ? 'City'
+                              : edit.selectedcity?.name ?? "",
+                    ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'pleaseselectyouraddress'.tr;
+                        }
+                        return null;
+                      },
+                      controller: edit.addressController,
+                      hintText: 'address'.tr,
+                    ),
+                    CustomIntlPhoneField(
+                      onChanged: (phone) {
+                        edit.updatepublicno(phone.completeNumber);
+                      },
+                      style: GoogleFonts.poppins(
+                          color: ColorManager.kPrimaryColor, fontSize: 12),
+                      showDropdownIcon: true,
+                      dropdownIcon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                        size: 10,
+                      ),
+                      dropdownTextStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: ColorManager.kPrimaryColor,
+                          fontWeight: FontWeight.w700),
+                      showCountryFlag: false,
+                      initialCountryCode: 'AE',
+                      controller: edit.publicmobileno,
+                      disableLengthCheck: true,
+                      keyboardType: TextInputType.phone,
+                      fieldfilled: true,
+                      fieldsColor: ColorManager.kPrimaryLightColor,
+                      fieldsborderColor: ColorManager.kWhiteColor,
+                      decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          border: InputBorder.none),
+                      languageCode: "en",
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    CustomIntlPhoneField(
+                      onChanged: (phone) {
+                        edit.updateprivateno(phone.completeNumber);
+                      },
+                      style: GoogleFonts.poppins(
+                          color: ColorManager.kPrimaryColor, fontSize: 12),
+                      showDropdownIcon: true,
+                      dropdownIcon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                        size: 10,
+                      ),
+                      dropdownTextStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: ColorManager.kPrimaryColor,
+                          fontWeight: FontWeight.w700),
+                      showCountryFlag: false,
+                      initialCountryCode: 'AE',
+                      controller: edit.privatemobileno,
+                      disableLengthCheck: true,
+                      keyboardType: TextInputType.phone,
+                      fieldfilled: true,
+                      fieldsColor: ColorManager.kPrimaryLightColor,
+                      fieldsborderColor: ColorManager.kWhiteColor,
+                      decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          border: InputBorder.none),
+                      languageCode: "en",
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    CustomIntlPhoneField(
+                      onChanged: (phone) {
+                        edit.updatetelephonenumber(phone.completeNumber);
+                      },
+                      style: GoogleFonts.poppins(
+                          color: ColorManager.kPrimaryColor, fontSize: 12),
+                      showDropdownIcon: true,
+                      dropdownIcon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                        size: 10,
+                      ),
+                      dropdownTextStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: ColorManager.kPrimaryColor,
+                          fontWeight: FontWeight.w700),
+                      showCountryFlag: false,
+                      initialCountryCode: 'AE',
+                      controller: edit.telephone,
+                      disableLengthCheck: true,
+                      keyboardType: TextInputType.phone,
+                      fieldfilled: true,
+                      fieldsColor: ColorManager.kPrimaryLightColor,
+                      fieldsborderColor: ColorManager.kWhiteColor,
+                      decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          border: InputBorder.none),
+                      languageCode: "en",
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Email';
+                        }
+                        return null;
+                      },
+                      controller: edit.emailController,
+                      hintText: 'email'.tr,
+                    ),
+                    Center(
+                      child: Text(
+                        'nextofKin'.tr,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: ColorManager.kPrimaryColor),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.02,
+                        right: Get.width * 0.02,
+                        top: Get.height * 0.01,
+                        bottom: Get.height * 0.03,
+                      ),
+                      child: const MySeparator(
                         color: ColorManager.kPrimaryColor,
-                        fontWeight: FontWeight.w700),
-                    showCountryFlag: false,
-                    initialCountryCode: 'AE',
-                    controller: edit.nokmobileno,
-                    disableLengthCheck: true,
-                    keyboardType: TextInputType.phone,
-                    fieldfilled: true,
-                    fieldsColor: ColorManager.kPrimaryLightColor,
-                    fieldsborderColor: ColorManager.kWhiteColor,
-                    decoration: InputDecoration(
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                color: ColorManager.kPrimaryColor)),
-                        border: InputBorder.none),
-                    languageCode: "en",
-                  ),
-                  SizedBox(height: Get.height * 0.03),
-                  PrimaryButton(
-                      fontSize: 15,
-                      title: 'update'.tr,
-                      onPressed: () async {
-                        ProfileRepo pr = ProfileRepo();
-                        String res = await pr.updateContact(
-                            edit.selectedcountry?.id,
-                            edit.selectedprovince?.id,
-                            edit.selectedcity?.id,
-                            edit.addressController.text,
-                            edit.privatenumber,
-                            edit.telephonenumber,
-                            edit.publicnumber,
-                            edit.nokfirstname.text,
-                            edit.noklastname.text,
-                            edit.selectednokrelation?.id,
-                            edit.nokidno.text,
-                            edit.nokmobilenumber,
-                            edit.emailController.text);
-                        if (res == "true") {
-                          Get.back(result: true);
+                      ),
+                    ),
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.selectednokrelation = null;
+                        RelationData generic = await searchabledropdown(
+                            context, edit.nokrelationList ?? []);
+                        edit.selectednokrelation = null;
+                        edit.updateselectednokrelation(generic);
+
+                        if (generic != '') {
+                          edit.selectednokrelation = generic;
+                          edit.selectednokrelation =
+                              (generic == '') ? null : edit.selectednokrelation;
                         }
                       },
-                      color: ColorManager.kPrimaryColor,
-                      textcolor: ColorManager.kWhiteColor),
-                  SizedBox(height: Get.height * 0.03),
-                ],
+                      readonly: true,
+                      hintText: edit.selectednokrelation?.name == ""
+                          ? 'NOK Relation'
+                          : edit.selectednokrelation?.name.toString(),
+                    ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter NOK First Name';
+                        }
+                        return null;
+                      },
+                      controller: edit.nokfirstname,
+                      hintText: 'firstname'.tr,
+                    ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter NOK Last Name';
+                        }
+                        return null;
+                      },
+                      controller: edit.noklastname,
+                      hintText: 'lastname'.tr,
+                    ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter NOK ID NO';
+                        }
+                        return null;
+                      },
+                      controller: edit.nokidno,
+                      hintText: 'idnumber'.tr,
+                    ),
+                    CustomIntlPhoneField(
+                      onChanged: (phone) {
+                        edit.updatenoknumber(phone.completeNumber);
+                      },
+                      style: GoogleFonts.poppins(
+                          color: ColorManager.kPrimaryColor, fontSize: 12),
+                      showDropdownIcon: true,
+                      dropdownIcon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                        size: 10,
+                      ),
+                      dropdownTextStyle: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: ColorManager.kPrimaryColor,
+                          fontWeight: FontWeight.w700),
+                      showCountryFlag: false,
+                      initialCountryCode: 'AE',
+                      controller: edit.nokmobileno,
+                      disableLengthCheck: true,
+                      keyboardType: TextInputType.phone,
+                      fieldfilled: true,
+                      fieldsColor: ColorManager.kPrimaryLightColor,
+                      fieldsborderColor: ColorManager.kWhiteColor,
+                      decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: ColorManager.kPrimaryColor)),
+                          border: InputBorder.none),
+                      languageCode: "en",
+                    ),
+                    SizedBox(height: Get.height * 0.03),
+                    PrimaryButton(
+                        fontSize: 15,
+                        title: 'update'.tr,
+                        onPressed: () async {
+                          ProfileRepo pr = ProfileRepo();
+                          String res = await pr.updateContact(
+                              edit.selectedcountry?.id,
+                              edit.selectedprovince?.id,
+                              edit.selectedcity?.id,
+                              edit.addressController.text,
+                              edit.privatenumber,
+                              edit.telephonenumber,
+                              edit.publicnumber,
+                              edit.nokfirstname.text,
+                              edit.noklastname.text,
+                              edit.selectednokrelation?.id,
+                              edit.nokidno.text,
+                              edit.nokmobilenumber,
+                              edit.emailController.text);
+                          if (res == "true") {
+                            Get.back(result: true);
+                          }
+                        },
+                        color: ColorManager.kPrimaryColor,
+                        textcolor: ColorManager.kWhiteColor),
+                    SizedBox(height: Get.height * 0.03),
+                  ],
+                ),
               ),
             ),
           ),

@@ -7,7 +7,8 @@ class AppImages {
   static String online = 'assets/images/online.png';
   static String locations = 'assets/images/locations.png';
   static String cross = 'assets/images/cross.png';
-   
+  static String editbig = 'assets/images/edit.png';
+
   static String helpful_background_logo =
       'assets/images/helpful_background_logo.png';
   static String editPrescription_logo = 'assets/images/prescription.png';

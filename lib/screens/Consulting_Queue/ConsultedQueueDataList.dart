@@ -360,8 +360,6 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                           child:
                                                                               Image.asset(
                                                                             Images.videocall,
-                                                                            color:
-                                                                                ColorManager.kPrimaryColor,
                                                                             width:
                                                                                 Get.width * 0.09,
                                                                             height:

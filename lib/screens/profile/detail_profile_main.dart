@@ -2,14 +2,10 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
-import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
-import 'package:doctormobileapplication/helpers/values_manager.dart';
-import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/screens/profile/awards_detail.dart';
 import 'package:doctormobileapplication/screens/profile/bank_detail.dart';
@@ -26,16 +22,8 @@ import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/family_screens/family_members.dart';
-import 'package:doctormobileapplication/screens/family_screens/status_screen.dart';
-import 'package:doctormobileapplication/screens/profile/edit_profile.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:async';
-
-import 'package:intl/intl.dart';
 
 class ProfileDetailMain extends StatefulWidget {
   const ProfileDetailMain({super.key});
@@ -93,6 +81,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
         child: DefaultTabController(
           length: 10,
           child: Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios),

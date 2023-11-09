@@ -238,35 +238,39 @@ class EditProfileCustomTextField extends StatelessWidget {
           maxLines: maxlines ?? 1,
           readOnly: readonly,
           style: GoogleFonts.poppins(
-              color: ColorManager.kPrimaryColor,
+              color: ColorManager.kWhiteColor,
               fontSize: 12,
               fontWeight: FontWeight.w700),
           decoration: InputDecoration(
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
             hintStyle: GoogleFonts.poppins(
                 fontSize: 12,
-                color: ColorManager.kPrimaryColor,
+                color: ColorManager.kWhiteColor,
                 fontWeight: FontWeight.w700),
             hintText: hintText,
             filled: true,
             disabledBorder:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             focusedBorder: OutlineInputBorder(
-                borderSide:
-                    const BorderSide(color: ColorManager.kPrimaryLightColor),
+                borderSide: BorderSide(
+                  color: Colors.white.withOpacity(0.1),
+                ),
                 borderRadius: BorderRadius.circular(8)),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide:
-                  const BorderSide(color: ColorManager.kPrimaryLightColor),
+              borderSide: BorderSide(
+                color: Colors.white.withOpacity(0.1),
+              ),
             ),
-            fillColor: ColorManager.kPrimaryLightColor,
+            fillColor: Colors.white.withOpacity(0.7),
             suffixIcon: suffixIcon,
             suffixText: suffixText,
             suffixStyle: suffixStyle,
             prefixIcon: prefixIcon,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: ColorManager.kPrimaryLightColor),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.white.withOpacity(0.1),
+              ),
               borderRadius: BorderRadius.all(
                 Radius.circular(0.0),
               ),

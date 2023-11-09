@@ -340,8 +340,6 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                           child:
                                                                               Image.asset(
                                                                             Images.videocall,
-                                                                            color:
-                                                                                ColorManager.kPrimaryColor,
                                                                             width:
                                                                                 Get.width * 0.09,
                                                                             height:

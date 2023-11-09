@@ -195,6 +195,7 @@ class ConfigureAppointmentController extends GetxController
     for (int i = 0; i < dayRows.length; i++) {
       dayRows[i].clear();
     }
+    daylst.clear();
     update();
   }
 

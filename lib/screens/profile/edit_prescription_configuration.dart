@@ -51,153 +51,157 @@ class _EditPrescriptionConfigurationState
         ),
         centerTitle: true,
       ),
-      body: GetBuilder<EditProfileController>(
-        builder: (contr) => Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                EditProfileCustomTextField(
-                  controller: edit.displayeducation,
-                  hintText: 'Display Education'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displaydesignation,
-                  hintText: 'Display Designation'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.stamp,
-                  hintText: 'Stamp'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.professionalsummary,
-                  hintText: 'Professional Summary'.tr,
-                ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                Center(
-                  child: Text(
-                    'EXR Configuration',
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: ColorManager.kPrimaryColor),
+      body: Container(
+        height: Get.height * 1,
+        color: ColorManager.kPrimaryColor,
+        padding: EdgeInsets.only(
+          top: Get.height * 0.02,
+          left: Get.width * 0.02,
+          right: Get.width * 0.02,
+        ),
+        child: GetBuilder<EditProfileController>(
+          builder: (contr) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  EditProfileCustomTextField(
+                    controller: edit.displayeducation,
+                    hintText: 'Display Education'.tr,
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.displaydesignation,
+                    hintText: 'Display Designation'.tr,
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.stamp,
+                    hintText: 'Stamp'.tr,
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.professionalsummary,
+                    hintText: 'Professional Summary'.tr,
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  Center(
+                    child: Text(
+                      'EXR Configuration',
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: ColorManager.kPrimaryColor),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.02,
-                    right: Get.width * 0.02,
-                    top: Get.height * 0.01,
-                    bottom: Get.height * 0.03,
-                  ),
-                  child: const MySeparator(
-                    color: ColorManager.kPrimaryColor,
-                  ),
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.topmargin,
-                  hintText: 'Top Margin'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.bottommargin,
-                  hintText: 'Bottom Margin'.tr,
-                ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                Center(
-                  child: Text(
-                    'English',
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: ColorManager.kPrimaryColor),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Get.width * 0.02,
+                      right: Get.width * 0.02,
+                      top: Get.height * 0.01,
+                      bottom: Get.height * 0.03,
+                    ),
+                    child: const MySeparator(
+                      color: ColorManager.kPrimaryColor,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.02,
-                    right: Get.width * 0.02,
-                    top: Get.height * 0.01,
-                    bottom: Get.height * 0.03,
+                  EditProfileCustomTextField(
+                    controller: edit.topmargin,
+                    hintText: 'Top Margin'.tr,
                   ),
-                  child: const MySeparator(
-                    color: ColorManager.kPrimaryColor,
+                  EditProfileCustomTextField(
+                    controller: edit.bottommargin,
+                    hintText: 'Bottom Margin'.tr,
                   ),
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displayenglisheducation,
-                  hintText: 'Education'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displayenglishdesignation,
-                  hintText: 'Designation(s)'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displayenglishothers,
-                  hintText: 'Others'.tr,
-                ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                Center(
-                  child: Text(
-                    'Arabic',
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: ColorManager.kPrimaryColor),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  Center(
+                    child: Text(
+                      'English',
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: ColorManager.kPrimaryColor),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.02,
-                    right: Get.width * 0.02,
-                    top: Get.height * 0.01,
-                    bottom: Get.height * 0.03,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Get.width * 0.02,
+                      right: Get.width * 0.02,
+                      top: Get.height * 0.01,
+                      bottom: Get.height * 0.03,
+                    ),
+                    child: const MySeparator(
+                      color: ColorManager.kPrimaryColor,
+                    ),
                   ),
-                  child: const MySeparator(
-                    color: ColorManager.kPrimaryColor,
+                  EditProfileCustomTextField(
+                    controller: edit.displayenglisheducation,
+                    hintText: 'Education'.tr,
                   ),
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displayurdueducation,
-                  hintText: 'Education'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displayurdudesignation,
-                  hintText: 'Designation(s)'.tr,
-                ),
-                EditProfileCustomTextField(
-                  controller: edit.displayurduothers,
-                  hintText: 'Others'.tr,
-                ),
-                SizedBox(height: Get.height * 0.03),
-                PrimaryButton(
-                    fontSize: 15,
-                    title: 'update'.tr,
-                    onPressed: () async {
-                      ProfileRepo pr = ProfileRepo();
-                      // String res = await pr.updateContact(
-                      //   );
-                      // if (res == "true") {
-                      //   Get.back(result: true);
-                      // }
+                  EditProfileCustomTextField(
+                    controller: edit.displayenglishdesignation,
+                    hintText: 'Designation(s)'.tr,
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.displayenglishothers,
+                    hintText: 'Others'.tr,
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  Center(
+                    child: Text(
+                      'Arabic',
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: ColorManager.kPrimaryColor),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Get.width * 0.02,
+                      right: Get.width * 0.02,
+                      top: Get.height * 0.01,
+                      bottom: Get.height * 0.03,
+                    ),
+                    child: const MySeparator(
+                      color: ColorManager.kPrimaryColor,
+                    ),
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.displayurdueducation,
+                    hintText: 'Education'.tr,
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.displayurdudesignation,
+                    hintText: 'Designation(s)'.tr,
+                  ),
+                  EditProfileCustomTextField(
+                    controller: edit.displayurduothers,
+                    hintText: 'Others'.tr,
+                  ),
+                  SizedBox(height: Get.height * 0.03),
+                  PrimaryButton(
+                      fontSize: 15,
+                      title: 'update'.tr,
+                      onPressed: () async {
+                        ProfileRepo pr = ProfileRepo();
 
-                      Get.back(result: true);
-                    },
-                    color: ColorManager.kPrimaryColor,
-                    textcolor: ColorManager.kWhiteColor),
-                SizedBox(height: Get.height * 0.03),
-              ],
+                        Get.back(result: true);
+                      },
+                      color: ColorManager.kPrimaryColor,
+                      textcolor: ColorManager.kWhiteColor),
+                  SizedBox(height: Get.height * 0.03),
+                ],
+              ),
             ),
           ),
         ),

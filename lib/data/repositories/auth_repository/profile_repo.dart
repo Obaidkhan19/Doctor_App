@@ -420,7 +420,6 @@ class ProfileRepo {
         .add(await http.MultipartFile.fromPath('fileUpload', file.path));
     // request.fields['OldImagePath'] = oldimagepath;
     request.fields['DoctorId'] = doctorid;
-
     final res = await request.send();
     final response = await http.Response.fromStream(res);
     if (res.statusCode == 200) {

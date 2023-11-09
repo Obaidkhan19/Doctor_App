@@ -496,6 +496,7 @@ class Localization extends Translations {
           'SelectApprovalCriteria': 'Select Approval Criteria',
         },
         "ar_SA": {
+          'oldpassword': 'كلمة المرور القديمة',
           'SelectApprovalCriteria': 'منظوری کے معیار کو منتخب کریں۔',
           'error': 'خطأ',
           'noitemisselected': 'لم يتم تحديد أي عنصر!',

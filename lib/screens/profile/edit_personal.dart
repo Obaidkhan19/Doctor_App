@@ -94,525 +94,539 @@ class _EditPersonalState extends State<EditPersonal> {
   Widget build(BuildContext context) {
     var edit = Get.put<EditProfileController>(EditProfileController());
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          color: ColorManager.kPrimaryColor,
-          onPressed: () {
-            Get.back(result: true);
-          },
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: const Icon(Icons.arrow_back_ios),
+      //     color: ColorManager.kPrimaryColor,
+      //     onPressed: () {
+      //       Get.back(result: true);
+      //     },
+      //   ),
+      //   title: Text(
+      //     'editPersonal'.tr,
+      //     style: GoogleFonts.poppins(
+      //         fontSize: 17,
+      //         fontWeight: FontWeight.w600,
+      //         color: ColorManager.kPrimaryColor),
+      //   ),
+      //   centerTitle: true,
+      // ),
+      body: Container(
+        height: Get.height * 1,
+        color: ColorManager.kPrimaryColor,
+        padding: EdgeInsets.only(
+          top: Get.height * 0.02,
+          left: Get.width * 0.02,
+          right: Get.width * 0.02,
         ),
-        title: Text(
-          'editPersonal'.tr,
-          style: GoogleFonts.poppins(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              color: ColorManager.kPrimaryColor),
-        ),
-        centerTitle: true,
-      ),
-      body: GetBuilder<EditProfileController>(
-        builder: (contr) => Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectedpersonalTitle = null;
-                      PTitle generic = await searchabledropdown(
-                          context, edit.personalTitleList ?? []);
-                      edit.selectedpersonalTitle = null;
-                      edit.updateselectedpersonalTitle(generic);
+        child: GetBuilder<EditProfileController>(
+          builder: (contr) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.selectedpersonalTitle = null;
+                        PTitle generic = await searchabledropdown(
+                            context, edit.personalTitleList ?? []);
+                        edit.selectedpersonalTitle = null;
+                        edit.updateselectedpersonalTitle(generic);
 
-                      if (generic != '') {
-                        edit.selectedpersonalTitle = generic;
-                        edit.selectedpersonalTitle =
-                            (generic == '') ? null : edit.selectedpersonalTitle;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectedpersonalTitle?.name == ""
-                        ? 'title'.tr
-                        : edit.selectedpersonalTitle?.name.toString(),
-                  ),
+                        if (generic != '') {
+                          edit.selectedpersonalTitle = generic;
+                          edit.selectedpersonalTitle = (generic == '')
+                              ? null
+                              : edit.selectedpersonalTitle;
+                        }
+                      },
+                      readonly: true,
+                      hintText: edit.selectedpersonalTitle?.name == ""
+                          ? 'title'.tr
+                          : edit.selectedpersonalTitle?.name.toString(),
+                    ),
 
-                  Visibility(
-                    visible: edit.selectedpersonalTitle?.name == 'Other',
-                    child: EditProfileCustomTextField(
+                    Visibility(
+                      visible: edit.selectedpersonalTitle?.name == 'Other',
+                      child: EditProfileCustomTextField(
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return 'Enter Title Prefix';
+                          }
+                          return null;
+                        },
+                        hintText: 'titlePrefix'.tr,
+                        controller: edit.customprefixtitle,
+                      ),
+                    ),
+
+                    EditProfileCustomTextField(
                       validator: (p0) {
                         if (p0!.isEmpty) {
-                          return 'Enter Title Prefix';
+                          return 'Enter First Name';
                         }
                         return null;
                       },
-                      hintText: 'titlePrefix'.tr,
-                      controller: edit.customprefixtitle,
+                      hintText: 'firstname'.tr,
+                      controller: edit.firstname,
                     ),
-                  ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter First Name';
-                      }
-                      return null;
-                    },
-                    hintText: 'firstname'.tr,
-                    controller: edit.firstname,
-                  ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Middle Name';
+                        }
+                        return null;
+                      },
+                      hintText: 'middleName'.tr,
+                      controller: edit.middlename,
+                    ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Middle Name';
-                      }
-                      return null;
-                    },
-                    hintText: 'middleName'.tr,
-                    controller: edit.middlename,
-                  ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Last Name';
+                        }
+                        return null;
+                      },
+                      hintText: 'lastname'.tr,
+                      controller: edit.lastname,
+                    ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Last Name';
-                      }
-                      return null;
-                    },
-                    hintText: 'lastname'.tr,
-                    controller: edit.lastname,
-                  ),
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.selectedgender = null;
+                        GendersData generic = await searchabledropdown(
+                            context, edit.genderList ?? []);
+                        edit.selectedgender = null;
+                        edit.updateselectedgender(generic);
 
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectedgender = null;
-                      GendersData generic = await searchabledropdown(
-                          context, edit.genderList ?? []);
-                      edit.selectedgender = null;
-                      edit.updateselectedgender(generic);
+                        if (generic != '') {
+                          edit.selectedgender = generic;
+                          edit.selectedgender =
+                              (generic == '') ? null : edit.selectedgender;
+                        }
+                      },
+                      readonly: true,
+                      hintText: edit.selectedgender?.name == ""
+                          ? 'gender'.tr
+                          : edit.selectedgender?.name.toString(),
+                    ),
 
-                      if (generic != '') {
-                        edit.selectedgender = generic;
-                        edit.selectedgender =
-                            (generic == '') ? null : edit.selectedgender;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectedgender?.name == ""
-                        ? 'gender'.tr
-                        : edit.selectedgender?.name.toString(),
-                  ),
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.selectedmaritalStatus = null;
+                        MSData generic = await searchabledropdown(
+                            context, edit.maritalStatusList ?? []);
+                        edit.selectedmaritalStatus = null;
+                        edit.updateselectedmaritalStatus(generic);
 
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectedmaritalStatus = null;
-                      MSData generic = await searchabledropdown(
-                          context, edit.maritalStatusList ?? []);
-                      edit.selectedmaritalStatus = null;
-                      edit.updateselectedmaritalStatus(generic);
+                        if (generic != '') {
+                          edit.selectedmaritalStatus = generic;
+                          edit.selectedmaritalStatus = (generic == '')
+                              ? null
+                              : edit.selectedmaritalStatus;
+                        }
+                      },
+                      readonly: true,
+                      hintText: edit.selectedmaritalStatus?.name == ""
+                          ? 'maritalstatus'.tr
+                          : edit.selectedmaritalStatus?.name.toString(),
+                    ),
 
-                      if (generic != '') {
-                        edit.selectedmaritalStatus = generic;
-                        edit.selectedmaritalStatus =
-                            (generic == '') ? null : edit.selectedmaritalStatus;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectedmaritalStatus?.name == ""
-                        ? 'maritalstatus'.tr
-                        : edit.selectedmaritalStatus?.name.toString(),
-                  ),
+                    // Center(
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       CustomRadioTile(
+                    //         title: 'nationalid'.tr,
+                    //         value: 'idno',
+                    //         groupValue: edit.selectedRadioValue,
+                    //         onChanged: (value) {
+                    //           // setState(() {
+                    //           //   selectedRadioValue = value!;
+                    //           // });
+                    //           edit.updateRadioValue(value);
+                    //         },
+                    //       ),
+                    //       CustomRadioTile(
+                    //         title: 'passport'.tr,
+                    //         value: 'passport',
+                    //         groupValue: edit.selectedRadioValue,
+                    //         onChanged: (value) {
+                    //           // setState(() {
+                    //           //   selectedRadioValue = value!;
+                    //           // });
+                    //           edit.updateRadioValue(value);
+                    //         },
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(height: Get.height * 0.02),
+                    // AuthTextField(
+                    //   validator: (p0) {
+                    //     if (p0!.isEmpty) {
+                    //       if (edit.selectedRadioValue == "idno") {
+                    //         return 'enteryouridnumber'.tr;
+                    //       } else {
+                    //         return 'Enter Your Passport No';
+                    //       }
+                    //     }
+                    //     return null;
+                    //   },
+                    //   controller: edit.idnumber,
+                    //   hintText: edit.selectedRadioValue == "idno"
+                    //       ? 'idnumber'.tr
+                    //       : 'passport'.tr,
+                    // ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter your Id Number'.tr;
+                        }
+                        return null;
+                      },
+                      controller: edit.idnumber,
+                      hintText: 'idnumber'.tr,
+                    ),
 
-                  // Center(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       CustomRadioTile(
-                  //         title: 'nationalid'.tr,
-                  //         value: 'idno',
-                  //         groupValue: edit.selectedRadioValue,
-                  //         onChanged: (value) {
-                  //           // setState(() {
-                  //           //   selectedRadioValue = value!;
-                  //           // });
-                  //           edit.updateRadioValue(value);
-                  //         },
-                  //       ),
-                  //       CustomRadioTile(
-                  //         title: 'passport'.tr,
-                  //         value: 'passport',
-                  //         groupValue: edit.selectedRadioValue,
-                  //         onChanged: (value) {
-                  //           // setState(() {
-                  //           //   selectedRadioValue = value!;
-                  //           // });
-                  //           edit.updateRadioValue(value);
-                  //         },
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // SizedBox(height: Get.height * 0.02),
-                  // AuthTextField(
-                  //   validator: (p0) {
-                  //     if (p0!.isEmpty) {
-                  //       if (edit.selectedRadioValue == "idno") {
-                  //         return 'enteryouridnumber'.tr;
-                  //       } else {
-                  //         return 'Enter Your Passport No';
-                  //       }
-                  //     }
-                  //     return null;
-                  //   },
-                  //   controller: edit.idnumber,
-                  //   hintText: edit.selectedRadioValue == "idno"
-                  //       ? 'idnumber'.tr
-                  //       : 'passport'.tr,
-                  // ),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter your Id Number'.tr;
-                      }
-                      return null;
-                    },
-                    controller: edit.idnumber,
-                    hintText: 'idnumber'.tr,
-                  ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Your Passport No';
+                        }
+                        return null;
+                      },
+                      controller: edit.passportno,
+                      hintText: 'passportNumber'.tr,
+                    ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Your Passport No';
-                      }
-                      return null;
-                    },
-                    controller: edit.passportno,
-                    hintText: 'passportNumber'.tr,
-                  ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'enteryourimcno'.tr;
+                        }
+                        return null;
+                      },
+                      controller: edit.imcno,
+                      hintText: 'imcno'.tr,
+                    ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'enteryourimcno'.tr;
-                      }
-                      return null;
-                    },
-                    controller: edit.imcno,
-                    hintText: 'imcno'.tr,
-                  ),
-
-                  InkWell(
-                    onTap: () {
-                      edit.picksinglefile();
-                    },
-                    child: Container(
-                      width: Get.width * 1, // Adjust the width as needed
-                      height: Get.height * 0.07,
-                      decoration: BoxDecoration(
-                        color: ColorManager.kPrimaryColor,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'addLMPC'.tr,
-                          style: GoogleFonts.poppins(
-                            color: ColorManager.kWhiteColor,
-                            fontSize: 15,
+                    InkWell(
+                      onTap: () {
+                        edit.picksinglefile();
+                      },
+                      child: Container(
+                        width: Get.width * 1, // Adjust the width as needed
+                        height: Get.height * 0.07,
+                        decoration: BoxDecoration(
+                          color: ColorManager.kPrimaryLightColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'addLMPC'.tr,
+                            style: GoogleFonts.poppins(
+                              color: ColorManager.kPrimaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: Get.height * 0.02),
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter NTN Number';
-                      }
-                      return null;
-                    },
-                    controller: edit.ntnnumber,
-                    hintText: 'NTNNumber'.tr,
-                  ),
+                    SizedBox(height: Get.height * 0.02),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter NTN Number';
+                        }
+                        return null;
+                      },
+                      controller: edit.ntnnumber,
+                      hintText: 'NTNNumber'.tr,
+                    ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Consultancy Fee';
-                      }
-                      return null;
-                    },
-                    hintText: 'consultancyfee'.tr,
-                    controller: edit.consultancyfee,
-                  ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Consultancy Fee';
+                        }
+                        return null;
+                      },
+                      hintText: 'consultancyfee'.tr,
+                      controller: edit.consultancyfee,
+                    ),
 
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Follow UP Fee';
-                      }
-                      return null;
-                    },
-                    hintText: 'followupfee'.tr,
-                    controller: edit.followupfee,
-                  ),
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Follow UP Fee';
+                        }
+                        return null;
+                      },
+                      hintText: 'followupfee'.tr,
+                      controller: edit.followupfee,
+                    ),
 
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectedbloodgroup = null;
-                      bloodGroupData generic = await searchabledropdown(
-                          context, edit.bloodgroupList ?? []);
-                      edit.selectedbloodgroup = null;
-                      edit.updateselectedbloodgroup(generic);
-
-                      if (generic != '') {
-                        edit.selectedbloodgroup = generic;
-                        edit.selectedbloodgroup =
-                            (generic == '') ? null : edit.selectedbloodgroup;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectedbloodgroup?.name == ""
-                        ? 'Blood Group'
-                        : edit.selectedbloodgroup?.name.toString(),
-                  ),
-
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectedreligion = null;
-                      Religion generic = await searchabledropdown(
-                          context, edit.religionList ?? []);
-                      edit.selectedreligion = null;
-                      edit.updateselectedreligion(generic);
-
-                      if (generic != '') {
-                        edit.selectedreligion = generic;
-                        edit.selectedreligion =
-                            (generic == '') ? null : edit.selectedreligion;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectedreligion?.name == ""
-                        ? 'Religion'
-                        : edit.selectedreligion?.name.toString(),
-                  ),
-
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.start,
-                  //   children: [
-                  //     Text(
-                  //       'Designation(s)',
-                  //       style: GoogleFonts.poppins(
-                  //         textStyle: GoogleFonts.poppins(
-                  //           fontSize: 12,
-                  //           color: Colors.black,
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
-                  EditProfileCustomTextField(
+                    EditProfileCustomTextField(
                       onTap: () async {
-                        Designations generic = await searchabledropdown(
-                            context, edit.designationList ?? []);
-                        await edit.addDesignation(generic, BuildContext);
-                        setState(() {});
+                        edit.selectedbloodgroup = null;
+                        bloodGroupData generic = await searchabledropdown(
+                            context, edit.bloodgroupList ?? []);
+                        edit.selectedbloodgroup = null;
+                        edit.updateselectedbloodgroup(generic);
+
+                        if (generic != '') {
+                          edit.selectedbloodgroup = generic;
+                          edit.selectedbloodgroup =
+                              (generic == '') ? null : edit.selectedbloodgroup;
+                        }
                       },
                       readonly: true,
-                      hintText: 'designations'.tr),
+                      hintText: edit.selectedbloodgroup?.name == ""
+                          ? 'Blood Group'
+                          : edit.selectedbloodgroup?.name.toString(),
+                    ),
 
-                  SizedBox(
-                    height: Get.height * 0.01,
-                  ),
-                  GetBuilder<EditProfileController>(
-                    builder: (contr) => Visibility(
-                      visible: edit.selecteddesignationList.isNotEmpty,
-                      child: Column(
-                        children: <Widget>[
-                          Wrap(
-                            direction: Axis
-                                .horizontal, // Make sure items are laid out horizontally
-                            runSpacing: 8.0,
-                            children: <Widget>[
-                              for (int index = 0;
-                                  index < edit.selecteddesignationList.length;
-                                  index++)
-                                InkWell(
-                                  onTap: () {
-                                    String cid =
-                                        edit.selecteddesignationList[index].id!;
-                                    deleteSelected(
-                                        context,
-                                        edit.selecteddesignationList,
-                                        cid,
-                                        "designation");
-                                  },
-                                  child: Card(
-                                    elevation: 4,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: Get.width * 0.01,
-                                          right: Get.width * 0.01),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SizedBox(
-                                            height: Get.height * 0.03,
-                                            width: Get.width * 0.03,
-                                            child: Image.asset(AppImages.cross),
-                                          ),
-                                          SizedBox(
-                                            width: Get.width * 0.01,
-                                          ),
-                                          Flexible(
-                                            child: Text(
-                                              edit
-                                                  .selecteddesignationList[
-                                                      index]
-                                                  .name
-                                                  .toString(),
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 10,
-                                                color: ColorManager.kblackColor,
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.selectedreligion = null;
+                        Religion generic = await searchabledropdown(
+                            context, edit.religionList ?? []);
+                        edit.selectedreligion = null;
+                        edit.updateselectedreligion(generic);
+
+                        if (generic != '') {
+                          edit.selectedreligion = generic;
+                          edit.selectedreligion =
+                              (generic == '') ? null : edit.selectedreligion;
+                        }
+                      },
+                      readonly: true,
+                      hintText: edit.selectedreligion?.name == ""
+                          ? 'Religion'
+                          : edit.selectedreligion?.name.toString(),
+                    ),
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     Text(
+                    //       'Designation(s)',
+                    //       style: GoogleFonts.poppins(
+                    //         textStyle: GoogleFonts.poppins(
+                    //           fontSize: 12,
+                    //           color: Colors.black,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+
+                    EditProfileCustomTextField(
+                        onTap: () async {
+                          Designations generic = await searchabledropdown(
+                              context, edit.designationList ?? []);
+                          await edit.addDesignation(generic, BuildContext);
+                          setState(() {});
+                        },
+                        readonly: true,
+                        hintText: 'designations'.tr),
+
+                    SizedBox(
+                      height: Get.height * 0.01,
+                    ),
+                    GetBuilder<EditProfileController>(
+                      builder: (contr) => Visibility(
+                        visible: edit.selecteddesignationList.isNotEmpty,
+                        child: Column(
+                          children: <Widget>[
+                            Wrap(
+                              direction: Axis
+                                  .horizontal, // Make sure items are laid out horizontally
+                              runSpacing: 8.0,
+                              children: <Widget>[
+                                for (int index = 0;
+                                    index < edit.selecteddesignationList.length;
+                                    index++)
+                                  InkWell(
+                                    onTap: () {
+                                      String cid = edit
+                                          .selecteddesignationList[index].id!;
+                                      deleteSelected(
+                                          context,
+                                          edit.selecteddesignationList,
+                                          cid,
+                                          "designation");
+                                    },
+                                    child: Card(
+                                      elevation: 4,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: Get.width * 0.01,
+                                            right: Get.width * 0.01),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              height: Get.height * 0.03,
+                                              width: Get.width * 0.03,
+                                              child:
+                                                  Image.asset(AppImages.cross),
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * 0.01,
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                edit
+                                                    .selecteddesignationList[
+                                                        index]
+                                                    .name
+                                                    .toString(),
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 10,
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.01,
-                          ),
-                        ],
+                              ],
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
 
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.ontap = true;
-                      edit.selectDateAndTime(context,
-                          EditProfileController.arrival, edit.formatearrival);
-                    },
-                    readonly: true,
-                    hintText: DateFormat('MM-dd-y').format(DateTime.parse(
-                        edit.formattedArrival.toString().split("T")[0])),
-                  ),
-
-                  EditProfileCustomTextField(
-                    validator: (p0) {
-                      if (p0!.isEmpty) {
-                        return 'Enter Guardian Name';
-                      }
-                      return null;
-                    },
-                    hintText: 'guardianName'.tr,
-                    controller: edit.guardianname,
-                  ),
-
-                  EditProfileCustomTextField(
-                    onTap: () async {
-                      edit.selectedrelation = null;
-                      RelationData generic = await searchabledropdown(
-                          context, edit.relationList ?? []);
-                      edit.selectedrelation = null;
-                      edit.updateselectedrelation(generic);
-
-                      if (generic != '') {
-                        edit.selectedrelation = generic;
-                        edit.selectedrelation =
-                            (generic == '') ? null : edit.selectedrelation;
-                      }
-                    },
-                    readonly: true,
-                    hintText: edit.selectedrelation?.name == ""
-                        ? 'Relation'
-                        : edit.selectedrelation?.name.toString(),
-                  ),
-
-                  SizedBox(height: Get.height * 0.03),
-                  PrimaryButton(
-                      fontSize: 15,
-                      title: 'update'.tr,
-                      onPressed: () async {
-                        // UPLOAD CERTIFICATE
-                        String filepath = "";
-                        if (edit.pmcfile != null) {
-                          AuthRepo ar = AuthRepo();
-                          await ar.uploadFile(edit.pmcfile!);
-                        }
-
-                        ProfileRepo pr = ProfileRepo();
-                        // if (EditProfileController.i.selectedRadioValue ==
-                        //     'idno') {
-                        String res = await pr.updatePersonalInfoCNIC(
-                          edit.customprefixtitle.text,
-                          edit.selectedpersonalTitle?.id ?? "",
-                          edit.firstname.text,
-                          edit.middlename.text,
-                          edit.lastname.text,
-                          edit.formattedArrival,
-                          edit.selectedmaritalStatus?.id ?? "",
-                          edit.guardianname.text,
-                          edit.selectedrelation?.id ?? "",
-                          edit.selectedgender?.id ?? "",
-                          edit.idnumber.text,
-                          edit.imcno.text,
-                          filepath,
-                          edit.ntnnumber.text,
-                          edit.consultancyfee.text,
-                          edit.followupfee.text,
-                          edit.selectedbloodgroup?.id ?? "",
-                          edit.selectedreligion?.id ?? "",
-                          edit.selecteddesignationIdList,
-                          edit.passportno.text,
-                        );
-                        if (res == "true") {
-                          Get.back(result: true);
-                        }
-                        // } else {
-                        //   // call passport
-
-                        //   String res = await pr.updatePersonalInfoPassport(
-                        //     edit.customprefixtitle.text,
-                        //     edit.selectedpersonalTitle?.id ?? "",
-                        //     edit.firstname.text,
-                        //     edit.middlename.text,
-                        //     edit.lastname.text,
-                        //     edit.formattedArrival,
-                        //     edit.selectedmaritalStatus?.id ?? "",
-                        //     edit.guardianname.text,
-                        //     edit.selectedrelation?.id ?? "",
-                        //     edit.selectedgender?.id ?? "",
-                        //     edit.idnumber.text,
-                        //     edit.imcno.text,
-                        //     filepath,
-                        //     edit.ntnnumber.text,
-                        //     edit.consultancyfee.text,
-                        //     edit.followupfee.text,
-                        //     edit.selectedbloodgroup?.id ?? "",
-                        //     edit.selectedreligion?.id ?? "",
-                        //     edit.selecteddesignationIdList,
-                        //   );
-                        //   if (res == "true") {
-                        //     Get.back(result: true);
-                        //   }
-                        // }
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.ontap = true;
+                        edit.selectDateAndTime(context,
+                            EditProfileController.arrival, edit.formatearrival);
                       },
-                      color: ColorManager.kPrimaryColor,
-                      textcolor: ColorManager.kWhiteColor),
-                  SizedBox(height: Get.height * 0.03),
-                ],
+                      readonly: true,
+                      hintText: DateFormat('MM-dd-y').format(DateTime.parse(
+                          edit.formattedArrival.toString().split("T")[0])),
+                    ),
+
+                    EditProfileCustomTextField(
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Enter Guardian Name';
+                        }
+                        return null;
+                      },
+                      hintText: 'guardianName'.tr,
+                      controller: edit.guardianname,
+                    ),
+
+                    EditProfileCustomTextField(
+                      onTap: () async {
+                        edit.selectedrelation = null;
+                        RelationData generic = await searchabledropdown(
+                            context, edit.relationList ?? []);
+                        edit.selectedrelation = null;
+                        edit.updateselectedrelation(generic);
+
+                        if (generic != '') {
+                          edit.selectedrelation = generic;
+                          edit.selectedrelation =
+                              (generic == '') ? null : edit.selectedrelation;
+                        }
+                      },
+                      readonly: true,
+                      hintText: edit.selectedrelation?.name == ""
+                          ? 'Relation'
+                          : edit.selectedrelation?.name.toString(),
+                    ),
+
+                    SizedBox(height: Get.height * 0.03),
+                    PrimaryButton(
+                        fontSize: 15,
+                        title: 'update'.tr,
+                        onPressed: () async {
+                          // UPLOAD CERTIFICATE
+                          String filepath = "";
+                          if (edit.pmcfile != null) {
+                            AuthRepo ar = AuthRepo();
+                            await ar.uploadFile(edit.pmcfile!);
+                          }
+
+                          ProfileRepo pr = ProfileRepo();
+                          // if (EditProfileController.i.selectedRadioValue ==
+                          //     'idno') {
+                          String res = await pr.updatePersonalInfoCNIC(
+                            edit.customprefixtitle.text,
+                            edit.selectedpersonalTitle?.id ?? "",
+                            edit.firstname.text,
+                            edit.middlename.text,
+                            edit.lastname.text,
+                            edit.formattedArrival,
+                            edit.selectedmaritalStatus?.id ?? "",
+                            edit.guardianname.text,
+                            edit.selectedrelation?.id ?? "",
+                            edit.selectedgender?.id ?? "",
+                            edit.idnumber.text,
+                            edit.imcno.text,
+                            filepath,
+                            edit.ntnnumber.text,
+                            edit.consultancyfee.text,
+                            edit.followupfee.text,
+                            edit.selectedbloodgroup?.id ?? "",
+                            edit.selectedreligion?.id ?? "",
+                            edit.selecteddesignationIdList,
+                            edit.passportno.text,
+                          );
+                          if (res == "true") {
+                            Get.back(result: true);
+                          }
+                          // } else {
+                          //   // call passport
+
+                          //   String res = await pr.updatePersonalInfoPassport(
+                          //     edit.customprefixtitle.text,
+                          //     edit.selectedpersonalTitle?.id ?? "",
+                          //     edit.firstname.text,
+                          //     edit.middlename.text,
+                          //     edit.lastname.text,
+                          //     edit.formattedArrival,
+                          //     edit.selectedmaritalStatus?.id ?? "",
+                          //     edit.guardianname.text,
+                          //     edit.selectedrelation?.id ?? "",
+                          //     edit.selectedgender?.id ?? "",
+                          //     edit.idnumber.text,
+                          //     edit.imcno.text,
+                          //     filepath,
+                          //     edit.ntnnumber.text,
+                          //     edit.consultancyfee.text,
+                          //     edit.followupfee.text,
+                          //     edit.selectedbloodgroup?.id ?? "",
+                          //     edit.selectedreligion?.id ?? "",
+                          //     edit.selecteddesignationIdList,
+                          //   );
+                          //   if (res == "true") {
+                          //     Get.back(result: true);
+                          //   }
+                          // }
+                        },
+                        color: ColorManager.kPrimaryLightColor,
+                        textcolor: ColorManager.kPrimaryColor),
+                    SizedBox(height: Get.height * 0.03),
+                  ],
+                ),
               ),
             ),
           ),
