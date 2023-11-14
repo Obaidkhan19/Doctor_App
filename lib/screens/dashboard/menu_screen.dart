@@ -7,7 +7,6 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/DialogBoxes/language_dialog.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
@@ -22,7 +21,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../components/images.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
