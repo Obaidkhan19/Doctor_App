@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
+import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/blood_group.dart';
@@ -37,9 +38,8 @@ class AuthRepo {
     final res = await request.send();
     if (res.statusCode == 200) {
       dynamic data = jsonDecode(await res.stream.bytesToString());
-      r = data["Path"];
+      r = data["PicturePath"];
     } else {}
-
     return r;
   }
 
@@ -54,7 +54,7 @@ class AuthRepo {
     final res = await request.send();
     if (res.statusCode == 200) {
       dynamic data = jsonDecode(await res.stream.bytesToString());
-      r = data["Path"];
+      r = data["PicturePath"];
     } else {}
 
     return r;
@@ -374,7 +374,7 @@ class AuthRepo {
       "AppVersion": AppVersion,
       "DeviceVersion": DeviceVersion
     };
-    log(jsonEncode(body.toString()));
+    log(jsonEncode(body));
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.login),
@@ -488,6 +488,8 @@ class AuthRepo {
     String url = AppConstants.getTitle;
     Uri uri = Uri.parse(url);
     var body = jsonEncode(<String, dynamic>{});
+    // ProfileController.i.updateval(false);
+    // ProfileController.i.updateaddval(false);
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});

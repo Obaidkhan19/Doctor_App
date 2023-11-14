@@ -525,7 +525,7 @@ class Expereinces {
   String? fromDate;
   String? toDate;
   dynamic isCurrentWorking;
-  String? description;
+  dynamic description;
   String? path;
 
   Expereinces(

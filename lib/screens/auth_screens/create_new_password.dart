@@ -90,7 +90,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                     return null;
                   },
                   controller: passwordController,
-                  hintText: 'password'.tr,
+                  hintText: 'newpassword'.tr,
                 ),
                 SizedBox(
                   height: Get.height * 0.02,
@@ -112,7 +112,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                     return null;
                   },
                   controller: confirmPasswordController,
-                  hintText: 'confirmationpassword'.tr,
+                  hintText: 'confirmationnewpassword'.tr,
                 ),
                 SizedBox(
                   height: Get.height * 0.03,

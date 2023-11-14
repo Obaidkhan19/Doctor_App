@@ -408,6 +408,7 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
       decoration: InputDecoration(
         filled: widget.fieldfilled,
         fillColor: widget.fieldsColor,
+        counter: const Offstage(),
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(

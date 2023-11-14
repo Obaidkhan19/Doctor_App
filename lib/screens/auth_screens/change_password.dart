@@ -54,7 +54,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
               children: [
                 Center(
                   child: Text(
-                    'createnewpassword'.tr,
+                    'ChangePassword'.tr,
                     style: GoogleFonts.poppins(
                         fontSize: 24,
                         color: ColorManager.kblackColor,
@@ -115,7 +115,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                   controller: passwordController,
-                  hintText: 'password'.tr,
+                  hintText: 'newpassword'.tr,
                 ),
                 SizedBox(
                   height: Get.height * 0.02,
@@ -138,7 +138,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     return null;
                   },
                   controller: confirmPasswordController,
-                  hintText: 'confirmationpassword'.tr,
+                  hintText: 'confirmationnewpassword'.tr,
                 ),
                 SizedBox(
                   height: Get.height * 0.03,

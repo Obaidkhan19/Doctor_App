@@ -86,6 +86,7 @@ dependencies:
   # flutter_webview_pro: ^3.0.1+4
   webview_flutter: ^4.4.2
   modal_bottom_sheet: ^2.1.2
+  easy_loading_button: ^0.3.2
   # webview_flutter: ^4.4.2
   # flutter_webview_pro: ^3.0.1+4
 

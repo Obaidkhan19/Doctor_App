@@ -1,8 +1,5 @@
-// ignore_for_file: unused_element
-
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/welcome_screen/welcome_screen.dart';
@@ -10,13 +7,11 @@ import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../data/localDB/local_db.dart';
 import '../dashboard/menu_drawer.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -33,16 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
     await remoteConfig.fetchAndActivate();
     String? doctorid = await LocalDb().getDoctorId();
     log(doctorid ?? "");
-
     baseURL = remoteConfig.getString('URL');
-    if (baseURL == "") {
-      baseURL = 'https://patient.helpful.ihealthcure.com/';
-
-      // baseURL = 'https://patient.helpful.ihealthcure.com/';
-    }
+    // if (baseURL == "") {
+    // baseURL = 'https://patient.helpful.ihealthcure.com/';
+    // }
     // baseURL = remoteConfig.getString('URLQA');
     // if (baseURL == "") {
-    // baseURL = 'http://192.168.88.254:324/';
+    baseURL = 'http://192.168.88.254:324/';
     // }
   }
 

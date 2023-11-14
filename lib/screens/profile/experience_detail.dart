@@ -3,12 +3,11 @@ import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
+import 'package:doctormobileapplication/data/controller/add_experience_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/models/degree.dart';
-import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:doctormobileapplication/screens/profile/add_education.dart';
-import 'package:doctormobileapplication/screens/profile/add_experience.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -30,15 +29,40 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
     await pr.getDoctorBasicInfo();
   }
 
+  _getLocation() async {
+    ProfileRepo pr = ProfileRepo();
+    EditProfileController.i.updateexperiencelocationList(
+      await pr.getLocations(),
+    );
+  }
+
   var experience = Get.put<ProfileController>(ProfileController());
   var edit = Get.put<EditProfileController>(EditProfileController());
-  bool editchk = false;
-  bool addchck = false;
+
+  var add = Get.put<AddExperienceController>(AddExperienceController());
+
+  _getaddLocation() async {
+    ProfileRepo pr = ProfileRepo();
+    AddExperienceController.i.updateaddexperiencelocationList(
+      await pr.getLocations(),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getaddLocation();
+    _getDoctorBasicInfo();
+    _getLocation();
+    Future.delayed(Duration.zero, () async {
+      ProfileController.i.updateselectedindex(3);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (contr) => editchk
+      builder: (contr) => contr.editval
           ? GetBuilder<EditProfileController>(
               builder: (contr) => Padding(
                 padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
@@ -55,20 +79,22 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                       EditProfileCustomTextField(
                         onTap: () async {
                           Degrees generic = await searchabledropdown(
-                              context, edit.locationList ?? []);
-                          edit.selectedlocation = null;
-                          edit.updateselectedlocation(generic);
+                              context, edit.experiencelocationList ?? []);
+                          edit.selectedexperiencelocation = null;
+                          edit.updateselectedexperiencelocation(generic);
 
                           if (generic != '') {
-                            edit.selectedlocation = generic;
-                            edit.selectedlocation =
-                                (generic == '') ? null : edit.selectedlocation;
+                            edit.selectedexperiencelocation = generic;
+                            edit.selectedexperiencelocation = (generic == '')
+                                ? null
+                                : edit.selectedexperiencelocation;
                           }
                         },
                         readonly: true,
-                        hintText: edit.selectedlocation?.name == ""
+                        hintText: edit.selectedexperiencelocation?.name == ""
                             ? 'Location'.tr
-                            : edit.selectedlocation?.name ?? "Select Location",
+                            : edit.selectedexperiencelocation?.name ??
+                                "Select Location",
                       ),
                       EditProfileCustomTextField(
                         onTap: () async {
@@ -88,34 +114,38 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                 .toString()
                                 .split(" ")[0])),
                       ),
-                      Row(
-                        children: <Widget>[
-                          Checkbox(
-                            side: MaterialStateBorderSide.resolveWith(
-                              (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
+                      SizedBox(
+                        height: Get.height * 0.05,
+                        child: Row(
+                          children: <Widget>[
+                            Checkbox(
+                              side: MaterialStateBorderSide.resolveWith(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.selected)) {
+                                    return const BorderSide(
+                                        color: Colors.white);
+                                  }
                                   return const BorderSide(color: Colors.white);
-                                }
-                                return const BorderSide(color: Colors.white);
+                                },
+                              ),
+                              value: edit.currentlyworkingisChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  edit.currentlyworkingisChecked = value!;
+                                });
                               },
+                              checkColor: ColorManager.kPrimaryColor,
+                              activeColor: ColorManager.kWhiteColor,
                             ),
-                            value: edit.currentlyworkingisChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                edit.currentlyworkingisChecked = value!;
-                              });
-                            },
-                            checkColor: ColorManager.kPrimaryColor,
-                            activeColor: ColorManager.kWhiteColor,
-                          ),
-                          Text(
-                            'Currently Working',
-                            style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: ColorManager.kWhiteColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                            Text(
+                              'Currently Working',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: ColorManager.kWhiteColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                       Visibility(
                         visible: edit.currentlyworkingisChecked == false,
@@ -172,7 +202,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                           fontSize: 15,
                           title: 'Edit'.tr,
                           onPressed: () async {
-                            editchk = false;
+                            ProfileController.i.updateval(false);
                             setState(() {});
                           },
                           color: Colors.white.withOpacity(0.7),
@@ -183,9 +213,9 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                 ),
               ),
             )
-          : addchck
+          : contr.addval
               // add new Controller
-              ? GetBuilder<EditProfileController>(
+              ? GetBuilder<AddExperienceController>(
                   builder: (contr) => Padding(
                     padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
                     child: SingleChildScrollView(
@@ -195,103 +225,108 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                             height: Get.height * 0.02,
                           ),
                           EditProfileCustomTextField(
-                            controller: edit.jobtitle,
+                            controller: add.jobtitle,
                             hintText: 'Job Title',
                           ),
                           EditProfileCustomTextField(
                             onTap: () async {
                               Degrees generic = await searchabledropdown(
-                                  context, edit.locationList ?? []);
-                              edit.selectedlocation = null;
-                              edit.updateselectedlocation(generic);
+                                  context, add.addexperiencelocationList ?? []);
+                              add.addselectedexperiencelocation = null;
+                              add.updateaddselectedexperiencelocation(generic);
 
                               if (generic != '') {
-                                edit.selectedlocation = generic;
-                                edit.selectedlocation = (generic == '')
-                                    ? null
-                                    : edit.selectedlocation;
+                                add.addselectedexperiencelocation = generic;
+                                add.addselectedexperiencelocation =
+                                    (generic == '')
+                                        ? null
+                                        : add.addselectedexperiencelocation;
                               }
                             },
                             readonly: true,
-                            hintText: edit.selectedlocation?.name == ""
-                                ? 'Location'.tr
-                                : edit.selectedlocation?.name ??
-                                    "Select Location",
+                            hintText:
+                                add.addselectedexperiencelocation?.name == ""
+                                    ? 'Location'.tr
+                                    : add.addselectedexperiencelocation?.name ??
+                                        "Select Location",
                           ),
                           EditProfileCustomTextField(
                             onTap: () async {
-                              await edit.selectexperiencefromDateAndTime(
+                              await add.selectexperiencefromDateAndTime(
                                   context,
-                                  EditProfileController.experiencefrom,
-                                  edit.formateexperiencefrom);
+                                  AddExperienceController.experiencefrom,
+                                  add.formateexperiencefrom);
                             },
                             readonly: true,
-                            hintText: edit.formattedexperiencefrom
+                            hintText: add.formattedexperiencefrom
                                         .toString()
                                         .split("T")[0] ==
                                     DateTime.now().toString().split(" ")[0]
                                 ? "Select From Date"
                                 : DateFormat('MM-dd-y').format(DateTime.parse(
-                                    edit.formattedexperiencefrom
+                                    add.formattedexperiencefrom
                                         .toString()
                                         .split(" ")[0])),
                           ),
-                          Row(
-                            children: <Widget>[
-                              Checkbox(
-                                side: MaterialStateBorderSide.resolveWith(
-                                  (Set<MaterialState> states) {
-                                    if (states
-                                        .contains(MaterialState.selected)) {
+                          SizedBox(
+                            height: Get.height * 0.05,
+                            child: Row(
+                              children: <Widget>[
+                                Checkbox(
+                                  side: MaterialStateBorderSide.resolveWith(
+                                    (Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return const BorderSide(
+                                            color: Colors.white);
+                                      }
                                       return const BorderSide(
                                           color: Colors.white);
-                                    }
-                                    return const BorderSide(
-                                        color: Colors.white);
+                                    },
+                                  ),
+                                  value: add.currentlyworkingisChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      add.currentlyworkingisChecked = value!;
+                                    });
                                   },
+                                  checkColor: ColorManager.kPrimaryColor,
+                                  activeColor: ColorManager.kWhiteColor,
                                 ),
-                                value: edit.currentlyworkingisChecked,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    edit.currentlyworkingisChecked = value!;
-                                  });
-                                },
-                                checkColor: ColorManager.kPrimaryColor,
-                                activeColor: ColorManager.kWhiteColor,
-                              ),
-                              Text(
-                                'Currently Working',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                                Text(
+                                  'Currently Working',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: ColorManager.kWhiteColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
                           Visibility(
-                            visible: edit.currentlyworkingisChecked == false,
+                            visible: add.currentlyworkingisChecked == false,
                             child: EditProfileCustomTextField(
                               onTap: () async {
-                                await edit.selectexperiencetoDateAndTime(
+                                await add.selectexperiencetoDateAndTime(
                                     context,
-                                    EditProfileController.experienceto,
-                                    edit.formateexperienceto);
+                                    AddExperienceController.experienceto,
+                                    add.formateexperienceto);
                               },
                               readonly: true,
-                              hintText: edit.formattedexperienceto
+                              hintText: add.formattedexperienceto
                                           .toString()
                                           .split("T")[0] ==
                                       DateTime.now().toString().split(" ")[0]
                                   ? "Select To Date"
                                   : DateFormat('MM-dd-y').format(DateTime.parse(
-                                      edit.formattedexperienceto
+                                      add.formattedexperienceto
                                           .toString()
                                           .split(" ")[0])),
                             ),
                           ),
                           InkWell(
                             onTap: () {
-                              edit.picksingleexperiencefile();
+                              add.picksingleexperiencefile();
                             },
                             child: Container(
                               width:
@@ -316,7 +351,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                             height: Get.height * 0.02,
                           ),
                           EditProfileCustomTextField(
-                            controller: edit.experienceDescription,
+                            controller: add.experienceDescription,
                             hintText: 'Description',
                           ),
                           SizedBox(height: Get.height * 0.03),
@@ -324,7 +359,8 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                               fontSize: 15,
                               title: 'Add '.tr,
                               onPressed: () async {
-                                addchck = false;
+                                ProfileController.i.updateaddval(false);
+
                                 setState(() {});
                               },
                               color: Colors.white.withOpacity(0.7),
@@ -335,247 +371,242 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                     ),
                   ),
                 )
-              : Scaffold(
-                  body: Container(
-                    height: Get.height * 1,
-                    color: ColorManager.kPrimaryColor,
-                    padding: EdgeInsets.only(
-                      top: Get.height * 0.02,
-                      left: Get.width * 0.02,
-                      right: Get.width * 0.02,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: Get.width * 0.04),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ImageContainer(
-                                  onpressed: () {
-                                    addchck = true;
-                                    setState(() {});
-                                    // Get.to(() => const AddExperience());
-                                    // callback
-                                  },
-                                  imagePath: Images.add,
-                                  isSvg: false,
-                                  color: ColorManager.kPrimaryColor,
-                                  backgroundColor: ColorManager.kWhiteColor,
-                                  boxheight: Get.height * 0.04,
-                                  boxwidth: Get.width * 0.08,
-                                )
-                              ],
-                            ),
+              : Container(
+                  height: Get.height * 1,
+                  color: ColorManager.kPrimaryColor,
+                  padding: EdgeInsets.only(
+                    top: Get.height * 0.02,
+                    left: Get.width * 0.02,
+                    right: Get.width * 0.02,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: Get.width * 0.04),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ImageContainer(
+                                onpressed: () {
+                                  ProfileController.i.updateaddval(true);
+                                  ProfileController.i.updateisEdit(true);
+                                  setState(() {});
+                                },
+                                imagePath: Images.add,
+                                isSvg: false,
+                                color: ColorManager.kPrimaryColor,
+                                backgroundColor: ColorManager.kWhiteColor,
+                                boxheight: Get.height * 0.04,
+                                boxwidth: Get.width * 0.08,
+                              )
+                            ],
                           ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          experience.experienceList.isNotEmpty
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: Get.width * 0.4,
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                            child: SizedBox(
-                                              height: Get.height * 0.04,
-                                              width: Get.width * 0.15,
-                                              child: Image.asset(
-                                                Images.edit,
-                                                color:
-                                                    ColorManager.kPrimaryColor,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            'Title',
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: ColorManager.kWhiteColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: Get.width * 0.24,
-                                      child: Text(
-                                        'Organization',
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: ColorManager.kWhiteColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: Get.width * 0.2,
-                                      child: Text(
-                                        'Date',
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: ColorManager.kWhiteColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox.shrink(),
-                          experience.experienceList.isNotEmpty
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: experience.experienceList.length,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
+                        experience.experienceList.isNotEmpty
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: Get.width * 0.4,
+                                    child: Row(
                                       children: [
-                                        SizedBox(
-                                          height: Get.height * 0.01,
+                                        InkWell(
+                                          child: SizedBox(
+                                            height: Get.height * 0.04,
+                                            width: Get.width * 0.15,
+                                            child: Image.asset(
+                                              Images.edit,
+                                              color: ColorManager.kPrimaryColor,
+                                            ),
+                                          ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: Get.width * 0.4,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  ImageContainerNew(
-                                                    onpressed: () {
-                                                      deleteSelected(
-                                                          context, "2");
-                                                    },
-                                                    imagePath: AppImages.cross,
-                                                    //  imageheight: Get.height * 0.03,
-                                                    isSvg: false,
-                                                    color:
-                                                        ColorManager.kRedColor,
-                                                    backgroundColor:
-                                                        ColorManager
-                                                            .kWhiteColor,
-                                                    boxheight:
-                                                        Get.height * 0.03,
-                                                    boxwidth: Get.width * 0.06,
-                                                  ),
-                                                  SizedBox(
-                                                    width: Get.width * 0.004,
-                                                  ),
-                                                  ImageContainerNew(
-                                                    onpressed: () {
-                                                      editchk = true;
-                                                      setState(() {});
-                                                    },
-                                                    imagePath:
-                                                        AppImages.editbig,
-                                                    isSvg: false,
-                                                    color: ColorManager
-                                                        .kPrimaryColor,
-                                                    backgroundColor:
-                                                        ColorManager
-                                                            .kWhiteColor,
-                                                    // imageheight: Get.height * 0.02,
-                                                    boxheight:
-                                                        Get.height * 0.03,
-                                                    boxwidth: Get.width * 0.06,
-                                                  ),
-                                                  SizedBox(
-                                                    width: Get.width * 0.002,
-                                                  ),
-                                                  SizedBox(
-                                                    width: Get.width * 0.25,
-                                                    child: Text(
-                                                      ProfileController
-                                                              .i
-                                                              .experienceList[
-                                                                  index]
-                                                              .title ??
-                                                          "",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontSize: 11,
-                                                        color: ColorManager
-                                                            .kWhiteColor,
-                                                      ),
+                                        Text(
+                                          'title'.tr,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            color: ColorManager.kWhiteColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.24,
+                                    child: Text(
+                                      'organization'.tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: ColorManager.kWhiteColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.2,
+                                    child: Text(
+                                      'date'.tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: ColorManager.kWhiteColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        experience.experienceList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: experience.experienceList.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width * 0.4,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ImageContainerNew(
+                                                  onpressed: () {
+                                                    deleteSelected(
+                                                        context, "2");
+                                                  },
+                                                  imagePath: AppImages.cross,
+                                                  //  imageheight: Get.height * 0.03,
+                                                  isSvg: false,
+                                                  color: ColorManager.kRedColor,
+                                                  backgroundColor:
+                                                      ColorManager.kWhiteColor,
+                                                  boxheight: Get.height * 0.03,
+                                                  boxwidth: Get.width * 0.06,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.004,
+                                                ),
+                                                ImageContainerNew(
+                                                  onpressed: () {
+                                                    edit.editSelectedExperience =
+                                                        null;
+                                                    edit.updateEditSelectedExperience(
+                                                        experience
+                                                                .experienceList[
+                                                            index]);
+                                                    ProfileController.i
+                                                        .updateval(true);
+                                                    ProfileController.i
+                                                        .updateisEdit(true);
+                                                    setState(() {});
+                                                  },
+                                                  imagePath: AppImages.editbig,
+                                                  isSvg: false,
+                                                  color: ColorManager
+                                                      .kPrimaryColor,
+                                                  backgroundColor:
+                                                      ColorManager.kWhiteColor,
+                                                  // imageheight: Get.height * 0.02,
+                                                  boxheight: Get.height * 0.03,
+                                                  boxwidth: Get.width * 0.06,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.002,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.25,
+                                                  child: Text(
+                                                    ProfileController
+                                                            .i
+                                                            .experienceList[
+                                                                index]
+                                                            .title ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 11,
+                                                      color: ColorManager
+                                                          .kWhiteColor,
                                                     ),
                                                   ),
-                                                ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: Get.width * 0.24,
+                                            child: Text(
+                                              ProfileController
+                                                      .i
+                                                      .experienceList[index]
+                                                      .organizationName ??
+                                                  "",
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 11,
+                                                color: ColorManager.kWhiteColor,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: Get.width * 0.24,
+                                          ),
+                                          SizedBox(
+                                              width: Get.width * 0.2,
                                               child: Text(
-                                                ProfileController
-                                                        .i
-                                                        .experienceList[index]
-                                                        .organizationName ??
-                                                    "",
+                                                (ProfileController
+                                                            .i
+                                                            .experienceList[
+                                                                index]
+                                                            .fromDate !=
+                                                        null)
+                                                    ? DateFormat('MM-dd-y')
+                                                        .format(DateTime.parse(
+                                                            ProfileController
+                                                                .i
+                                                                .experienceList[
+                                                                    index]
+                                                                .fromDate!
+                                                                .split("T")[0]))
+                                                    : "-",
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 11,
                                                   color:
                                                       ColorManager.kWhiteColor,
                                                 ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                width: Get.width * 0.2,
-                                                child: Text(
-                                                  (ProfileController
-                                                              .i
-                                                              .experienceList[
-                                                                  index]
-                                                              .fromDate !=
-                                                          null)
-                                                      ? DateFormat('MM-dd-y')
-                                                          .format(DateTime.parse(
-                                                              ProfileController
-                                                                  .i
-                                                                  .experienceList[
-                                                                      index]
-                                                                  .fromDate!
-                                                                  .split(
-                                                                      "T")[0]))
-                                                      : "-",
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 11,
-                                                    color: ColorManager
-                                                        .kWhiteColor,
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                )
-                              : Center(
-                                  child: Text(
-                                    "No Record Found",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              )
+                            : Center(
+                                child: Text(
+                                  "NoRecordFound".tr,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w300,
                                   ),
                                 ),
-                        ],
-                      ),
+                              ),
+                      ],
                     ),
                   ),
                 ),

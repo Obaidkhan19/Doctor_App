@@ -25,13 +25,31 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
     await pr.getDoctorBasicInfo();
   }
 
+  _getCountries() async {
+    ProfileRepo pr = ProfileRepo();
+
+    EditProfileController.i.updatecountriesList(
+      await pr.getCountries(),
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getCountries();
+    Future.delayed(Duration.zero, () async {
+      ProfileController.i.updateselectedindex(8);
+    });
+  }
+
   var profile = Get.put<ProfileController>(ProfileController());
   var edit = Get.put<EditProfileController>(EditProfileController());
-  bool val = false;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (contr) => val
+      builder: (contr) => contr.editval
           ? Container(
               height: Get.height * 1,
               color: ColorManager.kPrimaryColor,
@@ -175,7 +193,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                             title: 'update'.tr,
                             onPressed: () async {
                               ProfileRepo pr = ProfileRepo();
-                              val = false;
+                              ProfileController.i.updateval(false);
                               _getDoctorBasicInfo();
                               setState(() {});
                             },
@@ -431,7 +449,8 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                         fontSize: 15,
                         title: "edit".tr,
                         onPressed: () async {
-                          val = true;
+                          ProfileController.i.updateval(true);
+                          profile.updateisEdit(true);
                           setState(() {});
                           // var result = await Get.to(
                           //     () => const EditPrescriptionConfiguration());

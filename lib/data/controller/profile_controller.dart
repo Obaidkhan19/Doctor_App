@@ -1,9 +1,35 @@
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
+import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController implements GetxService {
   static ProfileController get i => Get.put(ProfileController());
+
+  List<WorkLocations> displayprofileworkLocationsList = [];
+
+  updatedisplayprofileWorkLocationslist(List<WorkLocations> wllist) {
+    displayprofileworkLocationsList = wllist;
+    update();
+  }
+
+  bool editval = false;
+  updateval(bool ret) {
+    editval = ret;
+    update();
+  }
+
+  bool addval = false;
+  updateaddval(bool ret) {
+    addval = ret;
+    update();
+  }
+
+  bool isEdit = false;
+  updateisEdit(value) {
+    isEdit = value;
+    update();
+  }
 
   int pageIndex = 0;
 
@@ -227,6 +253,9 @@ class ProfileController extends GetxController implements GetxService {
 
   updateselectedindex(int ind) {
     tabindex = ind;
+
+    ProfileController.i.updateval(false);
+    ProfileController.i.updateaddval(false);
     update();
   }
 

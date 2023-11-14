@@ -19,6 +19,7 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -120,15 +121,22 @@ class _RegisterScreensState extends State<RegisterScreens> {
         body: GetBuilder<RegistrationController>(builder: (cont) {
           return Padding(
             padding: EdgeInsets.only(
-                left: Get.width * 0.06,
-                right: Get.width * 0.06,
-                top: Get.height * 0.05),
+                left: Get.width * 0.05,
+                right: Get.width * 0.05,
+                top: Get.height * 0.02),
             child: Form(
               key: _formKey,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     RegisterCustomTextField(
+                      validator: (value) {
+                        if (controller.selectedpersonalTitle == null) {
+                          return 'selectpersonaltitle'.tr;
+                        } else {
+                          return null;
+                        }
+                      },
                       onTap: () async {
                         controller.selectedpersonalTitle = null;
                         PTitle generic = await searchabledropdown(
@@ -193,6 +201,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       height: Get.height * 0.02,
                     ),
                     RegisterCustomTextField(
+                      validator: (p0) {
+                        if (controller.selectedgender == null) {
+                          return 'selectgender'.tr;
+                        }
+                        return null;
+                      },
                       onTap: () async {
                         controller.selectedgender = null;
                         GendersData generic = await searchabledropdown(
@@ -229,6 +243,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           : controller.selectedgender!.name.toString(),
                     ),
                     RegisterCustomTextField(
+                      validator: (p0) {
+                        if (controller.selectedmaritalStatus == null) {
+                          return 'selectmaritalstatus'.tr;
+                        }
+                        return null;
+                      },
                       onTap: () async {
                         controller.selectedmaritalStatus = null;
                         MSData generic = await searchabledropdown(
@@ -294,31 +314,66 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         ],
                       ),
                     ),
-                    AuthTextField(
-                      onChangedwidget: (value) {
-                        AuthRepo ar = AuthRepo();
-                        if (controller.selectedRadioValue == "idno") {
-                          ar.cnicAvaibility(controller.idnumber.text);
-                        } else if (controller.selectedRadioValue ==
-                            "passport") {
-                          ar.passportAvaibility(controller.idnumber.text);
-                        }
-                      },
-                      validator: (p0) {
-                        if (p0!.isEmpty) {
-                          if (controller.selectedRadioValue == "idno") {
-                            return 'enteryouridnumber'.tr;
-                          } else {
-                            return 'Enter Your Passport No';
+
+                    Visibility(
+                      visible: controller.selectedRadioValue == "idno",
+                      child: IdNoAuthTextField(
+                        onChangedwidget: (value) {
+                          AuthRepo ar = AuthRepo();
+                          ar.pmdcAvaibility(controller.imcno.text);
+                        },
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return 'EnterIDNumber'.tr;
                           }
-                        }
-                        return null;
-                      },
-                      controller: controller.idnumber,
-                      hintText: controller.selectedRadioValue == "idno"
-                          ? 'idnumber'.tr
-                          : 'passport'.tr,
+                          return null;
+                        },
+                        controller: controller.idnumber,
+                        hintText: 'nationalid'.tr,
+                      ),
                     ),
+                    Visibility(
+                      visible: controller.selectedRadioValue == "passport",
+                      child: AuthTextField(
+                        onChangedwidget: (value) {
+                          AuthRepo ar = AuthRepo();
+                          ar.pmdcAvaibility(controller.imcno.text);
+                        },
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return 'EnterPassportNumber'.tr;
+                          }
+                          return null;
+                        },
+                        controller: controller.idnumber,
+                        hintText: 'passportNumber'.tr,
+                      ),
+                    ),
+                    // IdNoAuthTextField(
+                    //   onChangedwidget: (value) {
+                    //     AuthRepo ar = AuthRepo();
+                    //     if (controller.selectedRadioValue == "idno") {
+                    //       ar.cnicAvaibility(controller.idnumber.text);
+                    //     } else if (controller.selectedRadioValue ==
+                    //         "passport") {
+                    //       ar.passportAvaibility(controller.idnumber.text);
+                    //     }
+                    //   },
+                    //   validator: (p0) {
+                    //     if (p0!.isEmpty) {
+                    //       if (controller.selectedRadioValue == "idno") {
+                    //         return 'enteryouridnumber'.tr;
+                    //       } else {
+                    //         return 'Enter Your Passport No';
+                    //       }
+                    //     }
+                    //     return null;
+                    //   },
+                    //   controller: controller.idnumber,
+                    //   hintText: controller.selectedRadioValue == "idno"
+                    //       ? 'idnumber'.tr
+                    //       : 'passport'.tr,
+                    // ),
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
@@ -345,25 +400,25 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       },
                       child: Container(
                         width: Get.width * 1, // Adjust the width as needed
-                        height: Get.height * 0.08,
+                        height: Get.height * 0.06,
                         decoration: BoxDecoration(
                           color: ColorManager.kPrimaryColor,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Center(
                             child: RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Add ',
-                                style: TextStyle(
+                                text: 'add'.tr,
+                                style: const TextStyle(
                                     color: ColorManager.kWhiteColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
-                                text: ' (legal medical practising certificate)',
-                                style: TextStyle(
+                                text: 'legalmedicalpractisingcertificate'.tr,
+                                style: const TextStyle(
                                   color: ColorManager.kWhiteColor,
                                   fontSize: 12,
                                 ),
@@ -386,6 +441,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       height: Get.height * 0.02,
                     ),
                     RegisterCustomTextField(
+                      validator: (p0) {
+                        if (controller.selectedspecialities == null) {
+                          return 'SelectSpeciality'.tr;
+                        }
+                        return null;
+                      },
                       onTap: () async {
                         controller.selectedspecialities = null;
                         Specialities1 generic = await searchabledropdown(
@@ -435,6 +496,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
 
                     // SUB
                     RegisterCustomTextField(
+                      validator: (p0) {
+                        if (controller.selectedsubspecialities == null) {
+                          return 'SelectSubSpeciality'.tr;
+                        }
+                        return null;
+                      },
                       onTap: () async {
                         controller.selectedsubspecialities = null;
                         Specialities1 generic = await searchabledropdown(
@@ -484,7 +551,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       },
                       child: Container(
                         width: Get.width * 1, // Adjust the width as needed
-                        height: Get.height * 0.08,
+                        height: Get.height * 0.06,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: ColorManager.kGreyColor,
@@ -544,18 +611,19 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       },
                       style: GoogleFonts.poppins(
                           color: ColorManager.kGreyColor, fontSize: 12),
-                      showDropdownIcon: true,
+                      // showDropdownIcon: true,
                       dropdownIcon: const Icon(
                         Icons.arrow_drop_down,
                         color: Colors.white,
                         size: 10,
                       ),
+
                       dropdownTextStyle: GoogleFonts.poppins(
                           color: ColorManager.kGreyColor, fontSize: 12),
                       showCountryFlag: false,
                       initialCountryCode: 'AE',
                       controller: controller.phone,
-                      disableLengthCheck: true,
+                      disableLengthCheck: false,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                           disabledBorder: OutlineInputBorder(
@@ -586,8 +654,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       height: Get.height * 0.02,
                     ),
                     RegisterCustomTextField(
-                      validator: (value) {
-                        if (value == "Country") {
+                      validator: (p0) {
+                        if (controller.selectedcountry == null) {
                           return 'pleaseselectyourcountry'.tr;
                         }
                         return null;
@@ -648,9 +716,9 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           : controller.selectedcountry!.name.toString(),
                     ),
                     RegisterCustomTextField(
-                      validator: (value) {
-                        if (value == "Province") {
-                          return 'Please select your State'.tr;
+                      validator: (p0) {
+                        if (controller.selectedprovince == null) {
+                          return 'pleaseselectyourprovince'.tr;
                         }
                         return null;
                       },
@@ -700,12 +768,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           },
                           icon: Image.asset(Images.dropdown)),
                       hintText: controller.selectedprovince == null
-                          ? 'State'
+                          ? 'state'.tr
                           : controller.selectedprovince!.name.toString(),
                     ),
                     RegisterCustomTextField(
-                      validator: (value) {
-                        if (value == "City") {
+                      validator: (p0) {
+                        if (controller.selectedcity == null) {
                           return 'pleaseselectyourcity'.tr;
                         }
                         return null;
@@ -762,41 +830,46 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     PrimaryButton(
                         title: 'saveandproceed'.tr,
                         onPressed: () async {
-                          // if (_formKey.currentState!.validate() &&
-                          //         (controller.file != null &&
-                          //             controller.pmcfile != null &&
-                          //             controller.selectedcity?.id != null &&
-                          //             controller.selectedprovince?.id != null &&
-                          //             controller.selectedcountry?.id != null &&
-                          //             controller.selectedpersonalTitle?.id !=
-                          //                 null &&
-                          //             controller.selectedgender?.id != null &&
-                          //             controller.selectedmaritalStatus?.id !=
-                          //                 null) &&
-                          //         RegistrationController.i.pmdcavaibility ==
-                          //             false &&
-                          //         RegistrationController.i.idnoavaibility ==
-                          //             false ||
-                          //     RegistrationController.i.passportavaibility ==
-                          //         false) {
+                          if (_formKey.currentState!.validate() &&
+                                  // controller.file != null &&
+                                  controller.pmcfile != null &&
+                                  controller.ontap == true
+                              // &&
+                              // controller.selectedcity?.id != null &&
+                              // controller.selectedprovince?.id != null &&
+                              // controller.selectedcountry?.id != null &&
+                              // controller.selectedpersonalTitle?.id != null &&
+                              // controller.selectedgender?.id != null &&
+                              // controller.selectedmaritalStatus?.id != null
+                              ) {
+                            showSnackbar(context, 'saveRecord'.tr);
+                            controller.setPageIndexofDayPersonal(1);
+                          } else {
+                            if (controller.pmcfile == null) {
+                              showSnackbar(context, 'Add LMPC Certificate');
+                            }
+                            if (controller.ontap == false) {
+                              showSnackbar(context, 'Add Date of Birth');
+                            }
+                          }
+
+                          //     {
                           //   if (RegistrationController.i.pmdcavaibility ==
                           //       false) {
                           //     showSnackbar(
                           //         context, "LMPC Number Already Taken");
                           //   }
-                          //   if (controller.selectedRadioValue == "idno") {
-                          //     if (RegistrationController.i.idnoavaibility ==
-                          //         false) {
-                          //       showSnackbar(
-                          //           context, "Id Number Already Taken");
-                          //     }
+                          //   else if (controller.selectedRadioValue ==
+                          //           "idno" &&
+                          //       RegistrationController.i.idnoavaibility ==
+                          //           false) {
+                          //     showSnackbar(context, "Id Number Already Taken");
                           //   } else if (controller.selectedRadioValue ==
-                          //       "passport") {
-                          //     if (RegistrationController.i.passportavaibility ==
-                          //         false) {
-                          //       showSnackbar(
-                          //           context, "Passport Number Already Taken");
-                          //     }
+                          //           "passport" &&
+                          //       RegistrationController.i.passportavaibility ==
+                          //           false) {
+                          //     showSnackbar(
+                          //         context, "Passport Number Already Taken");
                           //   } else {
                           //     showSnackbar(context, 'saveRecord'.tr);
                           //     controller.setPageIndexofDayPersonal(1);
@@ -804,7 +877,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           // } else {
                           //   if (controller.file == null) {
                           //     showSnackbar(context, 'addpicture'.tr);
-                          //   } else if (controller.pmcfile == null) {
+                          //   } else
+                          //if (controller.pmcfile == null) {
                           //     showSnackbar(context, 'Add LMPC Certificate');
                           //   } else if (controller.selectedpersonalTitle?.id ==
                           //       null) {
@@ -825,63 +899,11 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           //     showSnackbar(context, 'pleaseselectyourcity'.tr);
                           //   }
                           // }
-                          if (_formKey.currentState!.validate() &&
-                              controller.file != null &&
-                              controller.pmcfile != null &&
-                              controller.selectedcity?.id != null &&
-                              controller.selectedprovince?.id != null &&
-                              controller.selectedcountry?.id != null &&
-                              controller.selectedpersonalTitle?.id != null &&
-                              controller.selectedgender?.id != null &&
-                              controller.selectedmaritalStatus?.id != null) {
-                            if (RegistrationController.i.pmdcavaibility ==
-                                false) {
-                              showSnackbar(
-                                  context, "LMPC Number Already Taken");
-                            } else if (controller.selectedRadioValue ==
-                                    "idno" &&
-                                RegistrationController.i.idnoavaibility ==
-                                    false) {
-                              showSnackbar(context, "Id Number Already Taken");
-                            } else if (controller.selectedRadioValue ==
-                                    "passport" &&
-                                RegistrationController.i.passportavaibility ==
-                                    false) {
-                              showSnackbar(
-                                  context, "Passport Number Already Taken");
-                            } else {
-                              showSnackbar(context, 'saveRecord'.tr);
-                              controller.setPageIndexofDayPersonal(1);
-                            }
-                          } else {
-                            if (controller.file == null) {
-                              showSnackbar(context, 'addpicture'.tr);
-                            } else if (controller.pmcfile == null) {
-                              showSnackbar(context, 'Add LMPC Certificate');
-                            } else if (controller.selectedpersonalTitle?.id ==
-                                null) {
-                              showSnackbar(context, 'selecttitle'.tr);
-                            } else if (controller.selectedgender?.id == null) {
-                              showSnackbar(context, 'selectgender'.tr);
-                            } else if (controller.selectedmaritalStatus?.id ==
-                                null) {
-                              showSnackbar(context, 'Select Marital Status');
-                            } else if (controller.selectedcountry?.id == null) {
-                              showSnackbar(
-                                  context, 'pleaseselectyourcountry'.tr);
-                            } else if (controller.selectedprovince?.id ==
-                                null) {
-                              showSnackbar(
-                                  context, 'pleaseselectyourprovince'.tr);
-                            } else if (controller.selectedcity?.id == null) {
-                              showSnackbar(context, 'pleaseselectyourcity'.tr);
-                            }
-                          }
                         },
                         color: ColorManager.kPrimaryColor,
                         textcolor: ColorManager.kWhiteColor),
                     SizedBox(
-                      height: Get.height * 0.03,
+                      height: Get.height * 0.02,
                     ),
                     SignupOrLoginText(
                       pre: 'alreadyHaveAnAccount'.tr,

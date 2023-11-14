@@ -1,8 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
-import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/wallet_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -12,7 +9,6 @@ import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class WalletScreen extends StatefulWidget {
   int? index = 0;

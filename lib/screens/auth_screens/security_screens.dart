@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
@@ -8,6 +7,7 @@ import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SecurityScreen extends StatefulWidget {
   const SecurityScreen({super.key});
@@ -34,9 +34,9 @@ class _SecurityScreenState extends State<SecurityScreen> {
       body: GetBuilder<AuthController>(builder: (cont) {
         return Padding(
           padding: EdgeInsets.only(
-            left: Get.width * 0.06,
-            right: Get.width * 0.06,
-            top: Get.height * 0.05,
+            left: Get.width * 0.05,
+            right: Get.width * 0.05,
+            top: Get.height * 0.02,
           ),
           child: Form(
             key: _formKey,
@@ -47,7 +47,6 @@ class _SecurityScreenState extends State<SecurityScreen> {
                     return AuthTextField(
                       onChangedwidget: (value) {
                         AuthRepo ar = AuthRepo();
-
                         ar.usernameAvaibility(controller.username.text);
                       },
                       validator: (p0) {
@@ -111,66 +110,165 @@ class _SecurityScreenState extends State<SecurityScreen> {
                   SizedBox(
                     height: Get.height * 0.13,
                   ),
-                  PrimaryButton(
-                      title: 'register'.tr,
-                      onPressed: () async {
-                        if (RegistrationController.i.usernameavaibility ==
-                            false) {
-                          showSnackbar(
-                              context, "UserName Number Already Taken");
-                        }
-                        controller.updateIsSavingPath(true);
+                  GetBuilder<RegistrationController>(
+                    builder: (cont) => SizedBox(
+                      width: Get.width * 1,
+                      height: Get.height * 0.07,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (controller.password.text !=
+                              controller.retypePassword.text) {
+                            showSnackbar(context,
+                                "Password and Confirm Password doesnot match");
+                          } else if (_formKey.currentState!.validate() &&
+                              controller.password.text ==
+                                  controller.retypePassword.text) {
+                            controller.updateIsSavingPath(true);
 
-                        AuthRepo ar = AuthRepo();
+                            AuthRepo ar = AuthRepo();
 
-                        String response = "";
+                            String response = "";
 
-                        if (controller.file != null &&
-                            controller.pmcfile != null &&
-                            controller.selectedcity?.id != null &&
-                            controller.selectedprovince?.id != null &&
-                            controller.selectedcountry?.id != null &&
-                            controller.selectedpersonalTitle?.id != null &&
-                            controller.selectedgender?.id != null &&
-                            controller.selectedmaritalStatus?.id != null &&
-                            controller.countryfullnumber == '') {
-                          showSnackbar(context, "pleasesavepersonaldetails".tr);
-                        }
-                        // if (controller.filepath == null ||
-                        //     controller.imagepath == null) {
-                        //   showSnackbar(context, "pleasesavepersonaldetails".tr);
-                        // }
+                            if (controller.pmcfile == null ||
+                                controller.selectedprovince?.id == null ||
+                                controller.selectedcity?.id == null ||
+                                controller.selectedcountry?.id == null ||
+                                controller.selectedpersonalTitle?.id == null ||
+                                controller.selectedgender?.id == null ||
+                                controller.selectedmaritalStatus?.id == null ||
+                                controller.countryfullnumber == '' ||
+                                controller.firstname.text == '' ||
+                                controller.lastname.text == '' ||
+                                (controller.idnumber.text == '' ||
+                                    controller.password.text == '') ||
+                                controller.imcno.text == '' ||
+                                controller.address.text == '' ||
+                                controller.email.text == '' ||
+                                controller.ontap == false) {
+                              controller.updateIsSavingPath(false);
+                              showSnackbar(
+                                  context, "pleasesavepersonaldetails".tr);
+                            } else {
+                              String path = '';
+                              if (controller.file != null) {
+                                path = await ar.uploadPicture(controller.file!);
+                              }
 
-                        String path = await ar.uploadPicture(controller.file!);
+                              String filepath =
+                                  await ar.uploadFile(controller.pmcfile!);
+                              controller.updatefilepath(filepath);
+                              controller.updateimagepath(path);
 
-                        String filepath =
-                            await ar.uploadFile(controller.pmcfile!);
-                        controller.updatefilepath(filepath);
-                        controller.updateimagepath(path);
-
-                        if (controller.selectedRadioValue == "idno") {
-                          if (_formKey.currentState!.validate()) {
-                            response = await ar.signupPersonalcnic();
-                            controller.updateIsSavingPath(false);
-                          } else {
-                            showSnackbar(context, response.toString());
+                              if (controller.selectedRadioValue == "idno") {
+                                if (_formKey.currentState!.validate()) {
+                                  response = await ar.signupPersonalcnic();
+                                  controller.updateIsSavingPath(false);
+                                } else {
+                                  controller.updateIsSavingPath(true);
+                                  showSnackbar(context, response.toString());
+                                }
+                              } else if (controller.selectedRadioValue ==
+                                  "passport") {
+                                if (_formKey.currentState!.validate()) {
+                                  response = await ar.signupPersonalpassport();
+                                  controller.updateIsSavingPath(false);
+                                  showSnackbar(context, response.toString());
+                                } else {
+                                  controller.updateIsSavingPath(false);
+                                  showSnackbar(context, response.toString());
+                                }
+                              }
+                            }
                           }
-                        } else if (controller.selectedRadioValue ==
-                            "passport") {
-                          if (_formKey.currentState!.validate()) {
-                            response = await ar.signupPersonalpassport();
-                            controller.updateIsSavingPath(false);
-                            showSnackbar(context, response.toString());
-                          } else {
-                            controller.updateIsSavingPath(false);
-                            showSnackbar(context, response.toString());
-                          }
-                        }
-                      },
-                      color: ColorManager.kPrimaryColor,
-                      textcolor: ColorManager.kWhiteColor),
+                        },
+                        child: controller.isSavingPath
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                'register'.tr,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.kWhiteColor),
+                              ),
+                      ),
+                    ),
+                  ),
+                  // PrimaryButton(
+                  //     title: 'register'.tr,
+                  //     onPressed: () async {
+                  //       if (controller.password.text !=
+                  //           controller.retypePassword.text) {
+                  //         showSnackbar(context,
+                  //             "Password and Confirm Password doesnot match");
+                  //       } else if (_formKey.currentState!.validate() &&
+                  //           controller.password.text ==
+                  //               controller.retypePassword.text) {
+                  //         controller.updateIsSavingPath(true);
+
+                  //         AuthRepo ar = AuthRepo();
+
+                  //         String response = "";
+
+                  //         if (controller.pmcfile == null ||
+                  //             controller.selectedprovince?.id == null ||
+                  //             controller.selectedcity?.id == null ||
+                  //             controller.selectedcountry?.id == null ||
+                  //             controller.selectedpersonalTitle?.id == null ||
+                  //             controller.selectedgender?.id == null ||
+                  //             controller.selectedmaritalStatus?.id == null ||
+                  //             controller.countryfullnumber == '' ||
+                  //             controller.firstname.text == '' ||
+                  //             controller.lastname.text == '' ||
+                  //             (controller.idnumber.text == '' ||
+                  //                 controller.password.text == '') ||
+                  //             controller.imcno.text == '' ||
+                  //             controller.address.text == '' ||
+                  //             controller.email.text == '' ||
+                  //             controller.ontap == false) {
+                  //           controller.updateIsSavingPath(false);
+                  //           showSnackbar(
+                  //               context, "pleasesavepersonaldetails".tr);
+                  //         } else {
+                  //           String path = '';
+                  //           if (controller.file != null) {
+                  //             path = await ar.uploadPicture(controller.file!);
+                  //           }
+
+                  //           String filepath =
+                  //               await ar.uploadFile(controller.pmcfile!);
+                  //           controller.updatefilepath(filepath);
+                  //           controller.updateimagepath(path);
+
+                  //           if (controller.selectedRadioValue == "idno") {
+                  //             if (_formKey.currentState!.validate()) {
+                  //               response = await ar.signupPersonalcnic();
+                  //               controller.updateIsSavingPath(false);
+                  //             } else {
+                  //               controller.updateIsSavingPath(true);
+                  //               showSnackbar(context, response.toString());
+                  //             }
+                  //           } else if (controller.selectedRadioValue ==
+                  //               "passport") {
+                  //             if (_formKey.currentState!.validate()) {
+                  //               response = await ar.signupPersonalpassport();
+                  //               controller.updateIsSavingPath(false);
+                  //               showSnackbar(context, response.toString());
+                  //             } else {
+                  //               controller.updateIsSavingPath(false);
+                  //               showSnackbar(context, response.toString());
+                  //             }
+                  //           }
+                  //         }
+                  //       }
+                  //     },
+                  //     color: ColorManager.kPrimaryColor,
+                  //     textcolor: ColorManager.kWhiteColor),
                   SizedBox(
-                    height: Get.height * 0.03,
+                    height: Get.height * 0.02,
                   ),
                   SignupOrLoginText(
                     pre: 'alreadyHaveAnAccount'.tr,
@@ -179,6 +277,9 @@ class _SecurityScreenState extends State<SecurityScreen> {
                       Get.to(() => const LoginScreen());
                     },
                   ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  )
                 ],
               ),
             ),

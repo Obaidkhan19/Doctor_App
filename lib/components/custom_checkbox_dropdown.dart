@@ -179,7 +179,7 @@ Future<dynamic> searchableDropdownCheckBox(
   TextEditingController search = TextEditingController();
   String title = "";
   Completer<List<dynamic>> completer = Completer<List<dynamic>>();
-
+  List<dynamic> deletedidlist = [];
   await showDialog(
     barrierDismissible: false,
     context: context,
@@ -298,17 +298,17 @@ Future<dynamic> searchableDropdownCheckBox(
                                           horizontal: 0.01, vertical: 0.0),
                                       value: isSelected,
                                       // onChanged: (bool? value) {
-                                      //   if (value != null) {
-                                      //     if (value) {
-                                      //       ERXController.i
-                                      //           .addcheckboxselectedPrimarydiagnosislist(
-                                      //               list[index]);
-                                      //     } else {
-                                      //       ERXController.i
-                                      //           .deletecheckboxselectedPrimarydiagnosislist(
-                                      //               list[index]);
+                                      //   setState(() {
+                                      //     if (value != null) {
+                                      //       if (value) {
+                                      //         checkboxselectedItems
+                                      //             .add(list[index]);
+                                      //       } else {
+                                      //         checkboxselectedItems
+                                      //             .remove(list[index]);
+                                      //       }
                                       //     }
-                                      //   }
+                                      //   });
                                       // },
                                       onChanged: (bool? value) {
                                         setState(() {
@@ -317,8 +317,22 @@ Future<dynamic> searchableDropdownCheckBox(
                                               checkboxselectedItems
                                                   .add(list[index]);
                                             } else {
-                                              checkboxselectedItems
-                                                  .remove(list[index]);
+                                              // find the index of item to remove
+                                              int indexOfItemToRemove =
+                                                  checkboxselectedItems
+                                                      .indexWhere(
+                                                (selectedItem) =>
+                                                    selectedItem.id ==
+                                                    list[index].id,
+                                              );
+                                              // remove from the index
+                                              if (indexOfItemToRemove != -1) {
+                                                checkboxselectedItems.removeAt(
+                                                    indexOfItemToRemove);
+                                                deletedidlist.add(
+                                                    checkboxselectedItems[index]
+                                                        .id);
+                                              }
                                             }
                                           }
                                         });
@@ -687,8 +701,7 @@ addComment(BuildContext context, String id, String listname) async {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
-                          fontSize: 14,
-                        ),
+                            fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
                     InkWell(
@@ -709,8 +722,7 @@ addComment(BuildContext context, String id, String listname) async {
                   'addcomments'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
-                      fontSize: 12,
-                    ),
+                        fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                 ),
 
@@ -739,7 +751,7 @@ addComment(BuildContext context, String id, String listname) async {
                 PrimaryButton(
                   title: 'save'.tr,
                   fontSize: 14,
-                  height: Get.height * 0.06,
+                  height: Get.height * 0.05,
                   width: Get.width * 0.5,
                   onPressed: () {
                     //  print(object)

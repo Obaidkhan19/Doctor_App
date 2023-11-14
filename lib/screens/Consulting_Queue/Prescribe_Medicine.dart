@@ -843,28 +843,28 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      // List<PrimaryDiagnosis1> result =
-                                      //     await searchableDropdownCheckBox(
-                                      //         context,
-                                      //         controller.primarydiagnosisList,
-                                      //         controller
-                                      //             .checkboxselectedprimarydiagnosisList,
-                                      //         true,
-                                      //         'primary');
-
-                                      // controller
-                                      //     .updateselectedPrimarydiagnosislist(
-                                      //         result);
-                                      // setState(() {});
-
-                                      PrimaryDiagnosis1 generic =
-                                          await searchabledropdown(
+                                      List<PrimaryDiagnosis1> result =
+                                          await searchableDropdownCheckBox(
                                               context,
-                                              controller.primarydiagnosisList ??
-                                                  []);
-                                      await controller.addPrimaryDiagnosis(
-                                          generic, BuildContext);
+                                              controller.primarydiagnosisList,
+                                              controller
+                                                  .checkboxselectedprimarydiagnosisList,
+                                              true,
+                                              'primary');
+
+                                      controller
+                                          .updateselectedPrimarydiagnosislist(
+                                              result);
                                       setState(() {});
+
+                                      // PrimaryDiagnosis1 generic =
+                                      //     await searchabledropdown(
+                                      //         context,
+                                      //         controller.primarydiagnosisList ??
+                                      //             []);
+                                      // await controller.addPrimaryDiagnosis(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
                                     },
                                     prefixIcon: const Icon(
                                       Icons.search_outlined,
@@ -995,14 +995,28 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      SecondaryDiagnosis1 generic =
-                                          await searchabledropdown(
+                                      // SecondaryDiagnosis1 generic =
+                                      //     await searchabledropdown(
+                                      //         context,
+                                      //         controller
+                                      //                 .secondaryDiagnosisList ??
+                                      //             []);
+                                      // await controller.addsecondaryDiagnosis(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
+
+                                      List<SecondaryDiagnosis1> result =
+                                          await searchableDropdownCheckBox(
                                               context,
+                                              controller.secondaryDiagnosisList,
                                               controller
-                                                      .secondaryDiagnosisList ??
-                                                  []);
-                                      await controller.addsecondaryDiagnosis(
-                                          generic, BuildContext);
+                                                  .checkboxselectedsecondarydiagnosisList,
+                                              true,
+                                              'secondary');
+
+                                      controller
+                                          .updateselectedsecondarydiagnosislist(
+                                              result);
                                       setState(() {});
                                     },
                                     prefixIcon: const Icon(
@@ -2485,7 +2499,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
               "";
       String dayurdu =
           ERXController.i.selectedlst.dayList?[i].urduDay.toString() ?? "";
-      DateTime dateurdu = DateTime.now();
+
       if (dayeng.toLowerCase() == "day") {
         qyt = "";
         dateeng = dateeng.add(Duration(days: (1 * int.parse(dateng)).toInt()));

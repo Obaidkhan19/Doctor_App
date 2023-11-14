@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:interval_time_picker/interval_time_picker.dart';
 
-enum _MenuValues { view, update }
+enum _MenuValues { view, update, pause, makedefault, resume }
 
 class ConfigureAppointmentScreen extends StatefulWidget {
   const ConfigureAppointmentScreen({super.key});
@@ -198,7 +198,6 @@ class _ConfigureAppointmentScreenState
                         SizedBox(
                           height: Get.height * 0.01,
                         ),
-
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -249,8 +248,11 @@ class _ConfigureAppointmentScreenState
                                                   'Online Video Consultation')
                                                 Image.asset(
                                                   AppImages.online,
-                                                  color:
-                                                      ColorManager.kWhiteColor,
+                                                  color: worklocation
+                                                              .isActive ==
+                                                          true
+                                                      ? ColorManager.kWhiteColor
+                                                      : ColorManager.kGreyColor,
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   scale: 2,
@@ -259,8 +261,11 @@ class _ConfigureAppointmentScreenState
                                                   'Online Video Consultation')
                                                 Image.asset(
                                                   AppImages.locations,
-                                                  color:
-                                                      ColorManager.kWhiteColor,
+                                                  color: worklocation
+                                                              .isActive ==
+                                                          true
+                                                      ? ColorManager.kWhiteColor
+                                                      : ColorManager.kGreyColor,
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   scale: 2.5,
@@ -271,19 +276,29 @@ class _ConfigureAppointmentScreenState
                                                   worklocation.workLocation ??
                                                       "",
                                                   style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    color: ColorManager
-                                                        .kWhiteColor,
-                                                  ),
+                                                      fontSize: 12,
+                                                      color: worklocation
+                                                                  .isActive ==
+                                                              true
+                                                          ? ColorManager
+                                                              .kWhiteColor
+                                                          : ColorManager
+                                                              .kGreyColor),
                                                 ),
                                               ),
                                               SizedBox(
                                                 width: Get.width * 0.1,
                                                 child: PopupMenuButton<
                                                         _MenuValues>(
-                                                    icon: const Icon(
+                                                    icon: Icon(
                                                       Icons.more_vert,
-                                                      color: Colors.white,
+                                                      color: worklocation
+                                                                  .isActive ==
+                                                              true
+                                                          ? ColorManager
+                                                              .kWhiteColor
+                                                          : ColorManager
+                                                              .kGreyColor,
                                                       size: 30,
                                                     ),
                                                     itemBuilder: (context) => [
@@ -313,6 +328,63 @@ class _ConfigureAppointmentScreenState
                                                                       .kPrimaryColor,
                                                                 ),
                                                               )),
+                                                          if (worklocation
+                                                                      .isActive ==
+                                                                  true &&
+                                                              worklocation
+                                                                      .isDefault !=
+                                                                  true)
+                                                            PopupMenuItem(
+                                                                value:
+                                                                    _MenuValues
+                                                                        .pause,
+                                                                child: Text(
+                                                                  'Pause'.tr,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: ColorManager
+                                                                        .kPrimaryColor,
+                                                                  ),
+                                                                )),
+                                                          if (worklocation
+                                                                  .isActive ==
+                                                              false)
+                                                            PopupMenuItem(
+                                                                value:
+                                                                    _MenuValues
+                                                                        .resume,
+                                                                child: Text(
+                                                                  'Resume'.tr,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: ColorManager
+                                                                        .kPrimaryColor,
+                                                                  ),
+                                                                )),
+                                                          if (worklocation
+                                                                      .isDefault ==
+                                                                  false &&
+                                                              worklocation
+                                                                      .isActive ==
+                                                                  true)
+                                                            PopupMenuItem(
+                                                                value: _MenuValues
+                                                                    .makedefault,
+                                                                child: Text(
+                                                                  'Make Default'
+                                                                      .tr,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: ColorManager
+                                                                        .kPrimaryColor,
+                                                                  ),
+                                                                )),
                                                         ],
                                                     onSelected: (value) async {
                                                       switch (value) {
@@ -335,6 +407,69 @@ class _ConfigureAppointmentScreenState
                                                             didChangeDependencies();
                                                           }
                                                           break;
+
+                                                        case _MenuValues.pause:
+                                                          // call pause api
+
+                                                          ConfigureAppointmentRepo
+                                                              cf =
+                                                              ConfigureAppointmentRepo();
+                                                          String res = await cf
+                                                              .pauseresumeAppointmentConfiguration(
+                                                            worklocation.id,
+                                                            worklocation
+                                                                .doctorId,
+                                                            worklocation
+                                                                .workLocationId,
+                                                            false,
+                                                          );
+                                                          if (res ==
+                                                              "Configuration Updated Successfully") {
+                                                            didChangeDependencies();
+                                                          }
+                                                          break;
+
+                                                        case _MenuValues.resume:
+                                                          // call resume api
+
+                                                          ConfigureAppointmentRepo
+                                                              cf =
+                                                              ConfigureAppointmentRepo();
+                                                          String res = await cf
+                                                              .pauseresumeAppointmentConfiguration(
+                                                            worklocation.id,
+                                                            worklocation
+                                                                .doctorId,
+                                                            worklocation
+                                                                .workLocationId,
+                                                            true,
+                                                          );
+
+                                                          if (res ==
+                                                              "Configuration Updated Successfully") {
+                                                            didChangeDependencies();
+                                                          }
+                                                          break;
+
+                                                        case _MenuValues
+                                                              .makedefault:
+                                                          ConfigureAppointmentRepo
+                                                              cf =
+                                                              ConfigureAppointmentRepo();
+                                                          String res = await cf
+                                                              .makedefaultAppointmentConfiguration(
+                                                                  worklocation
+                                                                      .id,
+                                                                  worklocation
+                                                                      .doctorId,
+                                                                  worklocation
+                                                                      .workLocationId);
+                                                          if (res ==
+                                                              "Default Configuration Successfully Updated") {
+                                                            didChangeDependencies();
+                                                          }
+
+                                                          break;
                                                       }
                                                     }),
                                               ),
@@ -345,116 +480,6 @@ class _ConfigureAppointmentScreenState
                                     )
                                   : Container());
                             }),
-                        // ListView.builder(
-                        //     physics: const NeverScrollableScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     itemCount: ConfigureAppointmentController
-                        //         .i.workLocationsList.length,
-                        //     itemBuilder: (context, index) {
-                        //       final worklocation = (ConfigureAppointmentController
-                        //               .i.workLocationsList.isNotEmpty)
-                        //           ? ConfigureAppointmentController
-                        //               .i.workLocationsList[index]
-                        //           : null;
-                        //       return ((ConfigureAppointmentController
-                        //               .i.workLocationsList.isNotEmpty)
-                        //           ? Padding(
-                        //               padding:
-                        //                   const EdgeInsets.symmetric(vertical: 3),
-                        //               child: Container(
-                        //                 decoration: BoxDecoration(
-                        //                   color: ColorManager.kPrimaryColor,
-                        //                   borderRadius: BorderRadius.circular(10),
-                        //                   boxShadow: [
-                        //                     BoxShadow(
-                        //                       color: Colors.grey.withOpacity(0.2),
-                        //                       spreadRadius: 2,
-                        //                       blurRadius: 2,
-                        //                       offset: const Offset(0, 2),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 child: Padding(
-                        //                   padding: const EdgeInsets.symmetric(
-                        //                       vertical: 6),
-                        //                   child: Row(
-                        //                     mainAxisAlignment:
-                        //                         MainAxisAlignment.spaceEvenly,
-                        //                     children: [
-                        //                       Image.asset(
-                        //                         AppImages.locations,
-                        //                         color: ColorManager.kWhiteColor,
-                        //                         alignment: Alignment.centerLeft,
-                        //                         scale: 2.5,
-                        //                       ),
-                        //                       SizedBox(
-                        //                         width: Get.width * 0.55,
-                        //                         child: Text(
-                        //                           worklocation!
-                        //                                   .workLocationName ??
-                        //                               "",
-                        //                           style: GoogleFonts.poppins(
-                        //                             fontSize: 12,
-                        //                             color:
-                        //                                 ColorManager.kWhiteColor,
-                        //                           ),
-                        //                         ),
-                        //                       ),
-                        //                       SizedBox(
-                        //                         width: Get.width * 0.1,
-                        //                         child: PopupMenuButton<
-                        //                                 _MenuValues>(
-                        //                             icon: const Icon(
-                        //                               Icons.more_vert,
-                        //                               color: Colors.white,
-                        //                               size: 30,
-                        //                             ),
-                        //                             itemBuilder: (context) => [
-                        //                                   PopupMenuItem(
-                        //                                       value: _MenuValues
-                        //                                           .view,
-                        //                                       child: Text(
-                        //                                         'View',
-                        //                                         style: GoogleFonts
-                        //                                             .poppins(
-                        //                                           fontSize: 12,
-                        //                                           color: ColorManager
-                        //                                               .kPrimaryColor,
-                        //                                         ),
-                        //                                       )),
-                        //                                   PopupMenuItem(
-                        //                                       value: _MenuValues
-                        //                                           .update,
-                        //                                       child: Text(
-                        //                                         'Edit',
-                        //                                         style: GoogleFonts
-                        //                                             .poppins(
-                        //                                           fontSize: 12,
-                        //                                           color: ColorManager
-                        //                                               .kPrimaryColor,
-                        //                                         ),
-                        //                                       )),
-                        //                                 ],
-                        //                             onSelected: (value) async {
-                        //                               switch (value) {
-                        //                                 case _MenuValues.view:
-                        //                                   Get.to(() =>
-                        //                                       const AppointmentDetail());
-                        //                                   break;
-                        //                                 case _MenuValues.update:
-                        //                                   Get.to(() =>
-                        //                                       const UpdateAppointmentConfiguration());
-                        //                                   break;
-                        //                               }
-                        //                             }),
-                        //                       ),
-                        //                     ],
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             )
-                        //           : Container());
-                        //     }),
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
@@ -619,7 +644,7 @@ class _ConfigureAppointmentScreenState
                           ),
                         ),
                         SizedBox(
-                          height: Get.height * 0.02,
+                          height: Get.height * 0.015,
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(

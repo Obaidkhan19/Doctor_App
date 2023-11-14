@@ -59,6 +59,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 children: [
                   // Row(
                   //   children: [
+                  //     IconButton(
+                  //       icon: const Icon(Icons.arrow_back_ios),
+                  //       color: ColorManager.kPrimaryColor,
+                  //       onPressed: () {
+                  //         Navigator.pop(context);
+                  //       },
+                  //     ),
+                  //     SizedBox(
+                  //       child: Center(
+                  //         child: Image.asset(
+                  //           Images.logo,
+                  //           height: Get.height * 0.07,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // Row(
+                  //   children: [
                   //     InkWell(
                   //       onTap: () {
                   //         Get.to(() => const LoginScreen());

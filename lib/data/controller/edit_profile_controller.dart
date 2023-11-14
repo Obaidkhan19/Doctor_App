@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/designation.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/genders_model.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:doctormobileapplication/models/institutes.dart';
@@ -15,6 +16,7 @@ import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/models/relation.dart';
 import 'package:doctormobileapplication/models/religion.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
+import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +45,7 @@ class EditProfileController extends GetxController implements GetxService {
   }
 
   List<HospitalORClinics> hospitalList = [];
-  HospitalORClinics? selectedhospital;
+  HospitalORClinics? selectedhospital = HospitalORClinics();
   updatehospitallist(List<HospitalORClinics> hlist) {
     hospitalList = hlist;
     update();
@@ -72,7 +74,7 @@ class EditProfileController extends GetxController implements GetxService {
 
   List<Specialities1> specialitiesList = [];
   List<Specialities1> selectedSpecialitiesList = [];
-  Specialities1? selectedspecialities;
+  Specialities1? selectedspecialities = Specialities1();
   updatespecialitiesList(List<Specialities1> slist) {
     specialitiesList = slist;
 
@@ -92,7 +94,7 @@ class EditProfileController extends GetxController implements GetxService {
 
   //
   List<Specialities1> subspecialitiesList = [];
-  Specialities1? selectedsubspecialities;
+  Specialities1? selectedsubspecialities = Specialities1();
   List<Specialities1> selectedSubSpecialitiesList = [];
   updatesubspecialitiesList(List<Specialities1> slist) {
     subspecialitiesList = slist;
@@ -300,8 +302,6 @@ class EditProfileController extends GetxController implements GetxService {
 
   bool inprogressisChecked = false;
 
-  bool newworklocationisChecked = false;
-
   bool currentlyworkingisChecked = false;
 
   static DateTime? degreestart = DateTime.now();
@@ -464,16 +464,16 @@ class EditProfileController extends GetxController implements GetxService {
     update();
   }
 
-  List<Degrees> locationList = [];
-  Degrees? selectedlocation = Degrees();
+  List<Degrees> experiencelocationList = [];
+  Degrees? selectedexperiencelocation = Degrees();
 
-  updatelocationList(List<Degrees> dlist) {
-    locationList = dlist;
+  updateexperiencelocationList(List<Degrees> dlist) {
+    experiencelocationList = dlist;
     update();
   }
 
-  updateselectedlocation(Degrees ins) {
-    selectedlocation = ins;
+  updateselectedexperiencelocation(Degrees ins) {
+    selectedexperiencelocation = ins;
 
     update();
   }
@@ -953,6 +953,46 @@ class EditProfileController extends GetxController implements GetxService {
   String nokmobilenumber = '';
   updatenoknumber(no) {
     nokmobilenumber = no;
+    update();
+  }
+
+  // EDIT OBJECTS
+  Expereinces? editSelectedExperience = Expereinces();
+  updateEditSelectedExperience(Expereinces expobj) {
+    editSelectedExperience = expobj;
+    jobtitle.text = expobj.title ?? "";
+    selectedexperiencelocation?.id = expobj.locationId;
+    selectedexperiencelocation?.name = expobj.locatioName;
+    formattedexperiencefrom = expobj.fromDate;
+    if (expobj.toDate != null) {
+      formattedexperienceto = expobj.toDate;
+    }
+    currentlyworkingisChecked = expobj.isCurrentWorking;
+    experienceDescription.text = expobj.description;
+    // if user upload attachment then give new path to this attachmentpath
+    String attachmentpath = expobj.path ?? "";
+    update();
+  }
+
+  updateEditSelectedSpecialities(id, name, subid, subname) {
+    selectedspecialities?.id = id;
+    selectedspecialities?.name = name;
+    selectedsubspecialities?.id = subid;
+    selectedsubspecialities?.name = subname;
+    update();
+  }
+
+  Educations? editSelectedEducation = Educations();
+  updateEditSelectedEducation(Educations eduobj) {
+    update();
+  }
+
+  WorkLocations? editSelectedworklocation = WorkLocations();
+  updateEditSelectedworklocation(WorkLocations worklocationobj) {
+    editSelectedworklocation = worklocationobj;
+    selectedhospital?.name = worklocationobj.workLocationName;
+    selectedhospital?.id = worklocationobj.userWorkLocationId;
+    worklocationpreference.text = worklocationobj.preference.toString();
     update();
   }
 }

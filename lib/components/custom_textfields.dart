@@ -152,6 +152,10 @@ class RegisterCustomTextField extends StatelessWidget {
           style: GoogleFonts.poppins(
               color: ColorManager.kblackColor, fontSize: 12),
           decoration: InputDecoration(
+            errorStyle: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: ColorManager.kRedColor, fontSize: 12),
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
             hintStyle: GoogleFonts.poppins(color: ColorManager.kGreyColor),
             hintText: hintText,
@@ -165,6 +169,8 @@ class RegisterCustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: ColorManager.kGreyColor),
             ),
+            errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.kRedColor)),
             fillColor: ColorManager.kWhiteColor,
             suffixIcon: suffixIcon,
             suffixText: suffixText,
@@ -205,8 +211,10 @@ class EditProfileCustomTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? hintText;
   final Function(String)? onchanged;
-  const EditProfileCustomTextField({
+  TextInputType? keyboardTypenew;
+  EditProfileCustomTextField({
     super.key,
+    this.keyboardTypenew,
     this.hintText,
     this.suffixIcon,
     this.fillColor = ColorManager.kPrimaryLightColor,
@@ -231,6 +239,7 @@ class EditProfileCustomTextField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         TextFormField(
+          keyboardType: keyboardTypenew,
           controller: controller,
           onChanged: onchanged,
           validator: validator,

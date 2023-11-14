@@ -16,11 +16,10 @@ import '../../localDB/local_db.dart';
 class ConsultingQueueRepo {
   static GetConsultingQueue(lenght) async {
     String? userId = await LocalDb().getDoctorId();
-    String? branchId = await LocalDb().getBranchId();
     var body = {
       "DoctorId": userId,
       "Search": "",
-      "BranchId": AppointmentHistoryController.i.selectedbranch?.id ?? branchId,
+      "BranchId": AppointmentHistoryController.i.selectedbranch?.id ?? '',
       "WorkLocationId":
           AppointmentHistoryController.i.selectedhospital?.id ?? "",
       "Status": "",

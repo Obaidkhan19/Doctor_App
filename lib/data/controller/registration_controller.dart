@@ -41,6 +41,7 @@ class RegistrationController extends GetxController implements GetxService {
   }
 
   disposevalues() {
+    _indexp = 0;
     firstname.clear();
     lastname.clear();
     email.clear();
@@ -56,7 +57,6 @@ class RegistrationController extends GetxController implements GetxService {
     arrival = DateTime.now();
     formattedArrival = null;
     formatearrival = DateFormat.yMMMd().format(arrival!).obs;
-
     selectedgender = null;
     selectedSpecialitiesList.clear();
     selectedSubSpecialitiesList.clear();
@@ -65,6 +65,11 @@ class RegistrationController extends GetxController implements GetxService {
     selectedcity = null;
     selectedprovince = null;
     selectedmaritalStatus = null;
+    selectedspecialities = null;
+    selectedsubspecialities = null;
+    file = null;
+    pmcfile = null;
+    ontap = false;
     update();
   }
 

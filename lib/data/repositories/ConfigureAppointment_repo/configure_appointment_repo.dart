@@ -45,14 +45,10 @@ class ConfigureAppointmentRepo {
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
-
-    log(body);
     if (response.statusCode == 200) {
       ConfigureAppointmentController.i.appointmentconfigurationList.clear();
       var responseData = jsonDecode(response.body);
       var status = responseData['Status'];
-
-      // here
       if (status == 1) {
         Iterable rawafData = responseData['AppointmentConfigurations'] ?? [];
         List<AppointmentConfigurations> af = rawafData
@@ -159,10 +155,85 @@ class ConfigureAppointmentRepo {
       "IsOnlineConfiguration": isolineconfiguratation,
       "IsActive": isactive,
     };
-    log(body.toString());
     try {
       var response = await http.post(
           Uri.parse(AppConstants.editappointconfiguration),
+          body: jsonEncode(body),
+          headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          showSnackbar(Get.context!, msg);
+          return msg;
+        } else if (status == -5) {
+          showSnackbar(Get.context!, msg);
+          return msg;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> makedefaultAppointmentConfiguration(
+    mainid,
+    doctorid,
+    worklocationid,
+  ) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "Id": mainid,
+      "DoctorId": doctorid,
+      "WorkLocationId": worklocationid,
+    };
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.makedefaultappointconfiguration),
+          body: jsonEncode(body),
+          headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          showSnackbar(Get.context!, msg);
+          return msg;
+        } else if (status == -5) {
+          showSnackbar(Get.context!, msg);
+          return msg;
+        }
+      }
+    } catch (e) {
+      showSnackbar(Get.context!, e.toString());
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> pauseresumeAppointmentConfiguration(
+    mainid,
+    doctorid,
+    worklocationid,
+    status,
+  ) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "Id": mainid,
+      "DoctorId": doctorid,
+      "WorkLocationId": worklocationid,
+      "Status": status,
+    };
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.changeappointconfigurationstatus),
           body: jsonEncode(body),
           headers: headers);
       if (response.statusCode == 200) {

@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
@@ -12,7 +11,6 @@ import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/models/relation.dart';
-import 'package:doctormobileapplication/screens/profile/edit_contact.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,12 +31,11 @@ class _ContactDetailState extends State<ContactDetail> {
     await pr.getDoctorBasicInfo();
   }
 
-  bool val = false;
-
   var edit = Get.put<EditProfileController>(EditProfileController());
 
   _getCountries() async {
     ProfileRepo pr = ProfileRepo();
+
     EditProfileController.i.updatecountriesList(
       await pr.getCountries(),
     );
@@ -67,14 +64,22 @@ class _ContactDetailState extends State<ContactDetail> {
     );
   }
 
+  updateboolval() {
+    ProfileController.i.updateval(true);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+
     _getCountries();
     _getProvinces(EditProfileController.i.selectedcountry?.id);
     _getCities(EditProfileController.i.selectedcity?.id);
     _getDoctorBasicInfo();
     _getNOKRelation();
+    Future.delayed(Duration.zero, () async {
+      ProfileController.i.updateselectedindex(1);
+    });
     super.initState();
   }
 
@@ -82,7 +87,7 @@ class _ContactDetailState extends State<ContactDetail> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (contr) => val
+      builder: (contr) => contr.editval
           ? Container(
               height: Get.height * 1,
               color: ColorManager.kPrimaryColor,
@@ -525,8 +530,7 @@ class _ContactDetailState extends State<ContactDetail> {
                                     edit.nokmobileno.text,
                                     edit.emailController.text);
                                 if (res == "true") {
-                                  //  Get.back(result: true);
-                                  val = false;
+                                  ProfileController.i.updateval(false);
                                   _getDoctorBasicInfo();
                                   setState(() {});
                                 }
@@ -730,12 +734,9 @@ class _ContactDetailState extends State<ContactDetail> {
                         fontSize: 15,
                         title: "edit".tr,
                         onPressed: () async {
-                          val = true;
+                          ProfileController.i.updateval(true);
+                          profile.updateisEdit(true);
                           setState(() {});
-                          // var result = await Get.to(() => const EditContact());
-                          // if (result == true) {
-                          //   _getDoctorBasicInfo();
-                          // }
                         },
                         color: ColorManager.kWhiteColor,
                         textcolor: ColorManager.kPrimaryColor),

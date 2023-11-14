@@ -1,12 +1,22 @@
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/data/controller/add_worklocation_controller.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
+import 'package:doctormobileapplication/data/repositories/ConfigureAppointment_repo/configure_appointment_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/profile/add_worklocation.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:doctormobileapplication/components/custom_textfields.dart';
+import 'package:doctormobileapplication/components/primary_button.dart';
+import 'package:doctormobileapplication/components/searchable_dropdown.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
+import 'package:doctormobileapplication/models/cities_model.dart';
+import 'package:doctormobileapplication/models/countries_model.dart';
+import 'package:doctormobileapplication/models/hospital_clinic.dart';
+import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WorkLocation extends StatefulWidget {
@@ -22,290 +32,615 @@ class _WorkLocationState extends State<WorkLocation> {
     await pr.getDoctorBasicInfo();
   }
 
+  _getHospital() async {
+    ConsultingQueueRepo cqr = ConsultingQueueRepo();
+    EditProfileController.i.updatehospitallist(
+      await cqr.getHospitalORClinic(),
+    );
+  }
+
+  _getCountries() async {
+    ProfileRepo pr = ProfileRepo();
+    EditProfileController.i.updateworklocationcountriesList(
+      await pr.getCountries(),
+    );
+  }
+
+  _getProvinces(cid) async {
+    ProfileRepo pr = ProfileRepo();
+    //   cid ??= EditProfileController.i.selectedcountry?.id;
+    EditProfileController.i.updateworklocationstateList(
+      await pr.getProvinces(cid),
+    );
+  }
+
+  _getCities(cid) async {
+    ProfileRepo pr = ProfileRepo();
+    // cid ??= EditProfileController.i.selectedcity?.id;
+    EditProfileController.i.updateworklocationcitiesList(
+      await pr.getCities(cid),
+    );
+  }
+
+  _getaddHospital() async {
+    ConsultingQueueRepo cqr = ConsultingQueueRepo();
+    AddWorklocationController.i.updateaddworklocationhospitallist(
+      await cqr.getHospitalORClinic(),
+    );
+  }
+
+  _getaddCountries() async {
+    ProfileRepo pr = ProfileRepo();
+    AddWorklocationController.i.updateaddworklocationcountriesList(
+      await pr.getCountries(),
+    );
+  }
+
+  _getaddProvinces(cid) async {
+    ProfileRepo pr = ProfileRepo();
+    AddWorklocationController.i.updateaddworklocationstateList(
+      await pr.getProvinces(cid),
+    );
+  }
+
+  _getaddCities(cid) async {
+    ProfileRepo pr = ProfileRepo();
+    AddWorklocationController.i.updateaddworklocationcitiesList(
+      await pr.getCities(cid),
+    );
+  }
+
+  // top worklocations
+  _getWorklocation() async {
+    ConfigureAppointmentRepo car = ConfigureAppointmentRepo();
+    ProfileController.i.updatedisplayprofileWorkLocationslist(
+      await car.getWorklocation(),
+    );
+  }
+
+  @override
+  void initState() {
+    _getWorklocation();
+    _getaddHospital();
+    _getHospital();
+    _getaddCountries();
+    _getCountries();
+    Future.delayed(Duration.zero, () async {
+      ProfileController.i.updateselectedindex(9);
+    });
+    super.initState();
+  }
+
   var worklocation = Get.put<ProfileController>(ProfileController());
+  var add = Get.put<AddWorklocationController>(AddWorklocationController());
+  var edit = Get.put<EditProfileController>(EditProfileController());
+  // bool editchk = false;
+  // bool addchck = false;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (contr) => Scaffold(
-        body: Container(
-          height: Get.height * 1,
-          color: ColorManager.kPrimaryColor,
-          padding: EdgeInsets.only(
-            top: Get.height * 0.02,
-            left: Get.width * 0.02,
-            right: Get.width * 0.02,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: Get.width * 0.04),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ImageContainer(
-                        onpressed: () {
-                          Get.to(() => const AddWorklocation());
-                          // callback
-                        },
-                        imagePath: Images.add,
-                        isSvg: false,
-                        color: ColorManager.kPrimaryColor,
-                        backgroundColor: ColorManager.kWhiteColor,
-                        boxheight: Get.height * 0.04,
-                        boxwidth: Get.width * 0.08,
-                      )
-                    ],
+        builder: (contr) => contr.editval
+            ? GetBuilder<EditProfileController>(
+                builder: (contr) => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
+                        EditProfileCustomTextField(
+                          onTap: () async {
+                            edit.selectedhospital = null;
+                            HospitalORClinics generic =
+                                await searchabledropdown(
+                                    context, edit.hospitalList ?? []);
+                            edit.selectedhospital = null;
+                            edit.updateselectedhospital(generic);
+
+                            if (generic != '') {
+                              edit.selectedhospital = generic;
+                              edit.selectedhospital = (generic == '')
+                                  ? null
+                                  : edit.selectedhospital;
+                            }
+                            setState(() {});
+                          },
+                          readonly: true,
+                          hintText: edit.selectedhospital?.name == ""
+                              ? 'Hospital'.tr
+                              : edit.selectedhospital?.name ??
+                                  "Select Hospital",
+                        ),
+                        EditProfileCustomTextField(
+                          controller: edit.worklocationpreference,
+                          hintText: 'Preference',
+                        ),
+                        SizedBox(height: Get.height * 0.03),
+                        PrimaryButton(
+                            fontSize: 15,
+                            title: 'Edit'.tr,
+                            onPressed: () async {
+                              ProfileController.i.updateval(false);
+                              setState(() {});
+                            },
+                            color: Colors.white.withOpacity(0.7),
+                            textcolor: ColorManager.kWhiteColor),
+                        SizedBox(height: Get.height * 0.03),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                worklocation.appointmentConfigurationList.isNotEmpty
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Get.width * 0.6,
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  child: SizedBox(
-                                    height: Get.height * 0.04,
-                                    width: Get.width * 0.19,
-                                    child: Image.asset(
-                                      Images.edit,
-                                      color: ColorManager.kPrimaryColor,
-                                    ),
+              )
+            : contr.addval
+                ? GetBuilder<AddWorklocationController>(
+                    builder: (contr) => Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: Get.height * 0.02,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Checkbox(
+                                  side: MaterialStateBorderSide.resolveWith(
+                                    (Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return const BorderSide(
+                                            color: Colors.white);
+                                      }
+                                      return const BorderSide(
+                                          color: Colors.white);
+                                    },
                                   ),
+                                  value: add.newworklocationisChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      add.newworklocationisChecked = value!;
+                                    });
+                                  },
+                                  checkColor: ColorManager.kWhiteColor,
+                                  activeColor: ColorManager.kPrimaryColor,
                                 ),
                                 Text(
-                                  'Hospital/Clinic',
+                                  'Add New Work Location',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                      fontSize: 12,
+                                      color: ColorManager.kWhiteColor,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.28,
-                            child: Text(
-                              'Preference',
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: ColorManager.kWhiteColor,
-                                fontWeight: FontWeight.w500,
+                            Visibility(
+                              visible: add.newworklocationisChecked == false,
+                              child: EditProfileCustomTextField(
+                                onTap: () async {
+                                  add.addworklocationselectedhospital = null;
+                                  HospitalORClinics generic =
+                                      await searchabledropdown(
+                                          context,
+                                          add.addworklocationhospitalList ??
+                                              []);
+                                  add.addworklocationselectedhospital = null;
+                                  add.updateaddworklocationselectedhospital(
+                                      generic);
+
+                                  if (generic != '') {
+                                    add.addworklocationselectedhospital =
+                                        generic;
+                                    add.addworklocationselectedhospital =
+                                        (generic == '')
+                                            ? null
+                                            : add
+                                                .addworklocationselectedhospital;
+                                  }
+                                  setState(() {});
+                                },
+                                readonly: true,
+                                hintText:
+                                    add.addworklocationselectedhospital?.name ==
+                                            ""
+                                        ? 'Hospital'.tr
+                                        : add.addworklocationselectedhospital
+                                                ?.name ??
+                                            "Select Hospital",
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-                worklocation.appointmentConfigurationList.isNotEmpty
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount:
-                            worklocation.appointmentConfigurationList.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: Get.height * 0.01,
+                            Visibility(
+                              visible: add.newworklocationisChecked == false,
+                              child: EditProfileCustomTextField(
+                                controller: add.worklocationpreference,
+                                hintText: 'Preference',
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: Get.width * 0.6,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ImageContainerNew(
-                                          onpressed: () {},
-                                          imagePath: AppImages.cross,
-                                          //  imageheight: Get.height * 0.03,
-                                          isSvg: false,
-                                          color: ColorManager.kRedColor,
-                                          backgroundColor:
-                                              ColorManager.kWhiteColor,
-                                          boxheight: Get.height * 0.03,
-                                          boxwidth: Get.width * 0.06,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width * 0.004,
-                                        ),
-                                        ImageContainerNew(
-                                          onpressed: () {},
-                                          imagePath: AppImages.editbig,
-                                          isSvg: false,
-                                          color: ColorManager.kPrimaryColor,
-                                          backgroundColor:
-                                              ColorManager.kWhiteColor,
-                                          // imageheight: Get.height * 0.02,
-                                          boxheight: Get.height * 0.03,
-                                          boxwidth: Get.width * 0.06,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width * 0.002,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width * 0.4,
-                                          child: Text(
-                                            ProfileController
-                                                    .i
-                                                    .appointmentConfigurationList[
-                                                        index]
-                                                    .workLocation ??
+                            ),
+                            Visibility(
+                              visible: add.newworklocationisChecked == true,
+                              child: EditProfileCustomTextField(
+                                controller: add.newworklocationname,
+                                hintText: 'Name',
+                              ),
+                            ),
+                            Visibility(
+                              visible: add.newworklocationisChecked == true,
+                              child: EditProfileCustomTextField(
+                                validator: (value) {
+                                  if (value == "Country") {
+                                    return 'pleaseselectyourcountry'.tr;
+                                  }
+                                  return null;
+                                },
+                                onTap: () async {
+                                  add.addselectedworklocationcountry = null;
+                                  add.addselectedworklocationCities = null;
+                                  add.addworklocationcitiesList.clear();
+                                  add.addselectedworklocationstate = null;
+                                  Countries generic = await searchabledropdown(
+                                      context,
+                                      add.addworklocationcountriesList ?? []);
+                                  add.addselectedworklocationcountry = null;
+                                  add.updateaddselectedworklocationcountry(
+                                      generic);
+
+                                  if (generic != '') {
+                                    add.addselectedworklocationcountry =
+                                        generic;
+                                    add.addselectedworklocationcountry =
+                                        (generic == '')
+                                            ? null
+                                            : add
+                                                .addselectedworklocationcountry;
+                                  }
+                                  String cid = add
+                                          .addselectedworklocationcountry?.id
+                                          .toString() ??
+                                      "";
+                                  setState(() {
+                                    _getaddProvinces(cid);
+                                  });
+                                },
+                                readonly: true,
+                                hintText:
+                                    add.addselectedworklocationcountry?.name ==
+                                            ""
+                                        ? 'country'.tr
+                                        : add.addselectedworklocationcountry
+                                                ?.name ??
+                                            "Select country",
+                              ),
+                            ),
+                            Visibility(
+                              visible: add.newworklocationisChecked == true,
+                              child: EditProfileCustomTextField(
+                                validator: (value) {
+                                  if (value == "Province") {
+                                    return 'Please select your State'.tr;
+                                  }
+                                  return null;
+                                },
+                                readonly: true,
+                                onTap: () async {
+                                  add.addselectedworklocationstate = null;
+                                  add.addselectedworklocationCities = null;
+                                  Provinces generic = await searchabledropdown(
+                                      context,
+                                      add.addworklocationstateList ?? []);
+                                  add.addselectedworklocationstate = null;
+                                  add.updateaddselectedworklocationstate(
+                                      generic);
+
+                                  if (generic != '') {
+                                    add.addselectedworklocationstate = generic;
+                                    add.addselectedworklocationstate =
+                                        (generic == '')
+                                            ? null
+                                            : add.addselectedworklocationstate;
+                                  }
+                                  String cid = add
+                                          .addselectedworklocationstate?.id
+                                          .toString() ??
+                                      "";
+                                  setState(() {
+                                    _getaddCities(cid);
+                                  });
+                                },
+                                hintText:
+                                    add.addselectedworklocationstate?.name == ""
+                                        ? 'State'
+                                        : add.addselectedworklocationstate
+                                                    ?.name ==
+                                                null
+                                            ? 'State'
+                                            : add.addselectedworklocationstate
+                                                    ?.name ??
                                                 "",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 11,
-                                              color: ColorManager.kWhiteColor,
+                              ),
+                            ),
+                            Visibility(
+                              visible: add.newworklocationisChecked == true,
+                              child: EditProfileCustomTextField(
+                                validator: (value) {
+                                  if (value == "City") {
+                                    return 'pleaseselectyourcity'.tr;
+                                  }
+                                  return null;
+                                },
+                                readonly: true,
+                                onTap: () async {
+                                  add.addselectedworklocationCities = null;
+                                  Cities generic = await searchabledropdown(
+                                      context,
+                                      add.addworklocationcitiesList ?? []);
+                                  add.addselectedworklocationCities = null;
+                                  add.updateaddselectedworklocationCities(
+                                      generic);
+
+                                  if (generic != '') {
+                                    add.addselectedworklocationCities = generic;
+                                    add.addselectedworklocationCities =
+                                        (generic == '')
+                                            ? null
+                                            : add.addselectedworklocationCities;
+                                  }
+                                  setState(() {});
+                                },
+                                hintText: add.addselectedworklocationCities
+                                            ?.name ==
+                                        ""
+                                    ? 'City'
+                                    : add.addselectedworklocationCities?.name ==
+                                            null
+                                        ? 'City'
+                                        : add.addselectedworklocationCities
+                                                ?.name ??
+                                            "",
+                              ),
+                            ),
+                            Visibility(
+                              visible: add.newworklocationisChecked == true,
+                              child: EditProfileCustomTextField(
+                                controller: add.newworklocationnameaddress,
+                                hintText: 'Address',
+                              ),
+                            ),
+                            SizedBox(height: Get.height * 0.03),
+                            PrimaryButton(
+                                fontSize: 15,
+                                title: 'Add'.tr,
+                                onPressed: () async {
+                                  ProfileController.i.updateaddval(false);
+                                  setState(() {});
+                                },
+                                color: Colors.white.withOpacity(0.7),
+                                textcolor: ColorManager.kWhiteColor),
+                            SizedBox(height: Get.height * 0.03),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : GetBuilder<ProfileController>(
+                    builder: (contr) => Container(
+                      height: Get.height * 1,
+                      color: ColorManager.kPrimaryColor,
+                      padding: EdgeInsets.only(
+                        top: Get.height * 0.02,
+                        left: Get.width * 0.02,
+                        right: Get.width * 0.02,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: Get.width * 0.04),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ImageContainer(
+                                    onpressed: () {
+                                      ProfileController.i.updateaddval(true);
+                                      ProfileController.i.updateisEdit(true);
+                                      setState(() {});
+                                    },
+                                    imagePath: Images.add,
+                                    isSvg: false,
+                                    color: ColorManager.kPrimaryColor,
+                                    backgroundColor: ColorManager.kWhiteColor,
+                                    boxheight: Get.height * 0.04,
+                                    boxwidth: Get.width * 0.08,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.02,
+                            ),
+                            contr.displayprofileworkLocationsList.isNotEmpty
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: Get.width * 0.65,
+                                        child: Row(
+                                          children: [
+                                            InkWell(
+                                              child: SizedBox(
+                                                height: Get.height * 0.04,
+                                                width: Get.width * 0.17,
+                                                child: Image.asset(
+                                                  Images.edit,
+                                                  color: ColorManager
+                                                      .kPrimaryColor,
+                                                ),
+                                              ),
                                             ),
+                                            Text(
+                                              'hospitalclinic'.tr,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color: ColorManager.kWhiteColor,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.2,
+                                        child: Text(
+                                          'preference'.tr,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            color: ColorManager.kWhiteColor,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.28,
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                            contr.displayprofileworkLocationsList.isNotEmpty
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: contr
+                                        .displayprofileworkLocationsList.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: Get.height * 0.01,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                width: Get.width * 0.65,
+                                                child: Row(
+                                                  // mainAxisAlignment:
+                                                  //     MainAxisAlignment
+                                                  //         .spaceBetween,
+                                                  children: [
+                                                    ImageContainerNew(
+                                                      onpressed: () {},
+                                                      imagePath:
+                                                          AppImages.cross,
+                                                      //  imageheight: Get.height * 0.03,
+                                                      isSvg: false,
+                                                      color: ColorManager
+                                                          .kRedColor,
+                                                      backgroundColor:
+                                                          ColorManager
+                                                              .kWhiteColor,
+                                                      boxheight:
+                                                          Get.height * 0.03,
+                                                      boxwidth:
+                                                          Get.width * 0.06,
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.015,
+                                                    ),
+                                                    ImageContainerNew(
+                                                      onpressed: () {
+                                                        // send object
+                                                        EditProfileController.i
+                                                                .editSelectedworklocation =
+                                                            null;
+                                                        EditProfileController.i
+                                                            .updateEditSelectedworklocation(
+                                                                worklocation
+                                                                        .displayprofileworkLocationsList[
+                                                                    index]);
+                                                        ProfileController.i
+                                                            .updateval(true);
+                                                        ProfileController.i
+                                                            .updateisEdit(true);
+                                                        setState(() {});
+                                                      },
+                                                      imagePath:
+                                                          AppImages.editbig,
+                                                      isSvg: false,
+                                                      color: ColorManager
+                                                          .kPrimaryColor,
+                                                      backgroundColor:
+                                                          ColorManager
+                                                              .kWhiteColor,
+                                                      // imageheight: Get.height * 0.02,
+                                                      boxheight:
+                                                          Get.height * 0.03,
+                                                      boxwidth:
+                                                          Get.width * 0.06,
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.03,
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.4,
+                                                      child: Text(
+                                                        contr
+                                                                .displayprofileworkLocationsList[
+                                                                    index]
+                                                                .workLocationName ??
+                                                            "",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 11,
+                                                          color: ColorManager
+                                                              .kWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.2,
+                                                child: Text(
+                                                  contr
+                                                      .displayprofileworkLocationsList[
+                                                          index]
+                                                      .preference
+                                                      .toString(),
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 11,
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
+                                : Center(
                                     child: Text(
-                                      ProfileController
-                                              .i
-                                              .appointmentConfigurationList[
-                                                  index]
-                                              .address ??
-                                          "",
+                                      "NoRecordFound".tr,
                                       style: GoogleFonts.poppins(
-                                        fontSize: 11,
-                                        color: ColorManager.kWhiteColor,
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w300,
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      )
-                    : Center(
-                        child: Text(
-                          "No Record Found",
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                          ),
+                          ],
                         ),
                       ),
-              ],
-            ),
-          ),
-        ),
-        // Container(
-        //   padding: EdgeInsets.only(
-        //     top: Get.height * 0.04,
-        //   ),
-        //   child: worklocation.appointmentConfigurationList.isNotEmpty
-        //       ? ListView.builder(
-        //           scrollDirection: Axis.vertical,
-        //           itemCount: worklocation.appointmentConfigurationList.length,
-        //           itemBuilder: (context, index) {
-        //             return Card(
-        //               elevation: 4,
-        //               color: ColorManager.kPrimaryColor,
-        //               child: Padding(
-        //                 padding: EdgeInsets.symmetric(
-        //                     horizontal: Get.width * 0.04,
-        //                     vertical: Get.height * 0.02),
-        //                 child: Column(
-        //                   children: [
-        //                     Row(
-        //                       children: [
-        //                         Text(
-        //                           "Hospital/Clinic :",
-        //                           style: GoogleFonts.poppins(
-        //                             fontSize: 14,
-        //                             color: ColorManager.kWhiteColor,
-        //                             fontWeight: FontWeight.bold,
-        //                           ),
-        //                         ),
-        //                         SizedBox(
-        //                           width: Get.width * 0.04,
-        //                         ),
-        //                         SizedBox(
-        //                           width: Get.width * 0.43,
-        //                           child: Text(
-        //                             ProfileController
-        //                                     .i
-        //                                     .appointmentConfigurationList[index]
-        //                                     .workLocation ??
-        //                                 "",
-        //                             style: GoogleFonts.poppins(
-        //                               fontSize: 12,
-        //                               color: ColorManager.kWhiteColor,
-        //                               fontWeight: FontWeight.w600,
-        //                             ),
-        //                           ),
-        //                         ),
-        //                       ],
-        //                     ),
-        //                     Row(
-        //                       children: [
-        //                         Text(
-        //                           "Preference          :",
-        //                           style: GoogleFonts.poppins(
-        //                             fontSize: 14,
-        //                             color: ColorManager.kWhiteColor,
-        //                             fontWeight: FontWeight.bold,
-        //                           ),
-        //                         ),
-        //                         SizedBox(
-        //                           width: Get.width * 0.04,
-        //                         ),
-        //                         SizedBox(
-        //                           width: Get.width * 0.43,
-        //                           child: Text(
-        //                             // ProfileController
-        //                             //         .i.bankDetailList[index].bankName ??
-        //                             //     "",
-        //                             "Add preference value from DB",
-        //                             style: GoogleFonts.poppins(
-        //                               fontSize: 12,
-        //                               color: ColorManager.kWhiteColor,
-        //                               fontWeight: FontWeight.w600,
-        //                             ),
-        //                           ),
-        //                         ),
-        //                       ],
-        //                     ),
-        //                   ],
-        //                 ),
-        //               ),
-        //             );
-        //           },
-        //         )
-        //       : Center(
-        //           child: Text(
-        //             "No Record Found",
-        //             style: GoogleFonts.poppins(
-        //               fontSize: 12,
-        //               color: Colors.black,
-        //               fontWeight: FontWeight.w300,
-        //             ),
-        //           ),
-        //         ),
-        // ),
-      ),
-    );
+                    ),
+                  ));
   }
 }

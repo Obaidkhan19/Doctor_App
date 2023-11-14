@@ -516,7 +516,7 @@ class PrescribeMedicinRepo {
           ERXController.i.updateselectedDiagnosticsList(diagnostics);
           ERXController.i.updateselectedPrimarydiagnosislist(primarydiagnosis);
           ERXController.i
-              .updateselectedsecondaryDiagnosisList(secondarydiagnosis);
+              .updateselectedsecondarydiagnosislist(secondarydiagnosis);
           ERXController.i.updateselectedInstructionList(instruction);
           ERXController.i.updateselectedProceduresList(procedures);
           ERXController.i.addfollowup(followUp);

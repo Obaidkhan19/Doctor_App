@@ -1,5 +1,11 @@
+import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/components/primary_button.dart';
+import 'package:doctormobileapplication/components/searchable_dropdown.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/models/degree.dart';
+import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/profile/add_award.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
@@ -24,162 +30,268 @@ class _AwardsDetailState extends State<AwardsDetail> {
     await pr.getDoctorBasicInfo();
   }
 
+  var edit = Get.put<EditProfileController>(EditProfileController());
+
+  _getLocations() async {
+    ProfileRepo pr = ProfileRepo();
+    EditProfileController.i.updateawardList(
+      await pr.getLocations(),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      ProfileController.i.updateselectedindex(6);
+    });
+    _getLocations();
+  }
+
   var awards = Get.put<ProfileController>(ProfileController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (contr) => Scaffold(
-        body: Container(
-          height: Get.height * 1,
-          color: ColorManager.kPrimaryColor,
-          padding: EdgeInsets.only(
-            top: Get.height * 0.02,
-            left: Get.width * 0.02,
-            right: Get.width * 0.02,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: Get.width * 0.04),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ImageContainer(
-                        onpressed: () {
-                          Get.to(() => const AddAward());
-                          // callback
-                        },
-                        imagePath: Images.add,
-                        isSvg: false,
-                        color: ColorManager.kPrimaryColor,
-                        backgroundColor: ColorManager.kWhiteColor,
-                        boxheight: Get.height * 0.04,
-                        boxwidth: Get.width * 0.08,
-                      )
-                    ],
+      builder: (contr) => contr.editval
+          ? Container(
+              height: Get.height * 1,
+              color: ColorManager.kPrimaryColor,
+              padding: EdgeInsets.only(
+                top: Get.height * 0.02,
+                left: Get.width * 0.02,
+                right: Get.width * 0.02,
+              ),
+              child: GetBuilder<EditProfileController>(
+                builder: (contr) => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        EditProfileCustomTextField(
+                          controller: edit.awardtitle,
+                          hintText: 'Title',
+                        ),
+
+                        EditProfileCustomTextField(
+                          controller: edit.awardcode,
+                          hintText: 'Code',
+                        ),
+
+                        // organization
+
+                        // location
+                        EditProfileCustomTextField(
+                          onTap: () async {
+                            Degrees generic = await searchabledropdown(
+                                context, edit.awardList ?? []);
+                            edit.selectedawardlocation = null;
+                            edit.updateselectedaward(generic);
+
+                            if (generic != '') {
+                              edit.selectedawardlocation = generic;
+                              edit.selectedawardlocation = (generic == '')
+                                  ? null
+                                  : edit.selectedawardlocation;
+                            }
+                          },
+                          readonly: true,
+                          hintText: edit.selectedawardlocation?.name == ""
+                              ? 'Location'.tr
+                              : edit.selectedawardlocation?.name ??
+                                  "Select Location",
+                        ),
+
+                        EditProfileCustomTextField(
+                          onTap: () async {
+                            await edit.selectformattedawardedDateAndTime(
+                                context,
+                                EditProfileController.awardeddate,
+                                edit.formateawardeddate);
+                          },
+                          readonly: true,
+                          hintText: edit.formattedawardeddate
+                                      .toString()
+                                      .split("T")[0] ==
+                                  DateTime.now().toString().split(" ")[0]
+                              ? "Select Awarded Date"
+                              : DateFormat('MM-dd-y').format(DateTime.parse(edit
+                                  .formattedawardeddate
+                                  .toString()
+                                  .split(" ")[0])),
+                        ),
+
+                        EditProfileCustomTextField(
+                          controller: edit.awarddescription,
+                          hintText: 'Description',
+                        ),
+                        SizedBox(height: Get.height * 0.03),
+                        PrimaryButton(
+                            fontSize: 15,
+                            title: 'Edit'.tr,
+                            onPressed: () async {
+                              ProfileController.i.updateval(false);
+                              setState(() {});
+                            },
+                            color: ColorManager.kWhiteColor.withOpacity(0.7),
+                            textcolor: ColorManager.kWhiteColor),
+                        SizedBox(height: Get.height * 0.03),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                awards.awardsList.isNotEmpty
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: Get.width * 0.4,
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  child: SizedBox(
-                                    height: Get.height * 0.04,
-                                    width: Get.width * 0.15,
-                                    child: Image.asset(
-                                      Images.edit,
-                                      color: ColorManager.kPrimaryColor,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  'Title',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+              ),
+            )
+          : contr.addval
+              ? Container(
+                  height: Get.height * 1,
+                  color: ColorManager.kPrimaryColor,
+                  padding: EdgeInsets.only(
+                    top: Get.height * 0.02,
+                    left: Get.width * 0.02,
+                    right: Get.width * 0.02,
+                  ),
+                  child: GetBuilder<EditProfileController>(
+                    builder: (contr) => Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.02),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            EditProfileCustomTextField(
+                              controller: edit.awardtitle,
+                              hintText: 'Title',
                             ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.24,
-                            child: Text(
-                              'Organization',
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: ColorManager.kWhiteColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+
+                            EditProfileCustomTextField(
+                              controller: edit.awardcode,
+                              hintText: 'Code',
                             ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.2,
-                            child: Text(
-                              'Date',
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: ColorManager.kWhiteColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+
+                            // organization
+
+                            // location
+                            EditProfileCustomTextField(
+                              onTap: () async {
+                                Degrees generic = await searchabledropdown(
+                                    context, edit.awardList ?? []);
+                                edit.selectedawardlocation = null;
+                                edit.updateselectedaward(generic);
+
+                                if (generic != '') {
+                                  edit.selectedawardlocation = generic;
+                                  edit.selectedawardlocation = (generic == '')
+                                      ? null
+                                      : edit.selectedawardlocation;
+                                }
+                              },
+                              readonly: true,
+                              hintText: edit.selectedawardlocation?.name == ""
+                                  ? 'Location'.tr
+                                  : edit.selectedawardlocation?.name ??
+                                      "Select Location",
                             ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-                awards.awardsList.isNotEmpty
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: awards.awardsList.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            EditProfileCustomTextField(
+                              onTap: () async {
+                                await edit.selectformattedawardedDateAndTime(
+                                    context,
+                                    EditProfileController.awardeddate,
+                                    edit.formateawardeddate);
+                              },
+                              readonly: true,
+                              hintText: edit.formattedawardeddate
+                                          .toString()
+                                          .split("T")[0] ==
+                                      DateTime.now().toString().split(" ")[0]
+                                  ? "Select Awarded Date"
+                                  : DateFormat('MM-dd-y').format(DateTime.parse(
+                                      edit.formattedawardeddate
+                                          .toString()
+                                          .split(" ")[0])),
+                            ),
+
+                            EditProfileCustomTextField(
+                              controller: edit.awarddescription,
+                              hintText: 'Description',
+                            ),
+                            SizedBox(height: Get.height * 0.03),
+                            PrimaryButton(
+                                fontSize: 15,
+                                title: 'Add'.tr,
+                                onPressed: () async {
+                                  ProfileController.i.updateaddval(false);
+                                  setState(() {});
+                                },
+                                color:
+                                    ColorManager.kWhiteColor.withOpacity(0.7),
+                                textcolor: ColorManager.kWhiteColor),
+                            SizedBox(height: Get.height * 0.03),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(
+                  height: Get.height * 1,
+                  color: ColorManager.kPrimaryColor,
+                  padding: EdgeInsets.only(
+                    top: Get.height * 0.02,
+                    left: Get.width * 0.02,
+                    right: Get.width * 0.02,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: Get.width * 0.04),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              Row(
+                              ImageContainer(
+                                onpressed: () {
+                                  ProfileController.i.updateaddval(true);
+                                  ProfileController.i.updateisEdit(true);
+                                  setState(() {});
+                                },
+                                imagePath: Images.add,
+                                isSvg: false,
+                                color: ColorManager.kPrimaryColor,
+                                backgroundColor: ColorManager.kWhiteColor,
+                                boxheight: Get.height * 0.04,
+                                boxwidth: Get.width * 0.08,
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
+                        awards.awardsList.isNotEmpty
+                            ? Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
                                     width: Get.width * 0.4,
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        ImageContainerNew(
-                                          onpressed: () {},
-                                          imagePath: AppImages.cross,
-                                          //  imageheight: Get.height * 0.03,
-                                          isSvg: false,
-                                          color: ColorManager.kRedColor,
-                                          backgroundColor:
-                                              ColorManager.kWhiteColor,
-                                          boxheight: Get.height * 0.03,
-                                          boxwidth: Get.width * 0.06,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width * 0.004,
-                                        ),
-                                        ImageContainerNew(
-                                          onpressed: () {},
-                                          imagePath: AppImages.editbig,
-                                          isSvg: false,
-                                          color: ColorManager.kPrimaryColor,
-                                          backgroundColor:
-                                              ColorManager.kWhiteColor,
-                                          // imageheight: Get.height * 0.02,
-                                          boxheight: Get.height * 0.03,
-                                          boxwidth: Get.width * 0.06,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width * 0.002,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width * 0.25,
-                                          child: Text(
-                                            ProfileController.i
-                                                    .awardsList[index].title ??
-                                                "",
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 11,
-                                              color: ColorManager.kWhiteColor,
+                                        InkWell(
+                                          child: SizedBox(
+                                            height: Get.height * 0.04,
+                                            width: Get.width * 0.15,
+                                            child: Image.asset(
+                                              Images.edit,
+                                              color: ColorManager.kPrimaryColor,
                                             ),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Title',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            color: ColorManager.kWhiteColor,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ],
@@ -188,54 +300,166 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                   SizedBox(
                                     width: Get.width * 0.24,
                                     child: Text(
-                                      ProfileController.i.awardsList[index]
-                                              .organizationName ??
-                                          "",
+                                      'Organization',
                                       style: GoogleFonts.poppins(
-                                        fontSize: 11,
+                                        fontSize: 12,
                                         color: ColorManager.kWhiteColor,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ),
                                   SizedBox(
-                                      width: Get.width * 0.2,
-                                      child: Text(
-                                        (ProfileController.i.awardsList[index]
-                                                    .awardedDate !=
-                                                null)
-                                            ? DateFormat('MM-dd-y').format(
-                                                DateTime.parse(ProfileController
-                                                    .i
-                                                    .experienceList[index]
-                                                    .fromDate!
-                                                    .split("T")[0]))
-                                            : "-",
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 11,
-                                          color: ColorManager.kWhiteColor,
-                                        ),
-                                      )),
+                                    width: Get.width * 0.2,
+                                    child: Text(
+                                      'Date',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: ColorManager.kWhiteColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                                 ],
+                              )
+                            : const SizedBox.shrink(),
+                        awards.awardsList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: awards.awardsList.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width * 0.4,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                ImageContainerNew(
+                                                  onpressed: () {},
+                                                  imagePath: AppImages.cross,
+                                                  //  imageheight: Get.height * 0.03,
+                                                  isSvg: false,
+                                                  color: ColorManager.kRedColor,
+                                                  backgroundColor:
+                                                      ColorManager.kWhiteColor,
+                                                  boxheight: Get.height * 0.03,
+                                                  boxwidth: Get.width * 0.06,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.004,
+                                                ),
+                                                ImageContainerNew(
+                                                  onpressed: () {
+                                                    ProfileController.i
+                                                        .updateval(true);
+                                                    ProfileController.i
+                                                        .updateisEdit(true);
+                                                    setState(() {});
+                                                  },
+                                                  imagePath: AppImages.editbig,
+                                                  isSvg: false,
+                                                  color: ColorManager
+                                                      .kPrimaryColor,
+                                                  backgroundColor:
+                                                      ColorManager.kWhiteColor,
+                                                  // imageheight: Get.height * 0.02,
+                                                  boxheight: Get.height * 0.03,
+                                                  boxwidth: Get.width * 0.06,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.002,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.25,
+                                                  child: Text(
+                                                    ProfileController
+                                                            .i
+                                                            .awardsList[index]
+                                                            .title ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 11,
+                                                      color: ColorManager
+                                                          .kWhiteColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: Get.width * 0.24,
+                                            child: Text(
+                                              ProfileController
+                                                      .i
+                                                      .awardsList[index]
+                                                      .organizationName ??
+                                                  "",
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 11,
+                                                color: ColorManager.kWhiteColor,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width: Get.width * 0.2,
+                                              child: Text(
+                                                (ProfileController
+                                                            .i
+                                                            .awardsList[index]
+                                                            .awardedDate !=
+                                                        null)
+                                                    ? DateFormat('MM-dd-y')
+                                                        .format(DateTime.parse(
+                                                            ProfileController
+                                                                .i
+                                                                .experienceList[
+                                                                    index]
+                                                                .fromDate!
+                                                                .split("T")[0]))
+                                                    : "-",
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 11,
+                                                  color:
+                                                      ColorManager.kWhiteColor,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              )
+                            : Center(
+                                child: Text(
+                                  "NoRecordFound".tr,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
                               ),
-                            ],
-                          );
-                        },
-                      )
-                    : Center(
-                        child: Text(
-                          "No Record Found",
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-              ],
-            ),
-          ),
-        ),
-      ),
+                      ],
+                    ),
+                  ),
+                ),
     );
   }
 }

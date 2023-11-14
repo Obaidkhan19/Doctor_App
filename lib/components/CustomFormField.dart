@@ -124,7 +124,8 @@ class _CustomFormFieldNotesState extends State<CustomFormFieldNotes> {
               .bodySmall!
               .copyWith(color: ColorManager.kRedColor, fontSize: 12),
           suffixIcon: widget.suffixIcon,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           hintText: widget.hintText,
           hintStyle: GoogleFonts.poppins(
             color: ColorManager.kGreyColor,

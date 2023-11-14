@@ -66,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                // height: Get.height * 0.1,
                                 child: Center(
                                   child: Image.asset(
                                     Images.logo,
@@ -326,14 +325,68 @@ class AuthTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         hintText: hintText,
-
         hintStyle:
             GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
-        // const TextStyle(
-        //     color: Color(0xfff000000),
-        //     fontSize: 16,
-        //     fontWeight: FontWeight.w600),
+        disabledBorder: const OutlineInputBorder(),
+        errorBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: ColorManager.kRedColor)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: ColorManager.kGreyColor)),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.kGreyColor),
+        ),
+      ),
+    );
+  }
+}
 
+class IdNoAuthTextField extends StatelessWidget {
+  final bool? obscureText;
+  final List<TextInputFormatter>? formatters;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final Widget? suffixIcon;
+  final String? hintText;
+  final bool? readOnly;
+  final ValueChanged<String>? onChangedwidget;
+
+  const IdNoAuthTextField({
+    super.key,
+    this.hintText,
+    this.onChangedwidget,
+    this.suffixIcon,
+    this.controller,
+    this.validator,
+    this.readOnly,
+    this.formatters,
+    this.obscureText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      style: const TextStyle(
+        fontSize: 12,
+        color: ColorManager.kGreyColor,
+      ),
+      keyboardType: TextInputType.number,
+      onChanged: onChangedwidget,
+      obscureText: obscureText ?? false,
+      inputFormatters: [LengthLimitingTextInputFormatter(15)],
+      readOnly: readOnly ?? false,
+      validator: validator,
+      controller: controller,
+      decoration: InputDecoration(
+        errorStyle: Theme.of(context)
+            .textTheme
+            .bodySmall!
+            .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+        suffixIcon: suffixIcon,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        hintText: hintText,
+        hintStyle:
+            GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
         disabledBorder: const OutlineInputBorder(),
         errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: ColorManager.kRedColor)),

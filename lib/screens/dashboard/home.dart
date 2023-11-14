@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
@@ -10,19 +9,17 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/ConsultingQueue.dart';
-
 import 'package:doctormobileapplication/screens/book_your_appointment/book_your_appointment.dart';
 import 'package:doctormobileapplication/screens/dashboard/notification.dart';
-import 'package:doctormobileapplication/screens/health_summary/health_summary_Screen.dart';
 import 'package:doctormobileapplication/screens/consulted_vault/appointment_history.dart';
 import 'package:doctormobileapplication/screens/appointment_configuration/configure_appointments.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../data/localDB/local_db.dart';
 import '../../data/repositories/specialities_repo/specialities_repo.dart';
 import '../../models/online_statuS.dart';
@@ -206,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Text(
-                              '${'    '}${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                              '${''}${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
                               style: GoogleFonts.poppins(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 10,
@@ -512,10 +509,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent),
                         onPressed: () {
-                          // Get.to(() => NoDataFound(
-                          //       Title: 'Health Summary',
-                          //     ));
-                          Get.to(const HealthSummaryScreen());
+                          Fluttertoast.showToast(
+                              msg: "Coming Soon",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: ColorManager.kPrimaryLightColor,
+                              textColor: ColorManager.kPrimaryColor,
+                              fontSize: 14.0);
+                          //  Get.to(const HealthSummaryScreen());
                         },
                         child: Padding(
                           padding: EdgeInsets.only(

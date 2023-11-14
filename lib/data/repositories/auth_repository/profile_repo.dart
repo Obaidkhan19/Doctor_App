@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -47,9 +48,12 @@ class ProfileRepo {
   }
 
   Future<List<Countries>> getCountries() async {
+    // ProfileController.i.updateval(false);
+    // ProfileController.i.updateaddval(false);
     String url = AppConstants.getCountries;
     Uri uri = Uri.parse(url);
     var body = jsonEncode(<String, dynamic>{});
+
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
@@ -244,7 +248,7 @@ class ProfileRepo {
             .map((item) => Memberships.fromJson(item))
             .toList();
 
-        List<dynamic> rawawardsdetail = responseData['Memberships'] ?? [];
+        List<dynamic> rawawardsdetail = responseData['Awards'] ?? [];
         List<Awards> awardsdetail =
             rawawardsdetail.map((item) => Awards.fromJson(item)).toList();
 
@@ -567,6 +571,7 @@ class ProfileRepo {
       "DesignationList": designationslist,
     };
 
+    print(body);
     try {
       var response = await http.post(
           Uri.parse(AppConstants.updatedoctorpersonalinfo),

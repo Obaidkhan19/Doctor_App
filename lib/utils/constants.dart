@@ -29,7 +29,7 @@ class AppConstants {
   static String getGenders = '$baseURL/api/ddl/GetGenders';
   static String getMaritalStatus = '$baseURL/api/ddl/GetMaritalStatuses';
 
-  static String uploadimage = '$baseURL/api/account/UploadPicture';
+  static String uploadimage = '$baseURL/api/doctor/UploadFile';
 
   static String getbloodgroup = '$baseURL/api/ddl/GetBloodGroups';
   static String getdesignation = '$baseURL/api/ddl/GetDesignations';
@@ -66,6 +66,12 @@ class AppConstants {
 
   static String editappointconfiguration =
       "$baseURL/api/doctor/UpdateAppointmentConfiguration";
+
+  static String makedefaultappointconfiguration =
+      "$baseURL/api/doctor/DefaultAppointmentConfiguration";
+
+  static String changeappointconfigurationstatus =
+      "$baseURL/api/doctor/ChangeAppointmentConfigurationStatus";
   static String getWorklocation = "$baseURL/api/ddl/GetWorkLocation";
 
   static String getappointconfiguration =

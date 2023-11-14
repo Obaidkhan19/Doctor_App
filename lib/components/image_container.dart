@@ -80,7 +80,8 @@ class ImageContainerNew extends StatelessWidget {
     return Container(
         height: boxheight,
         width: boxwidth,
-        decoration: BoxDecoration(color: backgroundColor),
+        decoration: BoxDecoration(
+            color: backgroundColor, borderRadius: BorderRadius.circular(5)),
         child: InkWell(
           onTap: onpressed,
           child: isSvg == true

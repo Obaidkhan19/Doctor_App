@@ -349,24 +349,8 @@ class ERXController extends GetxController implements GetxService {
 // ON SAVE BUTTON
   updateselectedPrimarydiagnosislist(List<PrimaryDiagnosis1> pdlist) {
     selectedprimarydiagnosisList = pdlist;
-
     checkboxselectedprimarydiagnosisList = pdlist;
 
-    update();
-  }
-
-  // ON CHECKBOX CLICK
-  addcheckboxselectedPrimarydiagnosislist(PrimaryDiagnosis1 pd) {
-    checkboxselectedprimarydiagnosisList.add(pd);
-    update();
-  }
-
-  deletecheckboxselectedPrimarydiagnosislist(PrimaryDiagnosis1 pd) {
-    checkboxselectedprimarydiagnosisList
-        .removeWhere((element) => element.id == pd.id);
-
-    // also add items in removing list
-    deletedprimarydiagnosisList.add(pd.id!);
     update();
   }
 
@@ -388,6 +372,7 @@ class ERXController extends GetxController implements GetxService {
 
   // SECONDAY DIAGNOSIS DATA
   List<SecondaryDiagnosis1> secondaryDiagnosisList = [];
+  List<SecondaryDiagnosis1> checkboxselectedsecondarydiagnosisList = [];
   List<SecondaryDiagnosis1> selectedsecondaryDiagnosisList = [];
   List<String> deletedsecondarydiagnosisList = [];
   updateSecondarydiagnosislist(List<SecondaryDiagnosis1> sdlist) {
@@ -403,14 +388,10 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
-  updateselectedsecondaryDiagnosisList(List<SecondaryDiagnosis1> sdlist) {
+// ON SAVE BUTTON
+  updateselectedsecondarydiagnosislist(List<SecondaryDiagnosis1> sdlist) {
     selectedsecondaryDiagnosisList = sdlist;
-    update();
-  }
-
-  deleteselectedsecondaryDiagnosisList(String id) {
-    selectedsecondaryDiagnosisList.removeWhere((element) => element.id == id);
-    deletedsecondarydiagnosisList.add(id);
+    checkboxselectedsecondarydiagnosisList = sdlist;
     update();
   }
 
@@ -421,6 +402,12 @@ class ERXController extends GetxController implements GetxService {
     );
     itemToUpdate.comments = comment;
     trailingtextController.clear();
+    update();
+  }
+
+  deleteselectedsecondaryDiagnosisList(String id) {
+    selectedsecondaryDiagnosisList.removeWhere((element) => element.id == id);
+    deletedsecondarydiagnosisList.add(id);
     update();
   }
 
