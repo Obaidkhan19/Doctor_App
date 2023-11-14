@@ -1,11 +1,5 @@
-import 'package:doctormobileapplication/models/countries_model.dart';
-import 'package:doctormobileapplication/models/degree.dart';
-import 'package:doctormobileapplication/models/institutes.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class AddSpecializationController extends GetxController
     implements GetxService {

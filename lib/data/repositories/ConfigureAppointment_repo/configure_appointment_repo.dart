@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/configure_appointment_controller.dart';

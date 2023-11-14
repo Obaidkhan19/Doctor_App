@@ -15,7 +15,6 @@ import 'package:doctormobileapplication/data/controller/edit_profile_controller.
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/institutes.dart';
-import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:intl/intl.dart';
 
 class EducationDetail extends StatefulWidget {

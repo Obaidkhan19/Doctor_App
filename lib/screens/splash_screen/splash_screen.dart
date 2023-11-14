@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await remoteConfig.fetchAndActivate();
     String? doctorid = await LocalDb().getDoctorId();
     log(doctorid ?? "");
-    baseURL = remoteConfig.getString('URL');
+    // baseURL = remoteConfig.getString('URL');
     // if (baseURL == "") {
     // baseURL = 'https://patient.helpful.ihealthcure.com/';
     // }
