@@ -139,7 +139,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             setState(() {
                               countryCode = country.dialCode;
                             });
-                            log('Country changed to: ${country.name}');
                           },
                           validator: (value) {
                             if (!value!.isValidNumber()) {
@@ -233,7 +232,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         await AuthRepo.getProvinces(value.id!);
                                     if (AuthController.i.provinces.isNotEmpty &&
                                         AuthController.i.provinces != null) {
-                                      log('country id ${value.id}');
                                       setState(() {
                                         AuthController.i.selectedProvince =
                                             null;

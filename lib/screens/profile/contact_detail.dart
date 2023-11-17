@@ -13,6 +13,7 @@ import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/models/relation.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -242,6 +243,7 @@ class _ContactDetailState extends State<ContactDetail> {
                               }
                               return null;
                             },
+                            keyboardTypenew: TextInputType.number,
                             controller: edit.publicmobileno,
                             hintText: 'Public Phone Number'.tr,
                           ),
@@ -291,6 +293,7 @@ class _ContactDetailState extends State<ContactDetail> {
                               }
                               return null;
                             },
+                            keyboardTypenew: TextInputType.number,
                             controller: edit.privatemobileno,
                             hintText: 'Private Phone Number'.tr,
                           ),
@@ -339,6 +342,7 @@ class _ContactDetailState extends State<ContactDetail> {
                               }
                               return null;
                             },
+                            keyboardTypenew: TextInputType.number,
                             controller: edit.telephone,
                             hintText: 'Telephone Number'.tr,
                           ),
@@ -459,8 +463,12 @@ class _ContactDetailState extends State<ContactDetail> {
                               }
                               return null;
                             },
+                            keyboardTypenew: TextInputType.number,
                             controller: edit.nokidno,
                             hintText: 'idnumber'.tr,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(15)
+                            ],
                           ),
                           // CustomIntlPhoneField(
                           //   onChanged: (phone) {
@@ -506,6 +514,7 @@ class _ContactDetailState extends State<ContactDetail> {
                               }
                               return null;
                             },
+                            keyboardTypenew: TextInputType.number,
                             controller: edit.nokmobileno,
                             hintText: 'NOK Mobile Number'.tr,
                           ),

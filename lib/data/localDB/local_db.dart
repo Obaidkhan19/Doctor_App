@@ -5,6 +5,17 @@ import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalDb {
+  static savefingerprint(bool val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('fingerprint', val);
+  }
+
+  static getfingerprint() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool returnvalue = prefs.getBool('fingerprint') ?? false;
+    return returnvalue;
+  }
+
   removeUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('BranchId');

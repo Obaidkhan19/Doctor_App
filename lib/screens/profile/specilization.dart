@@ -10,7 +10,6 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/auth_r
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
-import 'package:doctormobileapplication/screens/profile/add_specilization.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

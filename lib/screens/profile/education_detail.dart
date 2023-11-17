@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
@@ -15,7 +16,6 @@ import 'package:doctormobileapplication/data/controller/edit_profile_controller.
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/institutes.dart';
-import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:intl/intl.dart';
 
 class EducationDetail extends StatefulWidget {
@@ -416,6 +416,11 @@ class _EducationDetailState extends State<EducationDetail> {
                             child: EditProfileCustomTextField(
                               controller: edit.totalmarks,
                               hintText: 'Total',
+                              keyboardTypenew: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*\.?\d{0,2}')),
+                              ],
                             ),
                           ),
                           Visibility(
@@ -424,11 +429,21 @@ class _EducationDetailState extends State<EducationDetail> {
                             child: EditProfileCustomTextField(
                               controller: edit.obtainedmarks,
                               hintText: 'Obtained',
+                              keyboardTypenew: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*\.?\d{0,2}')),
+                              ],
                             ),
                           ),
                           EditProfileCustomTextField(
                             controller: edit.percentage,
                             hintText: 'Percentage',
+                            keyboardTypenew: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d*\.?\d{0,2}')),
+                            ],
                           ),
                           SizedBox(height: Get.height * 0.03),
                           PrimaryButton(
@@ -793,6 +808,11 @@ class _EducationDetailState extends State<EducationDetail> {
                                 child: EditProfileCustomTextField(
                                   controller: add.totalmarks,
                                   hintText: 'Total',
+                                  keyboardTypenew: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d{0,2}')),
+                                  ],
                                 ),
                               ),
                               Visibility(
@@ -801,11 +821,21 @@ class _EducationDetailState extends State<EducationDetail> {
                                 child: EditProfileCustomTextField(
                                   controller: add.obtainedmarks,
                                   hintText: 'Obtained',
+                                  keyboardTypenew: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d{0,2}')),
+                                  ],
                                 ),
                               ),
                               EditProfileCustomTextField(
                                 controller: add.percentage,
                                 hintText: 'Percentage',
+                                keyboardTypenew: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d*\.?\d{0,2}')),
+                                ],
                               ),
                               SizedBox(height: Get.height * 0.03),
                               PrimaryButton(

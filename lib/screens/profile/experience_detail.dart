@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/add_experience_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
-import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';

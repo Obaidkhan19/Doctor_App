@@ -212,7 +212,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                           EdgeInsets.symmetric(horizontal: Get.width * 0.04),
                       child: Container(
                         alignment: Alignment.bottomCenter,
-                        height: Get.height * 0.58,
+                        height: Get.height * 0.6,
                         width: Get.width * 1,
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(

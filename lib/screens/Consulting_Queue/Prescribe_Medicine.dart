@@ -225,6 +225,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     await ProfileRepo().getDoctorspeciality();
   }
 
+  _getMedMatrix() async {
+    ERXController.i
+        .updatemedicinelist(await PrescribeMedicinRepo.getMedicinesMatrix());
+  }
+
   String? performancestartdate;
 
   @override
@@ -233,15 +238,16 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     call();
     _getErnsDetailHistory();
     _getErnsHistory();
-    _getMediciness();
+    _getComplaints();
+    _getPrimaryDiagnosis();
+    _getSecondaryDiagnosis();
     _getInstructions();
     _getFollowup();
     _getProceduress();
-    _getPrimaryDiagnosis();
-    _getSecondaryDiagnosis();
-    _getComplaints();
+    _getMedMatrix();
     _getInvestigations();
     _getDiagnostics();
+    _getMediciness();
     super.initState();
   }
 
@@ -707,11 +713,23 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      Complaints1 generic =
-                                          await searchabledropdown(context,
-                                              controller.complaintsList ?? []);
-                                      await controller.addCompaint(
-                                          generic, BuildContext);
+                                      // Complaints1 generic =
+                                      //     await searchabledropdown(context,
+                                      //         controller.complaintsList ?? []);
+                                      // await controller.addCompaint(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
+                                      List<Complaints1> result =
+                                          await searchableDropdownCheckBox(
+                                              context,
+                                              controller.complaintsList,
+                                              controller
+                                                  .checkboxselectedcomplaintssList,
+                                              false,
+                                              'complaints');
+
+                                      controller
+                                          .updateselectedComplaintsList(result);
                                       setState(() {});
                                     },
                                     prefixIcon: const Icon(
@@ -1149,11 +1167,24 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      Diagnostics1 generic =
-                                          await searchabledropdown(context,
-                                              controller.diagnosticsList ?? []);
-                                      await controller.addDiagnostics(
-                                          generic, BuildContext);
+                                      // Diagnostics1 generic =
+                                      //     await searchabledropdown(context,
+                                      //         controller.diagnosticsList ?? []);
+                                      // await controller.addDiagnostics(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
+
+                                      List<Diagnostics1> result =
+                                          await searchableDropdownCheckBox(
+                                              context,
+                                              controller.diagnosticsList,
+                                              controller
+                                                  .checkboxselectediagnosticsList,
+                                              false,
+                                              'diagnostics');
+
+                                      controller.updateselectedDiagnosticsList(
+                                          result);
                                       setState(() {});
                                     },
                                     prefixIcon: const Icon(
@@ -1474,13 +1505,27 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      Investigations1 generic =
-                                          await searchabledropdown(
+                                      // Investigations1 generic =
+                                      //     await searchabledropdown(
+                                      //         context,
+                                      //         controller.investigationList ??
+                                      //             []);
+                                      // await controller.addInvestigation(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
+
+                                      List<Investigations1> result =
+                                          await searchableDropdownCheckBox(
                                               context,
-                                              controller.investigationList ??
-                                                  []);
-                                      await controller.addInvestigation(
-                                          generic, BuildContext);
+                                              controller.investigationList,
+                                              controller
+                                                  .checkboxselectedinvestigationList,
+                                              false,
+                                              'investigation');
+
+                                      controller
+                                          .updateselectedInvestigationList(
+                                              result);
                                       setState(() {});
                                     },
                                     prefixIcon: const Icon(
@@ -1615,11 +1660,23 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      Procedures1 generic =
-                                          await searchabledropdown(context,
-                                              controller.proceduresList ?? []);
-                                      await controller.addprocedures(
-                                          generic, BuildContext);
+                                      // Procedures1 generic =
+                                      //     await searchabledropdown(context,
+                                      //         controller.proceduresList ?? []);
+                                      // await controller.addprocedures(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
+                                      List<Procedures1> result =
+                                          await searchableDropdownCheckBox(
+                                              context,
+                                              controller.proceduresList,
+                                              controller
+                                                  .checkboxselectedproceduresList,
+                                              false,
+                                              'procedures');
+
+                                      controller
+                                          .updateselectedProceduresList(result);
                                       setState(() {});
                                     },
                                     prefixIcon: const Icon(
@@ -1754,9 +1811,9 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         child: CustomTextField(
                                           readonly: true,
                                           onTap: () async {
-                                            ERXController.i.updatemedicinelist(
-                                                await PrescribeMedicinRepo
-                                                    .getMedicinesMatrix());
+                                            // ERXController.i.updatemedicinelist(
+                                            //     await PrescribeMedicinRepo
+                                            //         .getMedicinesMatrix());
                                             String result = await addMedicine(
                                               context,
                                               controller.medicineList,
@@ -1804,7 +1861,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       width: Get.width * 0.01,
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.2,
+                                      width: Get.width * 0.22,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -1846,6 +1903,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   width: Get.width * 0.01,
                                                 ),
                                                 SizedBox(
+                                                  width: Get.width * 0.17,
                                                   child: Text(
                                                     controller
                                                             .finalmedicinellist[
@@ -1870,215 +1928,236 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.04,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "freq".tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        for (int index = 0;
-                                            index <
-                                                controller
-                                                    .selectedlst
-                                                    .medicineFrequencies!
-                                                    .length;
-                                            index++)
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                height: Get.height * 0.03,
-                                              ),
-                                              SizedBox(
-                                                width: Get.width * 0.1,
-                                                child: Text(
-                                                  controller
-                                                          .selectedlst
-                                                          .medicineFrequencies?[
-                                                              index]
-                                                          .quantity
-                                                          .toString() ??
-                                                      "",
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                      ],
+                                      width: Get.width * 0.02,
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.05,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "dos".tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
+                                      width: Get.width * 0.07,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "freq".tr,
+                                            style: GoogleFonts.poppins(
+                                              textStyle: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        for (int index = 0;
-                                            index <
-                                                controller.selectedlst
-                                                    .medicineDosages!.length;
-                                            index++)
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                height: Get.height * 0.03,
-                                              ),
-                                              SizedBox(
-                                                width: Get.width * 0.07,
-                                                child: Text(
+                                          SizedBox(
+                                            height: Get.height * 0.02,
+                                          ),
+                                          for (int index = 0;
+                                              index <
                                                   controller
-                                                          .selectedlst
-                                                          .medicineDosages?[
-                                                              index]
-                                                          .dosageValue
-                                                          .toString() ??
-                                                      "",
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      color: Colors.black,
+                                                      .selectedlst
+                                                      .medicineFrequencies!
+                                                      .length;
+                                              index++)
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.06,
+                                                  child: Text(
+                                                    controller
+                                                            .selectedlst
+                                                            .medicineFrequencies?[
+                                                                index]
+                                                            .quantity
+                                                            .toString() ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                      ],
+                                              ],
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.03,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "dur".tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        for (int index = 0;
-                                            index <
-                                                controller.selectedlst.dateList!
-                                                    .length;
-                                            index++)
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                height: Get.height * 0.03,
-                                              ),
-                                              Text(
-                                                "${controller.selectedlst.dateList![index].englishCounting} ${controller.selectedlst.dayList![index].englishDay}",
-                                                style: GoogleFonts.poppins(
-                                                  textStyle:
-                                                      GoogleFonts.poppins(
-                                                    fontSize: 10,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                      ],
+                                      width: Get.width * 0.02,
                                     ),
                                     SizedBox(
-                                      width: Get.width * 0.03,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "route".tr,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
+                                      width: Get.width * 0.07,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "dos".tr,
+                                            style: GoogleFonts.poppins(
+                                              textStyle: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        for (int index = 0;
-                                            index <
-                                                controller.selectedlst
-                                                    .medicineRoutes!.length;
-                                            index++)
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                height: Get.height * 0.03,
-                                              ),
-                                              SizedBox(
-                                                width: Get.width * 0.18,
-                                                child: Text(
-                                                  controller
-                                                          .selectedlst
-                                                          .medicineRoutes?[
-                                                              index]
-                                                          .englishDefinition
-                                                          .toString() ??
-                                                      "",
-                                                  style: GoogleFonts.poppins(
-                                                    textStyle:
-                                                        GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                ),
-                                              ),
-                                            ],
+                                          SizedBox(
+                                            height: Get.height * 0.02,
                                           ),
-                                      ],
+                                          for (int index = 0;
+                                              index <
+                                                  controller.selectedlst
+                                                      .medicineDosages!.length;
+                                              index++)
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.06,
+                                                  child: Text(
+                                                    controller
+                                                            .selectedlst
+                                                            .medicineDosages?[
+                                                                index]
+                                                            .dosageValue
+                                                            .toString() ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.02,
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.15,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "dur".tr,
+                                            style: GoogleFonts.poppins(
+                                              textStyle: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.02,
+                                          ),
+                                          for (int index = 0;
+                                              index <
+                                                  controller.selectedlst
+                                                      .dateList!.length;
+                                              index++)
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.14,
+                                                  child: Text(
+                                                    "${controller.selectedlst.dateList![index].englishCounting} ${controller.selectedlst.dayList![index].englishDay}",
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.01,
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.25,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "route".tr,
+                                            style: GoogleFonts.poppins(
+                                              textStyle: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.02,
+                                          ),
+                                          for (int index = 0;
+                                              index <
+                                                  controller.selectedlst
+                                                      .medicineRoutes!.length;
+                                              index++)
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: Get.height * 0.03,
+                                                ),
+                                                SizedBox(
+                                                  width: Get.width * 0.24,
+                                                  child: Text(
+                                                    controller
+                                                            .selectedlst
+                                                            .medicineRoutes?[
+                                                                index]
+                                                            .englishDefinition
+                                                            .toString() ??
+                                                        "",
+                                                    style: GoogleFonts.poppins(
+                                                      textStyle:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                     SizedBox(
                                       width: Get.width * 0.01,
@@ -2277,11 +2356,24 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      Instructions1 generic =
-                                          await searchabledropdown(context,
-                                              controller.instructionList ?? []);
-                                      await controller.addinstructions(
-                                          generic, BuildContext);
+                                      // Instructions1 generic =
+                                      //     await searchabledropdown(context,
+                                      //         controller.instructionList ?? []);
+                                      // await controller.addinstructions(
+                                      //     generic, BuildContext);
+                                      // setState(() {});
+
+                                      List<Instructions1> result =
+                                          await searchableDropdownCheckBox(
+                                              context,
+                                              controller.instructionList,
+                                              controller
+                                                  .checkboxselectedinstructionList,
+                                              false,
+                                              'instruction');
+
+                                      controller.updateselectedInstructionList(
+                                          result);
                                       setState(() {});
                                     },
                                     prefixIcon: const Icon(

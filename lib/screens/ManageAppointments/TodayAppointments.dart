@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import '../../data/controller/ManageAppointments_Controller.dart';
 import '../../helpers/color_manager.dart';
 import '../../helpers/font_manager.dart';
-import '../../helpers/values_manager.dart';
 import '../../utils/AppImages.dart';
 import 'DailyViewAppointment.dart';
 
@@ -82,105 +81,94 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                     .dailyDoctorAppointmentsModel
                                     .onlineAppointmentStatistics !=
                                 null)
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(
-                                        0xfff1272d3), // Set the background color of the container
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey
-                                            .withOpacity(0.3), // Shadow color
-                                        spreadRadius:
-                                            2, // Spread radius of the shadow
-                                        blurRadius:
-                                            2, // Blur radius of the shadow
-                                        offset: const Offset(
-                                            0, 2), // Offset of the shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: ListTile(
-                                    onTap: () {
-                                      DateTime Dates = DateTime.now();
-                                      String Date = DateFormat('yyyy-MM-dd')
-                                          .format(Dates);
-                                      ManageAppointmentController.i
-                                          .getDailyDoctorAppointmentSlots(
-                                              Date.toString(), 'true', '');
-                                      Get.to(() => DailyViewAppointments(
-                                          dateTime: Date.toString(),
-                                          IsOnline: 'true',
-                                          WorkLocationId: ''));
-                                    },
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    leading: Image.asset(
-                                      AppImages.online,
-                                      scale: 2,
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  color: const Color(
+                                      0xfff1272d3), // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey
+                                          .withOpacity(0.3), // Shadow color
+                                      spreadRadius:
+                                          2, // Spread radius of the shadow
+                                      blurRadius:
+                                          2, // Blur radius of the shadow
+                                      offset: const Offset(0, 2),
                                     ),
-                                    title: Text(
-                                      ManageAppointmentController
-                                              .i
-                                              .dailyDoctorAppointmentsModel
-                                              .onlineAppointmentStatistics
-                                              ?.location
-                                              .toString() ??
-                                          "",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 11,
+                                  ],
+                                ),
+                                child: ListTile(
+                                  onTap: () {
+                                    DateTime Dates = DateTime.now();
+                                    String Date =
+                                        DateFormat('yyyy-MM-dd').format(Dates);
+                                    ManageAppointmentController.i
+                                        .getDailyDoctorAppointmentSlots(
+                                            Date.toString(), 'true', '');
+                                    Get.to(() => DailyViewAppointments(
+                                        dateTime: Date.toString(),
+                                        IsOnline: 'true',
+                                        WorkLocationId: ''));
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  leading: Image.asset(
+                                    AppImages.online,
+                                    scale: 2,
+                                  ),
+                                  title: Text(
+                                    ManageAppointmentController
+                                            .i
+                                            .dailyDoctorAppointmentsModel
+                                            .onlineAppointmentStatistics
+                                            ?.location
+                                            .toString() ??
+                                        "",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 11,
+                                      color: ColorManager.kWhiteColor,
+                                    ),
+                                  ),
+                                  trailing: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        ManageAppointmentController
+                                                .i
+                                                .dailyDoctorAppointmentsModel
+                                                .onlineAppointmentStatistics
+                                                ?.noofAppointments
+                                                .toString() ??
+                                            "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: ColorManager.kWhiteColor,
+                                                fontWeight:
+                                                    FontWeightManager.light,
+                                                fontSize: 20),
+                                      ),
+                                      Text(
+                                        " | ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: ColorManager.kWhiteColor,
+                                                fontWeight:
+                                                    FontWeightManager.light,
+                                                fontSize: 20),
+                                      ),
+                                      const Icon(
+                                        Icons.navigate_next_outlined,
+                                        size:
+                                            20.0, // Adjust icon size as needed
                                         color: ColorManager.kWhiteColor,
                                       ),
-                                    ),
-                                    trailing: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          ManageAppointmentController
-                                                  .i
-                                                  .dailyDoctorAppointmentsModel
-                                                  .onlineAppointmentStatistics
-                                                  ?.noofAppointments
-                                                  .toString() ??
-
-// onlineAppointmentStatistics?.noofAppointments
-
-                                              "",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  color:
-                                                      ColorManager.kWhiteColor,
-                                                  fontWeight:
-                                                      FontWeightManager.light,
-                                                  fontSize: 20),
-                                        ),
-                                        Text(
-                                          " | ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                  color:
-                                                      ColorManager.kWhiteColor,
-                                                  fontWeight:
-                                                      FontWeightManager.light,
-                                                  fontSize: 20),
-                                        ),
-                                        const Icon(
-                                          Icons.navigate_next_outlined,
-                                          size:
-                                              20.0, // Adjust icon size as needed
-                                          color: ColorManager.kWhiteColor,
-                                        ),
-                                      ],
-                                    ),
+                                    ],
                                   ),
                                 ),
                               )
@@ -355,18 +343,22 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'timeSlot'.tr,
-                                                      style: GoogleFonts.poppins(
-                                                          fontSize: 9,
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                          fontWeight:
-                                                              FontWeight.w700),
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: Get.width * 0.25,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        'timeSlot'.tr,
+                                                        style: GoogleFonts.poppins(
+                                                            fontSize: 9,
+                                                            color: ColorManager
+                                                                .kblackColor,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 SizedBox(
                                                   height: Get.height * 0.01,
@@ -396,7 +388,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                               ],
                                             ),
                                             SizedBox(
-                                              width: Get.width * 0.1,
+                                              width: Get.width * 0.045,
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(
@@ -680,13 +672,17 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                         ),
                                         Row(
                                           children: [
-                                            Text(
-                                              'totalAppointments'.tr,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 8,
-                                                  color:
-                                                      ColorManager.kblackColor,
-                                                  fontWeight: FontWeight.w700),
+                                            SizedBox(
+                                              width: Get.width * 0.25,
+                                              child: Text(
+                                                'totalAppointments'.tr,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 8,
+                                                    color: ColorManager
+                                                        .kblackColor,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
                                             ),
                                             SizedBox(width: Get.width * 0.105),
                                             ManageAppointmentController
@@ -781,8 +777,8 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                               ),
                       ]),
                     ))
-                  : const Center(
-                      child: Text("No Record Found"),
+                  : Center(
+                      child: Text("NoRecordFound".tr),
                     ));
         }));
   }

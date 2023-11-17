@@ -375,7 +375,7 @@ class _ConfigureAppointmentScreenState
                                                                 value: _MenuValues
                                                                     .makedefault,
                                                                 child: Text(
-                                                                  'Make Default'
+                                                                  'Makedefault'
                                                                       .tr,
                                                                   style: GoogleFonts
                                                                       .poppins(
@@ -531,7 +531,7 @@ class _ConfigureAppointmentScreenState
                                                   .i.hasOnlineConsultation ==
                                               true) {
                                         showSnackbar(context,
-                                            "Already have Online Consultation");
+                                            "AlreadyhaveOnlineConsultation".tr);
                                       } else {
                                         contr.updateoOnline(value);
                                       }
@@ -1343,10 +1343,6 @@ class _ConfigureAppointmentScreenState
                         ),
                         InkWell(
                           onTap: () async {
-                            print(
-                                'contr.daylstcontr.daylstcontr.daylstcontr.daylst');
-                            print(contr.daylst);
-
                             String? hospitalid = contr.selectedhospital?.id;
                             String hid = '';
                             if (contr.daylst.isNotEmpty) {
@@ -1360,7 +1356,7 @@ class _ConfigureAppointmentScreenState
                                 if (_time ==
                                     const TimeOfDay(hour: 0, minute: 0)) {
                                   showSnackbar(
-                                      context, "Please select Slot Duration");
+                                      context, "PleaseselectSlotDuration".tr);
                                 }
                                 // else if (_fromtime ==
                                 //     const TimeOfDay(hour: 0, minute: 0)) {
@@ -1423,15 +1419,17 @@ class _ConfigureAppointmentScreenState
                                     }
                                   } else {
                                     showSnackbar(
-                                        context, "Slot Duration is incorrect");
+                                        context, "SlotDurationisincorrect".tr);
                                   }
                                 }
                               } else {
-                                showSnackbar(context,
-                                    "Select Hospital or enable online consultation");
+                                showSnackbar(
+                                    context,
+                                    "SelectHospitalorenableonlineconsultation"
+                                        .tr);
                               }
                             } else {
-                              showSnackbar(context, "Select at least One Day");
+                              showSnackbar(context, "SelectatleastOneDay".tr);
                             }
                           },
                           child: Container(

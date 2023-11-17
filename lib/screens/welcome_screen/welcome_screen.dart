@@ -25,16 +25,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: SafeArea(
         minimum: const EdgeInsets.only(bottom: AppPadding.p20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: Get.height * 0.02,
+            ),
             Image.asset(
               Images.welcome,
-              height: Get.height * 0.55,
-              width: Get.width,
+              height: Get.height * 0.5,
+              width: Get.width * 1,
               fit: BoxFit.cover,
             ),
             SizedBox(
-              height: Get.height * 0.06,
+              height: Get.height * 0.05,
             ),
             Center(
               child: Text('Welcome to ',
@@ -53,9 +56,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       fontWeight: FontWeight.bold)),
             ),
             SizedBox(
-              height: Get.height * 0.02,
+              height: Get.height * 0.04,
             ),
-            const Spacer(),
             const GetStartedButton()
           ],
         ),

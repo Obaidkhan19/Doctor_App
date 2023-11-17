@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:doctormobileapplication/utils/constants.dart';
 
 class PatientDetail {
   int? status;
@@ -144,37 +141,37 @@ class PatientDetail1 {
     return data;
   }
 
-  Future<List<PatientDetail1>> getPatientDetailForPrescription(
-      String dit, String vno, String pid, String bid) async {
-    print("a");
-    String url = AppConstants.getPatientDetailForPrescription;
-    Uri uri = Uri.parse(url);
-    var body = jsonEncode(<String, dynamic>{
-      "DoctorId": dit,
-      "VisitNo": vno,
-      "PatientId": pid,
-      "BranchId": bid,
-    });
-    var response = await http.post(uri,
-        body: body,
-        headers: <String, String>{'Content-Type': 'application/json'});
-    if (response.statusCode == 200) {
-      dynamic jsonData = jsonDecode(response.body);
+  // Future<List<PatientDetail1>> getPatientDetailForPrescription(
+  //     String dit, String vno, String pid, String bid) async {
+  //   print("a");
+  //   String url = AppConstants.getPatientDetailForPrescription;
+  //   Uri uri = Uri.parse(url);
+  //   var body = jsonEncode(<String, dynamic>{
+  //     "DoctorId": dit,
+  //     "VisitNo": vno,
+  //     "PatientId": pid,
+  //     "BranchId": bid,
+  //   });
+  //   var response = await http.post(uri,
+  //       body: body,
+  //       headers: <String, String>{'Content-Type': 'application/json'});
+  //   if (response.statusCode == 200) {
+  //     dynamic jsonData = jsonDecode(response.body);
 
-      // Check if the JSON data is a list or a single object
-      if (jsonData is List) {
-        List<PatientDetail1> patientdetailList =
-            jsonData.map((json) => PatientDetail1.fromJson(json)).toList();
-        return patientdetailList;
-      } else if (jsonData is Map<String, dynamic>) {
-        // Handle the case when jsonData is a single object
-        PatientDetail1 patientDetail = PatientDetail1.fromJson(jsonData);
-        return [patientDetail]; // Return a list with a single element
-      } else {
-        throw Exception('Invalid JSON response');
-      }
-    } else {
-      throw Exception('Failed to fetch patient details');
-    }
-  }
+  //     // Check if the JSON data is a list or a single object
+  //     if (jsonData is List) {
+  //       List<PatientDetail1> patientdetailList =
+  //           jsonData.map((json) => PatientDetail1.fromJson(json)).toList();
+  //       return patientdetailList;
+  //     } else if (jsonData is Map<String, dynamic>) {
+  //       // Handle the case when jsonData is a single object
+  //       PatientDetail1 patientDetail = PatientDetail1.fromJson(jsonData);
+  //       return [patientDetail]; // Return a list with a single element
+  //     } else {
+  //       throw Exception('Invalid JSON response');
+  //     }
+  //   } else {
+  //     throw Exception('Failed to fetch patient details');
+  //   }
+  // }
 }

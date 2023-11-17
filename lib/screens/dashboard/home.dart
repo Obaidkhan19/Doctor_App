@@ -96,11 +96,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        toolbarHeight: Get.height * 0.1,
         centerTitle: true,
-        title: SizedBox(
-            width: Get.width * 0.4,
-            height: Get.height * 9.97,
-            child: Image.asset(Images.logo)),
+        // title: SizedBox(
+        //     width: Get.width * 0.4,
+        //     height: Get.height * 9.97,
+        //     child: Image.asset(Images.logo)),
+        title: Image.asset(
+          Images.logo,
+          height: Get.height * 0.07,
+        ),
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -225,10 +230,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: Get.height * 0.08,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: const LinearGradient(colors: [
-                            Color(0xff1272D3),
-                            Color(0xff001D86),
-                          ])),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xff1272D3),
+                                Color(0xff001D86),
+                              ])),
                       width: Get.width * 0.45,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -243,17 +251,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.only(
                               top: Get.height * 0.015,
                               bottom: Get.height * 0.015),
-                          child: Text(
-                            'consultingqueue'.tr,
-                            //textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor),
-                          ),
+                          child: Text('consultingqueue'.tr,
+                              //textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: ColorManager.kWhiteColor)),
                         ),
                       ),
                     ),
@@ -295,18 +298,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               top: Get.height * 0.015,
                               bottom: Get.height * 0.015),
                           child: Text(
-                            profileContr.status
-                                .toLowerCase()
-                                .replaceAll(' ', '')
-                                .tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor),
-                          ),
+                              profileContr.value == 1
+                                  ? "iamonline".tr
+                                  : "iamoffline".tr,
+
+                              // profileContr
+                              //     .status
+                              //     .toLowerCase()
+                              //     .replaceAll(' ', '')
+                              //     .tr,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: ColorManager.kWhiteColor)),
                         ),
                       ),
                     ),
@@ -318,68 +322,97 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    // SizedBox(
+                    //   width: Get.width * 0.45,
+                    //   height: Get.height * 0.25,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       Get.to(const ConfigureAppointmentScreen());
+                    //     },
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Image.asset(
+                    //           Images.ConfiguationAppointment,
+                    //           height: Get.height * 0.1,
+                    //         ),
+                    //         SizedBox(
+                    //           height: Get.height * 0.01,
+                    //         ),
+                    //         Text('configureappointments'.tr,
+                    //             textAlign: TextAlign.center,
+                    //             style: GoogleFonts.poppins(
+                    //                 fontWeight: FontWeight.bold,
+                    //                 fontSize: 12,
+                    //                 color: ColorManager.kWhiteColor)),
+                    //         SizedBox(
+                    //           height: Get.height * 0.005,
+                    //         ),
+                    //         Text('adjustyourschedule'.tr,
+                    //             textAlign: TextAlign.center,
+                    //             style: GoogleFonts.poppins(
+                    //                 fontSize: 10,
+                    //                 color: ColorManager.kWhiteColor))
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    Container(
                       width: Get.width * 0.45,
-                      height: Get.height * 0.23,
+                      height: Get.height * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: ColorManager.kPrimaryColor),
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
                         onPressed: () {
-                          //  Get.to(() => ScrollControllerDemo());
-                          // Get.to(() => NoDataFound(
-                          //       Title: 'Configure Appointments',
-                          //     ));
                           Get.to(const ConfigureAppointmentScreen());
                         },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: Get.height * 0.015,
-                              bottom: Get.height * 0.015),
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Images.ConfiguationAppointment,
-                                height: Get.height * 0.1,
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              Text('configureappointments'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: ColorManager.kWhiteColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w900)),
-                              SizedBox(
-                                height: Get.height * 0.005,
-                              ),
-                              Text('adjustyourschedule'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: ColorManager.kWhiteColor,
-                                        fontSize: 8,
-                                      ))
-                            ],
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              Images.ConfiguationAppointment,
+                              height: Get.height * 0.1,
+                              width: Get.width * 0.3,
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Text('configureappointments'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    color: ColorManager.kWhiteColor)),
+                            SizedBox(
+                              height: Get.height * 0.005,
+                            ),
+                            Text('adjustyourschedule'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    color: ColorManager.kWhiteColor))
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(width: Get.height * 0.007),
+
                     Container(
                       width: Get.width * 0.43,
-                      height: Get.height * 0.23,
+                      height: Get.height * 0.25,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          gradient: const LinearGradient(colors: [
-                            Color(0xffFDD504),
-                            Color(0xffFCB006),
-                          ])),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xffFDD504),
+                                Color(0xffFCB006),
+                              ])),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 0.0,
@@ -400,31 +433,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               Image.asset(
                                 Images.ManagementAppointment,
                                 height: Get.height * 0.1,
+                                width: Get.width * 0.3,
                               ),
                               SizedBox(
                                 height: Get.height * 0.005,
                               ),
                               Text('manageappointments'.tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: ColorManager.kWhiteColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w900)),
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color: ColorManager.kWhiteColor)),
                               SizedBox(
                                 height: Get.height * 0.005,
                               ),
                               Text('approve/aisapproveappointments'.tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: ColorManager.kWhiteColor,
-                                        fontSize: 8,
-                                      ))
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 10,
+                                      color: ColorManager.kWhiteColor))
                             ],
                           ),
                         ),
@@ -440,63 +467,103 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: Get.width * 0.45,
-                      height: Get.height * 0.23,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Get.to(() => NoDataFound(
-                          //       Title: 'Consulted Vault',
-                          //     ));
+                    // SizedBox(
 
-                          //  Get.to(() => const PastConsultation());
+                    //   width: Get.width * 0.45,
+                    //   height: Get.height * 0.25,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       // Get.to(() => NoDataFound(
+                    //       //       Title: 'Consulted Vault',
+                    //       //     ));
+
+                    //       //  Get.to(() => const PastConsultation());
+                    //       Get.to(const AppointmentHistoryscreen());
+                    //     },
+                    //     child: Padding(
+                    //       padding: EdgeInsets.only(
+                    //           top: Get.height * 0.015,
+                    //           bottom: Get.height * 0.015),
+                    //       child: Column(
+                    //         crossAxisAlignment: CrossAxisAlignment.center,
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           Image.asset(
+                    //             Images.ConsultedVault,
+                    //             height: Get.height * 0.1,
+                    //           ),
+                    //           SizedBox(
+                    //             height: Get.height * 0.01,
+                    //           ),
+                    //           Text('consultedvault'.tr,
+                    //               textAlign: TextAlign.center,
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .bodyMedium
+                    //                   ?.copyWith(
+                    //                       color: ColorManager.kWhiteColor,
+                    //                       fontSize: 12,
+                    //                       fontWeight: FontWeight.bold)),
+                    //           SizedBox(
+                    //             height: Get.height * 0.005,
+                    //           ),
+                    //           Text('viewconsultations'.tr,
+                    //               textAlign: TextAlign.center,
+                    //               style: GoogleFonts.poppins(
+                    //                   fontSize: 10,
+                    //                   color: ColorManager.kWhiteColor))
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    Container(
+                      width: Get.width * 0.45,
+                      height: Get.height * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: ColorManager.kPrimaryColor),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () {
                           Get.to(const AppointmentHistoryscreen());
                         },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: Get.height * 0.015,
-                              bottom: Get.height * 0.015),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Images.ConsultedVault,
-                                height: Get.height * 0.1,
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              Text('consultedvault'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: ColorManager.kWhiteColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w900)),
-                              SizedBox(
-                                height: Get.height * 0.005,
-                              ),
-                              Text('viewconsultations'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: ColorManager.kWhiteColor,
-                                        fontSize: 8,
-                                      ))
-                            ],
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              Images.ConsultedVault,
+                              height: Get.height * 0.1,
+                              width: Get.width * 0.3,
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Text('consultedvault'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    color: ColorManager.kWhiteColor)),
+                            SizedBox(
+                              height: Get.height * 0.005,
+                            ),
+                            Text('viewconsultations'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    color: ColorManager.kWhiteColor))
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(width: Get.height * 0.007),
+
                     Container(
                       width: Get.width * 0.43,
-                      height: Get.height * 0.23,
+                      height: Get.height * 0.25,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           gradient: const LinearGradient(colors: [
@@ -510,7 +577,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             shadowColor: Colors.transparent),
                         onPressed: () {
                           Fluttertoast.showToast(
-                              msg: "Coming Soon",
+                              msg: "ComingSoon".tr,
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
@@ -530,31 +597,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               Image.asset(
                                 Images.HealthSummry,
                                 height: Get.height * 0.1,
+                                width: Get.width * 0.3,
                               ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
                               Text('healthsummary'.tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: ColorManager.kWhiteColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w900)),
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color: ColorManager.kWhiteColor)),
                               SizedBox(
                                 height: Get.height * 0.005,
                               ),
                               Text('patientmonitoring'.tr,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: ColorManager.kWhiteColor,
-                                        fontSize: 8,
-                                      ))
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 10,
+                                      color: ColorManager.kWhiteColor))
                             ],
                           ),
                         ),
@@ -758,7 +819,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(Get.height * 0.02),
                     child: Align(
                         alignment: Alignment.topLeft,
                         child: Image.asset(Images.profile)),
@@ -819,7 +880,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ?.copyWith(
                                             color: ColorManager.kWhiteColor,
                                             fontSize: 10,
-                                            fontWeight: FontWeight.w900),
+                                            fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(
                                     height: Get.height * 0.01,
@@ -961,13 +1022,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: ColorManager.kWhiteColor,
                           fontSize: 18,
-                          fontWeight: FontWeight.w900),
+                          fontWeight: FontWeight.bold),
                     )),
                 Text(
                   'Consulation',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: ColorManager.kyellowContainer,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.bold,
                       fontSize: 12),
                 )
               ],

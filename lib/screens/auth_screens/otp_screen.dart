@@ -45,7 +45,7 @@ class _OtpScreenState extends State<OtpScreen> {
           },
         ),
         automaticallyImplyLeading: false,
-        toolbarHeight: 50,
+        toolbarHeight: Get.height * 0.12,
         title: Image.asset(
           Images.logo,
           height: Get.height * 0.07,

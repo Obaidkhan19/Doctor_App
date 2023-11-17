@@ -32,7 +32,10 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
           dateTime: widget.dateTime,
           IsOnline: widget.IsOnline,
           WorkLocationId: widget.WorkLocationId),
-      DetailMonthlyAppointment(worklocationid: widget.WorkLocationId ?? "")
+      DetailMonthlyAppointment(
+        worklocationid: widget.WorkLocationId ?? "",
+        isonline: widget.IsOnline ?? "",
+      )
     ];
     super.initState();
   }
@@ -61,6 +64,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
             icon: const Icon(Icons.arrow_back_ios),
             color: ColorManager.kPrimaryColor,
             onPressed: () {
+              ManageAppointmentController.i.setPageIndexofDayViewAppointment(0);
               Get.back();
             },
           ),
@@ -102,7 +106,8 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
                       child: Visibility(
                         visible: true,
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Get.width * 0.05),
                             child: Container(
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(

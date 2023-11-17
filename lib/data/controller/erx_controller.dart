@@ -21,6 +21,8 @@ import 'package:doctormobileapplication/models/medicincematrix.dart' as med;
 class ERXController extends GetxController implements GetxService {
   static ERXController get i => Get.put(ERXController());
 
+  List<dynamic> deletedidlist = [];
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   updateIsloading(bool value) {
@@ -300,6 +302,7 @@ class ERXController extends GetxController implements GetxService {
   // COMPLAINT DATA
   List<Complaints1> complaintsList = [];
   List<Complaints1> selectedComplaintsList = [];
+  List<Complaints1> checkboxselectedcomplaintssList = [];
   List<String> deletedComplaintsList = [];
 
   updatecomplaintdata(List<Complaints1> clist) {
@@ -307,16 +310,17 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
-  addCompaint(Complaints1 c, ctx) {
-    if (selectedComplaintsList.contains(c)) {
-      showSnackbar(ctx, "Already Added");
-    }
-    selectedComplaintsList.add(c);
-    update();
-  }
+  // addCompaint(Complaints1 c, ctx) {
+  //   if (selectedComplaintsList.contains(c)) {
+  //     showSnackbar(ctx, "Already Added");
+  //   }
+  //   selectedComplaintsList.add(c);
+  //   update();
+  // }
 
   updateselectedComplaintsList(List<Complaints1> cmplist) {
     selectedComplaintsList = cmplist;
+    checkboxselectedcomplaintssList = cmplist;
     update();
   }
 
@@ -417,25 +421,12 @@ class ERXController extends GetxController implements GetxService {
   List<Investigations1> investigationList = [];
   List<Investigations1> selectedinvestigationList = [];
   // Investigations1? selectedinvestigation;
+  List<Investigations1> checkboxselectedinvestigationList = [];
   List<String> deletedinvestigationList = [];
   updateInvestigationlist(List<Investigations1> ilist) {
     investigationList = ilist;
     update();
   }
-
-  // addInvestigation() {
-  //   if (selectedinvestigationList.contains(selectedinvestigation)) {
-  //     showSnackbar(Get.context!, ' Already Selected');
-  //   } else {
-  //     selectedinvestigationList.add(selectedinvestigation!);
-  //   }
-  //   update();
-  // }
-
-  // updateinvestigation(Investigations1 investigations1) {
-  //   selectedinvestigation = investigations1;
-  //   update();
-  // }
 
   addInvestigation(Investigations1 c, ctx) {
     if (selectedinvestigationList.contains(c)) {
@@ -447,6 +438,7 @@ class ERXController extends GetxController implements GetxService {
 
   updateselectedInvestigationList(List<Investigations1> ilist) {
     selectedinvestigationList = ilist;
+    checkboxselectedinvestigationList = ilist;
     update();
   }
 
@@ -459,6 +451,7 @@ class ERXController extends GetxController implements GetxService {
   // PROCEDURES DATA
   List<Procedures1> proceduresList = [];
   List<Procedures1> selectedproceduresList = [];
+  List<Procedures1> checkboxselectedproceduresList = [];
   List<String> deletedproceduresList = [];
   updateProcedureslist(List<Procedures1> plist) {
     proceduresList = plist;
@@ -475,6 +468,7 @@ class ERXController extends GetxController implements GetxService {
 
   updateselectedProceduresList(List<Procedures1> plist) {
     selectedproceduresList = plist;
+    checkboxselectedproceduresList = plist;
     update();
   }
 
@@ -486,6 +480,7 @@ class ERXController extends GetxController implements GetxService {
 
   // INSTRUCTION DATA
   List<Instructions1> instructionList = [];
+  List<Instructions1> checkboxselectedinstructionList = [];
   List<Instructions1> selectedinstructionList = [];
   List<String> deletedinstructionList = [];
   updateInstructionlist(List<Instructions1> ilist) {
@@ -503,6 +498,7 @@ class ERXController extends GetxController implements GetxService {
 
   updateselectedInstructionList(List<Instructions1> ilist) {
     selectedinstructionList = ilist;
+    checkboxselectedinstructionList = ilist;
     update();
   }
 
@@ -564,22 +560,12 @@ class ERXController extends GetxController implements GetxService {
   // DIAGNOSTICS DATA
   List<Diagnostics1> diagnosticsList = [];
   List<Diagnostics1> selecteddiagnosticslist = [];
+  List<Diagnostics1> checkboxselectediagnosticsList = [];
   List<String> deleteddiagnosticsList = [];
-  //Diagnostics1? selecteddiagnostics;
-
-  // updatediagnostics(Diagnostics1 diagnostics1) {
-  //   selecteddiagnostics = diagnostics1;
-  //   update();
-  // }
-
-  // addDiagnostics() {
-  //   if (selecteddiagnosticslist.contains(selecteddiagnostics)) {
-  //     showSnackbar(Get.context!, ' Already Selected');
-  //   } else {
-  //     selecteddiagnosticslist.add(selecteddiagnostics!);
-  //   }
-  //   update();
-  // }
+  updatediagnosticslist(List<Diagnostics1> dlist) {
+    diagnosticsList = dlist;
+    update();
+  }
 
   addDiagnostics(Diagnostics1 c, ctx) {
     if (selecteddiagnosticslist.contains(c)) {
@@ -589,13 +575,9 @@ class ERXController extends GetxController implements GetxService {
     update();
   }
 
-  updatediagnosticslist(List<Diagnostics1> dlist) {
-    diagnosticsList = dlist;
-    update();
-  }
-
   updateselectedDiagnosticsList(List<Diagnostics1> dlist) {
     selecteddiagnosticslist = dlist;
+    checkboxselectediagnosticsList = dlist;
     update();
   }
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:doctormobileapplication/components/primary_button.dart';
-import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
@@ -179,7 +178,9 @@ Future<dynamic> searchableDropdownCheckBox(
   TextEditingController search = TextEditingController();
   String title = "";
   Completer<List<dynamic>> completer = Completer<List<dynamic>>();
-  List<dynamic> deletedidlist = [];
+  List dataList = checkboxselectedItems;
+
+  // add checkbox list in datelist
   await showDialog(
     barrierDismissible: false,
     context: context,
@@ -197,35 +198,36 @@ Future<dynamic> searchableDropdownCheckBox(
                 content: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: Get.width * 0.25,
-                          ),
-                          Text(
-                            'Search',
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.15,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: const Icon(
-                              Icons.close_outlined,
-                              size: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.03,
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     // SizedBox(
+                      //     //   width: Get.width * 0.25,
+                      //     // ),
+                      //     Text(
+                      //       'Search',
+                      //       style: GoogleFonts.poppins(
+                      //         textStyle: GoogleFonts.poppins(
+                      //             fontSize: 15, fontWeight: FontWeight.bold),
+                      //       ),
+                      //     ),
+                      //     // SizedBox(
+                      //   width: Get.width * 0.15,
+                      // ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.back();
+                      //   },
+                      //   child: const Icon(
+                      //     Icons.close_outlined,
+                      //     size: 20,
+                      //   ),
+                      // ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: Get.height * 0.03,
+                      // ),
                       SizedBox(
                         height: Get.height * 0.07,
                         child: TextFormField(
@@ -275,9 +277,8 @@ Future<dynamic> searchableDropdownCheckBox(
                           shrinkWrap: true,
                           itemCount: list.length,
                           itemBuilder: ((context, index) {
-                            bool isSelected = checkboxselectedItems.any(
-                                (selectedItem) =>
-                                    selectedItem.id == list[index].id);
+                            bool isSelected = dataList.any((selectedItem) =>
+                                selectedItem.id == list[index].id);
 
                             if (search.text.isEmpty ||
                                 list[index]
@@ -311,31 +312,36 @@ Future<dynamic> searchableDropdownCheckBox(
                                       //   });
                                       // },
                                       onChanged: (bool? value) {
-                                        setState(() {
-                                          if (value != null) {
-                                            if (value) {
-                                              checkboxselectedItems
-                                                  .add(list[index]);
-                                            } else {
-                                              // find the index of item to remove
-                                              int indexOfItemToRemove =
-                                                  checkboxselectedItems
-                                                      .indexWhere(
-                                                (selectedItem) =>
-                                                    selectedItem.id ==
-                                                    list[index].id,
-                                              );
-                                              // remove from the index
-                                              if (indexOfItemToRemove != -1) {
-                                                checkboxselectedItems.removeAt(
-                                                    indexOfItemToRemove);
-                                                deletedidlist.add(
-                                                    checkboxselectedItems[index]
-                                                        .id);
-                                              }
+                                        ERXController.i.selectedComplaintsList;
+
+                                        if (value != null) {
+                                          if (value) {
+                                            dataList.add(list[index]);
+                                            // if user remove and then add item again so remove that id from delete list
+                                            if (ERXController.i.deletedidlist
+                                                .contains(list[index].id)) {
+                                              ERXController.i.deletedidlist
+                                                  .remove(list[index].id);
+                                            }
+                                          } else {
+                                            // find the index of item to remove
+                                            int indexOfItemToRemove =
+                                                dataList.indexWhere(
+                                              (selectedItem) =>
+                                                  selectedItem.id ==
+                                                  list[index].id,
+                                            );
+                                            ERXController.i.deletedidlist
+                                                .add(list[index].id);
+                                            if (indexOfItemToRemove != -1) {
+                                              dataList.removeAt(
+                                                  indexOfItemToRemove);
                                             }
                                           }
-                                        });
+                                        }
+                                        ERXController.i.selectedComplaintsList;
+
+                                        setState(() {});
                                       },
                                     ),
                                     if (trailingvisibility == false)
@@ -369,7 +375,7 @@ Future<dynamic> searchableDropdownCheckBox(
                                   child: IconButton(
                                     onPressed: () {
                                       addComment(context, list[index].id ?? "",
-                                          listname);
+                                          list[index].comments ?? "", listname);
                                     },
                                     icon: const Icon(Icons.add_box_outlined),
                                   ),
@@ -390,8 +396,73 @@ Future<dynamic> searchableDropdownCheckBox(
                         height: Get.height * 0.05,
                         width: Get.width * 0.55,
                         onPressed: () {
+                          if (listname == "primary") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i
+                                  .deleteselectedprimarydiagnosisList(
+                                      ERXController.i.deletedidlist[i]);
+                            }
+                          }
+
+                          if (listname == "secondary") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i
+                                  .deleteselectedsecondaryDiagnosisList(
+                                      ERXController.i.deletedidlist[i]);
+                            }
+                          }
+
+                          if (listname == "complaints") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i.deleteSelectedComplaintsList(
+                                  ERXController.i.deletedidlist[i]);
+                            }
+                          }
+
+                          if (listname == "diagnostics") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i.deleteSelecteddiagnosticsList(
+                                  ERXController.i.deletedidlist[i]);
+                            }
+                          }
+
+                          if (listname == "investigation") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i.deleteselectedInvestigationList(
+                                  ERXController.i.deletedidlist[i]);
+                            }
+                          }
+                          if (listname == "procedures") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i.deleteSelectedProceduresList(
+                                  ERXController.i.deletedidlist[i]);
+                            }
+                          }
+
+                          if (listname == "instruction") {
+                            for (int i = 0;
+                                i < ERXController.i.deletedidlist.length;
+                                i++) {
+                              ERXController.i.deleteSelectedinstructionList(
+                                  ERXController.i.deletedidlist[i]);
+                            }
+                          }
+
+                          completer.complete(dataList);
                           Get.back();
-                          completer.complete(checkboxselectedItems);
+                          ERXController.i.deletedidlist.clear();
                         },
                         color: ColorManager.kPrimaryColor,
                         textcolor: ColorManager.kWhiteColor,
@@ -578,9 +649,11 @@ deleteSelected(
                       controller.deleteFindingList(id);
                     } else if (name == 'complaints') {
                       controller.deleteSelectedComplaintsList(id);
-                    } else if (name == 'designation') {
-                      EditProfileController.i.deleteSelectedComplaintsList(id);
                     }
+                    // for edit profile
+                    //  else if (name == 'designation') {
+                    //   EditProfileController.i.deleteSelectedComplaintsList(id);
+                    // }
 
                     Get.back();
                   },
@@ -678,11 +751,13 @@ deleteSelectedObject(
 }
 
 // ADD COMMENT
-addComment(BuildContext context, String id, String listname) async {
+addComment(
+    BuildContext context, String id, String comment, String listname) async {
   await showDialog(
     barrierDismissible: false,
     context: context,
     builder: (context) {
+      ERXController.i.trailingtextController.text = comment;
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
@@ -741,7 +816,9 @@ addComment(BuildContext context, String id, String listname) async {
                         width: 0,
                       ),
                     ),
-                    hintText: 'typeyourcommenthere'.tr,
+                    hintText: controller.trailingtextController.text == ""
+                        ? 'typeyourcommenthere'.tr
+                        : controller.trailingtextController.text,
                   ),
                 ),
 
@@ -801,7 +878,6 @@ addMedicine(
   controller.medicineList.sort((a, b) => a.name!.compareTo(b.name!));
 
   await showDialog(
-    //  barrierColor: Colors.grey.withOpacity(0.1),
     barrierDismissible: true,
     context: context,
     builder: (context) {
@@ -822,16 +898,6 @@ addMedicine(
                     SizedBox(
                       height: Get.height * 0.01,
                     ),
-                    // Center(
-                    //   child: Text(
-                    //     "Medicines",
-                    //     style: GoogleFonts.poppins(
-                    //         fontSize: 12, fontWeight: FontWeight.w600),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: Get.height * 0.01,
-                    // ),
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding:
@@ -890,35 +956,39 @@ addMedicine(
                               final isSelected = controller.selectedmedicineList
                                   .contains(medicine);
 
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (isSelected) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content:
-                                                  Text("Already Selected")));
-                                    } else {
-                                      controller.selectedmedicineList.clear();
-                                      controller.selectedmedicineList
-                                          .add(medicine);
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  color: isSelected
-                                      ? ColorManager.kPrimaryColor
-                                      : ColorManager.kWhiteColor,
-                                  child: Text(
-                                    medicine.name ?? "",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 10,
-                                      color: isSelected
-                                          ? ColorManager.kWhiteColor
-                                          : ColorManager.kblackColor,
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: Get.height * 0.005),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (isSelected) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content:
+                                                    Text("Already Selected")));
+                                      } else {
+                                        controller.selectedmedicineList.clear();
+                                        controller.selectedmedicineList
+                                            .add(medicine);
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    color: isSelected
+                                        ? ColorManager.kPrimaryColor
+                                        : ColorManager.kWhiteColor,
+                                    child: Text(
+                                      medicine.name ?? "",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 10,
+                                        color: isSelected
+                                            ? ColorManager.kWhiteColor
+                                            : ColorManager.kblackColor,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 4,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 4,
                                   ),
                                 ),
                               );

@@ -235,6 +235,10 @@ class _PersonalDetailState extends State<PersonalDetail> {
                               }
                               return null;
                             },
+                            keyboardTypenew: TextInputType.number,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(15)
+                            ],
                             controller: edit.idnumber,
                             hintText: 'idnumber'.tr,
                           ),
@@ -292,6 +296,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             },
                             controller: edit.ntnnumber,
                             hintText: 'NTNNumber'.tr,
+                            keyboardTypenew: TextInputType.number,
                           ),
                           EditProfileCustomTextField(
                             validator: (p0) {

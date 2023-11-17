@@ -3,6 +3,7 @@ import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/biometric_auth.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
@@ -20,7 +21,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
-
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -143,10 +143,14 @@ class _MenuScreenState extends State<MenuScreen> {
                   width: Get.width * 0.55,
                   child: Text(
                     ProfileController.i.selectedbasicInfo?.fullName ?? "",
+                    // style: GoogleFonts.poppins(
+                    //   textStyle: GoogleFonts.poppins(
+                    //       fontSize: 15, color: ColorManager.kWhiteColor),
+                    // ),
                     style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
-                    ),
+                        color: ColorManager.kWhiteColor,
+                        fontWeight: FontWeight.bold),
+
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -272,18 +276,24 @@ class _MenuScreenState extends State<MenuScreen> {
                   leading: Image.asset(
                     AppImages.walletimg,
                     height: Get.height * 0.035,
+                    width: Get.width * 0.08,
                   ),
                   title: Text(
                     'wallet'.tr,
                     style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
+                      fontSize: 15,
+                      color: ColorManager.kWhiteColor,
+                      // fontWeight: FontWeight.w600,
                     ),
+                    // ),
+                    // style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    //     color: ColorManager.kWhiteColor,
+                    //     fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     // COMING SOON
                     Fluttertoast.showToast(
-                        msg: "Coming Soon",
+                        msg: "ComingSoon".tr,
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.CENTER,
                         timeInSecForIosWeb: 1,
@@ -308,7 +318,10 @@ class _MenuScreenState extends State<MenuScreen> {
                     'changePassword'.tr,
                     style: GoogleFonts.poppins(
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
+                        fontSize: 15,
+                        color: ColorManager.kWhiteColor,
+                        //  fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   onTap: () {
@@ -327,71 +340,81 @@ class _MenuScreenState extends State<MenuScreen> {
                   trailing: Transform.scale(
                     scale: 0.55,
                     child: Switch(
-                      value: isBiometric,
-                      activeColor: ColorManager.kWhiteColor,
-                      onChanged: (value) async {
-                        // print('namename');
-                        // print(EditProfileController.i.name);
-                        if (value) {
-                          authentication = await _authenticate();
-                          if (authentication) {
-                            if (EditProfileController.i.name == null) {
-                              fingerprint = authentication;
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text("You are already Logged in")));
-                              // Utils().toastmessage("You are already Logged in");
-                              fingerprint = true;
-                            }
-                            setState(() {});
-                          } else {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(
-                            //         content: Text(
-                            //             "You declined the biometric login.")));
-                          }
-
-                          if (fingerprint) {
-                            if (authentication) {
-                              if (EditProfileController.i.name != null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text("You are already Logged in")));
-                                setState(() {
+                        value: fingerprint,
+                        onChanged: (val) async {
+                          bool auth = await Authentication.authentication();
+                          if (val == true) {
+                            if (auth) {
+                              // authentication = await _authenticate();
+                              if (auth) {
+                                if (ProfileController.i.selectedbasicInfo?.id ==
+                                    null) {
+                                  fingerprint = auth;
+                                } else {
+                                  // ScaffoldMessenger.of(context).showSnackBar(
+                                  //     const SnackBar(
+                                  //         content: Text('Biometric Enabled')));
+                                  LocalDb.savefingerprint(true);
+                                  // Utils().toastmessage(“You are already Logged in”);
                                   fingerprint = true;
-                                });
+                                }
+                                setState(() {});
+                              } else {
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     const SnackBar(
+                                //         content: Text(
+                                //             "You declined the biometric login.")));
                               }
-                              setState(() {
-                                profile;
-                              });
+                              if (fingerprint) {
+                                if (auth) {
+                                  if (ProfileController
+                                          .i.selectedbasicInfo?.id !=
+                                      null) {
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //     const SnackBar(
+                                    //         content:
+                                    //             Text('Biometric Enabled')));
+                                    LocalDb.savefingerprint(true);
+                                    setState(() {
+                                      fingerprint = true;
+                                    });
+                                  }
+                                  setState(() {
+                                    ProfileController.i.selectedbasicInfo;
+                                  });
+                                } else {
+                                  setState(() {
+                                    LocalDb.savefingerprint(true);
+                                    fingerprint = true;
+                                  });
+                                }
+                              }
                             } else {
                               setState(() {
-                                fingerprint = true;
+                                LocalDb.savefingerprint(false);
+                                fingerprint = false;
                               });
                             }
-                            // LocalDb.set ('fingerprint', !fingerprint);
+                          } else {
+                            fingerprint = val;
+                            setState(() {});
                           }
-                          // setState(() {
-                          //   fingerprint = value;
-                          // });
-                        } else {
-                          // prefs!.setBool('fingerprint', !fingerprint);
-                          setState(() {
-                            fingerprint = false;
-                            // authentication = !fingerprint;
-                          });
-                        }
-                      },
-                    ),
+                        }),
+                    // Switch(
+                    //   value: isBiometric,
+                    //   activeColor: ColorManager.kWhiteColor,
+                    //   onChanged: (value) async {
+                    //   },
+                    // ),
                   ),
                   title: Text(
                     'biometric'.tr,
                     style: GoogleFonts.poppins(
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
+                        fontSize: 15,
+                        color: ColorManager.kWhiteColor,
+                        //    fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   onTap: () {
@@ -412,7 +435,10 @@ class _MenuScreenState extends State<MenuScreen> {
                     'languages'.tr,
                     style: GoogleFonts.poppins(
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
+                        fontSize: 15,
+                        color: ColorManager.kWhiteColor,
+                        //  fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   onTap: () async {
@@ -428,46 +454,57 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
 
                 SizedBox(
-                  height: Get.height * 0.15,
+                  height: Get.height * 0.22,
                 ),
                 ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   leading: Image.asset(
                     AppImages.bin,
                     height: Get.height * 0.035,
                   ),
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   title: Text(
                     'deleteAccount'.tr,
                     style: GoogleFonts.poppins(
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
+                        fontSize: 15,
+                        color: ColorManager.kWhiteColor,
+                        //   fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   onTap: () async {},
                 ),
 
                 ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   leading: Image.asset(
                     AppImages.logout,
                     height: Get.height * 0.035,
                   ),
+                  visualDensity:
+                      const VisualDensity(horizontal: 0, vertical: -4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   title: Text(
                     'logout'.tr,
                     style: GoogleFonts.poppins(
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 15, color: ColorManager.kWhiteColor),
+                        fontSize: 15,
+                        color: ColorManager.kWhiteColor,
+                        //  fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   onTap: () async {
-                    SharedPreferences preferences =
-                        await SharedPreferences.getInstance();
-                    await preferences.clear();
+                    // SharedPreferences preferences =
+                    //     await SharedPreferences.getInstance();
+                    // await preferences.clear();
 
-                    AuthController.i.emailController.clear();
-                    AuthController.i.passwordController.clear();
+                    // AuthController.i.emailController.clear();
+                    // AuthController.i.passwordController.clear();
+
                     Get.offAll(() => const LoginScreen());
 
                     // String? id = await LocalDb().getDoctorId();

@@ -413,7 +413,6 @@ class PrescribeMedicinRepo {
       "ERNSBit": 3,
     });
 
-    print(body);
     try {
       ERXController.i.updateIsloading(true);
       var response = await http.post(uri,

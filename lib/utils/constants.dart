@@ -92,8 +92,8 @@ class AppConstants {
   static String pmdcavaibility = "$baseURL/api/doctor/PMDCAvailibility";
 // eRX APIS
 
-  static String getPatientDetailForPrescription =
-      "http://58.65.158.107:64/api/patient/GetPatientDetailForPrescription";
+  // static String getPatientDetailForPrescription =
+  //     "http://58.65.158.107:64/api/patient/GetPatientDetailForPrescription";
   static String getComplaints = "$baseURL/api/doctor/GetComplaints";
 
   static String getPrimaryDiagnosis = "$baseURL/api/doctor/GetDiagnosis";
@@ -123,11 +123,11 @@ class AppConstants {
   static String getErnsDetailHistory =
       "$baseURL/api/patient/GetPatientERNSDetail";
 
-  static String getMedicinesByGroupId =
-      "http://58.65.158.107:64/api/doctor/GetMedicinesByGroupId";
+  // static String getMedicinesByGroupId =
+  //     "http://58.65.158.107:64/api/doctor/GetMedicinesByGroupId";
 
-  static String postPrescription =
-      "http://58.65.158.107:64/api/doctor/Prescription";
+  // static String postPrescription =
+  //     "http://58.65.158.107:64/api/doctor/Prescription";
   // ======================>
   static String appName = 'Helpful';
   static String requestText =

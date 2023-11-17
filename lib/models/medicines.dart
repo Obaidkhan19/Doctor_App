@@ -155,27 +155,27 @@ class Medicines1 {
     }
   }
 
-  Future<List<Medicines1>> getMedicinesByGroupId(
-      dynamic did, dynamic bid, dynamic gid, dynamic token) async {
-    String url = AppConstants.getMedicinesByGroupId;
-    Uri uri = Uri.parse(url);
-    var body = jsonEncode(<String, dynamic>{
-      "DoctorId": did,
-      "BranchId": bid,
-      "GroupId": gid,
-      "Token": token
-    });
-    var response = await http.post(uri,
-        body: body,
-        headers: <String, String>{'Content-Type': 'application/json'});
-    if (response.statusCode == 200) {
-      dynamic jsonData = jsonDecode(response.body);
-      Iterable data = jsonData['Medicines'];
-      List<Medicines1> medicinesList =
-          data.map((json) => Medicines1.fromJson(json)).toList();
-      return medicinesList;
-    } else {
-      throw Exception('Failed to fetch medicines details');
-    }
-  }
+  // Future<List<Medicines1>> getMedicinesByGroupId(
+  //     dynamic did, dynamic bid, dynamic gid, dynamic token) async {
+  //   String url = AppConstants.getMedicinesByGroupId;
+  //   Uri uri = Uri.parse(url);
+  //   var body = jsonEncode(<String, dynamic>{
+  //     "DoctorId": did,
+  //     "BranchId": bid,
+  //     "GroupId": gid,
+  //     "Token": token
+  //   });
+  //   var response = await http.post(uri,
+  //       body: body,
+  //       headers: <String, String>{'Content-Type': 'application/json'});
+  //   if (response.statusCode == 200) {
+  //     dynamic jsonData = jsonDecode(response.body);
+  //     Iterable data = jsonData['Medicines'];
+  //     List<Medicines1> medicinesList =
+  //         data.map((json) => Medicines1.fromJson(json)).toList();
+  //     return medicinesList;
+  //   } else {
+  //     throw Exception('Failed to fetch medicines details');
+  //   }
+  // }
 }

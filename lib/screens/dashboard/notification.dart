@@ -1,6 +1,4 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
-import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/controller/notification_controller.dart';
 import 'package:doctormobileapplication/data/repositories/notification_repo/notifications_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -122,7 +120,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     .i.notificationlist.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Card(
-                                    color: ColorManager.kPrimaryColor,
+                                    surfaceTintColor: ColorManager.kWhiteColor,
                                     child: Padding(
                                       padding:
                                           EdgeInsets.all(Get.height * 0.01),
@@ -133,6 +131,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                                 BorderRadius.circular(50)),
                                         tileColor: Colors.transparent,
                                         title: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               NotificationController.i
@@ -143,7 +143,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                                   .bodyMedium
                                                   ?.copyWith(
                                                     color: ColorManager
-                                                        .kWhiteColor,
+                                                        .kblackColor,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                   ),
@@ -159,7 +159,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                color: ColorManager.kWhiteColor,
+                                                color: ColorManager.kblackColor,
                                                 fontSize: 10,
                                               ),
                                         ),
@@ -169,7 +169,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 })
                             : Center(
                                 child: Text(
-                                  "No Record Found",
+                                  "NoRecordFound".tr,
                                   style: GoogleFonts.poppins(fontSize: 16),
                                 ),
                               ),

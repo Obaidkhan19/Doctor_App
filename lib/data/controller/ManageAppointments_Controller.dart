@@ -53,14 +53,17 @@ class ManageAppointmentController extends GetxController
     update();
   }
 
-  getmonthlyoctorAppointment(date, wlid) async {
+  bool isLoadingMonthlyDoctorAppointment = false;
+  getmonthlyoctorAppointment(date, wlid, isonline) async {
     try {
+      isLoadingMonthlyDoctorAppointment = true;
       monthlyappintment =
-          await ManageAppointmentRepo.GetmonthlyDoctorAppointment(date, wlid);
-      isLoadingDailyDoctorAppointment = false;
+          await ManageAppointmentRepo.GetmonthlyDoctorAppointment(
+              date, wlid, isonline);
+      isLoadingMonthlyDoctorAppointment = false;
       update();
     } catch (e) {
-      isLoadingDailyDoctorAppointment = false;
+      isLoadingMonthlyDoctorAppointment = false;
       update();
     }
   }

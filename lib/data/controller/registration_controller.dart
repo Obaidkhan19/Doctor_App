@@ -155,6 +155,11 @@ class RegistrationController extends GetxController implements GetxService {
   }
 
   static DateTime? arrival = DateTime.now();
+  updatearrival(ardate) {
+    arrival = ardate;
+    update();
+  }
+
   String? formattedArrival = arrival!.toIso8601String();
   RxString? formatearrival = DateFormat.yMMMd().format(arrival!).obs;
   Future<void> selectDateAndTime(
@@ -175,6 +180,7 @@ class RegistrationController extends GetxController implements GetxService {
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formattedArrival = iso8601Format.format(date);
       calculateUserAge(date);
+      updatearrival(date);
       update();
     }
   }
@@ -216,9 +222,11 @@ class RegistrationController extends GetxController implements GetxService {
   late TextEditingController phone;
   late TextEditingController retypePassword;
   late TextEditingController address;
+  late TextEditingController dob;
 
   @override
   void onInit() {
+    dob = TextEditingController();
     firstname = TextEditingController();
     lastname = TextEditingController();
     email = TextEditingController();

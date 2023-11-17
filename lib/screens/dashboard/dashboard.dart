@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/ManageAppointments/TodayAppointments.dart';
 import 'package:doctormobileapplication/screens/dashboard/home.dart';
 import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart';
@@ -40,7 +39,6 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
         ),
       );
     }
-    navigateToPage(0);
   }
 
   bool isKeyboardVisible = false;
@@ -75,8 +73,6 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
       bool? isLoggedin = await LocalDb().getLoginStatus();
       if ((isLoggedin ?? false) == false) {
         Get.off(() => const LoginScreen());
-      } else {
-        _launchWhatsApp();
       }
       // Call the method to launch WhatsApp
     }
@@ -116,13 +112,12 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
           topRight: Radius.circular(20),
         ),
       ),
-      // shadowColor: Colors.red,
-      height: Get.height * 0.13,
+      height: Get.height * 0.11,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
         children: [
-          buildBottomNavItem(Images.homeIcon, "home".tr, 0, isSvg: true),
+          buildBottomNavItem(Images.homeIcon, "home".tr, 0, isSvg: false),
           buildBottomNavItem(Images.user, "profile".tr, 1, isSvg: false),
           buildBottomNavItem(Images.schedule, "schedule".tr, 2, isSvg: false),
           buildBottomNavItem(Images.wallet, 'help'.tr, 3, isSvg: false),
@@ -131,115 +126,113 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
     );
   }
 
-  buildMenuItem(IconData icon, String label, {Function()? onPressed}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Material(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-        child: InkWell(
-          onTap: onPressed,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon),
-                const SizedBox(width: 10),
-                Text(label),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // buildMenuItem(IconData icon, String label, {Function()? onPressed}) {
+  //   return Material(
+  //     borderRadius: BorderRadius.circular(20),
+  //     color: Colors.white,
+  //     child: InkWell(
+  //       onTap: onPressed,
+  //       child: Container(
+  //         // padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+  //         // height: 60,
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.circular(20),
+  //         ),
+  //         child: Row(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Icon(icon),
+  //             //   const SizedBox(width: 10),
+  //             Text(label),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   buildBottomNavItem(String imagePath, String label, int index,
       {bool? isSvg = false}) {
     final isSelected = selectedPage == index;
     return InkWell(
       onTap: () {
-        navigateToPage(index);
+        if (index == 3) {
+          _launchWhatsApp();
+        } else {
+          navigateToPage(index);
+        }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            imagePath.isEmpty
-                ? const SizedBox()
-                : isSvg == false
-                    ? Container(
-                        padding: const EdgeInsets.all(AppPadding.p8),
-                        decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: ColorManager.kGreyColor,
-                                blurRadius: 1.0,
-                                spreadRadius: 1,
-                                blurStyle: BlurStyle.normal,
-                                offset: Offset(
-                                  1,
-                                  2,
-                                ),
-                              )
-                            ],
-                            shape: BoxShape.circle,
-                            color: isSelected == true
-                                ? ColorManager.kPrimaryColor
-                                : ColorManager.kWhiteColor),
-                        child: Image.asset(
-                          imagePath,
-                          height: Get.height * 0.03,
-                          color: isSelected
-                              ? ColorManager.kWhiteColor
-                              : ColorManager.kPrimaryDark,
-                        ),
-                      )
-                    : Container(
-                        padding: const EdgeInsets.all(AppPadding.p8),
-                        decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: ColorManager.kWhiteColor,
-                                blurRadius: 1.0,
-                                spreadRadius: 1,
-                                blurStyle: BlurStyle.normal,
-                                offset: Offset(
-                                  1,
-                                  2,
-                                ),
-                              )
-                            ],
-                            shape: BoxShape.circle,
-                            color: isSelected == true
-                                ? ColorManager.kPrimaryColor
-                                : ColorManager.kWhiteColor),
-                        child: SvgPicture.asset(
-                          height: Get.height * 0.03,
-                          imagePath,
-                          color: isSelected
-                              ? ColorManager.kWhiteColor
-                              : ColorManager.kPrimaryDark,
-                        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          imagePath.isEmpty
+              ? const SizedBox()
+              : isSvg == false
+                  ? Container(
+                      padding: EdgeInsets.all(Get.width * 0.022),
+                      decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: ColorManager.kGreyColor,
+                              blurRadius: 1.0,
+                              spreadRadius: 1,
+                              blurStyle: BlurStyle.normal,
+                              offset: Offset(
+                                1,
+                                2,
+                              ),
+                            )
+                          ],
+                          shape: BoxShape.circle,
+                          color: isSelected == true
+                              ? ColorManager.kPrimaryColor
+                              : ColorManager.kWhiteColor),
+                      child: Image.asset(
+                        imagePath,
+                        height: Get.height * 0.03,
+                        color: isSelected
+                            ? ColorManager.kWhiteColor
+                            : ColorManager.kPrimaryDark,
                       ),
-            SizedBox(
-              height: Get.height * 0.00,
-            ),
-            Text(
-              label,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontSize: 10, color: ColorManager.kPrimaryDark),
-            )
-          ],
-        ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.all(Get.width * 0.022),
+                      decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: ColorManager.kWhiteColor,
+                              blurRadius: 1.0,
+                              spreadRadius: 1,
+                              blurStyle: BlurStyle.normal,
+                              offset: Offset(
+                                1,
+                                2,
+                              ),
+                            )
+                          ],
+                          shape: BoxShape.circle,
+                          color: isSelected == true
+                              ? ColorManager.kPrimaryColor
+                              : ColorManager.kWhiteColor),
+                      child: SvgPicture.asset(
+                        height: Get.height * 0.03,
+                        imagePath,
+                        color: isSelected
+                            ? ColorManager.kWhiteColor
+                            : ColorManager.kPrimaryDark,
+                      ),
+                    ),
+          SizedBox(
+            height: Get.height * 0.01,
+          ),
+          Text(
+            label,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontSize: 10, color: ColorManager.kPrimaryDark),
+          )
+        ],
       ),
     );
   }

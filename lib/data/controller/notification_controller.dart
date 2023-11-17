@@ -33,7 +33,7 @@ class NotificationController extends GetxController implements GetxService {
           startIndexToFetchData + AppConstants.maximumDataTobeFetched;
       return true;
     } else {
-      showSnackbar(Get.context!, 'All records are fetched!',
+      showSnackbar(Get.context!, 'allrecordsarefetched'.tr,
           color: const Color(0xfff1272d3));
       return false;
     }

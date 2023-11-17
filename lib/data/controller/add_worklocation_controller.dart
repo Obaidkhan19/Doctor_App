@@ -1,14 +1,9 @@
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
-import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/hospital_clinic.dart';
-import 'package:doctormobileapplication/models/institutes.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
-import 'package:doctormobileapplication/models/speciality.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class AddWorklocationController extends GetxController implements GetxService {
   static AddWorklocationController get i =>

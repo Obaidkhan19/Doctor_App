@@ -49,20 +49,19 @@ class ManageAppointmentRepo {
     }
   }
 
-  static GetmonthlyDoctorAppointment(String date, String worklocationid) async {
+  static GetmonthlyDoctorAppointment(
+      String date, String worklocationid, IsOnline) async {
     ManageAppointmentController.i.paid =
         ManageAppointmentController.i.unpaid = 0;
-
     String? userId = await LocalDb().getDoctorId();
 
     var body = {
       "MonthAndYear": date,
       "DoctorId": "$userId",
       "WorkLocationId": worklocationid,
-      "IsOnline": "false"
+      "IsOnline": IsOnline,
     };
-    print('aaa');
-    print(body);
+
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(
@@ -109,6 +108,8 @@ class ManageAppointmentRepo {
     var body = {
       "Date": Date,
       "DoctorId": "$userId",
+      "IsOnline": IsOnline,
+      "WorkLocationId": WorkLocationId,
     };
     var headers = {'Content-Type': 'application/json'};
     try {
@@ -121,7 +122,6 @@ class ManageAppointmentRepo {
         if (result['Status'] == 1) {
           DayViewAppointmentSlot =
               DayViewAppointmentSlotModel.fromJson(jsonDecode(response.body));
-          log('${DayViewAppointmentSlot.toString()} DayViewAppointmentSlot');
           return DayViewAppointmentSlot;
         } else {
           return DayViewAppointmentSlot;

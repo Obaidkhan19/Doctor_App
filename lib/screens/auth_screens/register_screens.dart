@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_radio.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
@@ -349,31 +351,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         hintText: 'passportNumber'.tr,
                       ),
                     ),
-                    // IdNoAuthTextField(
-                    //   onChangedwidget: (value) {
-                    //     AuthRepo ar = AuthRepo();
-                    //     if (controller.selectedRadioValue == "idno") {
-                    //       ar.cnicAvaibility(controller.idnumber.text);
-                    //     } else if (controller.selectedRadioValue ==
-                    //         "passport") {
-                    //       ar.passportAvaibility(controller.idnumber.text);
-                    //     }
-                    //   },
-                    //   validator: (p0) {
-                    //     if (p0!.isEmpty) {
-                    //       if (controller.selectedRadioValue == "idno") {
-                    //         return 'enteryouridnumber'.tr;
-                    //       } else {
-                    //         return 'Enter Your Passport No';
-                    //       }
-                    //     }
-                    //     return null;
-                    //   },
-                    //   controller: controller.idnumber,
-                    //   hintText: controller.selectedRadioValue == "idno"
-                    //       ? 'idnumber'.tr
-                    //       : 'passport'.tr,
-                    // ),
+
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
@@ -394,48 +372,18 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
-                    InkWell(
+
+                    RegisterLMPCCustomTextField(
+                      readonly: true,
                       onTap: () {
                         controller.picksinglefile();
                       },
-                      child: Container(
-                        width: Get.width * 1, // Adjust the width as needed
-                        height: Get.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: ColorManager.kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Center(
-                            child: RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'add'.tr,
-                                style: const TextStyle(
-                                    color: ColorManager.kWhiteColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'legalmedicalpractisingcertificate'.tr,
-                                style: const TextStyle(
-                                  color: ColorManager.kWhiteColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-
-                            //  Text(
-                            //   'Add (legal medical practising certificate)',
-                            //   style: GoogleFonts.poppins(
-                            //     color: ColorManager.kWhiteColor,
-                            //     fontSize: 12,
-                            //   ),
-                            // ),
-                            ),
-                      ),
+                      validator: (p0) {
+                        if (controller.pmcfile == null) {
+                          return 'pleaseaddLMPC'.tr;
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: Get.height * 0.02,
@@ -503,34 +451,39 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         return null;
                       },
                       onTap: () async {
-                        controller.selectedsubspecialities = null;
-                        Specialities1 generic = await searchabledropdown(
-                            context, controller.subspecialitiesList ?? []);
-                        controller.selectedsubspecialities = null;
-                        controller.updateselectedspeciality(generic);
+                        if (controller.selectedspecialities != null) {
+                          controller.selectedsubspecialities = null;
+                          Specialities1 generic = await searchabledropdown(
+                              context, controller.subspecialitiesList ?? []);
+                          controller.selectedsubspecialities = null;
+                          controller.updateselectedspeciality(generic);
 
-                        if (generic != '') {
-                          controller.selectedsubspecialities = generic;
-                          controller.selectedsubspecialities = (generic == '')
-                              ? null
-                              : controller.selectedsubspecialities;
+                          if (generic != '') {
+                            controller.selectedsubspecialities = generic;
+                            controller.selectedsubspecialities = (generic == '')
+                                ? null
+                                : controller.selectedsubspecialities;
+                          }
                         }
                       },
                       readonly: true,
                       suffixIcon: IconButton(
                           onPressed: () async {
-                            controller.selectedsubspecialities = null;
-                            Specialities1 generic = await searchabledropdown(
-                                context, controller.subspecialitiesList ?? []);
-                            controller.selectedsubspecialities = null;
-                            controller.updateselectedspeciality(generic);
+                            if (controller.selectedspecialities != null) {
+                              controller.selectedsubspecialities = null;
+                              Specialities1 generic = await searchabledropdown(
+                                  context,
+                                  controller.subspecialitiesList ?? []);
+                              controller.selectedsubspecialities = null;
+                              controller.updateselectedspeciality(generic);
 
-                            if (generic != '') {
-                              controller.selectedsubspecialities = generic;
-                              controller.selectedsubspecialities =
-                                  (generic == '')
-                                      ? null
-                                      : controller.selectedsubspecialities;
+                              if (generic != '') {
+                                controller.selectedsubspecialities = generic;
+                                controller.selectedsubspecialities =
+                                    (generic == '')
+                                        ? null
+                                        : controller.selectedsubspecialities;
+                              }
                             }
                           },
                           icon: Image.asset(Images.dropdown)),
@@ -538,10 +491,14 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           ? 'subspeciality'.tr
                           : controller.selectedsubspecialities!.name.toString(),
                     ),
-                    // SizedBox(
-                    //   height: Get.height * 0.02,
-                    // ),
-                    InkWell(
+                    RegisterDOBCustomTextField(
+                      readonly: true,
+                      validator: (p0) {
+                        if (controller.ontap == false) {
+                          return 'PleaseselectDateofBirth'.tr;
+                        }
+                        return null;
+                      },
                       onTap: () {
                         controller.ontap = true;
                         RegistrationController.i.selectDateAndTime(
@@ -549,75 +506,42 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             RegistrationController.arrival,
                             controller.formatearrival);
                       },
-                      child: Container(
-                        width: Get.width * 1, // Adjust the width as needed
-                        height: Get.height * 0.06,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: ColorManager.kGreyColor,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: ColorManager.kWhiteColor,
-                        ),
-
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: Get.width * 0.03, right: Get.width * 0.01),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                controller.ontap == true
-                                    ? RegistrationController.i.formatearrival
-                                        .toString()
-                                    : "dateofbirth".tr,
-                                style: GoogleFonts.poppins(
-                                  color: ColorManager.kGreyColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  controller.ontap = true;
-                                  RegistrationController.i.selectDateAndTime(
-                                      context,
-                                      RegistrationController.arrival,
-                                      controller.formatearrival);
-                                },
-                                icon: Image.asset(
-                                  AppImages.schedule,
-                                  height: 25,
-                                ),
-                              ),
-                            ],
-                          ),
+                      hintText: controller.ontap == true
+                          ? RegistrationController.i.formatearrival.toString()
+                          : "dateofbirth".tr,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          controller.ontap = true;
+                          RegistrationController.i.selectDateAndTime(
+                              context,
+                              RegistrationController.arrival,
+                              controller.formatearrival);
+                        },
+                        icon: Image.asset(
+                          AppImages.schedule,
+                          height: 25,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    // RegisterCustomTextField(
-                    //   readonly: true,
-                    //   hintText: controller.userage == ''
-                    //       ? 'age'.tr
-                    //       : controller.userage,
-                    // ),
 
                     CustomIntlPhoneField(
-                      onChanged: (phone) {
-                        controller.updatecountryfullno(phone.completeNumber);
-                      },
+                      // validator: (p0) {
+                      //   if (p0!.number.isEmpty) {
+                      //     return 'Please add Phone Number'.tr;
+                      //   }
+                      //   log(p0.toString());
+                      //   return null;
+                      // },
+                      // onChanged: (phone) {
+                      //   controller.updatecountryfullno(phone.completeNumber);
+                      // },
                       style: GoogleFonts.poppins(
                           color: ColorManager.kGreyColor, fontSize: 12),
-                      // showDropdownIcon: true,
                       dropdownIcon: const Icon(
                         Icons.arrow_drop_down,
                         color: Colors.white,
                         size: 10,
                       ),
-
                       dropdownTextStyle: GoogleFonts.poppins(
                           color: ColorManager.kGreyColor, fontSize: 12),
                       showCountryFlag: false,
@@ -724,47 +648,51 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       },
                       readonly: true,
                       onTap: () async {
-                        controller.selectedprovince = null;
-                        controller.selectedcity = null;
-                        Provinces generic = await searchabledropdown(
-                            context, controller.provinceList ?? []);
-                        controller.selectedprovince = null;
-                        controller.updateselectedprovince(generic);
+                        if (controller.selectedcountry != null) {
+                          controller.selectedprovince = null;
+                          controller.selectedcity = null;
+                          Provinces generic = await searchabledropdown(
+                              context, controller.provinceList ?? []);
+                          controller.selectedprovince = null;
+                          controller.updateselectedprovince(generic);
 
-                        if (generic != '') {
-                          controller.selectedprovince = generic;
-                          controller.selectedprovince = (generic == '')
-                              ? null
-                              : controller.selectedprovince;
+                          if (generic != '') {
+                            controller.selectedprovince = generic;
+                            controller.selectedprovince = (generic == '')
+                                ? null
+                                : controller.selectedprovince;
+                          }
+                          String cid = RegistrationController
+                              .i.selectedprovince!.id
+                              .toString();
+                          setState(() {
+                            _getCities(cid);
+                          });
                         }
-                        String cid = RegistrationController
-                            .i.selectedprovince!.id
-                            .toString();
-                        setState(() {
-                          _getCities(cid);
-                        });
                       },
                       suffixIcon: IconButton(
                           onPressed: () async {
-                            controller.selectedprovince = null;
-                            controller.selectedcity = null;
-                            Provinces generic = await searchabledropdown(
-                                context, controller.provinceList ?? []);
-                            controller.selectedprovince = null;
-                            controller.updateselectedprovince(generic);
+                            if (controller.selectedcountry != null) {
+                              controller.selectedprovince = null;
+                              controller.selectedcity = null;
+                              Provinces generic = await searchabledropdown(
+                                  context, controller.provinceList ?? []);
+                              controller.selectedprovince = null;
+                              controller.updateselectedprovince(generic);
 
-                            if (generic != '') {
-                              controller.selectedprovince = generic;
-                              controller.selectedprovince = (generic == '')
-                                  ? null
-                                  : controller.selectedprovince;
+                              if (generic != '') {
+                                controller.selectedprovince = generic;
+                                controller.selectedprovince = (generic == '')
+                                    ? null
+                                    : controller.selectedprovince;
+                              }
+                              String cid = RegistrationController
+                                  .i.selectedprovince!.id
+                                  .toString();
+                              setState(() {
+                                _getCities(cid);
+                              });
                             }
-                            String cid = RegistrationController
-                                .i.selectedprovince!.id
-                                .toString();
-                            setState(() {
-                              _getCities(cid);
-                            });
                           },
                           icon: Image.asset(Images.dropdown)),
                       hintText: controller.selectedprovince == null
@@ -780,34 +708,41 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       },
                       readonly: true,
                       onTap: () async {
-                        controller.selectedcity = null;
-                        Cities generic = await searchabledropdown(
-                            context, controller.citiesList ?? []);
-                        controller.selectedcity = null;
-                        controller.updateselectedcity(generic);
+                        if (controller.selectedcountry != null &&
+                            controller.selectedprovince != null) {
+                          controller.selectedcity = null;
+                          Cities generic = await searchabledropdown(
+                              context, controller.citiesList ?? []);
+                          controller.selectedcity = null;
+                          controller.updateselectedcity(generic);
 
-                        if (generic != '') {
-                          controller.selectedcity = generic;
-                          controller.selectedcity =
-                              (generic == '') ? null : controller.selectedcity;
+                          if (generic != '') {
+                            controller.selectedcity = generic;
+                            controller.selectedcity = (generic == '')
+                                ? null
+                                : controller.selectedcity;
+                          }
+                          setState(() {});
                         }
-                        setState(() {});
                       },
                       suffixIcon: IconButton(
                           onPressed: () async {
-                            controller.selectedcity = null;
-                            Cities generic = await searchabledropdown(
-                                context, controller.citiesList ?? []);
-                            controller.selectedcity = null;
-                            controller.updateselectedcity(generic);
+                            if (controller.selectedcountry != null &&
+                                controller.selectedprovince != null) {
+                              controller.selectedcity = null;
+                              Cities generic = await searchabledropdown(
+                                  context, controller.citiesList ?? []);
+                              controller.selectedcity = null;
+                              controller.updateselectedcity(generic);
 
-                            if (generic != '') {
-                              controller.selectedcity = generic;
-                              controller.selectedcity = (generic == '')
-                                  ? null
-                                  : controller.selectedcity;
+                              if (generic != '') {
+                                controller.selectedcity = generic;
+                                controller.selectedcity = (generic == '')
+                                    ? null
+                                    : controller.selectedcity;
+                              }
+                              setState(() {});
                             }
-                            setState(() {});
                           },
                           icon: Image.asset(Images.dropdown)),
                       hintText: controller.selectedcity == null
@@ -830,10 +765,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     PrimaryButton(
                         title: 'saveandproceed'.tr,
                         onPressed: () async {
-                          if (_formKey.currentState!.validate() &&
-                                  // controller.file != null &&
-                                  controller.pmcfile != null &&
-                                  controller.ontap == true
+                          if (_formKey.currentState!.validate()
+                              //&&
+                              // controller.file != null &&
+                              //controller.pmcfile != null &&
+                              // controller.ontap == true &&
+                              // controller.phone.text == ''
                               // &&
                               // controller.selectedcity?.id != null &&
                               // controller.selectedprovince?.id != null &&
@@ -845,12 +782,15 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             showSnackbar(context, 'saveRecord'.tr);
                             controller.setPageIndexofDayPersonal(1);
                           } else {
-                            if (controller.pmcfile == null) {
-                              showSnackbar(context, 'Add LMPC Certificate');
-                            }
-                            if (controller.ontap == false) {
-                              showSnackbar(context, 'Add Date of Birth');
-                            }
+                            // if (controller.pmcfile == null) {
+                            //   showSnackbar(context, 'LMPC Certificate');
+                            // }
+                            //  else if (controller.ontap == false) {
+                            //   showSnackbar(context, 'Add Date of Birth');
+                            // }
+                            // if (controller.phone.text == '') {
+                            //   showSnackbar(context, 'Enter Phone Number');
+                            // }
                           }
 
                           //     {

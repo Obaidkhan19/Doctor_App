@@ -51,7 +51,7 @@ class _SecurityScreenState extends State<SecurityScreen> {
                       },
                       validator: (p0) {
                         if (p0!.isEmpty) {
-                          return 'Enter UserName';
+                          return 'EnterUsername'.tr;
                         }
                         return null;
                       },
@@ -70,8 +70,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
                           controller.updatesecuritypassword();
                         },
                         child: controller.securitypassword
-                            ? const Icon(CupertinoIcons.eye)
-                            : const Icon(CupertinoIcons.eye_slash),
+                            ? const Icon(CupertinoIcons.eye_slash)
+                            : const Icon(CupertinoIcons.eye),
                       ),
                       validator: (p0) {
                         if (p0!.isEmpty) {
@@ -94,8 +94,8 @@ class _SecurityScreenState extends State<SecurityScreen> {
                           controller.updateconfirmpassword();
                         },
                         child: controller.securityconfirmpassword
-                            ? const Icon(CupertinoIcons.eye)
-                            : const Icon(CupertinoIcons.eye_slash),
+                            ? const Icon(CupertinoIcons.eye_slash)
+                            : const Icon(CupertinoIcons.eye),
                       ),
                       validator: (p0) {
                         if (p0!.isEmpty) {

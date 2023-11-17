@@ -2,6 +2,7 @@ library intl_phone_field;
 
 import 'dart:async';
 import 'package:doctormobileapplication/components/code_picker_dialog.dart';
+import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -349,7 +350,6 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
       );
 
       final value = widget.validator?.call(initialPhoneNumber);
-
       if (value is String) {
         validatorMessage = value;
       } else {
@@ -406,6 +406,24 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
       showCursor: widget.showCursor,
       onFieldSubmitted: widget.onSubmitted,
       decoration: InputDecoration(
+        errorStyle: Theme.of(context)
+            .textTheme
+            .bodySmall!
+            .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Colors.red,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Colors
+                .red, // Set the color to red or any other color you prefer
+          ),
+        ),
         filled: widget.fieldfilled,
         fillColor: widget.fieldsColor,
         counter: const Offstage(),
@@ -442,20 +460,24 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
         if (widget.autovalidateMode != AutovalidateMode.disabled) {
           validatorMessage = await widget.validator?.call(phoneNumber);
         }
-
         widget.onChanged?.call(phoneNumber);
       },
-      validator: (value) {
-        if (value == null || !isNumeric(value)) return validatorMessage;
-        if (!widget.disableLengthCheck) {
-          return value.length >= _selectedCountry.minLength &&
-                  value.length <= _selectedCountry.maxLength
-              ? null
-              : widget.invalidNumberMessage;
+      validator: (val) {
+        if (val != null) {
+          return "please add number";
         }
-
-        return validatorMessage;
+        return null;
       },
+      //  (value) {
+      //   if (value == null || !isNumeric(value)) return validatorMessage;
+      //   if (!widget.disableLengthCheck) {
+      //     return value.length >= _selectedCountry.minLength &&
+      //             value.length <= _selectedCountry.maxLength
+      //         ? null
+      //         : widget.invalidNumberMessage;
+      //   }
+      //   return validatorMessage;
+      // },
       maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,

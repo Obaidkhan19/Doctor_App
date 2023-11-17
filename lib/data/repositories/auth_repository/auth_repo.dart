@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
-import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/models/blood_group.dart';
@@ -665,7 +664,7 @@ class AuthRepo {
         } else if (status == -5) {
           if (errormsg == 'No account found against this user') {
             AuthController.i.updateIsotploading(false);
-            showSnackbar(Get.context!, 'worngemail'.tr);
+            showSnackbar(Get.context!, 'Wrong Email'.tr);
           }
         }
       }
