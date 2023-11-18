@@ -100,7 +100,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(AppImages.background_image),
+                      image: AssetImage(AppImages.backgroundimage),
                       alignment: Alignment.centerLeft),
                 ),
                 child: Padding(

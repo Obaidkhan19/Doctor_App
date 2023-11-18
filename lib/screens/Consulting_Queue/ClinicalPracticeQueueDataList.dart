@@ -112,7 +112,7 @@ class _ClinicalPracticeQueueDataListState
             body: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(AppImages.helpful_background_logo),
+                  image: AssetImage(AppImages.helpfulbackgroundlogo),
                   alignment: Alignment.centerLeft,
                 ),
               ),

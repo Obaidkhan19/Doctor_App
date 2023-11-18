@@ -27,7 +27,7 @@ class AppointmentHistoryscreen extends StatefulWidget {
 
 class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
   @override
-  String Status = "";
+  String status = "";
   final dateFormat = DateFormat('yyyy-MM-dd');
   DateTime dateTime = DateTime.now().subtract(const Duration(days: 30));
   DateTime dateTime2 = DateTime.now();
@@ -125,7 +125,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                       height: Get.height * 0.08,
                       width: Get.width * 0.08,
                       child: Image.asset(
-                        AppImages.filter_logo,
+                        AppImages.filterlogo,
                         color: ColorManager.kPrimaryColor,
                       ),
                     ),
@@ -145,7 +145,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(AppImages.background_image),
+                        image: AssetImage(AppImages.backgroundimage),
                         alignment: Alignment.centerLeft),
                   ),
                   child: Padding(

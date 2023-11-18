@@ -212,7 +212,7 @@ class _AppointmentCreationState extends State<AppointmentCreation> {
                 isSizedBoxAvailable: false,
                 suffixIcon: InkWell(
                     onTap: () async {
-                      PaymentMethodDialogue(context);
+                      paymentMethodDialogue(context);
                     },
                     child: Image.asset(Images.masterCard)),
               ),
@@ -262,7 +262,7 @@ class _AppointmentCreationState extends State<AppointmentCreation> {
     );
   }
 
-  Future<dynamic> PaymentMethodDialogue(BuildContext context) {
+  Future<dynamic> paymentMethodDialogue(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {

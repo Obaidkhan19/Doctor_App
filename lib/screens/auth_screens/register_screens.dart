@@ -143,11 +143,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         controller.selectedpersonalTitle = null;
                         controller.updateselectedpersonalTitle(generic);
 
-                        if (generic != '') {
+                        if (generic.id != null) {
                           controller.selectedpersonalTitle = generic;
-                          controller.selectedpersonalTitle = (generic == '')
-                              ? null
-                              : controller.selectedpersonalTitle;
+                          controller.selectedpersonalTitle =
+                              (generic.id == null)
+                                  ? null
+                                  : controller.selectedpersonalTitle;
                         }
                       },
                       readonly: true,
@@ -159,11 +160,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             controller.selectedpersonalTitle = null;
                             controller.updateselectedpersonalTitle(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               controller.selectedpersonalTitle = generic;
-                              controller.selectedpersonalTitle = (generic == '')
-                                  ? null
-                                  : controller.selectedpersonalTitle;
+                              controller.selectedpersonalTitle =
+                                  (generic.id == null)
+                                      ? null
+                                      : controller.selectedpersonalTitle;
                             }
                           },
                           icon: Image.asset(Images.dropdown)),
@@ -213,9 +215,9 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         controller.selectedgender = null;
                         controller.updateselectedgender(generic);
 
-                        if (generic != '') {
+                        if (generic.id != null) {
                           controller.selectedgender = generic;
-                          controller.selectedgender = (generic == '')
+                          controller.selectedgender = (generic.id == null)
                               ? null
                               : controller.selectedgender;
                         }
@@ -229,9 +231,9 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             controller.selectedgender = null;
                             controller.updateselectedgender(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               controller.selectedgender = generic;
-                              controller.selectedgender = (generic == '')
+                              controller.selectedgender = (generic.id == null)
                                   ? null
                                   : controller.selectedgender;
                             }
@@ -255,11 +257,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         controller.selectedmaritalStatus = null;
                         controller.updateselectedmaritalStatus(generic);
 
-                        if (generic != '') {
+                        if (generic.id != null) {
                           controller.selectedmaritalStatus = generic;
-                          controller.selectedmaritalStatus = (generic == '')
-                              ? null
-                              : controller.selectedmaritalStatus;
+                          controller.selectedmaritalStatus =
+                              (generic.id == null)
+                                  ? null
+                                  : controller.selectedmaritalStatus;
                         }
                       },
                       readonly: true,
@@ -271,11 +274,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             controller.selectedmaritalStatus = null;
                             controller.updateselectedmaritalStatus(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               controller.selectedmaritalStatus = generic;
-                              controller.selectedmaritalStatus = (generic == '')
-                                  ? null
-                                  : controller.selectedmaritalStatus;
+                              controller.selectedmaritalStatus =
+                                  (generic.id == null)
+                                      ? null
+                                      : controller.selectedmaritalStatus;
                             }
                           },
                           icon: Image.asset(Images.dropdown)),
@@ -399,9 +403,9 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         controller.selectedspecialities = null;
                         controller.updateselectedspeciality(generic);
 
-                        if (generic != '') {
+                        if (generic.id != null) {
                           controller.selectedspecialities = generic;
-                          controller.selectedspecialities = (generic == '')
+                          controller.selectedspecialities = (generic.id == null)
                               ? null
                               : controller.selectedspecialities;
                         }
@@ -419,11 +423,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             controller.selectedspecialities = null;
                             controller.updateselectedspeciality(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               controller.selectedspecialities = generic;
-                              controller.selectedspecialities = (generic == '')
-                                  ? null
-                                  : controller.selectedspecialities;
+                              controller.selectedspecialities =
+                                  (generic.id == null)
+                                      ? null
+                                      : controller.selectedspecialities;
                             }
 
                             setState(() {
@@ -455,11 +460,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           controller.selectedsubspecialities = null;
                           controller.updateselectedspeciality(generic);
 
-                          if (generic != '') {
+                          if (generic.id != null) {
                             controller.selectedsubspecialities = generic;
-                            controller.selectedsubspecialities = (generic == '')
-                                ? null
-                                : controller.selectedsubspecialities;
+                            controller.selectedsubspecialities =
+                                (generic.id == null)
+                                    ? null
+                                    : controller.selectedsubspecialities;
                           }
                         }
                       },
@@ -473,10 +479,10 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               controller.selectedsubspecialities = null;
                               controller.updateselectedspeciality(generic);
 
-                              if (generic != '') {
+                              if (generic.id != null) {
                                 controller.selectedsubspecialities = generic;
                                 controller.selectedsubspecialities =
-                                    (generic == '')
+                                    (generic.id == null)
                                         ? null
                                         : controller.selectedsubspecialities;
                               }
@@ -591,9 +597,9 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         controller.selectedcountry = null;
                         controller.updateselectedCountry(generic);
 
-                        if (generic != '') {
+                        if (generic.id != null) {
                           controller.selectedcountry = generic;
-                          controller.selectedcountry = (generic == '')
+                          controller.selectedcountry = (generic.id == null)
                               ? null
                               : controller.selectedcountry;
                         }

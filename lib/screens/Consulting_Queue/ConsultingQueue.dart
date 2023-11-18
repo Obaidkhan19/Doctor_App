@@ -83,7 +83,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(AppImages.helpful_background_logo),
+                  image: AssetImage(AppImages.helpfulbackgroundlogo),
                   alignment: Alignment.center,
                 ),
               ),

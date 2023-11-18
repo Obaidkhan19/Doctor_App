@@ -76,9 +76,6 @@ class Manageappointmentrepo {
           List<monthlyappointresponse> monthlyDoctorAppointment =
               data.map((e) => monthlyappointresponse.fromJson(e)).toList();
 
-          log('${monthlyDoctorAppointment.toString()} DailyDoctorAppointment');
-          Manageappointmentcontroller.i.monthlyappintment =
-              monthlyDoctorAppointment;
           for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
             if (monthlyDoctorAppointment[i].paid != 0) {
               Manageappointmentcontroller.i.paid =
@@ -90,8 +87,6 @@ class Manageappointmentrepo {
                       Manageappointmentcontroller.i.unpaid;
             }
           }
-          Manageappointmentcontroller.i
-              .updatemonthlyappointment(monthlyDoctorAppointment);
           return monthlyDoctorAppointment;
         }
       } else {

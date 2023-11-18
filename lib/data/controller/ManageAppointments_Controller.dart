@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:get/get.dart';
 
@@ -60,20 +62,55 @@ class Manageappointmentcontroller extends GetxController
   }
 
   bool isLoadingMonthlyDoctorAppointment = false;
-  getmonthlyoctorAppointment(date, wlid, isonline) async {
+  getmonthlyoctorAppointment(date, wlid, isonline, diffr) async {
+    monthlyappintment.clear();
+    data.clear();
     try {
       isLoadingMonthlyDoctorAppointment = true;
       monthlyappintment =
           await Manageappointmentrepo.GetmonthlyDoctorAppointment(
               date.toString().split(' ')[0], wlid, isonline);
-      data = await Manageappointmentrepo.GetmonthlyDoctorAppointment(
-          date.toString().split(' ')[1], wlid, isonline);
-      for (int i = 0; i < monthlyappintment.length; i++) {
-        for (int j = 0; j < data.length; j++) {
-          if (monthlyappintment[i] != data[j]) monthlyappintment.add(data[j]);
+      if (date.toString().split(' ')[0].trim() !=
+          date.toString().split(' ')[1].trim()) {
+        data = await Manageappointmentrepo.GetmonthlyDoctorAppointment(
+            date.toString().split(' ')[1], wlid, isonline);
+        if (date.toString().split(' ')[1] == date.toString().split(' ')[0]) {
+          for (var element in data) {
+            if (monthlyappintment.contains(element)) {
+            } else {
+              monthlyappintment.add(element);
+            }
+          }
+        } else {
+          monthlyappintment = monthlyappintment + data;
         }
       }
-      // monthlyappintment = monthlyappintment + data;
+      paid = 0;
+      unpaid = 0;
+      for (int i = 0; i < monthlyappintment.length; i++) {
+        log(monthlyappintment[i].date);
+        log(diffr);
+        // if (int.parse(monthlyappintment[i]
+        //             .date
+        //             .toString()
+        //             .split('T')[0]
+        //             .split('-')[2]) >
+        //         int.parse(diffr.toString().split(' ')[0]) &&
+        //     int.parse(monthlyappintment[i]
+        //             .date
+        //             .toString()
+        //             .split('T')[0]
+        //             .split('-')[2]) <
+        //         int.parse(diffr.toString().split(' ')[1]))
+        {
+          if (monthlyappintment[i].paid != 0) {
+            paid = monthlyappintment[i].paid + paid;
+          } else if (monthlyappintment[i].unPaid != 0) {
+            unpaid = monthlyappintment[i].unPaid + unpaid;
+          }
+        }
+      }
+
       isLoadingMonthlyDoctorAppointment = false;
       update();
     } catch (e) {
@@ -88,6 +125,9 @@ class Manageappointmentcontroller extends GetxController
 
   setPageIndexofDayViewAppointment(int ind) {
     _index = ind;
+    if (_index == 0) {
+      monthlyappintment.clear();
+    }
     update();
   }
 

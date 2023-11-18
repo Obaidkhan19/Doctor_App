@@ -118,7 +118,7 @@ class DetailMonthlyAppointment extends StatefulWidget {
 class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   @override
   void initState() {
-    call();
+    // call();
     Timer.periodic(const Duration(seconds: 6), (timer) {
       chk = true;
       timer.cancel();
@@ -129,12 +129,13 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   String monthyearDate = DateFormat('MM-yyyy').format(DateTime.now());
   String monthyearDate2 = DateFormat('MM-yyyy').format(DateTime.now());
 
-  call() async {
-    await Manageappointmentcontroller.i.getmonthlyoctorAppointment(
-        "$monthyearDate $monthyearDate2",
-        widget.worklocationid,
-        widget.isonline);
-  }
+  // call() async {
+  //   log("${monthyearDate.split(' ')[0].split('-')[1]}-${monthyearDate.split(' ')[0].split('-')[0]} ${int.parse(monthyearDate.split(' ')[0].split('-')[1]) < 12 ? int.parse(monthyearDate.split(' ')[0].split('-')[1]) + 1 : 01}-${monthyearDate.split(' ')[0].split('-')[0]}");
+  //   Manageappointmentcontroller.i.getmonthlyoctorAppointment(
+  //       "${monthyearDate.split(' ')[0].split('-')[1]}-${monthyearDate.split(' ')[0].split('-')[0]} ${int.parse(monthyearDate.split(' ')[0].split('-')[1]) < 12 ? int.parse(monthyearDate.split(' ')[0].split('-')[1]) + 1 : 01}-${monthyearDate.split(' ')[0].split('-')[0]}",
+  //       widget.worklocationid,
+  //       widget.isonline);
+  // }
 
   bool chk = false;
 
@@ -229,7 +230,8 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         Manageappointmentcontroller.i.getmonthlyoctorAppointment(
                             "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
                             widget.worklocationid,
-                            widget.isonline);
+                            widget.isonline,
+                            "${viewChangedDetails.visibleDates.first.day} ${viewChangedDetails.visibleDates.last.day}");
                         // }
                       },
                       // monthCellBuilder: monthCellBuilder,
