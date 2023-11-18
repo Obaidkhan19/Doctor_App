@@ -140,13 +140,13 @@ class AppConstants {
       'Dr. Shaikh Hamid is a highly skilled Cardiology specialist. With extensive expertise in the field, he possesses a deep understanding of cardiovascular diseases and their treatment. Dr. Hamid is committed to providing exceptional patient care and employing the latest advancements in cardiology to improve the lives of his patients. His dedication to research and continuous learning ensures that he stays up-to-date with the most current medical practices.';
   static String onlineStatus = '$baseURL/api/doctor/UpdateUserOnlineStatus';
   static String logoutApi = '$baseURL/api/doctor/Logoff';
-  static String GetDailyAppointment = '$baseURL/api/doctor/GetDailyAppointment';
-  static String GetMonthlyAppointment =
+  static String getDailyAppointment = '$baseURL/api/doctor/GetDailyAppointment';
+  static String getMonthlyAppointment =
       '$baseURL/api/doctor/GetMonthlyAppointment';
-  static String GetDayAppointment = '$baseURL/api/doctor/GetDayAppointment';
-  static String RescheduleApi = '$baseURL/api/doctor/Reschedule';
-  static String ApproveApi = '$baseURL/api/doctor/Approved';
-  static String WaitingQueueApi = '$baseURL/api/doctor/WaitingQueue';
+  static String getDayAppointment = '$baseURL/api/doctor/GetDayAppointment';
+  static String rescheduleApi = '$baseURL/api/doctor/Reschedule';
+  static String approveApi = '$baseURL/api/doctor/Approved';
+  static String waitingQueueApi = '$baseURL/api/doctor/WaitingQueue';
   static String consultingqueuepatient = '$baseURL/api/doctor/GetConsultations';
 
   static String consultingqueuewait = '$baseURL/api/doctor/WaitingQueue';

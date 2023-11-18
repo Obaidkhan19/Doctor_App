@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_radio.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
@@ -141,7 +139,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       onTap: () async {
                         controller.selectedpersonalTitle = null;
                         PTitle generic = await searchabledropdown(
-                            context, controller.personalTitleList ?? []);
+                            context, controller.personalTitleList);
                         controller.selectedpersonalTitle = null;
                         controller.updateselectedpersonalTitle(generic);
 
@@ -157,7 +155,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           onPressed: () async {
                             controller.selectedpersonalTitle = null;
                             PTitle generic = await searchabledropdown(
-                                context, controller.personalTitleList ?? []);
+                                context, controller.personalTitleList);
                             controller.selectedpersonalTitle = null;
                             controller.updateselectedpersonalTitle(generic);
 
@@ -211,7 +209,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       onTap: () async {
                         controller.selectedgender = null;
                         GendersData generic = await searchabledropdown(
-                            context, controller.genderList ?? []);
+                            context, controller.genderList);
                         controller.selectedgender = null;
                         controller.updateselectedgender(generic);
 
@@ -227,7 +225,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           onPressed: () async {
                             controller.selectedgender = null;
                             GendersData generic = await searchabledropdown(
-                                context, controller.genderList ?? []);
+                                context, controller.genderList);
                             controller.selectedgender = null;
                             controller.updateselectedgender(generic);
 
@@ -253,7 +251,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       onTap: () async {
                         controller.selectedmaritalStatus = null;
                         MSData generic = await searchabledropdown(
-                            context, controller.maritalStatusList ?? []);
+                            context, controller.maritalStatusList);
                         controller.selectedmaritalStatus = null;
                         controller.updateselectedmaritalStatus(generic);
 
@@ -269,7 +267,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           onPressed: () async {
                             controller.selectedmaritalStatus = null;
                             MSData generic = await searchabledropdown(
-                                context, controller.maritalStatusList ?? []);
+                                context, controller.maritalStatusList);
                             controller.selectedmaritalStatus = null;
                             controller.updateselectedmaritalStatus(generic);
 
@@ -397,7 +395,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       onTap: () async {
                         controller.selectedspecialities = null;
                         Specialities1 generic = await searchabledropdown(
-                            context, controller.specialitiesList ?? []);
+                            context, controller.specialitiesList);
                         controller.selectedspecialities = null;
                         controller.updateselectedspeciality(generic);
 
@@ -417,7 +415,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           onPressed: () async {
                             controller.selectedspecialities = null;
                             Specialities1 generic = await searchabledropdown(
-                                context, controller.specialitiesList ?? []);
+                                context, controller.specialitiesList);
                             controller.selectedspecialities = null;
                             controller.updateselectedspeciality(generic);
 
@@ -453,7 +451,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         if (controller.selectedspecialities != null) {
                           controller.selectedsubspecialities = null;
                           Specialities1 generic = await searchabledropdown(
-                              context, controller.subspecialitiesList ?? []);
+                              context, controller.subspecialitiesList);
                           controller.selectedsubspecialities = null;
                           controller.updateselectedspeciality(generic);
 
@@ -471,8 +469,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             if (controller.selectedspecialities != null) {
                               controller.selectedsubspecialities = null;
                               Specialities1 generic = await searchabledropdown(
-                                  context,
-                                  controller.subspecialitiesList ?? []);
+                                  context, controller.subspecialitiesList);
                               controller.selectedsubspecialities = null;
                               controller.updateselectedspeciality(generic);
 
@@ -590,7 +587,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         controller.selectedprovince = null;
 
                         Countries generic = await searchabledropdown(
-                            context, controller.countriesList ?? []);
+                            context, controller.countriesList);
                         controller.selectedcountry = null;
                         controller.updateselectedCountry(generic);
 
@@ -616,7 +613,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             controller.selectedprovince = null;
 
                             Countries generic = await searchabledropdown(
-                                context, controller.countriesList ?? []);
+                                context, controller.countriesList);
                             controller.selectedcountry = null;
                             controller.updateselectedCountry(generic);
 
@@ -651,7 +648,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           controller.selectedprovince = null;
                           controller.selectedcity = null;
                           Provinces generic = await searchabledropdown(
-                              context, controller.provinceList ?? []);
+                              context, controller.provinceList);
                           controller.selectedprovince = null;
                           controller.updateselectedprovince(generic);
 
@@ -675,7 +672,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               controller.selectedprovince = null;
                               controller.selectedcity = null;
                               Provinces generic = await searchabledropdown(
-                                  context, controller.provinceList ?? []);
+                                  context, controller.provinceList);
                               controller.selectedprovince = null;
                               controller.updateselectedprovince(generic);
 
@@ -711,7 +708,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                             controller.selectedprovince != null) {
                           controller.selectedcity = null;
                           Cities generic = await searchabledropdown(
-                              context, controller.citiesList ?? []);
+                              context, controller.citiesList);
                           controller.selectedcity = null;
                           controller.updateselectedcity(generic);
 
@@ -730,13 +727,13 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                 controller.selectedprovince != null) {
                               controller.selectedcity = null;
                               Cities generic = await searchabledropdown(
-                                  context, controller.citiesList ?? []);
+                                  context, controller.citiesList);
                               controller.selectedcity = null;
                               controller.updateselectedcity(generic);
 
-                              if (generic != '') {
+                              if (generic.id != null) {
                                 controller.selectedcity = generic;
-                                controller.selectedcity = (generic == '')
+                                controller.selectedcity = (generic.id == null)
                                     ? null
                                     : controller.selectedcity;
                               }

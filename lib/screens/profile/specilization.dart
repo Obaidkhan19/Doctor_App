@@ -87,13 +87,13 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                           onTap: () async {
                             add.addselectedspecialities = null;
                             Specialities1 generic = await searchabledropdown(
-                                context, add.addspecialitiesList ?? []);
+                                context, add.addspecialitiesList);
                             add.addselectedspecialities = null;
                             add.updateaddselectedspeciality(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               add.addselectedspecialities = generic;
-                              add.addselectedspecialities = (generic == '')
+                              add.addselectedspecialities = (generic.id == null)
                                   ? null
                                   : add.addselectedspecialities;
                             }
@@ -116,15 +116,16 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                           onTap: () async {
                             add.addselectedsubspecialities = null;
                             Specialities1 generic = await searchabledropdown(
-                                context, add.addsubspecialitiesList ?? []);
+                                context, add.addsubspecialitiesList);
                             add.addselectedsubspecialities = null;
                             add.updateaddselectedspeciality(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               add.addselectedsubspecialities = generic;
-                              add.addselectedsubspecialities = (generic == '')
-                                  ? null
-                                  : add.addselectedsubspecialities;
+                              add.addselectedsubspecialities =
+                                  (generic.id == null)
+                                      ? null
+                                      : add.addselectedsubspecialities;
                             }
                           },
                           readonly: true,
@@ -164,15 +165,16 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                 edit.selectedspecialities = null;
                                 Specialities1 generic =
                                     await searchabledropdown(
-                                        context, edit.specialitiesList ?? []);
+                                        context, edit.specialitiesList);
                                 edit.selectedspecialities = null;
                                 edit.updateselectedspeciality(generic);
 
-                                if (generic != '') {
+                                if (generic.id != null) {
                                   edit.selectedspecialities = generic;
-                                  edit.selectedspecialities = (generic == '')
-                                      ? null
-                                      : edit.selectedspecialities;
+                                  edit.selectedspecialities =
+                                      (generic.id == null)
+                                          ? null
+                                          : edit.selectedspecialities;
                                 }
 
                                 setState(() {
@@ -193,16 +195,17 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                               onTap: () async {
                                 edit.selectedsubspecialities = null;
                                 Specialities1 generic =
-                                    await searchabledropdown(context,
-                                        edit.subspecialitiesList ?? []);
+                                    await searchabledropdown(
+                                        context, edit.subspecialitiesList);
                                 edit.selectedsubspecialities = null;
                                 edit.updateselectedspeciality(generic);
 
-                                if (generic != '') {
+                                if (generic.id != null) {
                                   edit.selectedsubspecialities = generic;
-                                  edit.selectedsubspecialities = (generic == '')
-                                      ? null
-                                      : edit.selectedsubspecialities;
+                                  edit.selectedsubspecialities =
+                                      (generic.id != null)
+                                          ? null
+                                          : edit.selectedsubspecialities;
                                 }
                               },
                               readonly: true,

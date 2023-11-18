@@ -81,13 +81,13 @@ class _AwardsDetailState extends State<AwardsDetail> {
                         EditProfileCustomTextField(
                           onTap: () async {
                             Degrees generic = await searchabledropdown(
-                                context, edit.awardList ?? []);
+                                context, edit.awardList);
                             edit.selectedawardlocation = null;
                             edit.updateselectedaward(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               edit.selectedawardlocation = generic;
-                              edit.selectedawardlocation = (generic == '')
+                              edit.selectedawardlocation = (generic.id == null)
                                   ? null
                                   : edit.selectedawardlocation;
                             }
@@ -171,15 +171,16 @@ class _AwardsDetailState extends State<AwardsDetail> {
                             EditProfileCustomTextField(
                               onTap: () async {
                                 Degrees generic = await searchabledropdown(
-                                    context, edit.awardList ?? []);
+                                    context, edit.awardList);
                                 edit.selectedawardlocation = null;
                                 edit.updateselectedaward(generic);
 
-                                if (generic != '') {
+                                if (generic.id != null) {
                                   edit.selectedawardlocation = generic;
-                                  edit.selectedawardlocation = (generic == '')
-                                      ? null
-                                      : edit.selectedawardlocation;
+                                  edit.selectedawardlocation =
+                                      (generic.id == null)
+                                          ? null
+                                          : edit.selectedawardlocation;
                                 }
                               },
                               readonly: true,

@@ -145,7 +145,7 @@ class _EditContactState extends State<EditContact> {
                         edit.selectedprovince = null;
 
                         Countries generic = await searchabledropdown(
-                            context, edit.countriesList ?? []);
+                            context, edit.countriesList);
                         edit.selectedcountry = null;
                         edit.updateselectedCountry(generic);
 
@@ -176,7 +176,7 @@ class _EditContactState extends State<EditContact> {
                         edit.selectedprovince = null;
                         edit.selectedcity = null;
                         Provinces generic = await searchabledropdown(
-                            context, edit.provinceList ?? []);
+                            context, edit.provinceList);
                         edit.selectedprovince = null;
                         edit.updateselectedprovince(generic);
 
@@ -206,8 +206,8 @@ class _EditContactState extends State<EditContact> {
                       readonly: true,
                       onTap: () async {
                         edit.selectedcity = null;
-                        Cities generic = await searchabledropdown(
-                            context, edit.citiesList ?? []);
+                        Cities generic =
+                            await searchabledropdown(context, edit.citiesList);
                         edit.selectedcity = null;
                         edit.updateselectedcity(generic);
 
@@ -381,7 +381,7 @@ class _EditContactState extends State<EditContact> {
                       onTap: () async {
                         edit.selectednokrelation = null;
                         RelationData generic = await searchabledropdown(
-                            context, edit.nokrelationList ?? []);
+                            context, edit.nokrelationList);
                         edit.selectednokrelation = null;
                         edit.updateselectednokrelation(generic);
 

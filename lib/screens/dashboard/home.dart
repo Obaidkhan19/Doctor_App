@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // String pmdcno = "";
   _getUserName() async {
     await _getDoctorBasicInfo();
-    profileContr.value = ((await LocalDb().getOnlineStatus())!) ?? 0;
+    profileContr.value = ((await LocalDb().getOnlineStatus())!);
     if (profileContr.value == 0) {
       profileContr.status = "iamoffline".tr;
     } else if (profileContr.value == 1) {
@@ -375,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.ConfiguationAppointment,
+                              Images.configuationAppointment,
                               height: Get.height * 0.1,
                               width: Get.width * 0.3,
                             ),
@@ -431,7 +431,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                Images.ManagementAppointment,
+                                Images.managementAppointment,
                                 height: Get.height * 0.1,
                                 width: Get.width * 0.3,
                               ),
@@ -535,7 +535,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              Images.ConsultedVault,
+                              Images.consultedVault,
                               height: Get.height * 0.1,
                               width: Get.width * 0.3,
                             ),
@@ -595,7 +595,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                Images.HealthSummry,
+                                Images.healthSummry,
                                 height: Get.height * 0.1,
                                 width: Get.width * 0.3,
                               ),

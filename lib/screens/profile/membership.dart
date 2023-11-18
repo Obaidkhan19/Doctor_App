@@ -91,15 +91,16 @@ class _MemberShipState extends State<MemberShip> {
                         EditProfileCustomTextField(
                           onTap: () async {
                             Degrees generic = await searchabledropdown(
-                                context, edit.membershiplocationList ?? []);
+                                context, edit.membershiplocationList);
                             edit.selectedmembershiplocation = null;
                             edit.updateselectedmembershiplocation(generic);
 
-                            if (generic != '') {
+                            if (generic.id == null) {
                               edit.selectedmembershiplocation = generic;
-                              edit.selectedmembershiplocation = (generic == '')
-                                  ? null
-                                  : edit.selectedmembershiplocation;
+                              edit.selectedmembershiplocation =
+                                  (generic.id == null)
+                                      ? null
+                                      : edit.selectedmembershiplocation;
                             }
                           },
                           readonly: true,
@@ -200,16 +201,15 @@ class _MemberShipState extends State<MemberShip> {
                             EditProfileCustomTextField(
                               onTap: () async {
                                 Degrees generic = await searchabledropdown(
-                                    context,
-                                    add.addmembershiplocationList ?? []);
+                                    context, add.addmembershiplocationList);
                                 add.addselectedmembershiplocation = null;
                                 add.updateaddselectedmembershiplocation(
                                     generic);
 
-                                if (generic != '') {
+                                if (generic.id == null) {
                                   add.addselectedmembershiplocation = generic;
                                   add.addselectedmembershiplocation =
-                                      (generic == '')
+                                      (generic.id == null)
                                           ? null
                                           : add.addselectedmembershiplocation;
                                 }

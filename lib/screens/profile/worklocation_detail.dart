@@ -134,13 +134,13 @@ class _WorkLocationState extends State<WorkLocation> {
                             edit.selectedhospital = null;
                             HospitalORClinics generic =
                                 await searchabledropdown(
-                                    context, edit.hospitalList ?? []);
+                                    context, edit.hospitalList);
                             edit.selectedhospital = null;
                             edit.updateselectedhospital(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               edit.selectedhospital = generic;
-                              edit.selectedhospital = (generic == '')
+                              edit.selectedhospital = (generic.id == null)
                                   ? null
                                   : edit.selectedhospital;
                             }
@@ -221,19 +221,17 @@ class _WorkLocationState extends State<WorkLocation> {
                                 onTap: () async {
                                   add.addworklocationselectedhospital = null;
                                   HospitalORClinics generic =
-                                      await searchabledropdown(
-                                          context,
-                                          add.addworklocationhospitalList ??
-                                              []);
+                                      await searchabledropdown(context,
+                                          add.addworklocationhospitalList);
                                   add.addworklocationselectedhospital = null;
                                   add.updateaddworklocationselectedhospital(
                                       generic);
 
-                                  if (generic != '') {
+                                  if (generic.id != null) {
                                     add.addworklocationselectedhospital =
                                         generic;
                                     add.addworklocationselectedhospital =
-                                        (generic == '')
+                                        (generic.id == null)
                                             ? null
                                             : add
                                                 .addworklocationselectedhospital;
@@ -280,16 +278,16 @@ class _WorkLocationState extends State<WorkLocation> {
                                   add.addselectedworklocationstate = null;
                                   Countries generic = await searchabledropdown(
                                       context,
-                                      add.addworklocationcountriesList ?? []);
+                                      add.addworklocationcountriesList);
                                   add.addselectedworklocationcountry = null;
                                   add.updateaddselectedworklocationcountry(
                                       generic);
 
-                                  if (generic != '') {
+                                  if (generic.id != null) {
                                     add.addselectedworklocationcountry =
                                         generic;
                                     add.addselectedworklocationcountry =
-                                        (generic == '')
+                                        (generic.id == null)
                                             ? null
                                             : add
                                                 .addselectedworklocationcountry;
@@ -326,16 +324,15 @@ class _WorkLocationState extends State<WorkLocation> {
                                   add.addselectedworklocationstate = null;
                                   add.addselectedworklocationCities = null;
                                   Provinces generic = await searchabledropdown(
-                                      context,
-                                      add.addworklocationstateList ?? []);
+                                      context, add.addworklocationstateList);
                                   add.addselectedworklocationstate = null;
                                   add.updateaddselectedworklocationstate(
                                       generic);
 
-                                  if (generic != '') {
+                                  if (generic.id != null) {
                                     add.addselectedworklocationstate = generic;
                                     add.addselectedworklocationstate =
-                                        (generic == '')
+                                        (generic.id == null)
                                             ? null
                                             : add.addselectedworklocationstate;
                                   }
@@ -372,16 +369,15 @@ class _WorkLocationState extends State<WorkLocation> {
                                 onTap: () async {
                                   add.addselectedworklocationCities = null;
                                   Cities generic = await searchabledropdown(
-                                      context,
-                                      add.addworklocationcitiesList ?? []);
+                                      context, add.addworklocationcitiesList);
                                   add.addselectedworklocationCities = null;
                                   add.updateaddselectedworklocationCities(
                                       generic);
 
-                                  if (generic != '') {
+                                  if (generic.id != null) {
                                     add.addselectedworklocationCities = generic;
                                     add.addselectedworklocationCities =
-                                        (generic == '')
+                                        (generic.id == null)
                                             ? null
                                             : add.addselectedworklocationCities;
                                   }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../helpers/color_manager.dart';
 
-class CustomFormField2 extends StatefulWidget {
+class Customformfield2 extends StatefulWidget {
   final bool? obscureText;
   final List<TextInputFormatter>? formatters;
   final TextEditingController? controller;
@@ -19,7 +21,7 @@ class CustomFormField2 extends StatefulWidget {
   final bool? focusnode;
   final FocusNode? focusNode;
   final TextInputType? keyboardType;
-  CustomFormField2(
+  Customformfield2(
       {super.key,
       this.hintText,
       this.lines,
@@ -35,10 +37,10 @@ class CustomFormField2 extends StatefulWidget {
       this.keyboardType});
 
   @override
-  State<CustomFormField2> createState() => _CustomFormField2State();
+  State<Customformfield2> createState() => _Customformfield2State();
 }
 
-class _CustomFormField2State extends State<CustomFormField2> {
+class _Customformfield2State extends State<Customformfield2> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(

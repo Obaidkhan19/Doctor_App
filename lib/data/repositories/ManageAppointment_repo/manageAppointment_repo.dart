@@ -15,8 +15,8 @@ import '../../../models/ReschedualAppointment.dart';
 import '../../../models/TodayAppointmentModel.dart';
 import '../../localDB/local_db.dart';
 
-class ManageAppointmentRepo {
-  static GetDailyDoctorAppointment() async {
+class Manageappointmentrepo {
+  static getDailyDoctorAppointment() async {
     DateTime now = DateTime.now();
     String? Date = DateFormat('yyyy-MM-dd').format(now);
 
@@ -25,9 +25,9 @@ class ManageAppointmentRepo {
     var headers = {'Content-Type': 'application/json'};
 
     try {
-      ManageAppointmentController.i.updateIsloadingScreen(true);
+      Manageappointmentcontroller.i.updateIsloadingScreen(true);
       var response = await http.post(
-          Uri.parse(AppConstants.GetDailyAppointment),
+          Uri.parse(AppConstants.getDailyAppointment),
           headers: headers,
           body: jsonEncode(body));
       if (response.statusCode == 200) {
@@ -36,23 +36,23 @@ class ManageAppointmentRepo {
           DailyDoctorAppointmentsModel DailyDoctorAppointment =
               DailyDoctorAppointmentsModel.fromJson(jsonDecode(response.body));
           log('${DailyDoctorAppointment.toString()} DailyDoctorAppointment');
-          ManageAppointmentController.i.updateIsloadingScreen(false);
+          Manageappointmentcontroller.i.updateIsloadingScreen(false);
           return DailyDoctorAppointment;
         }
       } else {
-        ManageAppointmentController.i.updateIsloadingScreen(false);
+        Manageappointmentcontroller.i.updateIsloadingScreen(false);
         log(response.statusCode.toString());
       }
     } catch (e) {
-      ManageAppointmentController.i.updateIsloadingScreen(false);
+      Manageappointmentcontroller.i.updateIsloadingScreen(false);
       log('$e exception caught');
     }
   }
 
   static GetmonthlyDoctorAppointment(
       String date, String worklocationid, IsOnline) async {
-    ManageAppointmentController.i.paid =
-        ManageAppointmentController.i.unpaid = 0;
+    Manageappointmentcontroller.i.paid =
+        Manageappointmentcontroller.i.unpaid = 0;
     String? userId = await LocalDb().getDoctorId();
 
     var body = {
@@ -65,7 +65,7 @@ class ManageAppointmentRepo {
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(
-          Uri.parse(AppConstants.GetMonthlyAppointment),
+          Uri.parse(AppConstants.getMonthlyAppointment),
           headers: headers,
           body: jsonEncode(body));
       if (response.statusCode == 200) {
@@ -77,20 +77,20 @@ class ManageAppointmentRepo {
               data.map((e) => monthlyappointresponse.fromJson(e)).toList();
 
           log('${monthlyDoctorAppointment.toString()} DailyDoctorAppointment');
-          ManageAppointmentController.i.monthlyappintment =
+          Manageappointmentcontroller.i.monthlyappintment =
               monthlyDoctorAppointment;
           for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
             if (monthlyDoctorAppointment[i].paid != 0) {
-              ManageAppointmentController.i.paid =
+              Manageappointmentcontroller.i.paid =
                   monthlyDoctorAppointment[i].paid +
-                      ManageAppointmentController.i.paid;
+                      Manageappointmentcontroller.i.paid;
             } else if (monthlyDoctorAppointment[i].unPaid != 0) {
-              ManageAppointmentController.i.unpaid =
+              Manageappointmentcontroller.i.unpaid =
                   monthlyDoctorAppointment[i].unPaid +
-                      ManageAppointmentController.i.unpaid;
+                      Manageappointmentcontroller.i.unpaid;
             }
           }
-          ManageAppointmentController.i
+          Manageappointmentcontroller.i
               .updatemonthlyappointment(monthlyDoctorAppointment);
           return monthlyDoctorAppointment;
         }
@@ -113,7 +113,7 @@ class ManageAppointmentRepo {
     };
     var headers = {'Content-Type': 'application/json'};
     try {
-      var response = await http.post(Uri.parse(AppConstants.GetDayAppointment),
+      var response = await http.post(Uri.parse(AppConstants.getDayAppointment),
           headers: headers, body: jsonEncode(body));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
@@ -147,7 +147,7 @@ class ManageAppointmentRepo {
     };
     var headers = {'Content-Type': 'application/json'};
     try {
-      var response = await http.post(Uri.parse(AppConstants.RescheduleApi),
+      var response = await http.post(Uri.parse(AppConstants.rescheduleApi),
           headers: headers, body: jsonEncode(body));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
@@ -179,7 +179,7 @@ class ManageAppointmentRepo {
     };
     var headers = {'Content-Type': 'application/json'};
     try {
-      var response = await http.post(Uri.parse(AppConstants.ApproveApi),
+      var response = await http.post(Uri.parse(AppConstants.approveApi),
           headers: headers, body: jsonEncode(body));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);

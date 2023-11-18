@@ -7,7 +7,6 @@ import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
-import 'package:doctormobileapplication/utils/callwaiting.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,8 @@ import '../../helpers/values_manager.dart';
 import '../../utils/AppImages.dart';
 
 class ConsultedQueueDataList extends StatefulWidget {
-  String? Status;
-  ConsultedQueueDataList({super.key, this.Status});
+  String? status;
+  ConsultedQueueDataList({super.key, this.status});
 
   @override
   State<ConsultedQueueDataList> createState() => _ConsultedQueueDataListState();
@@ -38,7 +37,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
   @override
   void dispose() {
     _scrollController.dispose();
-    ConsultingQueueController.i.clearAllLists(widget.Status.toString());
+    ConsultingQueueController.i.clearAllLists(widget.status.toString());
 
     super.dispose();
   }
@@ -62,7 +61,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         length: "10",
         orderColumn: "0",
         orderDir: "desc"));
-    await ConsultingQueueController.i.clearAllLists(widget.Status.toString());
+    await ConsultingQueueController.i.clearAllLists(widget.status.toString());
 
     SearchFieldController.clear();
     _scrollController.addListener(() {
@@ -158,7 +157,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                 (manageAppointment
                                                         .patientStatusValue
                                                         .toString() ==
-                                                    widget.Status.toString()))
+                                                    widget.status.toString()))
                                             ? Card(
                                                 elevation: 4,
                                                 surfaceTintColor:
@@ -407,7 +406,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                           children: [
                                                             Expanded(
                                                               child: Text(
-                                                                '${'waitingSince'.tr} ${contr.startTimesconsulted[index] ?? ""}',
+                                                                '${'waitingSince'.tr} ${contr.startTimesconsulted[index]}',
                                                                 //'Waiting Since ${contr.startTimes[index] }',
                                                                 style:
                                                                     GoogleFonts
@@ -440,11 +439,10 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                               )
                                             : Container());
                                       }
-                                      return null;
                                     }),
                               )
-                            : (((ConsultingQueueController
-                                                    .i.ConsultedDataList !=
+                            : (((ConsultingQueueController.i.ConsultedDataList
+                                                    .totalRecord !=
                                                 null) &&
                                             (ConsultingQueueController.i
                                                     .ConsultedDataList.queue !=

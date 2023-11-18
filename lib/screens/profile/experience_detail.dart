@@ -78,15 +78,16 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                       EditProfileCustomTextField(
                         onTap: () async {
                           Degrees generic = await searchabledropdown(
-                              context, edit.experiencelocationList ?? []);
+                              context, edit.experiencelocationList);
                           edit.selectedexperiencelocation = null;
                           edit.updateselectedexperiencelocation(generic);
 
-                          if (generic != '') {
+                          if (generic.id != null) {
                             edit.selectedexperiencelocation = generic;
-                            edit.selectedexperiencelocation = (generic == '')
-                                ? null
-                                : edit.selectedexperiencelocation;
+                            edit.selectedexperiencelocation =
+                                (generic.id == null)
+                                    ? null
+                                    : edit.selectedexperiencelocation;
                           }
                         },
                         readonly: true,
@@ -230,14 +231,14 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                           EditProfileCustomTextField(
                             onTap: () async {
                               Degrees generic = await searchabledropdown(
-                                  context, add.addexperiencelocationList ?? []);
+                                  context, add.addexperiencelocationList);
                               add.addselectedexperiencelocation = null;
                               add.updateaddselectedexperiencelocation(generic);
 
-                              if (generic != '') {
+                              if (generic.id != null) {
                                 add.addselectedexperiencelocation = generic;
                                 add.addselectedexperiencelocation =
-                                    (generic == '')
+                                    (generic.id == null)
                                         ? null
                                         : add.addselectedexperiencelocation;
                               }

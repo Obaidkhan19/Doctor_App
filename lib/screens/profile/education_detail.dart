@@ -133,7 +133,7 @@ class _EducationDetailState extends State<EducationDetail> {
                             },
                             onTap: () async {
                               Countries generic = await searchabledropdown(
-                                  context, edit.countriesList ?? []);
+                                  context, edit.countriesList);
                               edit.educationselectedCountry = null;
                               edit.updateeducationselectedCountry(generic);
 
@@ -165,7 +165,7 @@ class _EducationDetailState extends State<EducationDetail> {
                             },
                             onTap: () async {
                               Institutions generic = await searchabledropdown(
-                                  context, edit.institutionList ?? []);
+                                  context, edit.institutionList);
                               edit.selectedinstitution = null;
                               edit.updateselectedInstitution(generic);
 
@@ -191,13 +191,13 @@ class _EducationDetailState extends State<EducationDetail> {
                             },
                             onTap: () async {
                               Degrees generic = await searchabledropdown(
-                                  context, edit.degreesList ?? []);
+                                  context, edit.degreesList);
                               edit.selecteddegree = null;
                               edit.updateselecteddegree(generic);
 
-                              if (generic != '') {
+                              if (generic.id != null) {
                                 edit.selecteddegree = generic;
-                                edit.selecteddegree = (generic == '')
+                                edit.selecteddegree = (generic.id == null)
                                     ? null
                                     : edit.selecteddegree;
                               }
@@ -216,7 +216,7 @@ class _EducationDetailState extends State<EducationDetail> {
                             },
                             onTap: () async {
                               Degrees generic = await searchabledropdown(
-                                  context, edit.fieldofstudyList ?? []);
+                                  context, edit.fieldofstudyList);
                               edit.selectedfieldofstudy = null;
                               edit.updateselectedfieldofstudy(generic);
 
@@ -488,8 +488,7 @@ class _EducationDetailState extends State<EducationDetail> {
                                 },
                                 onTap: () async {
                                   Countries generic = await searchabledropdown(
-                                      context,
-                                      add.educationaddcountriesList ?? []);
+                                      context, add.educationaddcountriesList);
                                   add.selectededucationaddcountry = null;
                                   add.updateselectededucationaddCountry(
                                       generic);
@@ -526,10 +525,8 @@ class _EducationDetailState extends State<EducationDetail> {
                                 },
                                 onTap: () async {
                                   Institutions generic =
-                                      await searchabledropdown(
-                                          context,
-                                          add.educationaddinstitutionList ??
-                                              []);
+                                      await searchabledropdown(context,
+                                          add.educationaddinstitutionList);
                                   add.educationaddselectedinstitution = null;
                                   add.updateeducationaddselectedInstitution(
                                       generic);
@@ -562,15 +559,14 @@ class _EducationDetailState extends State<EducationDetail> {
                                 },
                                 onTap: () async {
                                   Degrees generic = await searchabledropdown(
-                                      context,
-                                      add.educationadddegreesList ?? []);
+                                      context, add.educationadddegreesList);
                                   add.educationaddselecteddegree = null;
                                   add.updateeducationaddselecteddegree(generic);
 
-                                  if (generic != '') {
+                                  if (generic.id != null) {
                                     add.educationaddselecteddegree = generic;
                                     add.educationaddselecteddegree =
-                                        (generic == '')
+                                        (generic.id == null)
                                             ? null
                                             : add.educationaddselecteddegree;
                                   }
@@ -593,7 +589,7 @@ class _EducationDetailState extends State<EducationDetail> {
                                 onTap: () async {
                                   Degrees generic = await searchabledropdown(
                                       context,
-                                      add.educationaddfieldofstudyList ?? []);
+                                      add.educationaddfieldofstudyList);
                                   add.educationaddselectedfieldofstudy = null;
                                   add.updateeducationaddselectedfieldofstudy(
                                       generic);

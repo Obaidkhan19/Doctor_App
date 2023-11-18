@@ -55,11 +55,11 @@ class Images {
   static const String heart = '$path/heart.png';
   static const String clinic = '$path/clinic.png';
   static const String visa = '$path/visa.png';
-  static const String ConfiguationAppointment =
+  static const String configuationAppointment =
       '$path/ConfiguationAppointment.png';
-  static const String ManagementAppointment = '$path/ManagementAppointment.png';
-  static const String ConsultedVault = '$path/ConsultedVault.png';
-  static const String HealthSummry = '$path/HealthSummry.png';
+  static const String managementAppointment = '$path/ManagementAppointment.png';
+  static const String consultedVault = '$path/ConsultedVault.png';
+  static const String healthSummry = '$path/HealthSummry.png';
   static const String avator = '$path/avator.png';
   static const String paypal = "$path/paypal.png";
   static const String feedbacksubmit = '$path/submit_feedback.png';

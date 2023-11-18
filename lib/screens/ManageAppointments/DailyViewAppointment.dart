@@ -7,28 +7,26 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../data/controller/ManageAppointments_Controller.dart';
 import '../../helpers/color_manager.dart';
-import '../../helpers/font_manager.dart';
-import '../../utils/AppImages.dart';
 import '_DailyDetailAppointment.dart';
 import '_DetailMonthlyAppointment.dart';
 
-class DailyViewAppointments extends StatefulWidget {
+class Dailyviewappointments extends StatefulWidget {
   String? dateTime;
   String? IsOnline;
   String? WorkLocationId;
-  DailyViewAppointments(
+  Dailyviewappointments(
       {super.key, this.dateTime, this.IsOnline, this.WorkLocationId});
 
   @override
-  State<DailyViewAppointments> createState() => _TodayAppointmentsState();
+  State<Dailyviewappointments> createState() => _TodayAppointmentsState();
 }
 
-class _TodayAppointmentsState extends State<DailyViewAppointments> {
+class _TodayAppointmentsState extends State<Dailyviewappointments> {
   late List<Widget> pages;
   @override
   void initState() {
     pages = [
-      DailyDetailAppointment(
+      Dailydetailappointment(
           dateTime: widget.dateTime,
           IsOnline: widget.IsOnline,
           WorkLocationId: widget.WorkLocationId),
@@ -42,7 +40,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
 
   @override
   void dispose() {
-    ManageAppointmentController.i.date = null;
+    Manageappointmentcontroller.i.date = null;
     super.dispose();
   }
 
@@ -57,18 +55,18 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
   @override
   Widget build(BuildContext context) {
     var contr =
-        Get.put<ManageAppointmentController>(ManageAppointmentController());
+        Get.put<Manageappointmentcontroller>(Manageappointmentcontroller());
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             color: ColorManager.kPrimaryColor,
             onPressed: () {
-              ManageAppointmentController.i.setPageIndexofDayViewAppointment(0);
+              Manageappointmentcontroller.i.setPageIndexofDayViewAppointment(0);
               Get.back();
             },
           ),
-          title: GetBuilder<ManageAppointmentController>(
+          title: GetBuilder<Manageappointmentcontroller>(
             builder: (con) {
               return Text(
                 contr.index == 0
@@ -88,7 +86,7 @@ class _TodayAppointmentsState extends State<DailyViewAppointments> {
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
-        body: GetBuilder<ManageAppointmentController>(builder: (cont) {
+        body: GetBuilder<Manageappointmentcontroller>(builder: (cont) {
           return BlurryModalProgressHUD(
               inAsyncCall: cont.isLoadingDailyDoctorAppointmentSlots,
               blurEffectIntensity: 4,

@@ -9,12 +9,12 @@ class AppImages {
   static String cross = 'assets/images/cross.png';
   static String editbig = 'assets/images/edit.png';
 
-  static String helpful_background_logo =
+  static String helpfulbackgroundlogo =
       'assets/images/helpful_background_logo.png';
-  static String editPrescription_logo = 'assets/images/prescription.png';
-  static String filter_logo = 'assets/images/filter.png';
-  static String background_image = 'assets/images/helpbackgraound.png';
-  static String search_image = 'assets/images/search.png';
+  static String editPrescriptionlogo = 'assets/images/prescription.png';
+  static String filterlogo = 'assets/images/filter.png';
+  static String backgroundimage = 'assets/images/helpbackgraound.png';
+  static String searchimage = 'assets/images/search.png';
   static String vector = 'assets/images/Vector.png';
   static String wallet = 'assets/images/wallet.png';
   static String walletimg = 'assets/images/walletimg.png';

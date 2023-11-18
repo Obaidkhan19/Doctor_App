@@ -170,7 +170,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                           children: [
                             ClinicalPracticeQueueDataList(Status: "1"),
                             HoldQueueDataList(Status: "2"),
-                            ConsultedQueueDataList(Status: "3"),
+                            ConsultedQueueDataList(status: "3"),
                           ]),
                     ),
                   ],

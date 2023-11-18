@@ -45,18 +45,18 @@ List<Meeting> _getDataSource() {
       DateTime(today.year, today.month, today.day, 9, 0, 0);
   final DateTime endTime = startTime.add(const Duration(hours: 2));
   for (int i = 0;
-      i < ManageAppointmentController.i.monthlyappintment.length;
+      i < Manageappointmentcontroller.i.monthlyappintment.length;
       i++) {
     meetings.add(Meeting(
-        '${ManageAppointmentController.i.monthlyappintment[i].paid} ',
-        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
-        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
+        '${Manageappointmentcontroller.i.monthlyappintment[i].paid} ',
+        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
+        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
         ColorManager.kRedColor,
         false));
     meetings.add(Meeting(
-        '${ManageAppointmentController.i.monthlyappintment[i].unPaid} ',
-        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
-        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
+        '${Manageappointmentcontroller.i.monthlyappintment[i].unPaid} ',
+        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
+        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
         ColorManager.kblackColor,
         false));
   }
@@ -130,7 +130,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   String monthyearDate2 = DateFormat('MM-yyyy').format(DateTime.now());
 
   call() async {
-    await ManageAppointmentController.i.getmonthlyoctorAppointment(
+    await Manageappointmentcontroller.i.getmonthlyoctorAppointment(
         "$monthyearDate $monthyearDate2",
         widget.worklocationid,
         widget.isonline);
@@ -143,10 +143,10 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<ManageAppointmentController>(builder: (context) {
+      body: GetBuilder<Manageappointmentcontroller>(builder: (context) {
         return BlurryModalProgressHUD(
           inAsyncCall:
-              ManageAppointmentController.i.isLoadingMonthlyDoctorAppointment,
+              Manageappointmentcontroller.i.isLoadingMonthlyDoctorAppointment,
           blurEffectIntensity: 4,
           progressIndicator: const SpinKitSpinningLines(
             color: Color(0xfff1272d3),
@@ -185,7 +185,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                             MonthNavigationDirection.horizontal,
                       ),
                       onViewChanged: (viewChangedDetails) {
-                        // ManageAppointmentController.i
+                        // Manageappointmentcontroller.i
                         //     .getmonthlyoctorAppointment(monthyearDate,
                         //         widget.worklocationid, widget.isonline);
                         // if (chk) {
@@ -208,25 +208,25 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         //   } else {
                         //     date = "${date.split('-')[0]}-${current + 1}";
                         //   }
-                        //   ManageAppointmentController.i
+                        //   Manageappointmentcontroller.i
                         //       .getmonthlyoctorAppointment(
                         //           date, widget.worklocationid, widget.isonline);
 
                         //   log(viewChangedDetails.visibleDates.length
                         //       .toString());
                         // }
-                        // ManageAppointmentController.i
+                        // Manageappointmentcontroller.i
                         //     .getmonthlyoctorAppointment(monthyearDate,
                         //         widget.worklocationid, widget.isonline);
                         // if (int.parse(monthyearDate.toString().split('-')[0]) ==
                         //     int.parse(viewChangedDetails.visibleDates.last.month
                         //         .toString())) {
-                        //   ManageAppointmentController.i.getmonthlyoctorAppointment(
+                        //   Manageappointmentcontroller.i.getmonthlyoctorAppointment(
                         //       "${viewChangedDetails.visibleDates.last.month + 1}-${viewChangedDetails.visibleDates.last.year}",
                         //       widget.worklocationid,
                         //       widget.isonline);
                         // } else {
-                        ManageAppointmentController.i.getmonthlyoctorAppointment(
+                        Manageappointmentcontroller.i.getmonthlyoctorAppointment(
                             "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
                             widget.worklocationid,
                             widget.isonline);
@@ -235,33 +235,33 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       // monthCellBuilder: monthCellBuilder,
                       // onViewChanged: (viewChangedDetails) {
                       //   // in first parameter add month and year
-                      //   ManageAppointmentController.i
+                      //   Manageappointmentcontroller.i
                       //       .getmonthlyoctorAppointment(monthyearDate,
                       //           widget.worklocationid, widget.isonline);
                       // },
                       onTap: (CalendarTapDetails details) async {
-                        ManageAppointmentController.i
+                        Manageappointmentcontroller.i
                             .selectedmonthlyspecificdate(details.date);
 
                         String dt = DateFormat('yyyy-MM-dd')
-                            .format(ManageAppointmentController.i.date!)
+                            .format(Manageappointmentcontroller.i.date!)
                             .toString();
 
                         if (widget.worklocationid == '') {
-                          ManageAppointmentController.i
+                          Manageappointmentcontroller.i
                               .getDailyDoctorAppointmentSlots(
                                   dt.toString(), "true", "");
                         } else {
-                          ManageAppointmentController.i
+                          Manageappointmentcontroller.i
                               .getDailyDoctorAppointmentSlots(dt.toString(),
                                   "false", widget.worklocationid);
                         }
 
-                        ManageAppointmentController.i
+                        Manageappointmentcontroller.i
                             .setPageIndexofDayViewAppointment(0);
 
                         // print(details.date.toString().split(' ')[0]);
-                        // ManageAppointmentController.i.getmonthlyoctorAppointment(details.date.toString().split(' ')[0]);
+                        // Manageappointmentcontroller.i.getmonthlyoctorAppointment(details.date.toString().split(' ')[0]);
                       },
                     ),
                     SizedBox(
@@ -277,10 +277,10 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         SizedBox(
                           width: Get.width * 0.01,
                         ),
-                        GetBuilder<ManageAppointmentController>(
+                        GetBuilder<Manageappointmentcontroller>(
                             builder: (context) {
                           return Text(
-                            '${'paidappointments'.tr} |  ${ManageAppointmentController.i.paid}'
+                            '${'paidappointments'.tr} |  ${Manageappointmentcontroller.i.paid}'
                             '',
                             style: GoogleFonts.poppins(
                               fontSize: 9,
@@ -296,10 +296,10 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         SizedBox(
                           width: Get.width * 0.01,
                         ),
-                        GetBuilder<ManageAppointmentController>(
+                        GetBuilder<Manageappointmentcontroller>(
                             builder: (context) {
                           return Text(
-                            '${'unPaidappointments'.tr} |  ${ManageAppointmentController.i.unpaid}'
+                            '${'unPaidappointments'.tr} |  ${Manageappointmentcontroller.i.unpaid}'
                             '',
                             style: GoogleFonts.poppins(
                               fontSize: 9,

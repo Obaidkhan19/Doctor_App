@@ -77,14 +77,15 @@ class _BankDetailState extends State<BankDetail> {
                         EditProfileCustomTextField(
                           onTap: () async {
                             Degrees generic = await searchabledropdown(
-                                context, edit.bankList ?? []);
+                                context, edit.bankList);
                             edit.selectedbank = null;
                             edit.updateselectedbank(generic);
 
-                            if (generic != '') {
+                            if (generic.id != null) {
                               edit.selectedbank = generic;
-                              edit.selectedbank =
-                                  (generic == '') ? null : edit.selectedbank;
+                              edit.selectedbank = (generic.id == null)
+                                  ? null
+                                  : edit.selectedbank;
                             }
                           },
                           readonly: true,
@@ -158,13 +159,13 @@ class _BankDetailState extends State<BankDetail> {
                             EditProfileCustomTextField(
                               onTap: () async {
                                 Degrees generic = await searchabledropdown(
-                                    context, add.addbankList ?? []);
+                                    context, add.addbankList);
                                 add.addselectedbank = null;
                                 add.updateaddselectedbank(generic);
 
-                                if (generic != '') {
+                                if (generic.id != null) {
                                   add.addselectedbank = generic;
-                                  add.addselectedbank = (generic == '')
+                                  add.addselectedbank = (generic.id == null)
                                       ? null
                                       : add.addselectedbank;
                                 }

@@ -190,7 +190,7 @@ class _ConfigureAppointmentScreenState
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage(AppImages.background_image),
+                          image: AssetImage(AppImages.backgroundimage),
                           alignment: Alignment.centerLeft),
                     ),
                     child: Column(

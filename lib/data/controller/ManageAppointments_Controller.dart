@@ -6,10 +6,10 @@ import '../../models/ReschedualAppointment.dart';
 import '../../models/TodayAppointmentModel.dart';
 import '../repositories/ManageAppointment_repo/manageAppointment_repo.dart';
 
-class ManageAppointmentController extends GetxController
+class Manageappointmentcontroller extends GetxController
     implements GetxService {
-  static ManageAppointmentController get i =>
-      Get.put(ManageAppointmentController());
+  static Manageappointmentcontroller get i =>
+      Get.put(Manageappointmentcontroller());
   List<monthlyappointresponse> monthlyappintment = [];
   int unpaid = 0;
   int paid = 0;
@@ -64,9 +64,9 @@ class ManageAppointmentController extends GetxController
     try {
       isLoadingMonthlyDoctorAppointment = true;
       monthlyappintment =
-          await ManageAppointmentRepo.GetmonthlyDoctorAppointment(
+          await Manageappointmentrepo.GetmonthlyDoctorAppointment(
               date.toString().split(' ')[0], wlid, isonline);
-      data = await ManageAppointmentRepo.GetmonthlyDoctorAppointment(
+      data = await Manageappointmentrepo.GetmonthlyDoctorAppointment(
           date.toString().split(' ')[1], wlid, isonline);
       for (int i = 0; i < monthlyappintment.length; i++) {
         for (int j = 0; j < data.length; j++) {
@@ -98,7 +98,7 @@ class ManageAppointmentController extends GetxController
     try {
       _isLoadingscreen = true;
       _dailyDoctorAppointmentsModel =
-          await ManageAppointmentRepo.GetDailyDoctorAppointment();
+          await Manageappointmentrepo.getDailyDoctorAppointment();
       _isLoadingscreen = false;
       update();
     } catch (e) {
@@ -121,7 +121,7 @@ class ManageAppointmentController extends GetxController
     }
     try {
       _dayViewAppointmentSlotModel =
-          await ManageAppointmentRepo.getDailyDoctorAppointmentSlots(
+          await Manageappointmentrepo.getDailyDoctorAppointmentSlots(
               Dates, IsOnline, WorkLocationId);
       isLoadingDailyDoctorAppointmentSlots = false;
     } catch (e) {
@@ -202,7 +202,7 @@ class ManageAppointmentController extends GetxController
     }
     var resultResponse;
     try {
-      resultResponse = await ManageAppointmentRepo.resheduleAppointmentSlots(
+      resultResponse = await Manageappointmentrepo.resheduleAppointmentSlots(
           Dates, BranchId, appointments);
       isLoadingDailyDoctorAppointmentSlots = false;
       update();
@@ -238,7 +238,7 @@ class ManageAppointmentController extends GetxController
     }
     var resultResponse;
     try {
-      resultResponse = await ManageAppointmentRepo.approveAppointmentSlots(
+      resultResponse = await Manageappointmentrepo.approveAppointmentSlots(
           BranchId, appointments);
       isLoadingDailyDoctorAppointmentSlots = false;
       update();

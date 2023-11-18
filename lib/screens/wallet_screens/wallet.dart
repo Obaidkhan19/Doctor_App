@@ -519,7 +519,6 @@ Future<dynamic> creditAlert(
                     InkWell(
                       onTap: () {
                         WalletController.i.updateotheramount();
-                        print(WalletController.i.otheramount);
                       },
                       child: Container(
                         height: Get.height * 0.06,

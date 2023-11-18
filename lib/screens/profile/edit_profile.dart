@@ -273,15 +273,15 @@ class _EditProfileState extends State<EditProfile> {
                       widget.province = 'province'.tr;
                       widget.city = 'city'.tr;
 
-                      Countries generic = await searchabledropdown(
-                          context, edit.countriesList ?? []);
+                      Countries generic =
+                          await searchabledropdown(context, edit.countriesList);
                       edit.selectedcountry = null;
                       edit.updateselectedCountry(generic);
 
-                      if (generic != '') {
+                      if (generic.id != null) {
                         edit.selectedcountry = generic;
                         edit.selectedcountry =
-                            (generic == '') ? null : edit.selectedcountry;
+                            (generic.id == null) ? null : edit.selectedcountry;
                       }
                       String cid = EditProfileController.i.selectedcountry!.id
                           .toString();
@@ -306,15 +306,15 @@ class _EditProfileState extends State<EditProfile> {
                     onTap: () async {
                       edit.selectedprovince = null;
                       edit.selectedcity = null;
-                      Provinces generic = await searchabledropdown(
-                          context, edit.provinceList ?? []);
+                      Provinces generic =
+                          await searchabledropdown(context, edit.provinceList);
                       edit.selectedprovince = null;
                       edit.updateselectedprovince(generic);
 
-                      if (generic != '') {
+                      if (generic.id != null) {
                         edit.selectedprovince = generic;
                         edit.selectedprovince =
-                            (generic == '') ? null : edit.selectedprovince;
+                            (generic.id == null) ? null : edit.selectedprovince;
                       }
                       String cid = EditProfileController.i.selectedprovince!.id
                           .toString();
@@ -338,15 +338,15 @@ class _EditProfileState extends State<EditProfile> {
                   EditProfileCustomTextField(
                     onTap: () async {
                       edit.selectedcity = null;
-                      Cities generic = await searchabledropdown(
-                          context, edit.citiesList ?? []);
+                      Cities generic =
+                          await searchabledropdown(context, edit.citiesList);
                       edit.selectedcity = null;
                       edit.updateselectedcity(generic);
 
-                      if (generic != '') {
+                      if (generic.id != null) {
                         edit.selectedcity = generic;
                         edit.selectedcity =
-                            (generic == '') ? null : edit.selectedcity;
+                            (generic.id == null) ? null : edit.selectedcity;
                       }
                       setState(() {});
                     },
@@ -383,7 +383,7 @@ class _EditProfileState extends State<EditProfile> {
                         if (_formKey.currentState!.validate() &&
                             (edit.selectedcity?.name != "null" &&
                                 edit.selectedprovince?.name != "null")) {
-                          String chk = await rp.updateaccount(
+                          await rp.updateaccount(
                             doctorid,
                             nameController.text,
                             edit.formatearrival.toString(),

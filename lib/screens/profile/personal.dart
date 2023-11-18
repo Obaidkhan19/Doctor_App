@@ -128,15 +128,16 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             onTap: () async {
                               edit.selectedpersonalTitle = null;
                               PTitle generic = await searchabledropdown(
-                                  context, edit.personalTitleList ?? []);
+                                  context, edit.personalTitleList);
                               edit.selectedpersonalTitle = null;
                               edit.updateselectedpersonalTitle(generic);
 
-                              if (generic != '') {
+                              if (generic.id == null) {
                                 edit.selectedpersonalTitle = generic;
-                                edit.selectedpersonalTitle = (generic == '')
-                                    ? null
-                                    : edit.selectedpersonalTitle;
+                                edit.selectedpersonalTitle =
+                                    (generic.id == null)
+                                        ? null
+                                        : edit.selectedpersonalTitle;
                               }
                             },
                             readonly: true,
@@ -192,13 +193,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             onTap: () async {
                               edit.selectedgender = null;
                               GendersData generic = await searchabledropdown(
-                                  context, edit.genderList ?? []);
+                                  context, edit.genderList);
                               edit.selectedgender = null;
                               edit.updateselectedgender(generic);
 
-                              if (generic != '') {
+                              if (generic.id == null) {
                                 edit.selectedgender = generic;
-                                edit.selectedgender = (generic == '')
+                                edit.selectedgender = (generic.id == null)
                                     ? null
                                     : edit.selectedgender;
                               }
@@ -212,15 +213,16 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             onTap: () async {
                               edit.selectedmaritalStatus = null;
                               MSData generic = await searchabledropdown(
-                                  context, edit.maritalStatusList ?? []);
+                                  context, edit.maritalStatusList);
                               edit.selectedmaritalStatus = null;
                               edit.updateselectedmaritalStatus(generic);
 
-                              if (generic != '') {
+                              if (generic.id == null) {
                                 edit.selectedmaritalStatus = generic;
-                                edit.selectedmaritalStatus = (generic == '')
-                                    ? null
-                                    : edit.selectedmaritalStatus;
+                                edit.selectedmaritalStatus =
+                                    (generic.id == null)
+                                        ? null
+                                        : edit.selectedmaritalStatus;
                               }
                             },
                             readonly: true,
@@ -336,13 +338,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             onTap: () async {
                               edit.selectedbloodgroup = null;
                               bloodGroupData generic = await searchabledropdown(
-                                  context, edit.bloodgroupList ?? []);
+                                  context, edit.bloodgroupList);
                               edit.selectedbloodgroup = null;
                               edit.updateselectedbloodgroup(generic);
 
-                              if (generic != '') {
+                              if (generic.id == null) {
                                 edit.selectedbloodgroup = generic;
-                                edit.selectedbloodgroup = (generic == '')
+                                edit.selectedbloodgroup = (generic.id == null)
                                     ? null
                                     : edit.selectedbloodgroup;
                               }
@@ -356,13 +358,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             onTap: () async {
                               edit.selectedreligion = null;
                               Religion generic = await searchabledropdown(
-                                  context, edit.religionList ?? []);
+                                  context, edit.religionList);
                               edit.selectedreligion = null;
                               edit.updateselectedreligion(generic);
 
-                              if (generic != '') {
+                              if (generic.id == null) {
                                 edit.selectedreligion = generic;
-                                edit.selectedreligion = (generic == '')
+                                edit.selectedreligion = (generic.id == null)
                                     ? null
                                     : edit.selectedreligion;
                               }
@@ -375,7 +377,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                           EditProfileCustomTextField(
                               onTap: () async {
                                 Designations generic = await searchabledropdown(
-                                    context, edit.designationList ?? []);
+                                    context, edit.designationList);
                                 await edit.addDesignation(
                                     generic, BuildContext);
                                 setState(() {});
@@ -483,13 +485,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             onTap: () async {
                               edit.selectedrelation = null;
                               RelationData generic = await searchabledropdown(
-                                  context, edit.relationList ?? []);
+                                  context, edit.relationList);
                               edit.selectedrelation = null;
                               edit.updateselectedrelation(generic);
 
-                              if (generic != '') {
+                              if (generic.id == null) {
                                 edit.selectedrelation = generic;
-                                edit.selectedrelation = (generic == '')
+                                edit.selectedrelation = (generic.id == null)
                                     ? null
                                     : edit.selectedrelation;
                               }
