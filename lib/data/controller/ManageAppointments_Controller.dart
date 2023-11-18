@@ -53,13 +53,27 @@ class ManageAppointmentController extends GetxController
     update();
   }
 
+  List<monthlyappointresponse> data = [];
+  updatemonthlysecondlist(List<monthlyappointresponse> app) async {
+    data = app;
+    update();
+  }
+
   bool isLoadingMonthlyDoctorAppointment = false;
   getmonthlyoctorAppointment(date, wlid, isonline) async {
     try {
       isLoadingMonthlyDoctorAppointment = true;
       monthlyappintment =
           await ManageAppointmentRepo.GetmonthlyDoctorAppointment(
-              date, wlid, isonline);
+              date.toString().split(' ')[0], wlid, isonline);
+      data = await ManageAppointmentRepo.GetmonthlyDoctorAppointment(
+          date.toString().split(' ')[1], wlid, isonline);
+      for (int i = 0; i < monthlyappintment.length; i++) {
+        for (int j = 0; j < data.length; j++) {
+          if (monthlyappintment[i] != data[j]) monthlyappintment.add(data[j]);
+        }
+      }
+      // monthlyappintment = monthlyappintment + data;
       isLoadingMonthlyDoctorAppointment = false;
       update();
     } catch (e) {

@@ -127,10 +127,13 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   }
 
   String monthyearDate = DateFormat('MM-yyyy').format(DateTime.now());
+  String monthyearDate2 = DateFormat('MM-yyyy').format(DateTime.now());
 
   call() async {
     await ManageAppointmentController.i.getmonthlyoctorAppointment(
-        monthyearDate, widget.worklocationid, widget.isonline);
+        "$monthyearDate $monthyearDate2",
+        widget.worklocationid,
+        widget.isonline);
   }
 
   bool chk = false;
@@ -171,55 +174,65 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       headerStyle: const CalendarHeaderStyle(
                         textAlign: TextAlign.center,
                       ),
-                      monthViewSettings: ManageAppointmentController
-                              .i.monthlyappintment.isEmpty
-                          ? const MonthViewSettings()
-                          : const MonthViewSettings(
-                              numberOfWeeksInView: 4,
-                              appointmentDisplayCount: 2,
-                              appointmentDisplayMode:
-                                  MonthAppointmentDisplayMode.appointment,
-                              showAgenda: false,
-                              navigationDirection:
-                                  MonthNavigationDirection.horizontal,
-                            ),
+                      monthViewSettings: const MonthViewSettings(
+                        numberOfWeeksInView: 4,
+                        appointmentDisplayCount: 2,
+                        showTrailingAndLeadingDates: false,
+                        appointmentDisplayMode:
+                            MonthAppointmentDisplayMode.appointment,
+                        showAgenda: false,
+                        navigationDirection:
+                            MonthNavigationDirection.horizontal,
+                      ),
+                      onViewChanged: (viewChangedDetails) {
+                        // ManageAppointmentController.i
+                        //     .getmonthlyoctorAppointment(monthyearDate,
+                        //         widget.worklocationid, widget.isonline);
+                        // if (chk) {
+                        //   previousdate = int.parse(viewChangedDetails
+                        //       .visibleDates.first
+                        //       .toString()
+                        //       .split(' ')[0]
+                        //       .split('-')[1]);
+                        //   String date = viewChangedDetails.visibleDates.last
+                        //       .toString()
+                        //       .split(' ')[0];
+                        //   int current = int.parse(viewChangedDetails
+                        //       .visibleDates.last
+                        //       .toString()
+                        //       .split(' ')[0]
+                        //       .split('-')[1]);
+                        //   if (previousdate != current) {
+                        //     date =
+                        //         "${date.split('-')[1]}-${date.split('-')[0]}";
+                        //   } else {
+                        //     date = "${date.split('-')[0]}-${current + 1}";
+                        //   }
+                        //   ManageAppointmentController.i
+                        //       .getmonthlyoctorAppointment(
+                        //           date, widget.worklocationid, widget.isonline);
 
-                      // onViewChanged: (viewChangedDetails) {
-                      // ManageAppointmentController.i
-                      //     .getmonthlyoctorAppointment(monthyearDate,
-                      //         widget.worklocationid, widget.isonline);
-                      // if (chk) {
-                      //   previousdate = int.parse(viewChangedDetails
-                      //       .visibleDates.first
-                      //       .toString()
-                      //       .split(' ')[0]
-                      //       .split('-')[1]);
-                      //   String date = viewChangedDetails.visibleDates.last
-                      //       .toString()
-                      //       .split(' ')[0];
-                      //   int current = int.parse(viewChangedDetails
-                      //       .visibleDates.last
-                      //       .toString()
-                      //       .split(' ')[0]
-                      //       .split('-')[1]);
-                      //   if (previousdate != current) {
-                      //     date =
-                      //         "${date.split('-')[1]}-${date.split('-')[0]}";
-                      //   } else {
-                      //     date = "${date.split('-')[0]}-${current + 1}";
-                      //   }
-                      //   ManageAppointmentController.i
-                      //       .getmonthlyoctorAppointment(
-                      //           date, widget.worklocationid, widget.isonline);
-
-                      //   log(viewChangedDetails.visibleDates.length
-                      //       .toString());
-                      // }
-                      //   ManageAppointmentController.i
-                      //       .getmonthlyoctorAppointment(monthyearDate,
-                      //           widget.worklocationid, widget.isonline);
-                      // },
-                      //   monthCellBuilder: monthCellBuilder,
+                        //   log(viewChangedDetails.visibleDates.length
+                        //       .toString());
+                        // }
+                        // ManageAppointmentController.i
+                        //     .getmonthlyoctorAppointment(monthyearDate,
+                        //         widget.worklocationid, widget.isonline);
+                        // if (int.parse(monthyearDate.toString().split('-')[0]) ==
+                        //     int.parse(viewChangedDetails.visibleDates.last.month
+                        //         .toString())) {
+                        //   ManageAppointmentController.i.getmonthlyoctorAppointment(
+                        //       "${viewChangedDetails.visibleDates.last.month + 1}-${viewChangedDetails.visibleDates.last.year}",
+                        //       widget.worklocationid,
+                        //       widget.isonline);
+                        // } else {
+                        ManageAppointmentController.i.getmonthlyoctorAppointment(
+                            "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
+                            widget.worklocationid,
+                            widget.isonline);
+                        // }
+                      },
+                      // monthCellBuilder: monthCellBuilder,
                       // onViewChanged: (viewChangedDetails) {
                       //   // in first parameter add month and year
                       //   ManageAppointmentController.i
