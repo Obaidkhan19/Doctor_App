@@ -86,6 +86,7 @@
 // class _HistoryeRXConsultingQueueState extends State<HistoryeRXConsultingQueue> {
 //   final controller = Get.put(ERXController());
 
+import 'package:doctormobileapplication/models/patient_detail.dart';
 
 // _getPatientDetail() async {
 //     PatientDetail1 pd = PatientDetail1();

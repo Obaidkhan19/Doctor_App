@@ -711,4 +711,28 @@ class ERXController extends GetxController implements GetxService {
     historyvitals = names.join(', ');
     update();
   }
+
+  // patient detail for prescription
+
+  List<PatientDetail1> patientdeailprescriptionList = [];
+
+  PatientDetail1? selectedpatientdeailprescription;
+  updatepatientdeailprescriptionList(List<PatientDetail1> plist) {
+    patientdeailprescriptionList = plist;
+
+    // update radio
+    if (plist[0].smoker == 0) {
+      smokeryesSelected = false.obs;
+    } else if (plist[0].smoker == 1) {
+      smokeryesSelected = true.obs;
+    }
+
+    if (plist[0].diabetic == 0) {
+      diabeticyesSelected = false.obs;
+    } else if (plist[0].diabetic == 1) {
+      diabeticyesSelected = true.obs;
+    }
+
+    update();
+  }
 }

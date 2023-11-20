@@ -12,6 +12,7 @@ import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
+import 'package:doctormobileapplication/models/patient_detail.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
@@ -536,6 +537,31 @@ class PrescribeMedicinRepo {
     } catch (e) {
       ERXController.i.updateIsloading(false);
       return 'NotOk';
+    }
+  }
+
+  Future<List<PatientDetail1>> getPatientDetailPrescription(pid, vno) async {
+    String? did = await LocalDb().getDoctorId();
+    String? bid = await LocalDb().getBranchId();
+    String url = AppConstants.getpatientdetailprescription;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{
+      "DoctorId": did,
+      "BranchId": bid,
+      "PatientId": pid,
+      "VisitNo": vno
+    });
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['PatientDetail'];
+      List<PatientDetail1> patientdetailList =
+          data.map((json) => PatientDetail1.fromJson(json)).toList();
+      return patientdetailList;
+    } else {
+      throw Exception('Failed to fetch patient details');
     }
   }
 }

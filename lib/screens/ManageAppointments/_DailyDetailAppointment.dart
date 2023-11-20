@@ -151,7 +151,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                           await ManageAppointmentController.i
                                               .reShedualAppointmentSlots(
                                                   dateReshedualcontroller.text
-                                                      .toString(), //Shedule Date
+                                                      .toString(),
                                                   result[0].branchId.toString(),
                                                   result);
                                       if (response == 1) {

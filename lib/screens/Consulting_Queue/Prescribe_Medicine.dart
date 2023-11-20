@@ -219,6 +219,13 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     );
   }
 
+  _getpatientdetailprescription() async {
+    PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+    controller.updatepatientdeailprescriptionList(
+      await pmr.getPatientDetailPrescription(widget.patientid, widget.visitno),
+    );
+  }
+
   String? speciality;
 
   call() async {
@@ -237,6 +244,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     performancestartdate = DateTime.now().toString().split('.')[0];
     call();
     _getErnsDetailHistory();
+    _getpatientdetailprescription();
     _getErnsHistory();
     _getComplaints();
     _getPrimaryDiagnosis();
