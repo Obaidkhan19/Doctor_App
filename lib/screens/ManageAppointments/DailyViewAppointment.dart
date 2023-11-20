@@ -40,7 +40,7 @@ class _TodayAppointmentsState extends State<Dailyviewappointments> {
 
   @override
   void dispose() {
-    Manageappointmentcontroller.i.date = null;
+    ManageAppointmentController.i.date = null;
     super.dispose();
   }
 
@@ -55,18 +55,18 @@ class _TodayAppointmentsState extends State<Dailyviewappointments> {
   @override
   Widget build(BuildContext context) {
     var contr =
-        Get.put<Manageappointmentcontroller>(Manageappointmentcontroller());
+        Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             color: ColorManager.kPrimaryColor,
             onPressed: () {
-              Manageappointmentcontroller.i.setPageIndexofDayViewAppointment(0);
+              ManageAppointmentController.i.setPageIndexofDayViewAppointment(0);
               Get.back();
             },
           ),
-          title: GetBuilder<Manageappointmentcontroller>(
+          title: GetBuilder<ManageAppointmentController>(
             builder: (con) {
               return Text(
                 contr.index == 0
@@ -86,7 +86,7 @@ class _TodayAppointmentsState extends State<Dailyviewappointments> {
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
-        body: GetBuilder<Manageappointmentcontroller>(builder: (cont) {
+        body: GetBuilder<ManageAppointmentController>(builder: (cont) {
           return BlurryModalProgressHUD(
               inAsyncCall: cont.isLoadingDailyDoctorAppointmentSlots,
               blurEffectIntensity: 4,
@@ -98,107 +98,99 @@ class _TodayAppointmentsState extends State<Dailyviewappointments> {
               opacity: 0.4,
               color: Theme.of(context).scaffoldBackgroundColor,
               child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    SingleChildScrollView(
-                      child: Visibility(
-                        visible: true,
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Get.width * 0.05),
-                            child: Container(
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      Images.logoBackground,
-                                    ),
+                child: Column(children: [
+                  SingleChildScrollView(
+                    child: Visibility(
+                      visible: true,
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.05),
+                          child: Container(
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    Images.logoBackground,
                                   ),
                                 ),
-                                width: double.maxFinite,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        cont.setPageIndexofDayViewAppointment(
-                                            0);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: cont.index == 0
-                                              ? const Color(0xfff1272d3)
-                                              : ColorManager.kWhiteColor,
-                                          border: Border.all(
-                                            color: const Color(0xfff1272d3),
-                                            width: 2,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            bottomLeft: Radius.circular(15),
-                                          ),
+                              ),
+                              width: double.maxFinite,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      cont.setPageIndexofDayViewAppointment(0);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: cont.index == 0
+                                            ? const Color(0xfff1272d3)
+                                            : ColorManager.kWhiteColor,
+                                        border: Border.all(
+                                          color: const Color(0xfff1272d3),
+                                          width: 2,
                                         ),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.45,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.08,
-                                        child: Center(
-                                            child: Text('daily'.tr,
-                                                style: GoogleFonts.poppins(
-                                                    color: cont.index == 1
-                                                        ? const Color(
-                                                            0xfff1272d3)
-                                                        : ColorManager
-                                                            .kWhiteColor,
-                                                    fontSize: 16))),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        cont.setPageIndexofDayViewAppointment(
-                                            1);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: cont.index == 1
-                                              ? const Color(0xfff1272d3)
-                                              : ColorManager.kWhiteColor,
-                                          borderRadius: const BorderRadius.only(
-                                            bottomRight: Radius.circular(15),
-                                            topRight: Radius.circular(15),
-                                          ),
-                                          border: Border.all(
-                                            color: const Color(0xfff1272d3),
-                                            width: 2,
-                                          ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          bottomLeft: Radius.circular(15),
                                         ),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.45,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.08,
-                                        child: Center(
-                                            child: Text('monthly'.tr,
-                                                style: GoogleFonts.poppins(
-                                                    color: cont.index == 0
-                                                        ? const Color(
-                                                            0xfff1272d3)
-                                                        : ColorManager
-                                                            .kWhiteColor,
-                                                    fontSize: 16))),
                                       ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.08,
+                                      child: Center(
+                                          child: Text('daily'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  color: cont.index == 1
+                                                      ? const Color(0xfff1272d3)
+                                                      : ColorManager
+                                                          .kWhiteColor,
+                                                  fontSize: 16))),
                                     ),
-                                  ],
-                                ))),
-                      ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      cont.setPageIndexofDayViewAppointment(1);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: cont.index == 1
+                                            ? const Color(0xfff1272d3)
+                                            : ColorManager.kWhiteColor,
+                                        borderRadius: const BorderRadius.only(
+                                          bottomRight: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                        ),
+                                        border: Border.all(
+                                          color: const Color(0xfff1272d3),
+                                          width: 2,
+                                        ),
+                                      ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.08,
+                                      child: Center(
+                                          child: Text('monthly'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  color: cont.index == 0
+                                                      ? const Color(0xfff1272d3)
+                                                      : ColorManager
+                                                          .kWhiteColor,
+                                                  fontSize: 16))),
+                                    ),
+                                  ),
+                                ],
+                              ))),
                     ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.90,
-                        child: pages[cont.index]),
-                  ]),
-                ),
+                  ),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: pages[cont.index]),
+                ]),
               ));
         }));
   }

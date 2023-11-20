@@ -28,11 +28,11 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
   }
 
   call() async {
-    Manageappointmentcontroller.i.getDailyDoctorAppointment();
+    ManageAppointmentController.i.getDailyDoctorAppointment();
   }
 
   var contr =
-      Get.put<Manageappointmentcontroller>(Manageappointmentcontroller());
+      Get.put<ManageAppointmentController>(ManageAppointmentController());
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
           ),
           backgroundColor: Colors.transparent,
         ),
-        body: GetBuilder<Manageappointmentcontroller>(builder: (cont) {
+        body: GetBuilder<ManageAppointmentController>(builder: (cont) {
           return BlurryModalProgressHUD(
               inAsyncCall: cont.isLoadingscreen,
               blurEffectIntensity: 4,
@@ -68,7 +68,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
               dismissible: false,
               opacity: 0.4,
               color: Theme.of(context).scaffoldBackgroundColor,
-              child: Manageappointmentcontroller.i.dailyDoctorAppointmentsModel
+              child: ManageAppointmentController.i.dailyDoctorAppointmentsModel
                           .onlineAppointmentStatistics !=
                       null
                   ? SingleChildScrollView(
@@ -76,7 +76,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                       padding:
                           EdgeInsets.symmetric(horizontal: Get.width * 0.05),
                       child: Column(children: [
-                        (Manageappointmentcontroller
+                        (ManageAppointmentController
                                     .i
                                     .dailyDoctorAppointmentsModel
                                     .onlineAppointmentStatistics !=
@@ -103,7 +103,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                     DateTime Dates = DateTime.now();
                                     String Date =
                                         DateFormat('yyyy-MM-dd').format(Dates);
-                                    Manageappointmentcontroller.i
+                                    ManageAppointmentController.i
                                         .getDailyDoctorAppointmentSlots(
                                             Date.toString(), 'true', '');
                                     Get.to(() => Dailyviewappointments(
@@ -118,7 +118,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                     scale: 2,
                                   ),
                                   title: Text(
-                                    Manageappointmentcontroller
+                                    ManageAppointmentController
                                             .i
                                             .dailyDoctorAppointmentsModel
                                             .onlineAppointmentStatistics
@@ -135,7 +135,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        Manageappointmentcontroller
+                                        ManageAppointmentController
                                                 .i
                                                 .dailyDoctorAppointmentsModel
                                                 .onlineAppointmentStatistics
@@ -173,7 +173,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                 ),
                               )
                             : const SizedBox.shrink(),
-                        Manageappointmentcontroller
+                        ManageAppointmentController
                                     .i
                                     .dailyDoctorAppointmentsModel
                                     .appointmentStatistics !=
@@ -181,19 +181,19 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                             ? ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: Manageappointmentcontroller
+                                itemCount: ManageAppointmentController
                                     .i
                                     .dailyDoctorAppointmentsModel
                                     .appointmentStatistics
                                     ?.length,
                                 itemBuilder: (context, index) {
                                   final manageAppointment =
-                                      (Manageappointmentcontroller
+                                      (ManageAppointmentController
                                                   .i
                                                   .dailyDoctorAppointmentsModel
                                                   .appointmentStatistics !=
                                               null)
-                                          ? Manageappointmentcontroller
+                                          ? ManageAppointmentController
                                               .i
                                               .dailyDoctorAppointmentsModel
                                               .appointmentStatistics![index]
@@ -229,7 +229,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                     DateFormat('yyyy-MM-dd')
                                                         .format(Dates);
 
-                                                Manageappointmentcontroller.i
+                                                ManageAppointmentController.i
                                                     .getDailyDoctorAppointmentSlots(
                                                         Date.toString(),
                                                         'false',
@@ -269,7 +269,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
-                                                    '${Manageappointmentcontroller.i.dailyDoctorAppointmentsModel.appointmentStatistics?[index].noofAppointments ?? ""}',
+                                                    '${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentStatistics?[index].noofAppointments ?? ""}',
                                                     style: const TextStyle(
                                                         fontSize: 20,
                                                         color: Colors.blue),
@@ -300,7 +300,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                         SizedBox(
                           height: Get.height * 0.03,
                         ),
-                        Manageappointmentcontroller
+                        ManageAppointmentController
                                 .i
                                 .dailyDoctorAppointmentsModel
                                 .appointmentSummary!
@@ -317,7 +317,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
-                        Manageappointmentcontroller
+                        ManageAppointmentController
                                 .i
                                 .dailyDoctorAppointmentsModel
                                 .appointmentSummary!
@@ -363,7 +363,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 SizedBox(
                                                   height: Get.height * 0.01,
                                                 ),
-                                                Manageappointmentcontroller
+                                                ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
                                                         .appointmentSummary!
@@ -371,7 +371,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                     ? Row(
                                                         children: [
                                                           Text(
-                                                            "${Manageappointmentcontroller.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[0] ?? ""}:${Manageappointmentcontroller.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[1] ?? ""} to ${Manageappointmentcontroller.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[0] ?? ""}:${Manageappointmentcontroller.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[1] ?? ""}",
+                                                            "${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].start.toString().split(':')[1] ?? ""} to ${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[0] ?? ""}:${ManageAppointmentController.i.dailyDoctorAppointmentsModel.appointmentSummary?[0].end.toString().split(':')[1] ?? ""}",
                                                             style: GoogleFonts
                                                                 .poppins(
                                                               fontSize: 9,
@@ -425,13 +425,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                                 .i
                                                                 .dailyDoctorAppointmentsModel
                                                                 .appointmentSummary !=
                                                             null
                                                         ? Text(
-                                                            Manageappointmentcontroller
+                                                            ManageAppointmentController
                                                                     .i
                                                                     .dailyDoctorAppointmentsModel
                                                                     .appointmentSummary?[
@@ -493,13 +493,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                                 .i
                                                                 .dailyDoctorAppointmentsModel
                                                                 .appointmentSummary !=
                                                             null
                                                         ? Text(
-                                                            Manageappointmentcontroller
+                                                            ManageAppointmentController
                                                                     .i
                                                                     .dailyDoctorAppointmentsModel
                                                                     .appointmentSummary?[
@@ -561,13 +561,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                                 .i
                                                                 .dailyDoctorAppointmentsModel
                                                                 .appointmentSummary !=
                                                             null
                                                         ? Text(
-                                                            Manageappointmentcontroller
+                                                            ManageAppointmentController
                                                                     .i
                                                                     .dailyDoctorAppointmentsModel
                                                                     .appointmentSummary?[
@@ -629,13 +629,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                                 .i
                                                                 .dailyDoctorAppointmentsModel
                                                                 .appointmentSummary !=
                                                             null
                                                         ? Text(
-                                                            Manageappointmentcontroller
+                                                            ManageAppointmentController
                                                                     .i
                                                                     .dailyDoctorAppointmentsModel
                                                                     .appointmentSummary?[
@@ -685,13 +685,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                               ),
                                             ),
                                             SizedBox(width: Get.width * 0.105),
-                                            Manageappointmentcontroller
+                                            ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
                                                         .appointmentSummary !=
                                                     null
                                                 ? Text(
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                             .i
                                                             .dailyDoctorAppointmentsModel
                                                             .appointmentSummary?[
@@ -709,7 +709,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                 : const Text("0"),
                                             SizedBox(width: Get.width * 0.11),
                                             Text(
-                                              Manageappointmentcontroller
+                                              ManageAppointmentController
                                                       .i
                                                       .dailyDoctorAppointmentsModel
                                                       .appointmentSummary?[0]
@@ -723,13 +723,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             SizedBox(width: Get.width * 0.11),
-                                            Manageappointmentcontroller
+                                            ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
                                                         .appointmentSummary !=
                                                     null
                                                 ? Text(
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                             .i
                                                             .dailyDoctorAppointmentsModel
                                                             .appointmentSummary?[
@@ -746,13 +746,13 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                   )
                                                 : const Text("0"),
                                             SizedBox(width: Get.width * 0.12),
-                                            Manageappointmentcontroller
+                                            ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel
                                                         .appointmentSummary !=
                                                     null
                                                 ? Text(
-                                                    Manageappointmentcontroller
+                                                    ManageAppointmentController
                                                             .i
                                                             .dailyDoctorAppointmentsModel
                                                             .appointmentSummary?[
