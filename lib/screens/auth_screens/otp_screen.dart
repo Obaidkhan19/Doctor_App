@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/screens/auth_screens/create_new_password
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -98,7 +99,14 @@ class _OtpScreenState extends State<OtpScreen> {
                   if (usercode == verificationcode) {
                     Get.to(() => const CreateNewPasswordScreen());
                   } else {
-                    showSnackbar(context, 'wrongcode'.tr);
+                    Fluttertoast.showToast(
+                        msg: 'wrongcode'.tr,
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: ColorManager.kRedColor,
+                        textColor: ColorManager.kWhiteColor,
+                        fontSize: 14.0);
                   }
                 },
                 child: Container(

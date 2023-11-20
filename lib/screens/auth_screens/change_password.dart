@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -151,7 +152,14 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         if (_formKey.currentState!.validate()) {
                           if (passwordController.text !=
                               confirmPasswordController.text) {
-                            showSnackbar(context, 'newpasswordsshouldmatch'.tr);
+                            Fluttertoast.showToast(
+                                msg: "newpasswordsshouldmatch".tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: ColorManager.kRedColor,
+                                textColor: ColorManager.kWhiteColor,
+                                fontSize: 14.0);
                           } else {
                             AuthRepo ar = AuthRepo();
                             await ar.changePassword(oldpasswordController.text,

@@ -495,29 +495,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ),
                   onTap: () async {
-                    // SharedPreferences preferences =
-                    //     await SharedPreferences.getInstance();
-                    // await preferences.clear();
-
-                    // AuthController.i.emailController.clear();
-                    // AuthController.i.passwordController.clear();
-
                     Get.offAll(() => const LoginScreen());
-
-                    // String? id = await LocalDb().getDoctorId();
-                    // String? token = await LocalDb().getToken();
-                    // bool? loginStatus = await LocalDb().getLoginStatus();
-                    // String? DeviceToken = await LocalDb().getDeviceToken();
-                    // if (loginStatus == true) {
-                    //   AuthRepo.logout(
-                    //       DoctorId: id,
-                    //       token: token,
-                    //       DeviceToken: DeviceToken,
-                    //       IsLogOffAllDevice: 'false');
-                    // } else {
-                    //   showSnackbar(context, 'You are not Logged in');
-                    // }
-                    //Navigator.pop(context);
                   },
                 ),
               ],

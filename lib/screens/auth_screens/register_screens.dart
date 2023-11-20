@@ -19,6 +19,7 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -782,66 +783,17 @@ class _RegisterScreensState extends State<RegisterScreens> {
                               // controller.selectedgender?.id != null &&
                               // controller.selectedmaritalStatus?.id != null
                               ) {
-                            showSnackbar(context, 'saveRecord'.tr);
-                            controller.setPageIndexofDayPersonal(1);
-                          } else {
-                            // if (controller.pmcfile == null) {
-                            //   showSnackbar(context, 'LMPC Certificate');
-                            // }
-                            //  else if (controller.ontap == false) {
-                            //   showSnackbar(context, 'Add Date of Birth');
-                            // }
-                            // if (controller.phone.text == '') {
-                            //   showSnackbar(context, 'Enter Phone Number');
-                            // }
-                          }
+                            Fluttertoast.showToast(
+                                msg: 'saveRecord'.tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: ColorManager.kRedColor,
+                                textColor: ColorManager.kWhiteColor,
+                                fontSize: 14.0);
 
-                          //     {
-                          //   if (RegistrationController.i.pmdcavaibility ==
-                          //       false) {
-                          //     showSnackbar(
-                          //         context, "LMPC Number Already Taken");
-                          //   }
-                          //   else if (controller.selectedRadioValue ==
-                          //           "idno" &&
-                          //       RegistrationController.i.idnoavaibility ==
-                          //           false) {
-                          //     showSnackbar(context, "Id Number Already Taken");
-                          //   } else if (controller.selectedRadioValue ==
-                          //           "passport" &&
-                          //       RegistrationController.i.passportavaibility ==
-                          //           false) {
-                          //     showSnackbar(
-                          //         context, "Passport Number Already Taken");
-                          //   } else {
-                          //     showSnackbar(context, 'saveRecord'.tr);
-                          //     controller.setPageIndexofDayPersonal(1);
-                          //   }
-                          // } else {
-                          //   if (controller.file == null) {
-                          //     showSnackbar(context, 'addpicture'.tr);
-                          //   } else
-                          //if (controller.pmcfile == null) {
-                          //     showSnackbar(context, 'Add LMPC Certificate');
-                          //   } else if (controller.selectedpersonalTitle?.id ==
-                          //       null) {
-                          //     showSnackbar(context, 'selecttitle'.tr);
-                          //   } else if (controller.selectedgender?.id == null) {
-                          //     showSnackbar(context, 'selectgender'.tr);
-                          //   } else if (controller.selectedmaritalStatus?.id ==
-                          //       null) {
-                          //     showSnackbar(context, 'Select Marital Status');
-                          //   } else if (controller.selectedcountry?.id == null) {
-                          //     showSnackbar(
-                          //         context, 'pleaseselectyourcountry'.tr);
-                          //   } else if (controller.selectedprovince?.id ==
-                          //       null) {
-                          //     showSnackbar(
-                          //         context, 'pleaseselectyourprovince'.tr);
-                          //   } else if (controller.selectedcity?.id == null) {
-                          //     showSnackbar(context, 'pleaseselectyourcity'.tr);
-                          //   }
-                          // }
+                            controller.setPageIndexofDayPersonal(1);
+                          } else {}
                         },
                         color: ColorManager.kPrimaryColor,
                         textcolor: ColorManager.kWhiteColor),

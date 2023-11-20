@@ -187,7 +187,7 @@ class AuthRepo {
       "Address": RegistrationController.i.address.text,
       "PicturePath": RegistrationController.i.imagepath,
       "PersonTitleId": RegistrationController.i.selectedpersonalTitle!.id,
-      "ContactPublic": RegistrationController.i.countryfullnumber,
+      "ContactPublic": RegistrationController.i.phone.text,
       "PMDCCertificateAttachment": RegistrationController.i.filepath,
       "PMDCNumber": RegistrationController.i.imcno.text,
       "SpecialityList":
@@ -218,26 +218,24 @@ class AuthRepo {
             Get.to(const SucessfullRegistrationScreen());
           }
         } else {
-          // showSnackbar(Get.context!, errormsg);
           Fluttertoast.showToast(
               msg: errormsg,
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: ColorManager.kPrimaryColor,
+              backgroundColor: ColorManager.kRedColor,
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
           return errormsg;
         }
       }
     } catch (e) {
-      // showSnackbar(Get.context!, e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
+          backgroundColor: ColorManager.kRedColor,
           textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
       return 'false';
@@ -268,7 +266,7 @@ class AuthRepo {
       "Address": RegistrationController.i.address.text,
       "PicturePath": RegistrationController.i.imagepath,
       "PersonTitleId": RegistrationController.i.selectedpersonalTitle!.id,
-      "ContactPublic": RegistrationController.i.countryfullnumber,
+      "ContactPublic": RegistrationController.i.phone.text,
       "PMDCCertificateAttachment": RegistrationController.i.filepath,
       "PMDCNumber": RegistrationController.i.imcno.text,
       "SpecialityList":
@@ -303,7 +301,7 @@ class AuthRepo {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: ColorManager.kPrimaryColor,
+              backgroundColor: ColorManager.kRedColor,
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
           return errormsg;
@@ -315,7 +313,7 @@ class AuthRepo {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
+          backgroundColor: ColorManager.kRedColor,
           textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
       return 'false';
@@ -430,7 +428,7 @@ class AuthRepo {
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
               backgroundColor: ColorManager.kRedColor,
-              textColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
         }
       } else {
@@ -440,9 +438,8 @@ class AuthRepo {
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
             backgroundColor: ColorManager.kRedColor,
-            textColor: ColorManager.kPrimaryColor,
+            textColor: ColorManager.kWhiteColor,
             fontSize: 14.0);
-        // showSnackbar(Get.context!, '${response.statusCode}', color: Colors.red);
       }
     } catch (e) {
       Fluttertoast.showToast(
@@ -451,9 +448,8 @@ class AuthRepo {
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
           backgroundColor: ColorManager.kRedColor,
-          textColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
-      // showSnackbar(Get.context!, e.toString(), color: Colors.red);
     }
   }
 
@@ -795,7 +791,6 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updateusernameavaibility(false);
-          // showSnackbar(Get.context!, 'Username Already Taken');
           Fluttertoast.showToast(
               msg: ('UsernameAlreadyTaken'.tr),
               toastLength: Toast.LENGTH_SHORT,
@@ -843,7 +838,6 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updatepassportavaibility(false);
-          //showSnackbar(Get.context!, 'Passport Already Taken');
           Fluttertoast.showToast(
               msg: ('PassportNumberAlreadyTaken'.tr),
               toastLength: Toast.LENGTH_SHORT,
@@ -856,7 +850,6 @@ class AuthRepo {
         }
       }
     } catch (e) {
-      //  showSnackbar(Get.context!, e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
@@ -891,7 +884,6 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updateidnoavaibility(false);
-          // showSnackbar(Get.context!, 'National ID Number Already Taken');
           Fluttertoast.showToast(
               msg: 'NationalIDNumberAlreadyTaken'.tr,
               toastLength: Toast.LENGTH_SHORT,
@@ -904,7 +896,6 @@ class AuthRepo {
         }
       }
     } catch (e) {
-      // showSnackbar(Get.context!, e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
@@ -939,7 +930,6 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updateepmdcavaibility(false);
-          //showSnackbar(Get.context!, 'LMPC No Already Taken');
           Fluttertoast.showToast(
               msg: 'LMPCNoAlreadyTaken'.tr,
               toastLength: Toast.LENGTH_SHORT,

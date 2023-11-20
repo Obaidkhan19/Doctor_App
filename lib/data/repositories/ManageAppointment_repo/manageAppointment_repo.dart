@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -193,11 +195,23 @@ class Manageappointmentrepo {
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}',
-              color: Colors.green);
+          Fluttertoast.showToast(
+              msg: result['ErrorMessage'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         } else {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}',
-              color: Colors.red);
+          Fluttertoast.showToast(
+              msg: result['ErrorMessage'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
         return result['Status'];
       } else {
@@ -225,13 +239,24 @@ class Manageappointmentrepo {
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}',
-              color: Colors.green);
+          Fluttertoast.showToast(
+              msg: result['ErrorMessage'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         } else {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}',
-              color: Colors.red);
+          Fluttertoast.showToast(
+              msg: result['ErrorMessage'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
-        print('response of reshedul is ${result['Status']}');
         return result['Status'];
       } else {
         log(response.statusCode.toString());

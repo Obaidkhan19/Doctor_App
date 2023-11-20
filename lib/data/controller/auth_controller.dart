@@ -97,7 +97,6 @@ class AuthController extends GetxController implements GetxService {
         isTimerOver.value = true;
         tim.cancel();
         Get.to(() => const ForgetPassword());
-        //showSnackbar(ctx, 'codeexpire'.tr);
         Fluttertoast.showToast(
             msg: "codeexpire".tr,
             toastLength: Toast.LENGTH_SHORT,
@@ -169,7 +168,6 @@ class AuthController extends GetxController implements GetxService {
         file = File(result.files.first.path!);
       }
     } catch (e) {
-      //  showSnackbar(Get.context!, e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,

@@ -137,14 +137,13 @@ class _SecurityScreenState extends State<SecurityScreen> {
 
                             String response = "";
 
-                            if (controller.pmcfile == null ||
-                                controller.selectedprovince?.id == null ||
+                            if (controller.selectedprovince?.id == null ||
                                 controller.selectedcity?.id == null ||
                                 controller.selectedcountry?.id == null ||
                                 controller.selectedpersonalTitle?.id == null ||
                                 controller.selectedgender?.id == null ||
                                 controller.selectedmaritalStatus?.id == null ||
-                                controller.countryfullnumber == '' ||
+                                controller.phone.text == '' ||
                                 controller.firstname.text == '' ||
                                 controller.lastname.text == '' ||
                                 (controller.idnumber.text == '' ||
@@ -187,7 +186,6 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                       backgroundColor: ColorManager.kRedColor,
                                       textColor: ColorManager.kWhiteColor,
                                       fontSize: 14.0);
-                                  // showSnackbar(context, response.toString());
                                 }
                               } else if (controller.selectedRadioValue ==
                                   "passport") {
@@ -202,7 +200,6 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                       backgroundColor: ColorManager.kRedColor,
                                       textColor: ColorManager.kWhiteColor,
                                       fontSize: 14.0);
-                                  //   showSnackbar(context, response.toString());
                                 } else {
                                   controller.updateIsSavingPath(false);
                                   Fluttertoast.showToast(
@@ -213,7 +210,6 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                       backgroundColor: ColorManager.kRedColor,
                                       textColor: ColorManager.kWhiteColor,
                                       fontSize: 14.0);
-                                  // showSnackbar(context, response.toString());
                                 }
                               }
                             }
@@ -235,76 +231,6 @@ class _SecurityScreenState extends State<SecurityScreen> {
                       ),
                     ),
                   ),
-                  // PrimaryButton(
-                  //     title: 'register'.tr,
-                  //     onPressed: () async {
-                  //       if (controller.password.text !=
-                  //           controller.retypePassword.text) {
-                  //         showSnackbar(context,
-                  //             "Password and Confirm Password doesnot match");
-                  //       } else if (_formKey.currentState!.validate() &&
-                  //           controller.password.text ==
-                  //               controller.retypePassword.text) {
-                  //         controller.updateIsSavingPath(true);
-
-                  //         AuthRepo ar = AuthRepo();
-
-                  //         String response = "";
-
-                  //         if (controller.pmcfile == null ||
-                  //             controller.selectedprovince?.id == null ||
-                  //             controller.selectedcity?.id == null ||
-                  //             controller.selectedcountry?.id == null ||
-                  //             controller.selectedpersonalTitle?.id == null ||
-                  //             controller.selectedgender?.id == null ||
-                  //             controller.selectedmaritalStatus?.id == null ||
-                  //             controller.countryfullnumber == '' ||
-                  //             controller.firstname.text == '' ||
-                  //             controller.lastname.text == '' ||
-                  //             (controller.idnumber.text == '' ||
-                  //                 controller.password.text == '') ||
-                  //             controller.imcno.text == '' ||
-                  //             controller.address.text == '' ||
-                  //             controller.email.text == '' ||
-                  //             controller.ontap == false) {
-                  //           controller.updateIsSavingPath(false);
-                  //           showSnackbar(
-                  //               context, "pleasesavepersonaldetails".tr);
-                  //         } else {
-                  //           String path = '';
-                  //           if (controller.file != null) {
-                  //             path = await ar.uploadPicture(controller.file!);
-                  //           }
-
-                  //           String filepath =
-                  //               await ar.uploadFile(controller.pmcfile!);
-                  //           controller.updatefilepath(filepath);
-                  //           controller.updateimagepath(path);
-
-                  //           if (controller.selectedRadioValue == "idno") {
-                  //             if (_formKey.currentState!.validate()) {
-                  //               response = await ar.signupPersonalcnic();
-                  //               controller.updateIsSavingPath(false);
-                  //             } else {
-                  //               controller.updateIsSavingPath(true);
-                  //               showSnackbar(context, response.toString());
-                  //             }
-                  //           } else if (controller.selectedRadioValue ==
-                  //               "passport") {
-                  //             if (_formKey.currentState!.validate()) {
-                  //               response = await ar.signupPersonalpassport();
-                  //               controller.updateIsSavingPath(false);
-                  //               showSnackbar(context, response.toString());
-                  //             } else {
-                  //               controller.updateIsSavingPath(false);
-                  //               showSnackbar(context, response.toString());
-                  //             }
-                  //           }
-                  //         }
-                  //       }
-                  //     },
-                  //     color: ColorManager.kPrimaryColor,
-                  //     textcolor: ColorManager.kWhiteColor),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),

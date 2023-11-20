@@ -68,9 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onProgress: (int progress) {},
           onPageStarted: (String url) async {},
           onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {
-            // showSnackbar(context, error.description, color: Colors.black);
-          },
+          onWebResourceError: (WebResourceError error) {},
         ),
       )
       ..loadRequest(
