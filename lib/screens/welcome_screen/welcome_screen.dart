@@ -32,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Image.asset(
               Images.welcome,
-              height: Get.height * 0.5,
+              height: Get.height * 0.6,
               width: Get.width * 1,
               fit: BoxFit.cover,
             ),
@@ -77,7 +77,7 @@ class GetStartedButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(40),
       onTap: () {
         LocalDb().saveIsFirstTime(false);
-        Get.to(() => const LoginScreen());
+        Get.offAll(() => const LoginScreen());
         // Get.to(()=>const Introduction());
       },
       child: const CircleAvatar(

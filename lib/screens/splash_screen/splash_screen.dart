@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     log(doctorid ?? "");
     // baseURL = remoteConfig.getString('URL');
     // if (baseURL == "") {
-    //baseURL = 'https://patient.helpful.ihealthcure.com/';
+    // baseURL = 'https://patient.helpful.ihealthcure.com/';
     // }
     // baseURL = remoteConfig.getString('URLQA');
     // if (baseURL == "") {
