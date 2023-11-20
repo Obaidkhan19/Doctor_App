@@ -290,8 +290,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: (profileContr.value == 1)
-                              ? Colors.green
-                              : Colors.red, // Set the background color
+                              ? const Color(0xff00BE4C)
+                              : const Color(
+                                  0xffcd0000), // Set the background color
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(

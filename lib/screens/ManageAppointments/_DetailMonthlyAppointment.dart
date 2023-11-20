@@ -45,19 +45,19 @@ List<Meeting> _getDataSource() {
       DateTime(today.year, today.month, today.day, 9, 0, 0);
   final DateTime endTime = startTime.add(const Duration(hours: 2));
   for (int i = 0;
-      i < Manageappointmentcontroller.i.monthlyappintment.length;
+      i < ManageAppointmentController.i.monthlyappintment.length;
       i++) {
     meetings.add(Meeting(
-        '${Manageappointmentcontroller.i.monthlyappintment[i].paid} ',
-        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
-        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
-        ColorManager.kRedColor,
+        '${ManageAppointmentController.i.monthlyappintment[i].paid} ',
+        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
+        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
+        ColorManager.kPrimaryColor,
         false));
     meetings.add(Meeting(
-        '${Manageappointmentcontroller.i.monthlyappintment[i].unPaid} ',
-        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
-        DateTime.parse(Manageappointmentcontroller.i.monthlyappintment[i].date),
-        ColorManager.kblackColor,
+        '${ManageAppointmentController.i.monthlyappintment[i].unPaid} ',
+        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
+        DateTime.parse(ManageAppointmentController.i.monthlyappintment[i].date),
+        ColorManager.KgreenColor,
         false));
   }
 
@@ -131,7 +131,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
 
   // call() async {
   //   log("${monthyearDate.split(' ')[0].split('-')[1]}-${monthyearDate.split(' ')[0].split('-')[0]} ${int.parse(monthyearDate.split(' ')[0].split('-')[1]) < 12 ? int.parse(monthyearDate.split(' ')[0].split('-')[1]) + 1 : 01}-${monthyearDate.split(' ')[0].split('-')[0]}");
-  //   Manageappointmentcontroller.i.getmonthlyoctorAppointment(
+  //   ManageAppointmentController.i.getmonthlyoctorAppointment(
   //       "${monthyearDate.split(' ')[0].split('-')[1]}-${monthyearDate.split(' ')[0].split('-')[0]} ${int.parse(monthyearDate.split(' ')[0].split('-')[1]) < 12 ? int.parse(monthyearDate.split(' ')[0].split('-')[1]) + 1 : 01}-${monthyearDate.split(' ')[0].split('-')[0]}",
   //       widget.worklocationid,
   //       widget.isonline);
@@ -144,10 +144,10 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<Manageappointmentcontroller>(builder: (context) {
+      body: GetBuilder<ManageAppointmentController>(builder: (context) {
         return BlurryModalProgressHUD(
           inAsyncCall:
-              Manageappointmentcontroller.i.isLoadingMonthlyDoctorAppointment,
+              ManageAppointmentController.i.isLoadingMonthlyDoctorAppointment,
           blurEffectIntensity: 4,
           progressIndicator: const SpinKitSpinningLines(
             color: Color(0xfff1272d3),
@@ -186,7 +186,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                             MonthNavigationDirection.horizontal,
                       ),
                       onViewChanged: (viewChangedDetails) {
-                        // Manageappointmentcontroller.i
+                        // ManageAppointmentController.i
                         //     .getmonthlyoctorAppointment(monthyearDate,
                         //         widget.worklocationid, widget.isonline);
                         // if (chk) {
@@ -209,29 +209,29 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         //   } else {
                         //     date = "${date.split('-')[0]}-${current + 1}";
                         //   }
-                        //   Manageappointmentcontroller.i
+                        //   ManageAppointmentController.i
                         //       .getmonthlyoctorAppointment(
                         //           date, widget.worklocationid, widget.isonline);
 
                         //   log(viewChangedDetails.visibleDates.length
                         //       .toString());
                         // }
-                        // Manageappointmentcontroller.i
+                        // ManageAppointmentController.i
                         //     .getmonthlyoctorAppointment(monthyearDate,
                         //         widget.worklocationid, widget.isonline);
                         // if (int.parse(monthyearDate.toString().split('-')[0]) ==
                         //     int.parse(viewChangedDetails.visibleDates.last.month
                         //         .toString())) {
-                        //   Manageappointmentcontroller.i.getmonthlyoctorAppointment(
+                        //   ManageAppointmentController.i.getmonthlyoctorAppointment(
                         //       "${viewChangedDetails.visibleDates.last.month + 1}-${viewChangedDetails.visibleDates.last.year}",
                         //       widget.worklocationid,
                         //       widget.isonline);
                         // } else {
-                        Manageappointmentcontroller.i.getmonthlyoctorAppointment(
+                        ManageAppointmentController.i.getmonthlyoctorAppointment(
                             "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
                             widget.worklocationid,
                             widget.isonline,
-                            "${viewChangedDetails.visibleDates.first.day} ${viewChangedDetails.visibleDates.last.day}");
+                            "${viewChangedDetails.visibleDates.first} ${viewChangedDetails.visibleDates.last}");
                         // }
                       },
                       // monthCellBuilder: monthCellBuilder,
@@ -242,24 +242,24 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       //           widget.worklocationid, widget.isonline);
                       // },
                       onTap: (CalendarTapDetails details) async {
-                        Manageappointmentcontroller.i
+                        ManageAppointmentController.i
                             .selectedmonthlyspecificdate(details.date);
 
                         String dt = DateFormat('yyyy-MM-dd')
-                            .format(Manageappointmentcontroller.i.date!)
+                            .format(ManageAppointmentController.i.date!)
                             .toString();
 
                         if (widget.worklocationid == '') {
-                          Manageappointmentcontroller.i
+                          ManageAppointmentController.i
                               .getDailyDoctorAppointmentSlots(
                                   dt.toString(), "true", "");
                         } else {
-                          Manageappointmentcontroller.i
+                          ManageAppointmentController.i
                               .getDailyDoctorAppointmentSlots(dt.toString(),
                                   "false", widget.worklocationid);
                         }
 
-                        Manageappointmentcontroller.i
+                        ManageAppointmentController.i
                             .setPageIndexofDayViewAppointment(0);
 
                         // print(details.date.toString().split(' ')[0]);
@@ -274,15 +274,15 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         Container(
                           width: Get.width * 0.08,
                           height: Get.height * 0.04,
-                          color: ColorManager.kRedColor,
+                          color: ColorManager.kPrimaryColor,
                         ),
                         SizedBox(
                           width: Get.width * 0.01,
                         ),
-                        GetBuilder<Manageappointmentcontroller>(
+                        GetBuilder<ManageAppointmentController>(
                             builder: (context) {
                           return Text(
-                            '${'paidappointments'.tr} |  ${Manageappointmentcontroller.i.paid}'
+                            '${'paidappointments'.tr} |  ${ManageAppointmentController.i.paid}'
                             '',
                             style: GoogleFonts.poppins(
                               fontSize: 9,
@@ -293,15 +293,15 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         Container(
                           width: Get.width * 0.08,
                           height: Get.height * 0.04,
-                          color: ColorManager.kblackColor,
+                          color: ColorManager.KgreenColor,
                         ),
                         SizedBox(
                           width: Get.width * 0.01,
                         ),
-                        GetBuilder<Manageappointmentcontroller>(
+                        GetBuilder<ManageAppointmentController>(
                             builder: (context) {
                           return Text(
-                            '${'unPaidappointments'.tr} |  ${Manageappointmentcontroller.i.unpaid}'
+                            '${'unPaidappointments'.tr} |  ${ManageAppointmentController.i.unpaid}'
                             '',
                             style: GoogleFonts.poppins(
                               fontSize: 9,

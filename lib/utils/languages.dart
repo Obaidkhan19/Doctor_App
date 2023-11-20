@@ -279,12 +279,12 @@ class Localization extends Translations {
           'pleasesavepersonaldetails': 'Please Save Personal Details',
           'forgottenpassword': 'Forgotten Password',
           'ithappenkindlyenterthemobilenumberassociatedwithyouraccount':
-              'It happen, kindly enter the Email \n associated with your account',
+              'It happen, kindly enter the email \n associated with your account',
           'verifycode': 'Verify Code',
           'enteryourmobilenumber': 'Enter your Mobile Number',
           'entercode': 'Enter Code',
           'kindlyenterthecodesenttoyournumber':
-              'Kindly enter the code sent to your email',
+              'Kindly enter the code sent to your email address',
           'enternumber': 'Enter Number',
           'expirein': 'Expires in',
           'codeexpire': 'Code Expire',

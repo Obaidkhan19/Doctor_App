@@ -25,7 +25,7 @@ class Manageappointmentrepo {
     var headers = {'Content-Type': 'application/json'};
 
     try {
-      Manageappointmentcontroller.i.updateIsloadingScreen(true);
+      ManageAppointmentController.i.updateIsloadingScreen(true);
       var response = await http.post(
           Uri.parse(AppConstants.getDailyAppointment),
           headers: headers,
@@ -36,32 +36,78 @@ class Manageappointmentrepo {
           DailyDoctorAppointmentsModel DailyDoctorAppointment =
               DailyDoctorAppointmentsModel.fromJson(jsonDecode(response.body));
           log('${DailyDoctorAppointment.toString()} DailyDoctorAppointment');
-          Manageappointmentcontroller.i.updateIsloadingScreen(false);
+          ManageAppointmentController.i.updateIsloadingScreen(false);
           return DailyDoctorAppointment;
         }
       } else {
-        Manageappointmentcontroller.i.updateIsloadingScreen(false);
+        ManageAppointmentController.i.updateIsloadingScreen(false);
         log(response.statusCode.toString());
       }
     } catch (e) {
-      Manageappointmentcontroller.i.updateIsloadingScreen(false);
+      ManageAppointmentController.i.updateIsloadingScreen(false);
       log('$e exception caught');
     }
   }
 
+  // static GetmonthlyDoctorAppointment(
+  //     String date, String worklocationid, IsOnline) async {
+  //   ManageAppointmentController.i.paid =
+  //       ManageAppointmentController.i.unpaid = 0;
+  //   String? userId = await LocalDb().getDoctorId();
+
+  //   var body = {
+  //     "MonthAndYear": date,
+  //     "DoctorId": "$userId",
+  //     "WorkLocationId": worklocationid,
+  //     "IsOnline": IsOnline,
+  //   };
+
+  //   var headers = {'Content-Type': 'application/json'};
+  //   try {
+  //     var response = await http.post(
+  //         Uri.parse(AppConstants.getMonthlyAppointment),
+  //         headers: headers,
+  //         body: jsonEncode(body));
+  //     if (response.statusCode == 200) {
+  //       var result = jsonDecode(response.body);
+
+  //       if (result['Status'] == 1) {
+  //         Iterable data = result['Appointments'];
+  //         List<monthlyappointresponse> monthlyDoctorAppointment =
+  //             data.map((e) => monthlyappointresponse.fromJson(e)).toList();
+
+  //         for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
+  //           if (monthlyDoctorAppointment[i].paid != 0) {
+  //             ManageAppointmentController.i.paid =
+  //                 monthlyDoctorAppointment[i].paid +
+  //                     ManageAppointmentController.i.paid;
+  //           } else if (monthlyDoctorAppointment[i].unPaid != 0) {
+  //             ManageAppointmentController.i.unpaid =
+  //                 monthlyDoctorAppointment[i].unPaid +
+  //                     ManageAppointmentController.i.unpaid;
+  //           }
+  //         }
+  //         return monthlyDoctorAppointment;
+  //       }
+  //     } else {
+  //       log(response.statusCode.toString());
+  //     }
+  //   } catch (e) {
+  //     log('$e exception caught');
+  //   }
+  // }
+
   static GetmonthlyDoctorAppointment(
       String date, String worklocationid, IsOnline) async {
-    Manageappointmentcontroller.i.paid =
-        Manageappointmentcontroller.i.unpaid = 0;
+    ManageAppointmentController.i.paid =
+        ManageAppointmentController.i.unpaid = 0;
     String? userId = await LocalDb().getDoctorId();
-
     var body = {
       "MonthAndYear": date,
       "DoctorId": "$userId",
       "WorkLocationId": worklocationid,
       "IsOnline": IsOnline,
     };
-
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(
@@ -70,21 +116,19 @@ class Manageappointmentrepo {
           body: jsonEncode(body));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-
         if (result['Status'] == 1) {
           Iterable data = result['Appointments'];
           List<monthlyappointresponse> monthlyDoctorAppointment =
               data.map((e) => monthlyappointresponse.fromJson(e)).toList();
-
           for (int i = 0; i < monthlyDoctorAppointment.length; i++) {
             if (monthlyDoctorAppointment[i].paid != 0) {
-              Manageappointmentcontroller.i.paid =
+              ManageAppointmentController.i.paid =
                   monthlyDoctorAppointment[i].paid +
-                      Manageappointmentcontroller.i.paid;
+                      ManageAppointmentController.i.paid;
             } else if (monthlyDoctorAppointment[i].unPaid != 0) {
-              Manageappointmentcontroller.i.unpaid =
+              ManageAppointmentController.i.unpaid =
                   monthlyDoctorAppointment[i].unPaid +
-                      Manageappointmentcontroller.i.unpaid;
+                      ManageAppointmentController.i.unpaid;
             }
           }
           return monthlyDoctorAppointment;

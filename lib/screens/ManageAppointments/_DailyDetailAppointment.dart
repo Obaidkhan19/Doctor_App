@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +35,10 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
   @override
   void initState() {
     DateTime tempDate = DateTime.now();
-    if (Manageappointmentcontroller.i.date == null) {
-      SelectedDate = Manageappointmentcontroller.i.date != null
+    if (ManageAppointmentController.i.date == null) {
+      SelectedDate = ManageAppointmentController.i.date != null
           ? DateFormat('yyyy-MM-dd')
-              .format(Manageappointmentcontroller.i.date!)
+              .format(ManageAppointmentController.i.date!)
               .toString()
           : DateFormat('yyyy-MM-dd').format(tempDate).toString();
     }
@@ -47,9 +49,9 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
   @override
   Widget build(BuildContext context) {
     var contr =
-        Get.put<Manageappointmentcontroller>(Manageappointmentcontroller());
+        Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
-        body: GetBuilder<Manageappointmentcontroller>(builder: (cont) {
+        body: GetBuilder<ManageAppointmentController>(builder: (cont) {
       return /*  SpecialitiesController.i.isLoading == false ?*/
           SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -88,7 +90,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                             deactivatedColor: ColorManager.kPrimaryLightColor,
                             height: Get.height * 0.15,
                             initialSelectedDate:
-                                Manageappointmentcontroller.i.date ??
+                                ManageAppointmentController.i.date ??
                                     DateTime.now(),
                             selectionColor: ColorManager.kPrimaryColor,
                             selectedTextColor: Colors.white,
@@ -96,7 +98,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                               String Date =
                                   DateFormat('yyyy-MM-dd').format(date);
                               SelectedDate = Date;
-                              Manageappointmentcontroller.i
+                              ManageAppointmentController.i
                                   .getDailyDoctorAppointmentSlots(
                                       Date.toString(),
                                       widget.IsOnline.toString(),
@@ -116,7 +118,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                       InkWell(
                         onTap: () {
                           List<Appointments> result =
-                              Manageappointmentcontroller.i
+                              ManageAppointmentController.i
                                   .getCheckedAppointmentSlots();
                           if (result.isEmpty) {
                             showDialog(
@@ -146,14 +148,15 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                     onPressed: () async {
                                       Navigator.of(context).pop();
                                       var response =
-                                          await Manageappointmentcontroller.i
+                                          await ManageAppointmentController.i
                                               .reShedualAppointmentSlots(
                                                   dateReshedualcontroller.text
                                                       .toString(), //Shedule Date
                                                   result[0].branchId.toString(),
                                                   result);
                                       if (response == 1) {
-                                        Manageappointmentcontroller.i
+                                        log(SelectedDate.toString());
+                                        ManageAppointmentController.i
                                             .getDailyDoctorAppointmentSlots(
                                                 SelectedDate.toString(),
                                                 widget.IsOnline.toString(),
@@ -198,7 +201,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                       InkWell(
                         onTap: () async {
                           List<Appointments> result =
-                              Manageappointmentcontroller.i
+                              ManageAppointmentController.i
                                   .getCheckedAppointmentSlots();
                           if (result.isEmpty) {
                             showDialog(
@@ -215,11 +218,11 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                   );
                                 });
                           } else {
-                            var response = await Manageappointmentcontroller.i
+                            var response = await ManageAppointmentController.i
                                 .approveAppointmentSlots(
                                     result[0].branchId.toString(), result);
                             if (response == 1) {
-                              Manageappointmentcontroller.i
+                              ManageAppointmentController.i
                                   .getDailyDoctorAppointmentSlots(
                                       SelectedDate.toString(),
                                       widget.IsOnline.toString(),
@@ -258,7 +261,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                       ),
                       InkWell(
                         onTap: () {
-                          Manageappointmentcontroller.i
+                          ManageAppointmentController.i
                               .updateCheckedBoxStatusToSelectAll();
                         },
                         child: Container(
@@ -307,7 +310,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                       borderRadius: BorderRadius.circular(
                                           4), // Adjust as needed
                                     ),
-                                    child: (Manageappointmentcontroller
+                                    child: (ManageAppointmentController
                                                 .i.selectall ==
                                             true)
                                         ? Icon(Icons.check,
@@ -328,21 +331,21 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                   SizedBox(
                     height: Get.height * 0.015,
                   ),
-                  if ((((Manageappointmentcontroller
+                  if ((((ManageAppointmentController
                                       .i.dayViewAppointmentSlotModel !=
                                   null) &&
-                              (Manageappointmentcontroller
+                              (ManageAppointmentController
                                       .i
                                       .dayViewAppointmentSlotModel
                                       .appointments !=
                                   null))
-                          ? Manageappointmentcontroller.i
+                          ? ManageAppointmentController.i
                               .dayViewAppointmentSlotModel.appointments?.length
                           : 0) !=
                       0)
-                    GetBuilder<Manageappointmentcontroller>(
+                    GetBuilder<ManageAppointmentController>(
                       builder: (contro) => BlurryModalProgressHUD(
-                        inAsyncCall: Manageappointmentcontroller
+                        inAsyncCall: ManageAppointmentController
                             .i.isLoadingDailyDoctorAppointmentSlots,
                         blurEffectIntensity: 4,
                         progressIndicator: const SpinKitSpinningLines(
@@ -354,15 +357,15 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                           child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: (((Manageappointmentcontroller
+                              itemCount: (((ManageAppointmentController
                                               .i.dayViewAppointmentSlotModel !=
                                           null) &&
-                                      (Manageappointmentcontroller
+                                      (ManageAppointmentController
                                               .i
                                               .dayViewAppointmentSlotModel
                                               .appointments !=
                                           null))
-                                  ? Manageappointmentcontroller
+                                  ? ManageAppointmentController
                                       .i
                                       .dayViewAppointmentSlotModel
                                       .appointments
@@ -370,15 +373,15 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                   : 1),
                               itemBuilder: (context, index) {
                                 final manageAppointmentSlots =
-                                    ((Manageappointmentcontroller.i
+                                    ((ManageAppointmentController.i
                                                     .dayViewAppointmentSlotModel !=
                                                 null) &&
-                                            (Manageappointmentcontroller
+                                            (ManageAppointmentController
                                                     .i
                                                     .dayViewAppointmentSlotModel
                                                     .appointments !=
                                                 null))
-                                        ? Manageappointmentcontroller
+                                        ? ManageAppointmentController
                                             .i
                                             .dayViewAppointmentSlotModel
                                             .appointments![index]
@@ -386,30 +389,34 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
 
                                 return ((manageAppointmentSlots != null)
                                     ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.end,
                                         children: [
-                                          Text(
-                                            (manageAppointmentSlots.time !=
-                                                    null)
-                                                ? Manageappointmentcontroller.i
-                                                    .convertTimeFormat(
-                                                        manageAppointmentSlots
-                                                                .time ??
-                                                            "")
-                                                : "",
+                                          SizedBox(
+                                            width: Get.width * 0.15,
+                                            child: Text(
+                                              (manageAppointmentSlots.time !=
+                                                      null)
+                                                  ? ManageAppointmentController
+                                                      .i
+                                                      .convertTimeFormat(
+                                                          manageAppointmentSlots
+                                                                  .time ??
+                                                              "")
+                                                  : "",
 
-                                            // manageAppointmentSlots.time ?? "",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                    fontSize: 12,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeightManager
-                                                            .regular),
+                                              // manageAppointmentSlots.time ?? "",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontSize: 12,
+                                                      color: ColorManager
+                                                          .kblackColor,
+                                                      fontWeight:
+                                                          FontWeightManager
+                                                              .regular),
+                                            ),
                                           ),
                                           Text(
                                             ' | ',
@@ -496,7 +503,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                                                                 () {
                                                                               // Toggle the checkbox state when the box is tapped
                                                                               setState(() {
-                                                                                Manageappointmentcontroller.i.updateCheckedBoxStatus(manageAppointmentSlots.appointmentId!);
+                                                                                ManageAppointmentController.i.updateCheckedBoxStatus(manageAppointmentSlots.appointmentId!);
                                                                                 //   isChecked = !isChecked;
                                                                               });
                                                                             },
@@ -529,24 +536,24 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                         ),
                       ),
                     ),
-                  (((Manageappointmentcontroller
+                  (((ManageAppointmentController
                                           .i.dayViewAppointmentSlotModel !=
                                       null) &&
-                                  (Manageappointmentcontroller
+                                  (ManageAppointmentController
                                           .i
                                           .dayViewAppointmentSlotModel
                                           .appointments !=
                                       null))
-                              ? Manageappointmentcontroller
+                              ? ManageAppointmentController
                                   .i
                                   .dayViewAppointmentSlotModel
                                   .appointments
                                   ?.length
                               : 0) ==
                           0
-                      ? GetBuilder<Manageappointmentcontroller>(
+                      ? GetBuilder<ManageAppointmentController>(
                           builder: (controo) => BlurryModalProgressHUD(
-                            inAsyncCall: Manageappointmentcontroller
+                            inAsyncCall: ManageAppointmentController
                                 .i.isLoadingDailyDoctorAppointmentSlots,
                             blurEffectIntensity: 4,
                             progressIndicator: const SpinKitSpinningLines(

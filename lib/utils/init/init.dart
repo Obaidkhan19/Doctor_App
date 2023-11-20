@@ -13,7 +13,7 @@ class AppBindings implements Bindings {
     Get.put<AddressController>(AddressController());
     Get.put<AuthController>(AuthController());
     Get.put<LanguageController>(LanguageController());
-    Get.put<Manageappointmentcontroller>(Manageappointmentcontroller());
+    Get.put<ManageAppointmentController>(ManageAppointmentController());
     Get.put<ERXController>(ERXController());
   }
 }

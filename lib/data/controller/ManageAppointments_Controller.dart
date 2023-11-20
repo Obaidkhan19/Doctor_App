@@ -1,17 +1,17 @@
 import 'dart:developer';
 
+import 'package:doctormobileapplication/data/repositories/ManageAppointment_repo/manageAppointment_repo.dart';
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:get/get.dart';
 
 import '../../models/DayViewAppointmentModel.dart';
 import '../../models/ReschedualAppointment.dart';
 import '../../models/TodayAppointmentModel.dart';
-import '../repositories/ManageAppointment_repo/manageAppointment_repo.dart';
 
-class Manageappointmentcontroller extends GetxController
+class ManageAppointmentController extends GetxController
     implements GetxService {
-  static Manageappointmentcontroller get i =>
-      Get.put(Manageappointmentcontroller());
+  static ManageAppointmentController get i =>
+      Get.put(ManageAppointmentController());
   List<monthlyappointresponse> monthlyappintment = [];
   int unpaid = 0;
   int paid = 0;
@@ -62,6 +62,28 @@ class Manageappointmentcontroller extends GetxController
   }
 
   bool isLoadingMonthlyDoctorAppointment = false;
+  // getmonthlyoctorAppointment(date, wlid, isonline) async {
+  //   try {
+  //     isLoadingMonthlyDoctorAppointment = true;
+  //     monthlyappintment =
+  //         await Manageappointmentrepo.GetmonthlyDoctorAppointment(
+  //             date.toString().split(' ')[0], wlid, isonline);
+  //     data = await Manageappointmentrepo.GetmonthlyDoctorAppointment(
+  //         date.toString().split(' ')[1], wlid, isonline);
+  //     for (int i = 0; i < monthlyappintment.length; i++) {
+  //       for (int j = 0; j < data.length; j++) {
+  //         if (monthlyappintment[i] != data[j]) monthlyappintment.add(data[j]);
+  //       }
+  //     }
+  //     //  monthlyappintment = monthlyappintment + data;
+  //     isLoadingMonthlyDoctorAppointment = false;
+  //     update();
+  //   } catch (e) {
+  //     isLoadingMonthlyDoctorAppointment = false;
+  //     update();
+  //   }
+  // }
+
   getmonthlyoctorAppointment(date, wlid, isonline, diffr) async {
     monthlyappintment.clear();
     data.clear();
@@ -87,22 +109,28 @@ class Manageappointmentcontroller extends GetxController
       }
       paid = 0;
       unpaid = 0;
+      DateTime dt1 = DateTime.parse(
+          "${diffr.toString().split(' ')[0]} ${diffr.toString().split(' ')[1]}");
+      DateTime dt2 = DateTime.parse(
+          "${diffr.toString().split(' ')[2]} ${diffr.toString().split(' ')[3]}");
       for (int i = 0; i < monthlyappintment.length; i++) {
-        log(monthlyappintment[i].date);
-        log(diffr);
         // if (int.parse(monthlyappintment[i]
         //             .date
         //             .toString()
-        //             .split('T')[0]
-        //             .split('-')[2]) >
-        //         int.parse(diffr.toString().split(' ')[0]) &&
+        //             .split(‘T’)[0]
+        //             .split(‘-’)[2]) >
+        //         int.parse(diffr.toString().split(' ’)[0]) &&
         //     int.parse(monthlyappintment[i]
         //             .date
         //             .toString()
-        //             .split('T')[0]
-        //             .split('-')[2]) <
-        //         int.parse(diffr.toString().split(' ')[1]))
-        {
+        //             .split(‘T’)[0]
+        //             .split(‘-’)[2]) <
+        //         int.parse(diffr.toString().split(' ’)[1]))
+        // if(DateTime.parse(diffr))
+        if (dt1.isBefore(DateTime.parse(
+                "${monthlyappintment[i].date.toString().split('T')[0]} ${monthlyappintment[i].date.toString().split('T')[1]}")) &&
+            dt2.isAfter(DateTime.parse(
+                "${monthlyappintment[i].date.toString().split('T')[0]} ${monthlyappintment[i].date.toString().split('T')[1]}"))) {
           if (monthlyappintment[i].paid != 0) {
             paid = monthlyappintment[i].paid + paid;
           } else if (monthlyappintment[i].unPaid != 0) {
@@ -110,7 +138,6 @@ class Manageappointmentcontroller extends GetxController
           }
         }
       }
-
       isLoadingMonthlyDoctorAppointment = false;
       update();
     } catch (e) {
@@ -125,9 +152,6 @@ class Manageappointmentcontroller extends GetxController
 
   setPageIndexofDayViewAppointment(int ind) {
     _index = ind;
-    if (_index == 0) {
-      monthlyappintment.clear();
-    }
     update();
   }
 
