@@ -150,6 +150,7 @@ class Manageappointmentrepo {
       "IsOnline": IsOnline,
       "WorkLocationId": WorkLocationId,
     };
+    log(body.toString());
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.getDayAppointment),
@@ -182,8 +183,9 @@ class Manageappointmentrepo {
       "DoctorId": "$userId",
       "Token": "$userToken",
       "BranchId": BranchId,
-      "Appointments": Appointments,
+      "Appointments": jsonEncode(Appointments),
     };
+    log(body.toString());
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.rescheduleApi),

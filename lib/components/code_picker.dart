@@ -2,10 +2,12 @@ library intl_phone_field;
 
 import 'dart:async';
 import 'package:doctormobileapplication/components/code_picker_dialog.dart';
+import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
@@ -390,6 +392,10 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
       autofillHints: widget.disableAutoFillHints
           ? null
           : [AutofillHints.telephoneNumberNational],
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(10),
+      ],
       readOnly: widget.readOnly,
       obscureText: widget.obscureText,
       textAlign: widget.textAlign,
@@ -448,6 +454,7 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
           ),
         );
       },
+
       onChanged: (value) async {
         final phoneNumber = PhoneNumber(
           countryISOCode: _selectedCountry.code,
@@ -461,12 +468,15 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
         widget.onChanged?.call(phoneNumber);
       },
       validator: (val) {
-        if (val != null) {
-          return "please add number";
+        if (RegistrationController.i.phone.text.isEmpty ||
+            RegistrationController.i.phone.text.toString().split('').length <
+                10) {
+          return "pleaseaddnumber".tr;
         }
         return null;
       },
-      //  (value) {
+
+      // validator:  (value) {
       //   if (value == null || !isNumeric(value)) return validatorMessage;
       //   if (!widget.disableLengthCheck) {
       //     return value.length >= _selectedCountry.minLength &&
@@ -476,9 +486,8 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
       //   }
       //   return validatorMessage;
       // },
-      maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
+      //  maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
       keyboardType: widget.keyboardType,
-      inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
       keyboardAppearance: widget.keyboardAppearance,
       autofocus: widget.autofocus,

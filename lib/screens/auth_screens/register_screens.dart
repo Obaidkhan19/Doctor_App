@@ -527,15 +527,16 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     ),
 
                     CustomIntlPhoneField(
-                      // validator: (p0) {
-                      //   if (p0!.number.isEmpty) {
-                      //     return 'Please add Phone Number'.tr;
+                      // validator: (val) {
+                      //   if (RegistrationController.i.phone.text.isEmpty ||
+                      //       RegistrationController.i.phone.text
+                      //               .toString()
+                      //               .split('')
+                      //               .length <
+                      //           10) {
+                      //     return "please add number";
                       //   }
-                      //   log(p0.toString());
                       //   return null;
-                      // },
-                      // onChanged: (phone) {
-                      //   controller.updatecountryfullno(phone.completeNumber);
                       // },
                       style: GoogleFonts.poppins(
                           color: ColorManager.kGreyColor, fontSize: 12),

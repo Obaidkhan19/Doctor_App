@@ -37,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               fit: BoxFit.cover,
             ),
             SizedBox(
-              height: Get.height * 0.05,
+              height: Get.height * 0.06,
             ),
             Center(
               child: Text('Welcome to ',
@@ -77,7 +77,7 @@ class GetStartedButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(40),
       onTap: () {
         LocalDb().saveIsFirstTime(false);
-        Get.to(() => const LoginScreen());
+        Get.offAll(() => const LoginScreen());
         // Get.to(()=>const Introduction());
       },
       child: const CircleAvatar(

@@ -529,8 +529,10 @@ class Localization extends Translations {
           'SelectHospitalorenableonlineconsultation':
               'Select Hospital or enable online consultation',
           'SelectatleastOneDay': 'Select at least One Day',
+          'pleaseaddnumber': 'Please add your number',
         },
         "ar_SA": {
+          'pleaseaddnumber': 'يرجى إضافة رقمك',
           'SelectatleastOneDay': 'حدد يومًا واحدًا على الأقل',
           'SelectHospitalorenableonlineconsultation':
               'حدد المستشفى أو قم بتمكين الاستشارة عبر الإنترنت',
@@ -1578,6 +1580,7 @@ class Localization extends Translations {
           'SelectHospitalorenableonlineconsultation':
               'ہسپتال کا انتخاب کریں یا آن لائن مشاورت کو فعال کریں۔',
           'SelectatleastOneDay': 'کم از کم ایک دن منتخب کریں۔',
+          'pleaseaddnumber': 'براہ کرم اپنا نمبر شامل کریں۔',
         }
       };
 }
