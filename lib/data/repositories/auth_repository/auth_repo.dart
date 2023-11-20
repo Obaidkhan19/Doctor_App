@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/blood_group.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
@@ -24,6 +25,7 @@ import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -216,12 +218,28 @@ class AuthRepo {
             Get.to(const SucessfullRegistrationScreen());
           }
         } else {
-          showSnackbar(Get.context!, errormsg);
+          // showSnackbar(Get.context!, errormsg);
+          Fluttertoast.showToast(
+              msg: errormsg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return errormsg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      // showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -280,12 +298,26 @@ class AuthRepo {
             Get.to(const SucessfullRegistrationScreen());
           }
         } else {
-          showSnackbar(Get.context!, errormsg);
+          Fluttertoast.showToast(
+              msg: errormsg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return errormsg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -392,14 +424,36 @@ class AuthRepo {
           LocalDb().saveDoctorUserImagePath(result['UserImagePath']);
           LocalDb().saveOnlineStatus(0);
         } else {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}',
-              color: Colors.red);
+          Fluttertoast.showToast(
+              msg: result['ErrorMessage'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kPrimaryColor,
+              fontSize: 14.0);
         }
       } else {
-        showSnackbar(Get.context!, '${response.statusCode}', color: Colors.red);
+        Fluttertoast.showToast(
+            msg: response.statusCode.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kPrimaryColor,
+            fontSize: 14.0);
+        // showSnackbar(Get.context!, '${response.statusCode}', color: Colors.red);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString(), color: Colors.red);
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kPrimaryColor,
+          fontSize: 14.0);
+      // showSnackbar(Get.context!, e.toString(), color: Colors.red);
     }
   }
 
@@ -581,12 +635,26 @@ class AuthRepo {
             Get.to(() => const LoginScreen());
           }
         } else {
-          showSnackbar(Get.context!, errormsg);
+          Fluttertoast.showToast(
+              msg: errormsg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return errormsg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -623,12 +691,26 @@ class AuthRepo {
             Get.to(() => const LoginScreen());
           }
         } else {
-          showSnackbar(Get.context!, errormsg);
+          Fluttertoast.showToast(
+              msg: errormsg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return errormsg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -664,13 +746,28 @@ class AuthRepo {
         } else if (status == -5) {
           if (errormsg == 'No account found against this user') {
             AuthController.i.updateIsotploading(false);
-            showSnackbar(Get.context!, 'Wrong Email'.tr);
+
+            Fluttertoast.showToast(
+                msg: 'Wrongemail'.tr,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
           }
         }
       }
     } catch (e) {
       AuthController.i.updateIsotploading(false);
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -698,12 +795,27 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updateusernameavaibility(false);
-          showSnackbar(Get.context!, 'Username Already Taken');
+          // showSnackbar(Get.context!, 'Username Already Taken');
+          Fluttertoast.showToast(
+              msg: ('UsernameAlreadyTaken'.tr),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return false;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return false;
     }
     return false;
@@ -731,12 +843,28 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updatepassportavaibility(false);
-          showSnackbar(Get.context!, 'Passport Already Taken');
+          //showSnackbar(Get.context!, 'Passport Already Taken');
+          Fluttertoast.showToast(
+              msg: ('PassportNumberAlreadyTaken'.tr),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return false;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      //  showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return false;
     }
     return false;
@@ -763,12 +891,28 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updateidnoavaibility(false);
-          showSnackbar(Get.context!, 'ID Number Already Taken');
+          // showSnackbar(Get.context!, 'National ID Number Already Taken');
+          Fluttertoast.showToast(
+              msg: 'NationalIDNumberAlreadyTaken'.tr,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return false;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      // showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return false;
     }
     return false;
@@ -795,12 +939,27 @@ class AuthRepo {
           return true;
         } else {
           RegistrationController.i.updateepmdcavaibility(false);
-          showSnackbar(Get.context!, 'LMPC No Already Taken');
+          //showSnackbar(Get.context!, 'LMPC No Already Taken');
+          Fluttertoast.showToast(
+              msg: 'LMPCNoAlreadyTaken'.tr,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return false;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return false;
     }
     return false;

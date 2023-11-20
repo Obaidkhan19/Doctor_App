@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:interval_time_picker/interval_time_picker.dart';
@@ -872,7 +873,14 @@ class _UpdateAppointmentConfigurationState
                           ConfigureAppointmentRepo car =
                               ConfigureAppointmentRepo();
                           if (_time == const TimeOfDay(hour: 0, minute: 0)) {
-                            showSnackbar(context, "Please select time Slot");
+                            Fluttertoast.showToast(
+                                msg: "PleaseselectSlotDuration".tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: ColorManager.kWhiteColor,
+                                textColor: ColorManager.kPrimaryColor,
+                                fontSize: 14.0);
                           }
                           String mainId = widget.configureAppointment.id;
                           if (_time != const TimeOfDay(hour: 0, minute: 0)) {
@@ -902,12 +910,25 @@ class _UpdateAppointmentConfigurationState
                                 Get.back(result: true);
                               }
                             } else {
-                              showSnackbar(
-                                  context, "Slot Duration is incorrect");
+                              Fluttertoast.showToast(
+                                  msg: "SlotDurationisincorrect".tr,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: ColorManager.kWhiteColor,
+                                  textColor: ColorManager.kPrimaryColor,
+                                  fontSize: 14.0);
                             }
                           }
                         } else {
-                          showSnackbar(context, "Select at least One Day");
+                          Fluttertoast.showToast(
+                              msg: "SelectatleastOneDay".tr,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: ColorManager.kWhiteColor,
+                              textColor: ColorManager.kPrimaryColor,
+                              fontSize: 14.0);
                         }
                       },
                       child: Container(

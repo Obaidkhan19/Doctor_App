@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -118,8 +119,15 @@ class _SecurityScreenState extends State<SecurityScreen> {
                         onPressed: () async {
                           if (controller.password.text !=
                               controller.retypePassword.text) {
-                            showSnackbar(context,
-                                "Password and Confirm Password doesnot match");
+                            Fluttertoast.showToast(
+                                msg:
+                                    'PasswordandConfirmPassworddoesnotmatch'.tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: ColorManager.kRedColor,
+                                textColor: ColorManager.kWhiteColor,
+                                fontSize: 14.0);
                           } else if (_formKey.currentState!.validate() &&
                               controller.password.text ==
                                   controller.retypePassword.text) {
@@ -146,8 +154,14 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                 controller.email.text == '' ||
                                 controller.ontap == false) {
                               controller.updateIsSavingPath(false);
-                              showSnackbar(
-                                  context, "pleasesavepersonaldetails".tr);
+                              Fluttertoast.showToast(
+                                  msg: 'pleasesavepersonaldetails'.tr,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: ColorManager.kRedColor,
+                                  textColor: ColorManager.kWhiteColor,
+                                  fontSize: 14.0);
                             } else {
                               String path = '';
                               if (controller.file != null) {
@@ -165,17 +179,41 @@ class _SecurityScreenState extends State<SecurityScreen> {
                                   controller.updateIsSavingPath(false);
                                 } else {
                                   controller.updateIsSavingPath(true);
-                                  showSnackbar(context, response.toString());
+                                  Fluttertoast.showToast(
+                                      msg: response.toString(),
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: ColorManager.kRedColor,
+                                      textColor: ColorManager.kWhiteColor,
+                                      fontSize: 14.0);
+                                  // showSnackbar(context, response.toString());
                                 }
                               } else if (controller.selectedRadioValue ==
                                   "passport") {
                                 if (_formKey.currentState!.validate()) {
                                   response = await ar.signupPersonalpassport();
                                   controller.updateIsSavingPath(false);
-                                  showSnackbar(context, response.toString());
+                                  Fluttertoast.showToast(
+                                      msg: response.toString(),
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: ColorManager.kRedColor,
+                                      textColor: ColorManager.kWhiteColor,
+                                      fontSize: 14.0);
+                                  //   showSnackbar(context, response.toString());
                                 } else {
                                   controller.updateIsSavingPath(false);
-                                  showSnackbar(context, response.toString());
+                                  Fluttertoast.showToast(
+                                      msg: response.toString(),
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: ColorManager.kRedColor,
+                                      textColor: ColorManager.kWhiteColor,
+                                      fontSize: 14.0);
+                                  // showSnackbar(context, response.toString());
                                 }
                               }
                             }

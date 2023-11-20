@@ -530,8 +530,22 @@ class Localization extends Translations {
               'Select Hospital or enable online consultation',
           'SelectatleastOneDay': 'Select at least One Day',
           'pleaseaddnumber': 'Please add your number',
+          'Wrongemail': 'Wrong Email',
+          'UsernameAlreadyTaken': 'Username Already Taken',
+          'PassportNumberAlreadyTaken': 'Passport Number Already Taken',
+          'NationalIDNumberAlreadyTaken': 'National ID Number Already Taken',
+          'LMPCNoAlreadyTaken': 'LMPC No Already Taken',
+          'PasswordandConfirmPassworddoesnotmatch':
+              'Password and Confirm Password doesnot match',
         },
         "ar_SA": {
+          'PasswordandConfirmPassworddoesnotmatch':
+              'كلمة المرور وتأكيد كلمة المرور غير متطابقين',
+          'LMPCNoAlreadyTaken': 'LMPC لم يتم أخذه بالفعل',
+          'NationalIDNumberAlreadyTaken': 'رقم الهوية الوطنية مأخوذ بالفعل',
+          'PassportNumberAlreadyTaken': 'رقم جواز السفر مأخوذ بالفعل',
+          'UsernameAlreadyTaken': 'الاسم مستخدم من قبل',
+          'Wrongemail': 'بريد إلكتروني خاطئ',
           'pleaseaddnumber': 'يرجى إضافة رقمك',
           'SelectatleastOneDay': 'حدد يومًا واحدًا على الأقل',
           'SelectHospitalorenableonlineconsultation':
@@ -1581,6 +1595,14 @@ class Localization extends Translations {
               'ہسپتال کا انتخاب کریں یا آن لائن مشاورت کو فعال کریں۔',
           'SelectatleastOneDay': 'کم از کم ایک دن منتخب کریں۔',
           'pleaseaddnumber': 'براہ کرم اپنا نمبر شامل کریں۔',
+          'Wrongemail': 'غلط ای میل',
+          'UsernameAlreadyTaken': 'صارف نام پہلے ہی لے لیا گیا ہے۔',
+          'PassportNumberAlreadyTaken': 'پاسپورٹ نمبر پہلے ہی لے لیا گیا ہے۔',
+          'NationalIDNumberAlreadyTaken':
+              'قومی شناختی نمبر پہلے ہی لے لیا گیا ہے۔',
+          'LMPCNoAlreadyTaken': 'ایل ایم پی سی پہلے ہی نہیں لیا گیا ہے۔',
+          'PasswordandConfirmPassworddoesnotmatch':
+              'پاس ورڈ اور کنفرم پاس ورڈ مماثل نہیں ہیں۔',
         }
       };
 }

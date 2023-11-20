@@ -1,11 +1,12 @@
-
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/configure_appointment_controller.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
 import 'dart:convert';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -108,15 +109,37 @@ class ConfigureAppointmentRepo {
         var status = responseData['Status'];
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
           return 'true';
         } else if (status == -5) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return 'false';
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -164,15 +187,39 @@ class ConfigureAppointmentRepo {
         var status = responseData['Status'];
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
           return msg;
         } else if (status == -5) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
           return msg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+
       return 'false';
     }
     return 'false';
@@ -201,15 +248,36 @@ class ConfigureAppointmentRepo {
         var status = responseData['Status'];
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return msg;
         } else if (status == -5) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return msg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -240,15 +308,36 @@ class ConfigureAppointmentRepo {
         var status = responseData['Status'];
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return msg;
         } else if (status == -5) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kPrimaryColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return msg;
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';

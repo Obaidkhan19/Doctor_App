@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/notification_model.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class NotificationController extends GetxController implements GetxService {
@@ -33,8 +35,14 @@ class NotificationController extends GetxController implements GetxService {
           startIndexToFetchData + AppConstants.maximumDataTobeFetched;
       return true;
     } else {
-      showSnackbar(Get.context!, 'allrecordsarefetched'.tr,
-          color: const Color(0xfff1272d3));
+      Fluttertoast.showToast(
+          msg: "allrecordsarefetched".tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryLightColor,
+          textColor: ColorManager.kPrimaryColor,
+          fontSize: 14.0);
       return false;
     }
   }

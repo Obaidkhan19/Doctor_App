@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:interval_time_picker/interval_time_picker.dart';
@@ -530,8 +531,16 @@ class _ConfigureAppointmentScreenState
                                           ConfigureAppointmentController
                                                   .i.hasOnlineConsultation ==
                                               true) {
-                                        showSnackbar(context,
-                                            "AlreadyhaveOnlineConsultation".tr);
+                                        Fluttertoast.showToast(
+                                            msg: "AlreadyhaveOnlineConsultation"
+                                                .tr,
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                ColorManager.kPrimaryColor,
+                                            textColor: ColorManager.kWhiteColor,
+                                            fontSize: 14.0);
                                       } else {
                                         contr.updateoOnline(value);
                                       }
@@ -1355,8 +1364,14 @@ class _ConfigureAppointmentScreenState
                                     ConfigureAppointmentRepo();
                                 if (_time ==
                                     const TimeOfDay(hour: 0, minute: 0)) {
-                                  showSnackbar(
-                                      context, "PleaseselectSlotDuration".tr);
+                                  Fluttertoast.showToast(
+                                      msg: "PleaseselectSlotDuration".tr,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: ColorManager.kWhiteColor,
+                                      textColor: ColorManager.kPrimaryColor,
+                                      fontSize: 14.0);
                                 }
                                 // else if (_fromtime ==
                                 //     const TimeOfDay(hour: 0, minute: 0)) {
@@ -1418,18 +1433,39 @@ class _ConfigureAppointmentScreenState
                                           .falseSwitch();
                                     }
                                   } else {
-                                    showSnackbar(
-                                        context, "SlotDurationisincorrect".tr);
+                                    Fluttertoast.showToast(
+                                        msg: "SlotDurationisincorrect".tr,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor:
+                                            ColorManager.kWhiteColor,
+                                        textColor: ColorManager.kPrimaryColor,
+                                        fontSize: 14.0);
                                   }
                                 }
                               } else {
-                                showSnackbar(
-                                    context,
-                                    "SelectHospitalorenableonlineconsultation"
-                                        .tr);
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "SelectHospitalorenableonlineconsultation"
+                                            .tr,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: ColorManager.kWhiteColor,
+                                    textColor: ColorManager.kPrimaryColor,
+                                    fontSize: 14.0);
                               }
                             } else {
-                              showSnackbar(context, "SelectatleastOneDay".tr);
+                              Fluttertoast.showToast(
+                                  msg: "SelectatleastOneDay".tr,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: ColorManager.kWhiteColor,
+                                  textColor: ColorManager.kPrimaryColor,
+                                  fontSize: 14.0);
+                              // showSnackbar(context, "SelectatleastOneDay".tr);
                             }
                           },
                           child: Container(

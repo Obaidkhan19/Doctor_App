@@ -7,10 +7,8 @@ import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/CustomFormField.dart';
 import 'package:doctormobileapplication/components/MyCustomExpansionTile.dart';
 import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart';
-import 'package:doctormobileapplication/components/custom_expension_listtile.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
-import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
@@ -21,20 +19,18 @@ import 'package:doctormobileapplication/data/repositories/auth_repository/profil
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
-import 'package:doctormobileapplication/models/finding.dart';
 import 'package:doctormobileapplication/models/followups.dart';
 import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
-import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:doctormobileapplication/models/prescribemedcinemodel.dart'
     as pm;
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/doctor_review.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -226,6 +222,14 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     );
   }
 
+  // _getPastMedicine() async {
+  //   PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+  //   controller.updatePastmedicineList(
+  //     // add in medicine list
+  //     await pmr.getPatientpastMedicine(widget.patientid, widget.visitno),
+  //   );
+  // }
+
   String? speciality;
 
   call() async {
@@ -244,6 +248,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     performancestartdate = DateTime.now().toString().split('.')[0];
     call();
     _getErnsDetailHistory();
+    // _getPastMedicine();
     _getpatientdetailprescription();
     _getErnsHistory();
     _getComplaints();
@@ -2761,7 +2766,14 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     String rep =
         await PrescribeMedicinRepo().precribemedicine(jsonEncode(prescribe));
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(rep)));
+    Fluttertoast.showToast(
+        msg: rep,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kPrimaryColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
     print('repreprep');
     print(rep);
     ERXController.i.updateIsloading(false);

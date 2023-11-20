@@ -115,6 +115,8 @@ class AppConstants {
 
   static String getpatientdetailprescription =
       "$baseURL/api/patient/GetPatientDetailForPrescription";
+  static String getpatientpastmedicine =
+      "$baseURL/api/patient/GetPatientMedicineHistory";
 
   static String getDiagnostics = "$baseURL/api/doctor/GetDiagnostics";
   static String prescribemed = "$baseURL/api/doctor/Prescription";

@@ -10,6 +10,7 @@ import 'package:doctormobileapplication/models/instruction.dart';
 import 'package:doctormobileapplication/models/investigation.dart';
 import 'package:doctormobileapplication/models/medicine_matrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
+import 'package:doctormobileapplication/models/pastMedicine.dart';
 import 'package:doctormobileapplication/models/patient_detail.dart';
 import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
@@ -735,4 +736,35 @@ class ERXController extends GetxController implements GetxService {
 
     update();
   }
+
+  List<Medicinesss1> pastmedicineList = [];
+  // updatePastmedicineList(List<Medicinesss1> pmlist) {
+  //   List<med.MedicineDosages> dosage = [];
+  //   List<med.MedicineFrequencies> freq = [];
+  //   List<med.MedicineEventList> duration = [];
+  //   List<med.MedicineRoutes> routes = [];
+  //   pastmedicineList = pmlist;
+  //   // for (int i = 0; i < pmlist.length; i++) {
+  //   //   finalmedicinellist
+  //   //       .add(Medicines1(id: pmlist[i].eRNSId, name: pmlist[i].medicineName));
+  //   //   dosage.add(med.MedicineDosages(
+  //   //       id: pmlist[i].medicineDosageId,
+  //   //       dosageValue: pmlist[i].dosageValue.toString()));
+  //   //   freq.add(med.MedicineFrequencies(
+  //   //       quantity: pmlist[i].frequencyQuantity.toString(),
+  //   //       numericDisplay: pmlist[i].frequencyNumeric));
+  //   //   duration.add(med.MedicineEventList(
+  //   //       id: pmlist[i].medicineEventTimingId,
+  //   //       description: pmlist[i].medicineEventTimingDetail,
+  //   //       display: pmlist[i].medicineEventTimingDisplay));
+  //   //   routes.add(med.MedicineRoutes(
+  //   //       id: pmlist[i].medicineRouteId, abbreviation: pmlist[i].routeName));
+  //   // }
+  //   // selectedlst = med.medicinematric(
+  //   //   medicineDosages: dosage,
+  //   //   medicineRoutes: routes,
+  //   //   medicineFrequencies: freq,
+  //   // );
+  //   update();
+  // }
 }

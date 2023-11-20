@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/forget_password.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
@@ -95,7 +97,15 @@ class AuthController extends GetxController implements GetxService {
         isTimerOver.value = true;
         tim.cancel();
         Get.to(() => const ForgetPassword());
-        showSnackbar(ctx, 'codeexpire'.tr);
+        //showSnackbar(ctx, 'codeexpire'.tr);
+        Fluttertoast.showToast(
+            msg: "codeexpire".tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kPrimaryColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
       } else {
         timer--;
       }
@@ -159,7 +169,15 @@ class AuthController extends GetxController implements GetxService {
         file = File(result.files.first.path!);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      //  showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
     update();
     return file;

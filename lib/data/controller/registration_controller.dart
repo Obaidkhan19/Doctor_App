@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
@@ -9,6 +10,7 @@ import 'package:doctormobileapplication/models/person_title.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -197,7 +199,15 @@ class RegistrationController extends GetxController implements GetxService {
         file = File(result.files.first.path!);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      //  showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
     update();
     return file;

@@ -74,15 +74,14 @@ class medicinematric {
           medicineDosages!.map((v) => v.toJson()).toList();
     }
     if (medicineRoutes != null) {
-      data['MedicineRoutes'] =
-          medicineRoutes!.map((v) => v.toJson()).toList();
+      data['MedicineRoutes'] = medicineRoutes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class MedicineFrequencies {
-  double? quantity;
+  String? quantity;
   String? numericDisplay;
 
   MedicineFrequencies({this.quantity, this.numericDisplay});
@@ -184,8 +183,8 @@ class MedicineDosages {
   String? latin;
   String? englishDefinition;
   String? urduDefinition;
-  double? dosageValue;
-  bool? active;
+  String? dosageValue;
+  String? active;
   String? repeatId;
   String? branchId;
   String? createdById;
