@@ -32,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Image.asset(
               Images.welcome,
-              height: Get.height * 0.5,
+              height: Get.height * 0.6,
               width: Get.width * 1,
               fit: BoxFit.cover,
             ),
