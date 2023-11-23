@@ -222,13 +222,13 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     );
   }
 
-  // _getPastMedicine() async {
-  //   PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
-  //   controller.updatePastmedicineList(
-  //     // add in medicine list
-  //     await pmr.getPatientpastMedicine(widget.patientid, widget.visitno),
-  //   );
-  // }
+  _getPastMedicine() async {
+    PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+    controller.updatePastmedicineList(
+      // add in medicine list
+      await pmr.getPatientpastMedicine(widget.patientid, widget.visitno),
+    );
+  }
 
   String? speciality;
 
@@ -247,8 +247,9 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
   void initState() {
     performancestartdate = DateTime.now().toString().split('.')[0];
     call();
+    _getMedMatrix();
     _getErnsDetailHistory();
-    // _getPastMedicine();
+    _getPastMedicine();
     _getpatientdetailprescription();
     _getErnsHistory();
     _getComplaints();
@@ -257,7 +258,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     _getInstructions();
     _getFollowup();
     _getProceduress();
-    _getMedMatrix();
+
     _getInvestigations();
     _getDiagnostics();
     _getMediciness();
@@ -1854,7 +1855,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                       // medicine visisbility
                       GetBuilder<ERXController>(
                         builder: (cont) => Visibility(
-                          visible: controller.selectedmedicineList.isNotEmpty,
+                          visible: controller.finalmedicinellist.isNotEmpty,
                           // visible: true,
                           child: Card(
                             elevation: 4,

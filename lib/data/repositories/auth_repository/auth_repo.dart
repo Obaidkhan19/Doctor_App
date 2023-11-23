@@ -420,6 +420,9 @@ class AuthRepo {
           LocalDb().saveDoctorFullName(result['FullName']);
           LocalDb().saveDoctorPMDCNumber(result['PMDCNumber']);
           LocalDb().saveDoctorUserImagePath(result['UserImagePath']);
+
+          LocalDb().saveUsername(cnic);
+          LocalDb().savePassword(password);
           LocalDb().saveOnlineStatus(0);
         } else {
           Fluttertoast.showToast(
@@ -606,14 +609,12 @@ class AuthRepo {
     };
     String token = await LocalDb().getDeviceToken();
     String doctorid = await LocalDb().getDoctorId() ?? "";
-
     var body = {
       "Id": doctorid,
       "Password": newpassword,
       "OldPassword": oldpassword,
       "Token": token
     };
-
     try {
       var response = await http.post(
         Uri.parse(AppConstants.changePassword),

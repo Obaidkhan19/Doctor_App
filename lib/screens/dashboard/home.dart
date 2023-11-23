@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //String name = '';
   // String pmdcno = "";
   _getUserName() async {
-    await _getDoctorBasicInfo();
     profileContr.value = ((await LocalDb().getOnlineStatus())!);
     if (profileContr.value == 0) {
       profileContr.status = "iamoffline".tr;
@@ -66,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _getDoctorBasicInfo();
     _getUserName();
     _getimagepath();
     super.initState();
@@ -146,38 +146,52 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GetBuilder<ProfileController>(builder: (context) {
-                        return CircleAvatar(
-                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                          radius: 30,
-                          child: ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl: ProfileController
-                                          .i.selectedbasicInfo?.picturePath !=
-                                      null
-                                  ? baseURL +
-                                      ProfileController
-                                          .i.selectedbasicInfo?.picturePath
-                                  : "",
-                              width: Get.width * 0.16,
-                              fit: BoxFit.fill,
-                              errorWidget: (context, url, error) =>
-                                  Image.asset(AppImages.doctorlogo),
-                            ),
-                          ),
-                        );
+                        return ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: CircleAvatar(
+                                backgroundColor:
+                                    const Color.fromRGBO(0, 0, 0, 0),
+                                radius: 30,
+                                child: CachedNetworkImage(
+                                  imageUrl: ProfileController.i
+                                              .selectedbasicInfo?.picturePath !=
+                                          null
+                                      ? baseURL +
+                                          ProfileController
+                                              .i.selectedbasicInfo?.picturePath
+                                      : "",
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  // fit: BoxFit.fitHeight,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(AppImages.doctorlogo),
+                                )));
 
                         // CircleAvatar(
-                        //     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                        //     backgroundColor:
+                        //         const Color.fromRGBO(0, 0, 0, 0),
                         //     radius: 30,
                         //     child: ClipRRect(
                         //         borderRadius: BorderRadius.circular(30),
                         //         child: CachedNetworkImage(
-                        //           imageUrl: ProfileController.i
-                        //                       .selectedbasicInfo?.picturePath !=
+                        //           imageUrl: ProfileController
+                        //                       .i
+                        //                       .selectedbasicInfo
+                        //                       ?.picturePath !=
                         //                   null
                         //               ? baseURL +
                         //                   ProfileController
-                        //                       .i.selectedbasicInfo?.picturePath
+                        //                       .i
+                        //                       .selectedbasicInfo
+                        //                       ?.picturePath
                         //               : "",
                         //           fit: BoxFit.fill,
                         //           errorWidget: (context, url, error) =>

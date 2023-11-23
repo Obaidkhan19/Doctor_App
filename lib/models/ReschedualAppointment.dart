@@ -7,6 +7,8 @@ class ReschedualAppointmentSlots {
       this.PatientAppointmentId,
       this.SessionId,
       this.WorkLocationId,
+      this.DoctorId,
+      this.BranchId,
       this.PatientId});
   String? AppointmentBranchId;
   String? AppointmentId;
@@ -16,6 +18,8 @@ class ReschedualAppointmentSlots {
   String? SessionId;
   String? WorkLocationId;
   String? PatientId;
+  String? DoctorId;
+  String? BranchId;
 
   ReschedualAppointmentSlots.fromJson(Map<String, dynamic> json) {
     AppointmentBranchId = json['AppointmentBranchId'];
@@ -26,6 +30,8 @@ class ReschedualAppointmentSlots {
     SessionId = json['SessionId'];
     WorkLocationId = json['WorkLocationId'];
     PatientId = json['PatientId'];
+    BranchId = json['BranchId'];
+    DoctorId = json['DoctorId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +44,8 @@ class ReschedualAppointmentSlots {
     data['SessionId'] = SessionId;
     data['WorkLocationId'] = WorkLocationId;
     data['PatientId'] = PatientId;
+    data['DoctorId'] = DoctorId;
+    data['BranchId'] = BranchId;
     return data;
   }
 }

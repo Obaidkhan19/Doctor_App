@@ -67,12 +67,12 @@ class _AwardsDetailState extends State<AwardsDetail> {
                       children: [
                         EditProfileCustomTextField(
                           controller: edit.awardtitle,
-                          hintText: 'Title',
+                          hintText: 'title'.tr,
                         ),
 
                         EditProfileCustomTextField(
                           controller: edit.awardcode,
-                          hintText: 'Code',
+                          hintText: 'code'.tr,
                         ),
 
                         // organization
@@ -94,9 +94,9 @@ class _AwardsDetailState extends State<AwardsDetail> {
                           },
                           readonly: true,
                           hintText: edit.selectedawardlocation?.name == ""
-                              ? 'Location'.tr
+                              ? 'location'.tr
                               : edit.selectedawardlocation?.name ??
-                                  "Select Location",
+                                  "selectLocation".tr,
                         ),
 
                         EditProfileCustomTextField(
@@ -111,7 +111,7 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                       .toString()
                                       .split("T")[0] ==
                                   DateTime.now().toString().split(" ")[0]
-                              ? "Select Awarded Date"
+                              ? "SelectAwardedDate".tr
                               : DateFormat('MM-dd-y').format(DateTime.parse(edit
                                   .formattedawardeddate
                                   .toString()
@@ -120,12 +120,12 @@ class _AwardsDetailState extends State<AwardsDetail> {
 
                         EditProfileCustomTextField(
                           controller: edit.awarddescription,
-                          hintText: 'Description',
+                          hintText: 'description'.tr,
                         ),
                         SizedBox(height: Get.height * 0.03),
                         PrimaryButton(
                             fontSize: 15,
-                            title: 'Edit'.tr,
+                            title: 'edit'.tr,
                             onPressed: () async {
                               ProfileController.i.updateval(false);
                               setState(() {});
@@ -157,12 +157,12 @@ class _AwardsDetailState extends State<AwardsDetail> {
                           children: [
                             EditProfileCustomTextField(
                               controller: edit.awardtitle,
-                              hintText: 'Title',
+                              hintText: 'title'.tr,
                             ),
 
                             EditProfileCustomTextField(
                               controller: edit.awardcode,
-                              hintText: 'Code',
+                              hintText: 'code'.tr,
                             ),
 
                             // organization
@@ -185,9 +185,9 @@ class _AwardsDetailState extends State<AwardsDetail> {
                               },
                               readonly: true,
                               hintText: edit.selectedawardlocation?.name == ""
-                                  ? 'Location'.tr
+                                  ? 'location'.tr
                                   : edit.selectedawardlocation?.name ??
-                                      "Select Location",
+                                      "SelectLocation".tr,
                             ),
 
                             EditProfileCustomTextField(
@@ -202,7 +202,7 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                           .toString()
                                           .split("T")[0] ==
                                       DateTime.now().toString().split(" ")[0]
-                                  ? "Select Awarded Date"
+                                  ? "SelectAwardedDate".tr
                                   : DateFormat('MM-dd-y').format(DateTime.parse(
                                       edit.formattedawardeddate
                                           .toString()
@@ -211,12 +211,12 @@ class _AwardsDetailState extends State<AwardsDetail> {
 
                             EditProfileCustomTextField(
                               controller: edit.awarddescription,
-                              hintText: 'Description',
+                              hintText: 'description'.tr,
                             ),
                             SizedBox(height: Get.height * 0.03),
                             PrimaryButton(
                                 fontSize: 15,
-                                title: 'Add'.tr,
+                                title: 'add'.tr,
                                 onPressed: () async {
                                   ProfileController.i.updateaddval(false);
                                   setState(() {});
@@ -299,7 +299,7 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                   SizedBox(
                                     width: Get.width * 0.24,
                                     child: Text(
-                                      'Organization',
+                                      'organization'.tr,
                                       style: GoogleFonts.poppins(
                                         fontSize: 12,
                                         color: ColorManager.kWhiteColor,
@@ -310,7 +310,7 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                   SizedBox(
                                     width: Get.width * 0.2,
                                     child: Text(
-                                      'Date',
+                                      'date'.tr,
                                       style: GoogleFonts.poppins(
                                         fontSize: 12,
                                         color: ColorManager.kWhiteColor,

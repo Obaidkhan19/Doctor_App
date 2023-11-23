@@ -218,8 +218,8 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
+                              // bottomLeft: Radius.circular(10),
+                              // bottomRight: Radius.circular(10),
                             ),
                             color: ColorManager.kPrimaryColor),
                         child: SingleChildScrollView(

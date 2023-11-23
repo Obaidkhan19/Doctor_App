@@ -222,6 +222,7 @@ class CustomIntlPhoneField extends StatefulWidget {
 
   final Color? fieldsborderColor;
   final Color? fieldsColor;
+  final Color? errorColor;
   final bool? fieldfilled;
 
   /// The padding of the Flags Button.
@@ -297,6 +298,7 @@ class CustomIntlPhoneField extends StatefulWidget {
     this.showCursor = true,
     this.pickerDialogStyle,
     this.flagsButtonMargin = EdgeInsets.zero,
+    this.errorColor,
   }) : super(key: key);
 
   @override
@@ -396,6 +398,7 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(10),
       ],
+
       readOnly: widget.readOnly,
       obscureText: widget.obscureText,
       textAlign: widget.textAlign,
@@ -413,7 +416,7 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
         errorStyle: Theme.of(context)
             .textTheme
             .bodySmall!
-            .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+            .copyWith(color: widget.errorColor, fontSize: 12),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -467,6 +470,7 @@ class _IntlPhoneFieldState extends State<CustomIntlPhoneField> {
         }
         widget.onChanged?.call(phoneNumber);
       },
+
       validator: (val) {
         if (RegistrationController.i.phone.text.isEmpty ||
             RegistrationController.i.phone.text.toString().split('').length <

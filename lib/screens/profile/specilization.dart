@@ -63,12 +63,16 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
 
   @override
   void initState() {
+    _getaddSpeciality();
     _getSpeciality();
     Future.delayed(Duration.zero, () async {
       ProfileController.i.updateselectedindex(4);
     });
     super.initState();
   }
+
+  final GlobalKey<FormState> _addformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _editformKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,73 +82,90 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                 builder: (contr) => Padding(
                   padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: Get.height * 0.02,
-                        ),
-                        EditProfileCustomTextField(
-                          onTap: () async {
-                            add.addselectedspecialities = null;
-                            Specialities1 generic = await searchabledropdown(
-                                context, add.addspecialitiesList);
-                            add.addselectedspecialities = null;
-                            add.updateaddselectedspeciality(generic);
+                    child: Form(
+                      key: _addformKey,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: Get.height * 0.02,
+                          ),
+                          EditProfileCustomTextField(
+                            onTap: () async {
+                              add.addselectedspecialities = null;
+                              Specialities1 generic = await searchabledropdown(
+                                  context, add.addspecialitiesList);
+                              add.addselectedspecialities = null;
+                              add.updateaddselectedspeciality(generic);
 
-                            if (generic.id != null) {
-                              add.addselectedspecialities = generic;
-                              add.addselectedspecialities = (generic.id == null)
-                                  ? null
-                                  : add.addselectedspecialities;
-                            }
+                              if (generic.id != null) {
+                                add.addselectedspecialities = generic;
+                                add.addselectedspecialities =
+                                    (generic.id == null)
+                                        ? null
+                                        : add.addselectedspecialities;
+                              }
 
-                            setState(() {
-                              _getaddSubSpeciality(generic.id);
-                            });
-                          },
-                          readonly: true,
-                          hintText: add.addselectedspecialities == null
-                              ? 'speciality'.tr
-                              : add.addselectedspecialities!.name.toString(),
-                        ),
-                        // SizedBox(
-                        //   height: Get.height * 0.02,
-                        // ),
-
-                        // SUB
-                        EditProfileCustomTextField(
-                          onTap: () async {
-                            add.addselectedsubspecialities = null;
-                            Specialities1 generic = await searchabledropdown(
-                                context, add.addsubspecialitiesList);
-                            add.addselectedsubspecialities = null;
-                            add.updateaddselectedspeciality(generic);
-
-                            if (generic.id != null) {
-                              add.addselectedsubspecialities = generic;
-                              add.addselectedsubspecialities =
-                                  (generic.id == null)
-                                      ? null
-                                      : add.addselectedsubspecialities;
-                            }
-                          },
-                          readonly: true,
-                          hintText: add.addselectedsubspecialities == null
-                              ? 'subspeciality'.tr
-                              : add.addselectedsubspecialities!.name.toString(),
-                        ),
-                        SizedBox(height: Get.height * 0.03),
-                        PrimaryButton(
-                            fontSize: 15,
-                            title: 'Add'.tr,
-                            onPressed: () async {
-                              ProfileController.i.updateaddval(false);
-                              setState(() {});
+                              setState(() {
+                                _getaddSubSpeciality(generic.id);
+                              });
                             },
-                            color: Colors.white.withOpacity(0.7),
-                            textcolor: ColorManager.kWhiteColor),
-                        SizedBox(height: Get.height * 0.03),
-                      ],
+                            validator: (p0) {
+                              if (add.addselectedspecialities == null) {
+                                return 'SelectSpeciality'.tr;
+                              } else {
+                                return null;
+                              }
+                            },
+                            readonly: true,
+                            hintText: add.addselectedspecialities == null
+                                ? 'speciality'.tr
+                                : add.addselectedspecialities!.name.toString(),
+                          ),
+                          // SizedBox(
+                          //   height: Get.height * 0.02,
+                          // ),
+
+                          // SUB
+                          EditProfileCustomTextField(
+                            onTap: () async {
+                              if (add.addselectedspecialities != null) {
+                                add.addselectedsubspecialities = null;
+                                Specialities1 generic =
+                                    await searchabledropdown(
+                                        context, add.addsubspecialitiesList);
+                                add.addselectedsubspecialities = null;
+                                add.updateaddselectedspeciality(generic);
+
+                                if (generic.id != null) {
+                                  add.addselectedsubspecialities = generic;
+                                  add.addselectedsubspecialities =
+                                      (generic.id == null)
+                                          ? null
+                                          : add.addselectedsubspecialities;
+                                }
+                              }
+                            },
+                            readonly: true,
+                            hintText: add.addselectedsubspecialities == null
+                                ? 'subspeciality'.tr
+                                : add.addselectedsubspecialities!.name
+                                    .toString(),
+                          ),
+                          SizedBox(height: Get.height * 0.03),
+                          PrimaryButton(
+                              fontSize: 15,
+                              title: 'add'.tr,
+                              onPressed: () async {
+                                if (_addformKey.currentState!.validate()) {
+                                  ProfileController.i.updateaddval(false);
+                                  setState(() {});
+                                }
+                              },
+                              color: Colors.white.withOpacity(0.7),
+                              textcolor: ColorManager.kWhiteColor),
+                          SizedBox(height: Get.height * 0.03),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -155,79 +176,94 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                       padding:
                           EdgeInsets.symmetric(horizontal: Get.width * 0.05),
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: Get.height * 0.02,
-                            ),
-                            EditProfileCustomTextField(
-                              onTap: () async {
-                                edit.selectedspecialities = null;
-                                Specialities1 generic =
-                                    await searchabledropdown(
-                                        context, edit.specialitiesList);
-                                edit.selectedspecialities = null;
-                                edit.updateselectedspeciality(generic);
+                        child: Form(
+                          key: _editformKey,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: Get.height * 0.02,
+                              ),
+                              EditProfileCustomTextField(
+                                onTap: () async {
+                                  edit.selectedspecialities = null;
+                                  Specialities1 generic =
+                                      await searchabledropdown(
+                                          context, edit.specialitiesList);
+                                  edit.selectedspecialities = null;
+                                  edit.updateselectedspeciality(generic);
 
-                                if (generic.id != null) {
-                                  edit.selectedspecialities = generic;
-                                  edit.selectedspecialities =
-                                      (generic.id == null)
-                                          ? null
-                                          : edit.selectedspecialities;
-                                }
+                                  if (generic.id != null) {
+                                    edit.selectedspecialities = generic;
+                                    edit.selectedspecialities =
+                                        (generic.id == null)
+                                            ? null
+                                            : edit.selectedspecialities;
+                                  }
 
-                                setState(() {
-                                  _getSubSpeciality(generic.id);
-                                });
-                              },
-                              readonly: true,
-                              hintText: edit.selectedspecialities == null
-                                  ? 'speciality'.tr
-                                  : edit.selectedspecialities!.name.toString(),
-                            ),
-                            // SizedBox(
-                            //   height: Get.height * 0.02,
-                            // ),
-
-                            // SUB
-                            EditProfileCustomTextField(
-                              onTap: () async {
-                                edit.selectedsubspecialities = null;
-                                Specialities1 generic =
-                                    await searchabledropdown(
-                                        context, edit.subspecialitiesList);
-                                edit.selectedsubspecialities = null;
-                                edit.updateselectedspeciality(generic);
-
-                                if (generic.id != null) {
-                                  edit.selectedsubspecialities = generic;
-                                  edit.selectedsubspecialities =
-                                      (generic.id != null)
-                                          ? null
-                                          : edit.selectedsubspecialities;
-                                }
-                              },
-                              readonly: true,
-                              hintText: edit.selectedsubspecialities == null
-                                  ? 'subspeciality'.tr
-                                  : edit.selectedsubspecialities!.id == null
-                                      ? 'subspeciality'.tr
-                                      : edit.selectedsubspecialities!.name
-                                          .toString(),
-                            ),
-                            SizedBox(height: Get.height * 0.03),
-                            PrimaryButton(
-                                fontSize: 15,
-                                title: 'Edit'.tr,
-                                onPressed: () async {
-                                  ProfileController.i.updateval(false);
-                                  setState(() {});
+                                  setState(() {
+                                    _getSubSpeciality(generic.id);
+                                  });
                                 },
-                                color: Colors.white.withOpacity(0.7),
-                                textcolor: ColorManager.kWhiteColor),
-                            SizedBox(height: Get.height * 0.03),
-                          ],
+                                validator: (p0) {
+                                  if (edit.selectedspecialities!.id == null) {
+                                    return 'SelectSpeciality'.tr;
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                readonly: true,
+                                hintText: edit.selectedspecialities == null
+                                    ? 'speciality'.tr
+                                    : edit.selectedspecialities!.name
+                                        .toString(),
+                              ),
+                              // SizedBox(
+                              //   height: Get.height * 0.02,
+                              // ),
+
+                              // SUB
+                              EditProfileCustomTextField(
+                                onTap: () async {
+                                  if (edit.selectedspecialities != null) {
+                                    edit.selectedsubspecialities = null;
+                                    Specialities1 generic =
+                                        await searchabledropdown(
+                                            context, edit.subspecialitiesList);
+                                    edit.selectedsubspecialities = null;
+                                    edit.updateselectedspeciality(generic);
+
+                                    if (generic.id != null) {
+                                      edit.selectedsubspecialities = generic;
+                                      edit.selectedsubspecialities =
+                                          (generic.id != null)
+                                              ? null
+                                              : edit.selectedsubspecialities;
+                                    }
+                                  }
+                                },
+                                readonly: true,
+                                hintText: edit.selectedsubspecialities == null
+                                    ? 'subspeciality'.tr
+                                    : edit.selectedsubspecialities!.id == null
+                                        ? 'subspeciality'.tr
+                                        : edit.selectedsubspecialities!.name
+                                            .toString(),
+                              ),
+                              SizedBox(height: Get.height * 0.03),
+                              PrimaryButton(
+                                  fontSize: 15,
+                                  title: 'edit'.tr,
+                                  onPressed: () async {
+                                    if (_editformKey.currentState!.validate()) {
+                                      ProfileController.i.updateval(false);
+                                      setState(() {});
+                                    }
+                                  },
+                                  color: Colors.white.withOpacity(0.7),
+                                  textcolor: ColorManager.kWhiteColor),
+                              SizedBox(height: Get.height * 0.03),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -375,6 +411,7 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                                     ),
                                                     ImageContainerNew(
                                                       onpressed: () {
+                                                        _getDoctorBasicInfo();
                                                         EditProfileController.i
                                                             .updateEditSelectedSpecialities(
                                                           ProfileController

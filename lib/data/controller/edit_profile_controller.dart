@@ -113,6 +113,11 @@ class EditProfileController extends GetxController implements GetxService {
   }
 
   static DateTime? arrival = DateTime.now();
+  updatearrival(ardate) {
+    arrival = ardate;
+    update();
+  }
+
   String? formattedArrival = arrival!.toIso8601String();
   RxString? formatearrival = DateFormat.yMMMd().format(arrival!).obs;
   Future<void> selectDateAndTime(
@@ -133,8 +138,18 @@ class EditProfileController extends GetxController implements GetxService {
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formattedArrival = iso8601Format.format(date);
       calculateUserAge(date);
+      updatearrival(date);
       update();
     }
+  }
+
+  static DateTime? degreestart = DateTime.now();
+  String? formatteddegreestart = degreestart!.toIso8601String();
+  RxString? formatedegreestart = DateFormat.yMMMd().format(degreestart!).obs;
+
+  updatedegreestart(ardate) {
+    degreestart = ardate;
+    update();
   }
 
   Future<void> selecteducationstartDateAndTime(
@@ -154,8 +169,18 @@ class EditProfileController extends GetxController implements GetxService {
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreestart = iso8601Format.format(date);
+      updatedegreestart(date);
       update();
     }
+  }
+
+  static DateTime? degreeend = DateTime.now();
+  String? formatteddegreeend = degreeend!.toIso8601String();
+  RxString? formatedegreeend = DateFormat.yMMMd().format(degreeend!).obs;
+
+  updatedegreeend(ardate) {
+    degreeend = ardate;
+    update();
   }
 
   Future<void> selecteducationendDateAndTime(
@@ -175,6 +200,7 @@ class EditProfileController extends GetxController implements GetxService {
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreeend = iso8601Format.format(date);
+      updatedegreeend(date);
       update();
     }
   }
@@ -303,14 +329,6 @@ class EditProfileController extends GetxController implements GetxService {
   bool inprogressisChecked = false;
 
   bool currentlyworkingisChecked = false;
-
-  static DateTime? degreestart = DateTime.now();
-  String? formatteddegreestart = degreestart!.toIso8601String();
-  RxString? formatedegreestart = DateFormat.yMMMd().format(degreestart!).obs;
-
-  static DateTime? degreeend = DateTime.now();
-  String? formatteddegreeend = degreeend!.toIso8601String();
-  RxString? formatedegreeend = DateFormat.yMMMd().format(degreeend!).obs;
 
   static DateTime? degreeissue = DateTime.now();
   String? formatteddegreeissue = degreeissue!.toIso8601String();

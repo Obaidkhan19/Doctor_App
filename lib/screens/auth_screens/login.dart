@@ -34,12 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    call();
-
+    // call();
     super.initState();
   }
 
-  bool isBiometric = false;
+  // bool isBiometric = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType>? _availableBiometrics;
   String _authorized = "Not Authorized";
@@ -69,12 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   call() async {
     SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    String? username = sharedpref.getString(
-      'doctorusername',
-    );
-    String? userpassword = sharedpref.getString(
-      'doctorpassword',
-    );
+    // String? username = sharedpref.getString(
+    //   'doctorusername',
+    // );
+    // String? userpassword = sharedpref.getString(
+    //   'doctorpassword',
+    // );
+
+    String? username = await LocalDb().getUsername();
+    String? userpassword = await LocalDb().getPassword();
+
     bool fingerprint = await LocalDb.getfingerprint();
     if (username != null && userpassword != null && fingerprint) {
       _authenticate();

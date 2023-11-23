@@ -7,10 +7,12 @@ import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/controller/notification_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/notification_model.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../screens/Consulting_Queue/ConsultingQueue.dart';
@@ -167,7 +169,14 @@ class NotificationsRepo {
         var result = jsonDecode(response.body);
 
         if (result['Status'] == 0) {
-          showSnackbar(Get.context!, 'Failed to get');
+          Fluttertoast.showToast(
+              msg: 'Failedtogetdata'.tr,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         } else if (result['Status'] == 1) {
           Iterable lst = result['data'];
           List<NotificationModel> rep =

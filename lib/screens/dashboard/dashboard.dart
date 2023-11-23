@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/ManageAppointments/TodayAppointments.dart';
 import 'package:doctormobileapplication/screens/dashboard/home.dart';
@@ -8,6 +9,7 @@ import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../data/localDB/local_db.dart';
 import '../auth_screens/login.dart';
@@ -33,11 +35,14 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
         await launchUrl(Uri.parse(androidUrl));
       }
     } on Exception {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("WhatsApp is not installed on your device."),
-        ),
-      );
+      Fluttertoast.showToast(
+          msg: 'WhatsAppisnotinstalledonyourdevice.'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -52,7 +57,15 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   ];
   int selectedPage = 0;
 
+  _getDoctorBasicInfo() async {
+    ProfileRepo pr = ProfileRepo();
+    await pr.getDoctorBasicInfo();
+  }
+
   void navigateToPage(int index) async {
+    if (index == 0) {
+      await _getDoctorBasicInfo();
+    }
     if (index == 1) {
       bool? isLoggedin = await LocalDb().getLoginStatus();
       if ((isLoggedin ?? false) == false) {

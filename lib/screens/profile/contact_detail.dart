@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
@@ -128,12 +131,6 @@ class _ContactDetailState extends State<ContactDetail> {
                             ),
                           ),
                           EditProfileCustomTextField(
-                            validator: (value) {
-                              if (value == "Country") {
-                                return 'pleaseselectyourcountry'.tr;
-                              }
-                              return null;
-                            },
                             onTap: () async {
                               edit.selectedcountry = null;
                               edit.selectedcity = null;
@@ -160,98 +157,82 @@ class _ContactDetailState extends State<ContactDetail> {
                             readonly: true,
                             hintText: edit.selectedcountry?.name == ""
                                 ? 'country'.tr
-                                : edit.selectedcountry?.name ??
-                                    "Select country",
+                                : edit.selectedcountry?.name ?? "country".tr,
                           ),
                           EditProfileCustomTextField(
-                            validator: (value) {
-                              if (value == "Province") {
-                                return 'Please select your State'.tr;
-                              }
-                              return null;
-                            },
                             readonly: true,
                             onTap: () async {
-                              edit.selectedprovince = null;
-                              edit.selectedcity = null;
-                              Provinces generic = await searchabledropdown(
-                                  context, edit.provinceList);
-                              edit.selectedprovince = null;
-                              edit.updateselectedprovince(generic);
+                              if (edit.selectedcountry != null) {
+                                edit.selectedprovince = null;
+                                edit.selectedcity = null;
+                                Provinces generic = await searchabledropdown(
+                                    context, edit.provinceList);
+                                edit.selectedprovince = null;
+                                edit.updateselectedprovince(generic);
 
-                              if (generic.id != null) {
-                                edit.selectedprovince = generic;
-                                edit.selectedprovince = (generic.id == null)
-                                    ? null
-                                    : edit.selectedprovince;
+                                if (generic.id != null) {
+                                  edit.selectedprovince = generic;
+                                  edit.selectedprovince = (generic.id == null)
+                                      ? null
+                                      : edit.selectedprovince;
+                                }
+                                String cid =
+                                    edit.selectedprovince?.id.toString() ?? "";
+                                setState(() {
+                                  _getCities(cid);
+                                });
                               }
-                              String cid =
-                                  edit.selectedprovince?.id.toString() ?? "";
-                              setState(() {
-                                _getCities(cid);
-                              });
                             },
                             hintText: edit.selectedprovince?.name == ""
-                                ? 'State'
+                                ? 'state'.tr
                                 : edit.selectedprovince?.name == null
-                                    ? 'State'
+                                    ? 'state'.tr
                                     : edit.selectedprovince?.name ?? "",
                           ),
                           EditProfileCustomTextField(
-                            validator: (value) {
-                              if (value == "City") {
-                                return 'pleaseselectyourcity'.tr;
-                              }
-                              return null;
-                            },
                             readonly: true,
                             onTap: () async {
-                              edit.selectedcity = null;
-                              Cities generic = await searchabledropdown(
-                                  context, edit.citiesList);
-                              edit.selectedcity = null;
-                              edit.updateselectedcity(generic);
+                              if (edit.selectedcountry != null &&
+                                  edit.selectedprovince != null) {
+                                edit.selectedcity = null;
+                                Cities generic = await searchabledropdown(
+                                    context, edit.citiesList);
+                                edit.selectedcity = null;
+                                edit.updateselectedcity(generic);
 
-                              if (generic.id != null) {
-                                edit.selectedcity = generic;
-                                edit.selectedcity = (generic.id == null)
-                                    ? null
-                                    : edit.selectedcity;
+                                if (generic.id != null) {
+                                  edit.selectedcity = generic;
+                                  edit.selectedcity = (generic.id == null)
+                                      ? null
+                                      : edit.selectedcity;
+                                }
+                                setState(() {});
                               }
-                              setState(() {});
                             },
                             hintText: edit.selectedcity?.name == ""
-                                ? 'City'
+                                ? 'city'.tr
                                 : edit.selectedcity?.name == null
-                                    ? 'City'
+                                    ? 'city'.tr
                                     : edit.selectedcity?.name ?? "",
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'pleaseselectyouraddress'.tr;
-                              }
-                              return null;
-                            },
                             controller: edit.addressController,
                             hintText: 'address'.tr,
                           ),
 
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return ''.tr;
-                              }
-                              return null;
-                            },
                             keyboardTypenew: TextInputType.number,
                             controller: edit.publicmobileno,
-                            hintText: 'Public Phone Number'.tr,
+                            hintText: 'PublicPhoneNumber'.tr,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(11)
+                            ],
                           ),
                           // CustomIntlPhoneField(
                           //   onChanged: (phone) {
                           //     edit.updatepublicno(phone.completeNumber);
                           //   },
+                          //   errorColor: ColorManager.kWhiteColor,
                           //   style: GoogleFonts.poppins(
                           //       color: ColorManager.kWhiteColor, fontSize: 12),
                           //   showDropdownIcon: false,
@@ -267,10 +248,9 @@ class _ContactDetailState extends State<ContactDetail> {
                           //   showCountryFlag: false,
                           //   initialCountryCode: 'AE',
                           //   controller: edit.publicmobileno,
-                          //   disableLengthCheck: true,
                           //   keyboardType: TextInputType.phone,
                           //   fieldfilled: true,
-                          //   fieldsColor: Colors.white.withOpacity(0.1),
+                          //   fieldsColor: Colors.white.withOpacity(0.7),
                           //   fieldsborderColor: Colors.white.withOpacity(0.1),
                           //   decoration: InputDecoration(
                           //       disabledBorder: OutlineInputBorder(
@@ -290,22 +270,25 @@ class _ContactDetailState extends State<ContactDetail> {
                           EditProfileCustomTextField(
                             validator: (p0) {
                               if (p0!.isEmpty) {
-                                return ''.tr;
+                                return 'pleaseenteryourmobilenumber'.tr;
                               }
                               return null;
                             },
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(11)
+                            ],
                             keyboardTypenew: TextInputType.number,
                             controller: edit.privatemobileno,
-                            hintText: 'Private Phone Number'.tr,
+                            hintText: 'PrivatePhoneNumber'.tr,
                           ),
                           // CustomIntlPhoneField(
                           //   onChanged: (phone) {
                           //     edit.updateprivateno(phone.completeNumber);
                           //   },
+                          //   errorColor: ColorManager.kWhiteColor,
                           //   style: GoogleFonts.poppins(
-                          //       color: ColorManager.kPrimaryColor,
-                          //       fontSize: 12),
-                          //   showDropdownIcon: true,
+                          //       color: ColorManager.kWhiteColor, fontSize: 12),
+                          //   showDropdownIcon: false,
                           //   dropdownIcon: const Icon(
                           //     Icons.arrow_drop_down,
                           //     color: Colors.white,
@@ -313,7 +296,7 @@ class _ContactDetailState extends State<ContactDetail> {
                           //   ),
                           //   dropdownTextStyle: GoogleFonts.poppins(
                           //       fontSize: 12,
-                          //       color: ColorManager.kPrimaryColor,
+                          //       color: ColorManager.kWhiteColor,
                           //       fontWeight: FontWeight.w700),
                           //   showCountryFlag: false,
                           //   initialCountryCode: 'AE',
@@ -321,40 +304,39 @@ class _ContactDetailState extends State<ContactDetail> {
                           //   disableLengthCheck: true,
                           //   keyboardType: TextInputType.phone,
                           //   fieldfilled: true,
-                          //   fieldsColor: ColorManager.kPrimaryLightColor,
-                          //   fieldsborderColor: ColorManager.kWhiteColor,
+                          //   fieldsColor: Colors.white.withOpacity(0.7),
+                          //   fieldsborderColor: Colors.white.withOpacity(0.1),
                           //   decoration: InputDecoration(
                           //       disabledBorder: OutlineInputBorder(
                           //           borderRadius: BorderRadius.circular(10),
-                          //           borderSide: const BorderSide(
-                          //               color: ColorManager.kPrimaryColor)),
+                          //           borderSide: BorderSide(
+                          //             color: Colors.white.withOpacity(0.1),
+                          //           )),
                           //       enabledBorder: OutlineInputBorder(
                           //           borderRadius: BorderRadius.circular(10),
-                          //           borderSide: const BorderSide(
-                          //               color: ColorManager.kPrimaryColor)),
+                          //           borderSide: BorderSide(
+                          //             color: Colors.white.withOpacity(0.1),
+                          //           )),
                           //       border: InputBorder.none),
                           //   languageCode: "en",
                           // ),
 
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return ''.tr;
-                              }
-                              return null;
-                            },
                             keyboardTypenew: TextInputType.number,
                             controller: edit.telephone,
-                            hintText: 'Telephone Number'.tr,
+                            hintText: 'TelephoneNumber'.tr,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(11)
+                            ],
                           ),
                           // CustomIntlPhoneField(
                           //   onChanged: (phone) {
                           //     edit.updatetelephonenumber(phone.completeNumber);
                           //   },
+                          //   errorColor: ColorManager.kWhiteColor,
                           //   style: GoogleFonts.poppins(
-                          //       color: ColorManager.kPrimaryColor,
-                          //       fontSize: 12),
-                          //   showDropdownIcon: true,
+                          //       color: ColorManager.kWhiteColor, fontSize: 12),
+                          //   showDropdownIcon: false,
                           //   dropdownIcon: const Icon(
                           //     Icons.arrow_drop_down,
                           //     color: Colors.white,
@@ -362,7 +344,7 @@ class _ContactDetailState extends State<ContactDetail> {
                           //   ),
                           //   dropdownTextStyle: GoogleFonts.poppins(
                           //       fontSize: 12,
-                          //       color: ColorManager.kPrimaryColor,
+                          //       color: ColorManager.kWhiteColor,
                           //       fontWeight: FontWeight.w700),
                           //   showCountryFlag: false,
                           //   initialCountryCode: 'AE',
@@ -370,17 +352,19 @@ class _ContactDetailState extends State<ContactDetail> {
                           //   disableLengthCheck: true,
                           //   keyboardType: TextInputType.phone,
                           //   fieldfilled: true,
-                          //   fieldsColor: ColorManager.kPrimaryLightColor,
-                          //   fieldsborderColor: ColorManager.kWhiteColor,
+                          //   fieldsColor: Colors.white.withOpacity(0.7),
+                          //   fieldsborderColor: Colors.white.withOpacity(0.1),
                           //   decoration: InputDecoration(
                           //       disabledBorder: OutlineInputBorder(
                           //           borderRadius: BorderRadius.circular(10),
-                          //           borderSide: const BorderSide(
-                          //               color: ColorManager.kPrimaryColor)),
+                          //           borderSide: BorderSide(
+                          //             color: Colors.white.withOpacity(0.1),
+                          //           )),
                           //       enabledBorder: OutlineInputBorder(
                           //           borderRadius: BorderRadius.circular(10),
-                          //           borderSide: const BorderSide(
-                          //               color: ColorManager.kPrimaryColor)),
+                          //           borderSide: BorderSide(
+                          //             color: Colors.white.withOpacity(0.1),
+                          //           )),
                           //       border: InputBorder.none),
                           //   languageCode: "en",
                           // ),
@@ -388,7 +372,7 @@ class _ContactDetailState extends State<ContactDetail> {
                           EditProfileCustomTextField(
                             validator: (p0) {
                               if (p0!.isEmpty) {
-                                return 'Enter Email';
+                                return 'pleaseenteryouremail'.tr;
                               }
                               return null;
                             },
@@ -434,36 +418,18 @@ class _ContactDetailState extends State<ContactDetail> {
                             },
                             readonly: true,
                             hintText: edit.selectednokrelation?.name == ""
-                                ? 'NOK Relation'
+                                ? 'NOKRelation'.tr
                                 : edit.selectednokrelation?.name.toString(),
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter NOK First Name';
-                              }
-                              return null;
-                            },
                             controller: edit.nokfirstname,
                             hintText: 'firstname'.tr,
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter NOK Last Name';
-                              }
-                              return null;
-                            },
                             controller: edit.noklastname,
                             hintText: 'lastname'.tr,
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter NOK ID NO';
-                              }
-                              return null;
-                            },
                             keyboardTypenew: TextInputType.number,
                             controller: edit.nokidno,
                             hintText: 'idnumber'.tr,
@@ -509,15 +475,12 @@ class _ContactDetailState extends State<ContactDetail> {
                           //   languageCode: "en",
                           // ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter NOK Mobile NO';
-                              }
-                              return null;
-                            },
                             keyboardTypenew: TextInputType.number,
                             controller: edit.nokmobileno,
-                            hintText: 'NOK Mobile Number'.tr,
+                            hintText: 'NOKMobileNumber'.tr,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(11)
+                            ],
                           ),
                           SizedBox(height: Get.height * 0.02),
                           PrimaryButton(
@@ -525,24 +488,26 @@ class _ContactDetailState extends State<ContactDetail> {
                               title: 'update'.tr,
                               onPressed: () async {
                                 ProfileRepo pr = ProfileRepo();
-                                String res = await pr.updateContact(
-                                    edit.selectedcountry?.id,
-                                    edit.selectedprovince?.id,
-                                    edit.selectedcity?.id,
-                                    edit.addressController.text,
-                                    edit.privatemobileno.text,
-                                    edit.telephone.text,
-                                    edit.publicmobileno.text,
-                                    edit.nokfirstname.text,
-                                    edit.noklastname.text,
-                                    edit.selectednokrelation?.id,
-                                    edit.nokidno.text,
-                                    edit.nokmobileno.text,
-                                    edit.emailController.text);
-                                if (res == "true") {
-                                  ProfileController.i.updateval(false);
-                                  _getDoctorBasicInfo();
-                                  setState(() {});
+                                if (_formKey.currentState!.validate()) {
+                                  String res = await pr.updateContact(
+                                      edit.selectedcountry?.id,
+                                      edit.selectedprovince?.id,
+                                      edit.selectedcity?.id,
+                                      edit.addressController.text,
+                                      edit.privatemobileno.text,
+                                      edit.telephone.text,
+                                      edit.publicmobileno.text,
+                                      edit.nokfirstname.text,
+                                      edit.noklastname.text,
+                                      edit.selectednokrelation?.id,
+                                      edit.nokidno.text,
+                                      edit.nokmobileno.text,
+                                      edit.emailController.text);
+                                  if (res == "true") {
+                                    ProfileController.i.updateval(false);
+                                    _getDoctorBasicInfo();
+                                    setState(() {});
+                                  }
                                 }
                               },
                               color: Colors.white.withOpacity(0.7),

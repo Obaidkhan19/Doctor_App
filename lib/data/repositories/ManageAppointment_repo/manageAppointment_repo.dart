@@ -101,6 +101,7 @@ class Manageappointmentrepo {
 
   static GetmonthlyDoctorAppointment(
       String date, String worklocationid, IsOnline) async {
+    // ManageAppointmentController.i.updateIsmonthly(true);
     ManageAppointmentController.i.paid =
         ManageAppointmentController.i.unpaid = 0;
     String? userId = await LocalDb().getDoctorId();
@@ -133,12 +134,15 @@ class Manageappointmentrepo {
                       ManageAppointmentController.i.unpaid;
             }
           }
+          // ManageAppointmentController.i.updateIsmonthly(false);
           return monthlyDoctorAppointment;
         }
       } else {
+        // ManageAppointmentController.i.updateIsmonthly(false);
         log(response.statusCode.toString());
       }
     } catch (e) {
+      // ManageAppointmentController.i.updateIsmonthly(false);
       log('$e exception caught');
     }
   }
@@ -179,11 +183,9 @@ class Manageappointmentrepo {
   static resheduleAppointmentSlots(String Date, String BranchId,
       List<ReschedualAppointmentSlots> Appointments) async {
     String? userId = await LocalDb().getDoctorId();
-    String? userToken = await LocalDb().getToken();
     var body = {
       "Date": Date,
       "DoctorId": "$userId",
-      "Token": "$userToken",
       "BranchId": BranchId,
       "Appointments": jsonEncode(Appointments),
     };

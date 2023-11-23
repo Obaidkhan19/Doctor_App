@@ -56,6 +56,8 @@ class _BankDetailState extends State<BankDetail> {
 
   var bankdetail = Get.put<ProfileController>(ProfileController());
 
+  final GlobalKey<FormState> _addformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _editformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
@@ -72,69 +74,88 @@ class _BankDetailState extends State<BankDetail> {
                 builder: (contr) => Padding(
                   padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        EditProfileCustomTextField(
-                          onTap: () async {
-                            Degrees generic = await searchabledropdown(
-                                context, edit.bankList);
-                            edit.selectedbank = null;
-                            edit.updateselectedbank(generic);
+                    child: Form(
+                      key: _addformKey,
+                      child: Column(
+                        children: [
+                          EditProfileCustomTextField(
+                            onTap: () async {
+                              Degrees generic = await searchabledropdown(
+                                  context, edit.bankList);
+                              edit.selectedbank = null;
+                              edit.updateselectedbank(generic);
 
-                            if (generic.id != null) {
-                              edit.selectedbank = generic;
-                              edit.selectedbank = (generic.id == null)
-                                  ? null
-                                  : edit.selectedbank;
-                            }
-                          },
-                          readonly: true,
-                          hintText: edit.selectedbank?.name == ""
-                              ? 'bank'.tr
-                              : edit.selectedbank?.name ?? "Select Bank",
-                        ),
-                        EditProfileCustomTextField(
-                          controller: edit.accountTitle,
-                          hintText: 'Account Title',
-                        ),
-                        EditProfileCustomTextField(
-                          controller: edit.accountNo,
-                          hintText: 'Account Number',
-                        ),
-                        InkWell(
-                          onTap: () {
-                            edit.picksingleBankfile();
-                          },
-                          child: Container(
-                            width: Get.width * 1, // Adjust th e width as needed
-                            height: Get.height * 0.065,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Upload File',
-                                style: GoogleFonts.poppins(
-                                    color: ColorManager.kWhiteColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
+                              if (generic.id != null) {
+                                edit.selectedbank = generic;
+                                edit.selectedbank = (generic.id == null)
+                                    ? null
+                                    : edit.selectedbank;
+                              }
+                            },
+                            validator: (p0) {
+                              if (edit.selectedbank!.id == null) {
+                                return 'SelectBank'.tr;
+                              } else {
+                                return null;
+                              }
+                            },
+                            readonly: true,
+                            hintText: edit.selectedbank?.name == ""
+                                ? 'bank'.tr
+                                : edit.selectedbank?.name ?? "SelectBank".tr,
+                          ),
+                          EditProfileCustomTextField(
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return 'EnterAccountTitle'.tr;
+                              }
+                              return null;
+                            },
+                            controller: edit.accountTitle,
+                            hintText: 'AccountTitle'.tr,
+                          ),
+                          EditProfileCustomTextField(
+                            controller: edit.accountNo,
+                            hintText: 'AccountNumber'.tr,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              edit.picksingleBankfile();
+                            },
+                            child: Container(
+                              width:
+                                  Get.width * 1, // Adjust th e width as needed
+                              height: Get.height * 0.065,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'UploadFile'.tr,
+                                  style: GoogleFonts.poppins(
+                                      color: ColorManager.kWhiteColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: Get.height * 0.03),
-                        PrimaryButton(
-                            fontSize: 15,
-                            title: 'Edit'.tr,
-                            onPressed: () async {
-                              ProfileController.i.updateval(false);
-                              setState(() {});
-                            },
-                            color: ColorManager.kWhiteColor.withOpacity(0.7),
-                            textcolor: ColorManager.kWhiteColor),
-                        SizedBox(height: Get.height * 0.03),
-                      ],
+                          SizedBox(height: Get.height * 0.03),
+                          PrimaryButton(
+                              fontSize: 15,
+                              title: 'edit'.tr,
+                              onPressed: () async {
+                                if (_editformKey.currentState!.validate()) {
+                                  ProfileController.i.updateval(false);
+                                  setState(() {});
+                                }
+                              },
+                              color: ColorManager.kWhiteColor.withOpacity(0.7),
+                              textcolor: ColorManager.kWhiteColor),
+                          SizedBox(height: Get.height * 0.03),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -154,70 +175,89 @@ class _BankDetailState extends State<BankDetail> {
                       padding:
                           EdgeInsets.symmetric(horizontal: Get.width * 0.02),
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            EditProfileCustomTextField(
-                              onTap: () async {
-                                Degrees generic = await searchabledropdown(
-                                    context, add.addbankList);
-                                add.addselectedbank = null;
-                                add.updateaddselectedbank(generic);
+                        child: Form(
+                          key: _addformKey,
+                          child: Column(
+                            children: [
+                              EditProfileCustomTextField(
+                                onTap: () async {
+                                  Degrees generic = await searchabledropdown(
+                                      context, add.addbankList);
+                                  add.addselectedbank = null;
+                                  add.updateaddselectedbank(generic);
 
-                                if (generic.id != null) {
-                                  add.addselectedbank = generic;
-                                  add.addselectedbank = (generic.id == null)
-                                      ? null
-                                      : add.addselectedbank;
-                                }
-                              },
-                              readonly: true,
-                              hintText: add.addselectedbank?.name == ""
-                                  ? 'bank'.tr
-                                  : add.addselectedbank?.name ?? "Select Bank",
-                            ),
-                            EditProfileCustomTextField(
-                              controller: add.accountTitle,
-                              hintText: 'Account Title',
-                            ),
-                            EditProfileCustomTextField(
-                              controller: add.accountNo,
-                              hintText: 'Account Number',
-                            ),
-                            InkWell(
-                              onTap: () {
-                                add.picksingleBankfile();
-                              },
-                              child: Container(
-                                width:
-                                    Get.width * 1, // Adjust the width as needed
-                                height: Get.height * 0.065,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.7),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Upload File',
-                                    style: GoogleFonts.poppins(
-                                        color: ColorManager.kWhiteColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
+                                  if (generic.id != null) {
+                                    add.addselectedbank = generic;
+                                    add.addselectedbank = (generic.id == null)
+                                        ? null
+                                        : add.addselectedbank;
+                                  }
+                                },
+                                validator: (p0) {
+                                  if (add.addselectedbank?.name == null) {
+                                    return 'SelectBank'.tr;
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                readonly: true,
+                                hintText: add.addselectedbank?.name == ""
+                                    ? 'bank'.tr
+                                    : add.addselectedbank?.name ??
+                                        "SelectBank".tr,
+                              ),
+                              EditProfileCustomTextField(
+                                validator: (p0) {
+                                  if (p0!.isEmpty) {
+                                    return 'EnterAccountTitle'.tr;
+                                  }
+                                  return null;
+                                },
+                                controller: add.accountTitle,
+                                hintText: 'AccountTitle'.tr,
+                              ),
+                              EditProfileCustomTextField(
+                                controller: add.accountNo,
+                                hintText: 'AccountNumber'.tr,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  add.picksingleBankfile();
+                                },
+                                child: Container(
+                                  width: Get.width *
+                                      1, // Adjust the width as needed
+                                  height: Get.height * 0.065,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'UploadFile'.tr,
+                                      style: GoogleFonts.poppins(
+                                          color: ColorManager.kWhiteColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: Get.height * 0.03),
-                            PrimaryButton(
-                                fontSize: 15,
-                                title: 'Add'.tr,
-                                onPressed: () async {
-                                  ProfileController.i.updateaddval(false);
-                                  setState(() {});
-                                },
-                                color: Colors.white.withOpacity(0.7),
-                                textcolor: ColorManager.kWhiteColor),
-                            SizedBox(height: Get.height * 0.03),
-                          ],
+                              SizedBox(height: Get.height * 0.03),
+                              PrimaryButton(
+                                  fontSize: 15,
+                                  title: 'add'.tr,
+                                  onPressed: () async {
+                                    if (_addformKey.currentState!.validate()) {
+                                      ProfileController.i.updateaddval(false);
+                                      setState(() {});
+                                    }
+                                  },
+                                  color: Colors.white.withOpacity(0.7),
+                                  textcolor: ColorManager.kWhiteColor),
+                              SizedBox(height: Get.height * 0.03),
+                            ],
+                          ),
                         ),
                       ),
                     ),

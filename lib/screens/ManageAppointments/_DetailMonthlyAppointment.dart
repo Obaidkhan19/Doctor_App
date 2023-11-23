@@ -221,13 +221,13 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         //         widget.worklocationid, widget.isonline);
                         // if (int.parse(monthyearDate.toString().split('-')[0]) ==
                         //     int.parse(viewChangedDetails.visibleDates.last.month
-                        //         .toString())) {
                         //   ManageAppointmentController.i.getmonthlyoctorAppointment(
                         //       "${viewChangedDetails.visibleDates.last.month + 1}-${viewChangedDetails.visibleDates.last.year}",
                         //       widget.worklocationid,
                         //       widget.isonline);
                         // } else {
-                        ManageAppointmentController.i.getmonthlyoctorAppointment(
+
+                        ManageAppointmentController.i.getmonthlydoctorAppointment(
                             "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
                             widget.worklocationid,
                             widget.isonline,
@@ -270,6 +270,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                       height: Get.height * 0.04,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           width: Get.width * 0.08,
@@ -277,31 +278,33 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                           color: ColorManager.kPrimaryColor,
                         ),
                         SizedBox(
-                          width: Get.width * 0.01,
+                          width: Get.width * 0.03,
                         ),
                         GetBuilder<ManageAppointmentController>(
                             builder: (context) {
                           return Text(
-                            '${'paidappointments'.tr} |  ${ManageAppointmentController.i.paid}'
+                            '${'BookedAppointments'.tr} |  ${ManageAppointmentController.i.paid}'
                             '',
                             style: GoogleFonts.poppins(
                               fontSize: 9,
                             ),
                           );
                         }),
-                        const Spacer(),
+                        SizedBox(
+                          width: Get.width * 0.09,
+                        ),
                         Container(
                           width: Get.width * 0.08,
                           height: Get.height * 0.04,
                           color: ColorManager.KgreenColor,
                         ),
                         SizedBox(
-                          width: Get.width * 0.01,
+                          width: Get.width * 0.03,
                         ),
                         GetBuilder<ManageAppointmentController>(
                             builder: (context) {
                           return Text(
-                            '${'unPaidappointments'.tr} |  ${ManageAppointmentController.i.unpaid}'
+                            '${'consulted'.tr} |  ${ManageAppointmentController.i.unpaid}'
                             '',
                             style: GoogleFonts.poppins(
                               fontSize: 9,

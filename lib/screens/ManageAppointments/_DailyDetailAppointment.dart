@@ -47,14 +47,20 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var contr =
         Get.put<ManageAppointmentController>(ManageAppointmentController());
     return Scaffold(
         body: GetBuilder<ManageAppointmentController>(builder: (cont) {
-      return /*  SpecialitiesController.i.isLoading == false ?*/
-          SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      return SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
           child: Stack(
@@ -332,218 +338,207 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                     height: Get.height * 0.015,
                   ),
                   if ((((ManageAppointmentController
-                                      .i.dayViewAppointmentSlotModel !=
-                                  null) &&
-                              (ManageAppointmentController
-                                      .i
-                                      .dayViewAppointmentSlotModel
-                                      .appointments !=
-                                  null))
+                                  .i.dayViewAppointmentSlotModel.appointments !=
+                              null))
                           ? ManageAppointmentController.i
                               .dayViewAppointmentSlotModel.appointments?.length
                           : 0) !=
                       0)
-                    GetBuilder<ManageAppointmentController>(
-                      builder: (contro) => BlurryModalProgressHUD(
-                        inAsyncCall: ManageAppointmentController
-                            .i.isLoadingDailyDoctorAppointmentSlots,
-                        blurEffectIntensity: 4,
-                        progressIndicator: const SpinKitSpinningLines(
-                          color: Color(0xfff1272d3),
-                          size: 60,
-                        ),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.52,
-                          child: ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: (((ManageAppointmentController
-                                              .i.dayViewAppointmentSlotModel !=
-                                          null) &&
-                                      (ManageAppointmentController
-                                              .i
-                                              .dayViewAppointmentSlotModel
-                                              .appointments !=
-                                          null))
-                                  ? ManageAppointmentController
-                                      .i
-                                      .dayViewAppointmentSlotModel
-                                      .appointments
-                                      ?.length
-                                  : 1),
-                              itemBuilder: (context, index) {
-                                final manageAppointmentSlots =
-                                    ((ManageAppointmentController.i
-                                                    .dayViewAppointmentSlotModel !=
-                                                null) &&
-                                            (ManageAppointmentController
-                                                    .i
-                                                    .dayViewAppointmentSlotModel
-                                                    .appointments !=
-                                                null))
-                                        ? ManageAppointmentController
+                    BlurryModalProgressHUD(
+                      inAsyncCall: contr.isLoadingDailyDoctorAppointmentSlots,
+                      blurEffectIntensity: 4,
+                      progressIndicator: const SpinKitSpinningLines(
+                        color: Color(0xfff1272d3),
+                        size: 60,
+                      ),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.52,
+                        child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: (((ManageAppointmentController
+                                            .i.dayViewAppointmentSlotModel !=
+                                        null) &&
+                                    (ManageAppointmentController
                                             .i
                                             .dayViewAppointmentSlotModel
-                                            .appointments![index]
-                                        : null;
+                                            .appointments !=
+                                        null))
+                                ? ManageAppointmentController
+                                    .i
+                                    .dayViewAppointmentSlotModel
+                                    .appointments
+                                    ?.length
+                                : 1),
+                            itemBuilder: (context, index) {
+                              final manageAppointmentSlots =
+                                  ((ManageAppointmentController.i
+                                                  .dayViewAppointmentSlotModel !=
+                                              null) &&
+                                          (ManageAppointmentController
+                                                  .i
+                                                  .dayViewAppointmentSlotModel
+                                                  .appointments !=
+                                              null))
+                                      ? ManageAppointmentController
+                                          .i
+                                          .dayViewAppointmentSlotModel
+                                          .appointments![index]
+                                      : null;
 
-                                return ((manageAppointmentSlots != null)
-                                    ? Row(
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.end,
-                                        children: [
-                                          SizedBox(
-                                            width: Get.width * 0.15,
-                                            child: Text(
-                                              (manageAppointmentSlots.time !=
-                                                      null)
-                                                  ? ManageAppointmentController
-                                                      .i
-                                                      .convertTimeFormat(
-                                                          manageAppointmentSlots
-                                                                  .time ??
-                                                              "")
-                                                  : "",
+                              return ((manageAppointmentSlots != null)
+                                  ? Row(
+                                      // mainAxisAlignment:
+                                      //     MainAxisAlignment.end,
+                                      children: [
+                                        SizedBox(
+                                          width: Get.width * 0.15,
+                                          child: Text(
+                                            (manageAppointmentSlots.time !=
+                                                    null)
+                                                ? ManageAppointmentController.i
+                                                    .convertTimeFormat(
+                                                        manageAppointmentSlots
+                                                                .time ??
+                                                            "")
+                                                : "",
 
-                                              // manageAppointmentSlots.time ?? "",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      fontSize: 12,
-                                                      color: ColorManager
-                                                          .kblackColor,
-                                                      fontWeight:
-                                                          FontWeightManager
-                                                              .regular),
-                                            ),
-                                          ),
-                                          Text(
-                                            ' | ',
+                                            // manageAppointmentSlots.time ?? "",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!
                                                 .copyWith(
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     color: ColorManager
                                                         .kblackColor,
                                                     fontWeight:
                                                         FontWeightManager
                                                             .regular),
                                           ),
-                                          Material(
-                                              child: Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.70,
-                                                  // Adjust the width as needed
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    border: Border(
-                                                      bottom: BorderSide(
-                                                        color: ColorManager
-                                                            .kblackColor, // Customize the border color
-                                                        width:
-                                                            1, // Adjust the border width
-                                                      ),
+                                        ),
+                                        Text(
+                                          ' | ',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontSize: 14,
+                                                  color:
+                                                      ColorManager.kblackColor,
+                                                  fontWeight: FontWeightManager
+                                                      .regular),
+                                        ),
+                                        Material(
+                                            child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.70,
+                                                // Adjust the width as needed
+                                                decoration: const BoxDecoration(
+                                                  border: Border(
+                                                    bottom: BorderSide(
+                                                      color: ColorManager
+                                                          .kblackColor, // Customize the border color
+                                                      width:
+                                                          1, // Adjust the border width
                                                     ),
                                                   ),
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Flexible(
-                                                                child: Text(
-                                                                  manageAppointmentSlots
-                                                                          .name ??
-                                                                      "",
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyMedium!
-                                                                      .copyWith(
-                                                                          fontSize:
-                                                                              13,
-                                                                          color: ColorManager
-                                                                              .kblackColor,
-                                                                          fontWeight:
-                                                                              FontWeightManager.regular),
-                                                                ),
+                                                ),
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Flexible(
+                                                              child: Text(
+                                                                manageAppointmentSlots
+                                                                        .name ??
+                                                                    "",
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyMedium!
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            13,
+                                                                        color: ColorManager
+                                                                            .kblackColor,
+                                                                        fontWeight:
+                                                                            FontWeightManager.regular),
                                                               ),
-                                                              Flexible(
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Flexible(
-                                                                      child:
-                                                                          Text(
-                                                                        manageAppointmentSlots.cellNumber ??
-                                                                            "",
-                                                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                                                            fontSize:
-                                                                                13,
-                                                                            color:
-                                                                                ColorManager.kblackColor,
-                                                                            fontWeight: FontWeightManager.regular),
-                                                                      ),
+                                                            ),
+                                                            Flexible(
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Flexible(
+                                                                    child: Text(
+                                                                      manageAppointmentSlots
+                                                                              .cellNumber ??
+                                                                          "",
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyMedium!
+                                                                          .copyWith(
+                                                                              fontSize: 13,
+                                                                              color: ColorManager.kblackColor,
+                                                                              fontWeight: FontWeightManager.regular),
                                                                     ),
-                                                                    manageAppointmentSlots.appointmentId !=
-                                                                            null
-                                                                        ? InkWell(
-                                                                            onTap:
-                                                                                () {
-                                                                              // Toggle the checkbox state when the box is tapped
-                                                                              setState(() {
-                                                                                ManageAppointmentController.i.updateCheckedBoxStatus(manageAppointmentSlots.appointmentId!);
-                                                                                //   isChecked = !isChecked;
-                                                                              });
-                                                                            },
+                                                                  ),
+                                                                  manageAppointmentSlots
+                                                                              .appointmentId !=
+                                                                          null
+                                                                      ? InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            // Toggle the checkbox state when the box is tapped
+                                                                            setState(() {
+                                                                              ManageAppointmentController.i.updateCheckedBoxStatus(manageAppointmentSlots.appointmentId!);
+                                                                              //   isChecked = !isChecked;
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(top: 3, bottom: 3),
                                                                             child:
-                                                                                Padding(
-                                                                              padding: const EdgeInsets.only(top: 3, bottom: 3),
-                                                                              child: Container(
-                                                                                width: 21, // Set the desired width for the checkbox
-                                                                                height: 21, // Set the desired height for the checkbox
-                                                                                decoration: BoxDecoration(
-                                                                                  border: Border.all(color: (manageAppointmentSlots.status.toString().toLowerCase().contains('confirmed')) ? Colors.green : Colors.black), // Border color
-                                                                                  borderRadius: BorderRadius.circular(4), // Adjust as needed
-                                                                                ),
-                                                                                child: (manageAppointmentSlots.IsChecked == true)
-                                                                                    ? Icon(Icons.check, size: 16, color: (manageAppointmentSlots.status.toString().toLowerCase().contains('confirmed')) ? Colors.green : Colors.black) // Show the check icon when checked
-                                                                                    : Container(), // No content when not checked
+                                                                                Container(
+                                                                              width: 21, // Set the desired width for the checkbox
+                                                                              height: 21, // Set the desired height for the checkbox
+                                                                              decoration: BoxDecoration(
+                                                                                border: Border.all(color: (manageAppointmentSlots.status.toString().toLowerCase().contains('confirmed')) ? Colors.green : Colors.black), // Border color
+                                                                                borderRadius: BorderRadius.circular(4), // Adjust as needed
                                                                               ),
+                                                                              child: (manageAppointmentSlots.IsChecked == true)
+                                                                                  ? Icon(Icons.check, size: 16, color: (manageAppointmentSlots.status.toString().toLowerCase().contains('confirmed')) ? Colors.green : Colors.black) // Show the check icon when checked
+                                                                                  : Container(), // No content when not checked
                                                                             ),
-                                                                          )
-                                                                        : Container()
-                                                                  ],
-                                                                ),
+                                                                          ),
+                                                                        )
+                                                                      : Container()
+                                                                ],
                                                               ),
-                                                            ])
-                                                      ])))
-                                        ],
-                                      )
-                                    : Container());
-                              }),
-                        ),
+                                                            ),
+                                                          ])
+                                                    ])))
+                                      ],
+                                    )
+                                  : Container());
+                            }),
                       ),
                     ),
-                  (((ManageAppointmentController
-                                          .i.dayViewAppointmentSlotModel !=
-                                      null) &&
-                                  (ManageAppointmentController
-                                          .i
-                                          .dayViewAppointmentSlotModel
-                                          .appointments !=
-                                      null))
+                  (((ManageAppointmentController.i.dayViewAppointmentSlotModel
+                                      .appointments !=
+                                  null))
                               ? ManageAppointmentController
                                   .i
                                   .dayViewAppointmentSlotModel
@@ -551,21 +546,10 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                                   ?.length
                               : 0) ==
                           0
-                      ? GetBuilder<ManageAppointmentController>(
-                          builder: (controo) => BlurryModalProgressHUD(
-                            inAsyncCall: ManageAppointmentController
-                                .i.isLoadingDailyDoctorAppointmentSlots,
-                            blurEffectIntensity: 4,
-                            progressIndicator: const SpinKitSpinningLines(
-                              color: Color(0xfff1272d3),
-                              size: 60,
-                            ),
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.5,
-                              child: Center(
-                                child: Text('NoRecordFound'.tr),
-                              ),
-                            ),
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: Center(
+                            child: Text('NoRecordFound'.tr),
                           ),
                         )
                       : Container(),

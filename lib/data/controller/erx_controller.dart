@@ -738,33 +738,44 @@ class ERXController extends GetxController implements GetxService {
   }
 
   List<Medicinesss1> pastmedicineList = [];
-  // updatePastmedicineList(List<Medicinesss1> pmlist) {
-  //   List<med.MedicineDosages> dosage = [];
-  //   List<med.MedicineFrequencies> freq = [];
-  //   List<med.MedicineEventList> duration = [];
-  //   List<med.MedicineRoutes> routes = [];
-  //   pastmedicineList = pmlist;
-  //   // for (int i = 0; i < pmlist.length; i++) {
-  //   //   finalmedicinellist
-  //   //       .add(Medicines1(id: pmlist[i].eRNSId, name: pmlist[i].medicineName));
-  //   //   dosage.add(med.MedicineDosages(
-  //   //       id: pmlist[i].medicineDosageId,
-  //   //       dosageValue: pmlist[i].dosageValue.toString()));
-  //   //   freq.add(med.MedicineFrequencies(
-  //   //       quantity: pmlist[i].frequencyQuantity.toString(),
-  //   //       numericDisplay: pmlist[i].frequencyNumeric));
-  //   //   duration.add(med.MedicineEventList(
-  //   //       id: pmlist[i].medicineEventTimingId,
-  //   //       description: pmlist[i].medicineEventTimingDetail,
-  //   //       display: pmlist[i].medicineEventTimingDisplay));
-  //   //   routes.add(med.MedicineRoutes(
-  //   //       id: pmlist[i].medicineRouteId, abbreviation: pmlist[i].routeName));
-  //   // }
-  //   // selectedlst = med.medicinematric(
-  //   //   medicineDosages: dosage,
-  //   //   medicineRoutes: routes,
-  //   //   medicineFrequencies: freq,
-  //   // );
-  //   update();
-  // }
+  updatePastmedicineList(List<Medicinesss1> pmlist) {
+    List<med.DateList> datelist = [];
+    List<med.DayList> daylist = [];
+    List<med.MedicineFrequencies> freq = [];
+    List<med.MedicineDosages> dosage = [];
+    List<med.MedicineRoutes> routes = [];
+    pastmedicineList = pmlist;
+    for (int i = 0; i < pmlist.length; i++) {
+      finalmedicinellist.add(
+          Medicines1(id: pmlist[i].eRNSId, medicine: pmlist[i].medicineName));
+      dosage.add(med.MedicineDosages(
+          id: pmlist[i].medicineDosageId,
+          dosageValue: pmlist[i].dosageValue.toString()));
+      freq.add(med.MedicineFrequencies(
+          quantity: pmlist[i].frequencyQuantity.toString(),
+          numericDisplay: pmlist[i].frequencyNumeric));
+      datelist.add(med.DateList(
+        id: pmlist[i].medicineEventTimingId,
+        englishCounting: pmlist[i].englishCounting,
+      ));
+      daylist.add(med.DayList(
+        id: pmlist[i].dateId,
+        englishDay: pmlist[i].englishDay,
+      ));
+      routes.add(med.MedicineRoutes(
+        id: pmlist[i].medicineRouteId,
+        englishDefinition: pmlist[i].routeName,
+      ));
+      // finalmedicinellist.add(pmlist[i].)
+    }
+
+    selectedlst = med.medicinematric(
+      dateList: datelist,
+      dayList: daylist,
+      medicineDosages: dosage,
+      medicineRoutes: routes,
+      medicineFrequencies: freq,
+    );
+    update();
+  }
 }

@@ -81,8 +81,8 @@ class medicinematric {
 }
 
 class MedicineFrequencies {
-  String? quantity;
-  String? numericDisplay;
+  dynamic quantity;
+  dynamic numericDisplay;
 
   MedicineFrequencies({this.quantity, this.numericDisplay});
 
@@ -100,9 +100,9 @@ class MedicineFrequencies {
 }
 
 class DayList {
-  String? id;
-  String? englishDay;
-  String? urduDay;
+  dynamic id;
+  dynamic englishDay;
+  dynamic urduDay;
 
   DayList({this.id, this.englishDay, this.urduDay});
 
@@ -122,9 +122,9 @@ class DayList {
 }
 
 class DateList {
-  String? id;
-  String? englishCounting;
-  String? urduCounting;
+  dynamic id;
+  dynamic englishCounting;
+  dynamic urduCounting;
 
   DateList({this.id, this.englishCounting, this.urduCounting});
 
@@ -144,11 +144,11 @@ class DateList {
 }
 
 class MedicineEventList {
-  String? id;
-  String? code;
-  String? display;
-  String? description;
-  String? urduDescription;
+  dynamic id;
+  dynamic code;
+  dynamic display;
+  dynamic description;
+  dynamic urduDescription;
 
   MedicineEventList(
       {this.id,
@@ -177,20 +177,20 @@ class MedicineEventList {
 }
 
 class MedicineDosages {
-  String? id;
-  String? timeStamp;
-  String? abbreviation;
-  String? latin;
-  String? englishDefinition;
-  String? urduDefinition;
-  String? dosageValue;
-  String? active;
-  String? repeatId;
-  String? branchId;
-  String? createdById;
-  String? createdOn;
-  String? modifiedById;
-  String? modifiedOn;
+  dynamic id;
+  dynamic timeStamp;
+  dynamic abbreviation;
+  dynamic latin;
+  dynamic englishDefinition;
+  dynamic urduDefinition;
+  dynamic dosageValue;
+  dynamic active;
+  dynamic repeatId;
+  dynamic branchId;
+  dynamic createdById;
+  dynamic createdOn;
+  dynamic modifiedById;
+  dynamic modifiedOn;
 
   MedicineDosages(
       {this.id,
@@ -208,7 +208,7 @@ class MedicineDosages {
       this.modifiedById,
       this.modifiedOn});
 
-  MedicineDosages.fromJson(Map<String, dynamic> json) {
+  MedicineDosages.fromJson(Map<dynamic, dynamic> json) {
     id = json['Id'];
     timeStamp = json['TimeStamp'];
     abbreviation = json['Abbreviation'];
@@ -246,10 +246,10 @@ class MedicineDosages {
 }
 
 class MedicineRoutes {
-  String? id;
-  String? abbreviation;
-  String? englishDefinition;
-  String? urduDefinition;
+  dynamic id;
+  dynamic abbreviation;
+  dynamic englishDefinition;
+  dynamic urduDefinition;
 
   MedicineRoutes(
       {this.id,

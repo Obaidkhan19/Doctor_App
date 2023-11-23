@@ -6,6 +6,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -1262,32 +1263,54 @@ addMedicine(
                                     completer.complete(selectedMedicine);
                                     Get.back();
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content:
-                                                Text("Select Dosages First")));
+                                    Fluttertoast.showToast(
+                                        msg: 'SelectDosagesFirst'.tr,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: ColorManager.kRedColor,
+                                        textColor: ColorManager.kWhiteColor,
+                                        fontSize: 14.0);
                                   }
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content:
-                                              Text("Select Duaration First")));
+                                  Fluttertoast.showToast(
+                                      msg: 'SelectDuarationFirst'.tr,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: ColorManager.kRedColor,
+                                      textColor: ColorManager.kWhiteColor,
+                                      fontSize: 14.0);
                                 }
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text("Select Frequency First")));
+                                Fluttertoast.showToast(
+                                    msg: 'SelectFrequencyFirst'.tr,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: ColorManager.kRedColor,
+                                    textColor: ColorManager.kWhiteColor,
+                                    fontSize: 14.0);
                               }
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text("Select Route First")));
+                              Fluttertoast.showToast(
+                                  msg: 'SelectRouteFirst'.tr,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: ColorManager.kRedColor,
+                                  textColor: ColorManager.kWhiteColor,
+                                  fontSize: 14.0);
                             }
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Select Medicine First")));
+                            Fluttertoast.showToast(
+                                msg: 'SelectMedicineFirst'.tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: ColorManager.kRedColor,
+                                textColor: ColorManager.kWhiteColor,
+                                fontSize: 14.0);
                           }
                         },
                         color: ColorManager.kPrimaryColor,

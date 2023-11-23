@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/biometric_auth.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
@@ -37,8 +38,14 @@ class _MenuScreenState extends State<MenuScreen> {
     setState(() {});
   }
 
+  getDetail() {
+    ProfileRepo pr = ProfileRepo();
+    pr.getDoctorBasicInfo();
+  }
+
   @override
   void initState() {
+    getDetail();
     _getUserName();
     _getimagepath();
     super.initState();
@@ -63,7 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
       backgroundColor: ColorManager.kPrimaryColor,
       body: GetBuilder<ProfileController>(builder: (cntS) {
         return SafeArea(
-          minimum: const EdgeInsets.all(AppPadding.p20),
+          minimum: EdgeInsets.only(left: Get.width * 0.06),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,25 +101,32 @@ class _MenuScreenState extends State<MenuScreen> {
                   height: Get.height * 0.04,
                 ),
                 GetBuilder<ProfileController>(builder: (context) {
-                  return CircleAvatar(
-                    backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                    radius: 30,
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: ProfileController
-                                    .i.selectedbasicInfo?.picturePath !=
-                                null
-                            ? baseURL +
-                                ProfileController
-                                    .i.selectedbasicInfo?.picturePath
-                            : "",
-                        width: Get.width * 0.16,
-                        fit: BoxFit.fill,
-                        errorWidget: (context, url, error) =>
-                            Image.asset(AppImages.doctorlogo),
-                      ),
-                    ),
-                  );
+                  return ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: CircleAvatar(
+                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                          radius: 30,
+                          child: CachedNetworkImage(
+                            imageUrl: ProfileController
+                                        .i.selectedbasicInfo?.picturePath !=
+                                    null
+                                ? baseURL +
+                                    ProfileController
+                                        .i.selectedbasicInfo?.picturePath
+                                : "",
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover, // Adjust the fit property
+                                ),
+                              ),
+                            ),
+                            //  fit: BoxFit.fitHeight,
+                            errorWidget: (context, url, error) =>
+                                Image.asset(AppImages.doctorlogo),
+                          )));
                   // CircleAvatar(
                   //     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
                   //     radius: 30,
@@ -272,8 +286,8 @@ class _MenuScreenState extends State<MenuScreen> {
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   leading: Image.asset(
                     AppImages.walletimg,
-                    height: Get.height * 0.035,
-                    width: Get.width * 0.08,
+                    height: Get.height * 0.03,
+                    width: Get.width * 0.06,
                   ),
                   title: Text(
                     'wallet'.tr,
@@ -348,29 +362,17 @@ class _MenuScreenState extends State<MenuScreen> {
                                     null) {
                                   fingerprint = auth;
                                 } else {
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //     const SnackBar(
-                                  //         content: Text('Biometric Enabled')));
                                   LocalDb.savefingerprint(true);
                                   // Utils().toastmessage(“You are already Logged in”);
                                   fingerprint = true;
                                 }
                                 setState(() {});
-                              } else {
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //     const SnackBar(
-                                //         content: Text(
-                                //             "You declined the biometric login.")));
-                              }
+                              } else {}
                               if (fingerprint) {
                                 if (auth) {
                                   if (ProfileController
                                           .i.selectedbasicInfo?.id !=
                                       null) {
-                                    // ScaffoldMessenger.of(context).showSnackBar(
-                                    //     const SnackBar(
-                                    //         content:
-                                    //             Text('Biometric Enabled')));
                                     LocalDb.savefingerprint(true);
                                     setState(() {
                                       fingerprint = true;
@@ -397,12 +399,6 @@ class _MenuScreenState extends State<MenuScreen> {
                             setState(() {});
                           }
                         }),
-                    // Switch(
-                    //   value: isBiometric,
-                    //   activeColor: ColorManager.kWhiteColor,
-                    //   onChanged: (value) async {
-                    //   },
-                    // ),
                   ),
                   title: Text(
                     'biometric'.tr,
@@ -410,7 +406,6 @@ class _MenuScreenState extends State<MenuScreen> {
                       textStyle: GoogleFonts.poppins(
                         fontSize: 15,
                         color: ColorManager.kWhiteColor,
-                        //    fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -456,7 +451,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 ListTile(
                   leading: Image.asset(
                     AppImages.bin,
-                    height: Get.height * 0.035,
+                    height: Get.height * 0.03,
                   ),
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),

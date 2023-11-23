@@ -195,6 +195,108 @@ class RegisterLMPCCustomTextField extends StatelessWidget {
   }
 }
 
+class EditLMPCCustomTextField extends StatelessWidget {
+  final TextEditingController? controller;
+  final List<TextInputFormatter>? inputFormatters;
+  final String? Function(String?)? validator;
+  final Function()? onTap;
+  final EdgeInsetsGeometry? padding;
+  final int? maxlines;
+  final Widget? prefixIcon;
+  final TextStyle? suffixStyle;
+  final String? suffixText;
+  final bool? isSizedBoxAvailable;
+  final bool readonly;
+  final Color? fillColor;
+  final Widget? suffixIcon;
+  final String? hintText;
+  final Function(String)? onchanged;
+  const EditLMPCCustomTextField({
+    super.key,
+    this.hintText,
+    this.suffixIcon,
+    this.fillColor = ColorManager.kPrimaryLightColor,
+    this.readonly = false,
+    this.isSizedBoxAvailable = true,
+    this.suffixText,
+    this.suffixStyle,
+    this.prefixIcon,
+    this.maxlines,
+    this.padding,
+    this.onTap,
+    this.validator,
+    this.inputFormatters,
+    this.onchanged,
+    this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        TextFormField(
+          controller: controller,
+          onChanged: onchanged,
+          validator: validator,
+          onTap: onTap ?? () {},
+          maxLines: maxlines ?? 1,
+          readOnly: readonly,
+          style: GoogleFonts.poppins(
+              color: ColorManager.kblackColor, fontSize: 12),
+          decoration: InputDecoration(
+            errorStyle: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: ColorManager.kWhiteColor, fontSize: 12),
+            contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
+            hintStyle: GoogleFonts.poppins(
+                color: ColorManager.kWhiteColor,
+                fontSize: 12,
+                fontWeight: FontWeight.bold),
+            hintText: 'addlegalmedicalpractisingcertificate'.tr,
+            filled: true,
+            disabledBorder:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide:
+                  BorderSide(color: ColorManager.kWhiteColor.withOpacity(0.6)),
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.white.withOpacity(0.1),
+                ),
+                borderRadius: BorderRadius.circular(8)),
+            errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.kRedColor)),
+            fillColor: Colors.white.withOpacity(0.7),
+            suffixIcon: suffixIcon,
+            suffixText: suffixText,
+            suffixStyle: suffixStyle,
+            prefixIcon: prefixIcon,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.white.withOpacity(0.1),
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(0.0),
+              ),
+            ),
+          ),
+          inputFormatters: inputFormatters,
+        ),
+        isSizedBoxAvailable == true
+            ? SizedBox(
+                //  height: Get.height * 0.02,
+                )
+            : SizedBox.shrink()
+      ],
+    );
+  }
+}
+
 class RegisterDOBCustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
@@ -439,6 +541,10 @@ class EditProfileCustomTextField extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w700),
           decoration: InputDecoration(
+            errorStyle: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: ColorManager.kWhiteColor, fontSize: 12),
             contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
             hintStyle: GoogleFonts.poppins(
                 fontSize: 12,
@@ -459,6 +565,8 @@ class EditProfileCustomTextField extends StatelessWidget {
                 color: Colors.white.withOpacity(0.1),
               ),
             ),
+            errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.kRedColor)),
             fillColor: Colors.white.withOpacity(0.7),
             suffixIcon: suffixIcon,
             suffixText: suffixText,

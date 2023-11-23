@@ -528,17 +528,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     ),
 
                     CustomIntlPhoneField(
-                      // validator: (val) {
-                      //   if (RegistrationController.i.phone.text.isEmpty ||
-                      //       RegistrationController.i.phone.text
-                      //               .toString()
-                      //               .split('')
-                      //               .length <
-                      //           10) {
-                      //     return "please add number";
-                      //   }
-                      //   return null;
-                      // },
+                      errorColor: ColorManager.kRedColor,
                       style: GoogleFonts.poppins(
                           color: ColorManager.kGreyColor, fontSize: 12),
                       dropdownIcon: const Icon(

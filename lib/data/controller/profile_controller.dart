@@ -1,4 +1,5 @@
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/models/designation.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:get/get.dart';
@@ -111,6 +112,26 @@ class ProfileController extends GetxController implements GetxService {
     EditProfileController.i.middlename.text =
         selectedbasicInfo?.middleName ?? "";
     EditProfileController.i.lastname.text = selectedbasicInfo?.lastName ?? "";
+
+    //  Designation
+
+    if (selectedbasicInfo?.designation != null &&
+        selectedbasicInfo?.designationIds != null) {
+      String designationname = selectedbasicInfo?.designation;
+      String designationids = selectedbasicInfo?.designationIds;
+
+      List<String> idList = designationids.split(',');
+
+      EditProfileController.i.selecteddesignationList = idList.map((id) {
+        return Designations()..id = id.trim();
+      }).toList();
+
+      List<String> nameList = designationname.split(',');
+
+      EditProfileController.i.selecteddesignationList = nameList.map((name) {
+        return Designations()..name = name.trim();
+      }).toList();
+    }
 
     // if (selectedbasicInfo?.cNICNumber == null) {
     //   EditProfileController.i.idnumber.text =

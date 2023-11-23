@@ -150,16 +150,16 @@ class _WorkLocationState extends State<WorkLocation> {
                           hintText: edit.selectedhospital?.name == ""
                               ? 'Hospital'.tr
                               : edit.selectedhospital?.name ??
-                                  "Select Hospital",
+                                  "SelectHospital".tr,
                         ),
                         EditProfileCustomTextField(
                           controller: edit.worklocationpreference,
-                          hintText: 'Preference',
+                          hintText: 'Preference'.tr,
                         ),
                         SizedBox(height: Get.height * 0.03),
                         PrimaryButton(
                             fontSize: 15,
-                            title: 'Edit'.tr,
+                            title: 'edit'.tr,
                             onPressed: () async {
                               ProfileController.i.updateval(false);
                               setState(() {});
@@ -207,7 +207,7 @@ class _WorkLocationState extends State<WorkLocation> {
                                   activeColor: ColorManager.kPrimaryColor,
                                 ),
                                 Text(
-                                  'Add New Work Location',
+                                  'AddNewWorkLocation'.tr,
                                   style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       color: ColorManager.kWhiteColor,
@@ -245,21 +245,21 @@ class _WorkLocationState extends State<WorkLocation> {
                                         ? 'Hospital'.tr
                                         : add.addworklocationselectedhospital
                                                 ?.name ??
-                                            "Select Hospital",
+                                            "SelectHospital".tr,
                               ),
                             ),
                             Visibility(
                               visible: add.newworklocationisChecked == false,
                               child: EditProfileCustomTextField(
                                 controller: add.worklocationpreference,
-                                hintText: 'Preference',
+                                hintText: 'Preference'.tr,
                               ),
                             ),
                             Visibility(
                               visible: add.newworklocationisChecked == true,
                               child: EditProfileCustomTextField(
                                 controller: add.newworklocationname,
-                                hintText: 'Name',
+                                hintText: 'name'.tr,
                               ),
                             ),
                             Visibility(
@@ -307,7 +307,7 @@ class _WorkLocationState extends State<WorkLocation> {
                                         ? 'country'.tr
                                         : add.addselectedworklocationcountry
                                                 ?.name ??
-                                            "Select country",
+                                            "Selectcountry".tr,
                               ),
                             ),
                             Visibility(
@@ -315,42 +315,48 @@ class _WorkLocationState extends State<WorkLocation> {
                               child: EditProfileCustomTextField(
                                 validator: (value) {
                                   if (value == "Province") {
-                                    return 'Please select your State'.tr;
+                                    return 'pleaseselectyourprovince'.tr;
                                   }
                                   return null;
                                 },
                                 readonly: true,
                                 onTap: () async {
-                                  add.addselectedworklocationstate = null;
-                                  add.addselectedworklocationCities = null;
-                                  Provinces generic = await searchabledropdown(
-                                      context, add.addworklocationstateList);
-                                  add.addselectedworklocationstate = null;
-                                  add.updateaddselectedworklocationstate(
-                                      generic);
+                                  if (add.addselectedworklocationcountry !=
+                                      null) {
+                                    add.addselectedworklocationstate = null;
+                                    add.addselectedworklocationCities = null;
+                                    Provinces generic =
+                                        await searchabledropdown(context,
+                                            add.addworklocationstateList);
+                                    add.addselectedworklocationstate = null;
+                                    add.updateaddselectedworklocationstate(
+                                        generic);
 
-                                  if (generic.id != null) {
-                                    add.addselectedworklocationstate = generic;
-                                    add.addselectedworklocationstate =
-                                        (generic.id == null)
-                                            ? null
-                                            : add.addselectedworklocationstate;
+                                    if (generic.id != null) {
+                                      add.addselectedworklocationstate =
+                                          generic;
+                                      add.addselectedworklocationstate =
+                                          (generic.id == null)
+                                              ? null
+                                              : add
+                                                  .addselectedworklocationstate;
+                                    }
+                                    String cid = add
+                                            .addselectedworklocationstate?.id
+                                            .toString() ??
+                                        "";
+                                    setState(() {
+                                      _getaddCities(cid);
+                                    });
                                   }
-                                  String cid = add
-                                          .addselectedworklocationstate?.id
-                                          .toString() ??
-                                      "";
-                                  setState(() {
-                                    _getaddCities(cid);
-                                  });
                                 },
                                 hintText:
                                     add.addselectedworklocationstate?.name == ""
-                                        ? 'State'
+                                        ? 'state'.tr
                                         : add.addselectedworklocationstate
                                                     ?.name ==
                                                 null
-                                            ? 'State'
+                                            ? 'state'.tr
                                             : add.addselectedworklocationstate
                                                     ?.name ??
                                                 "",
@@ -367,29 +373,36 @@ class _WorkLocationState extends State<WorkLocation> {
                                 },
                                 readonly: true,
                                 onTap: () async {
-                                  add.addselectedworklocationCities = null;
-                                  Cities generic = await searchabledropdown(
-                                      context, add.addworklocationcitiesList);
-                                  add.addselectedworklocationCities = null;
-                                  add.updateaddselectedworklocationCities(
-                                      generic);
+                                  if (add.addselectedworklocationcountry !=
+                                          null &&
+                                      add.addselectedworklocationstate !=
+                                          null) {
+                                    add.addselectedworklocationCities = null;
+                                    Cities generic = await searchabledropdown(
+                                        context, add.addworklocationcitiesList);
+                                    add.addselectedworklocationCities = null;
+                                    add.updateaddselectedworklocationCities(
+                                        generic);
 
-                                  if (generic.id != null) {
-                                    add.addselectedworklocationCities = generic;
-                                    add.addselectedworklocationCities =
-                                        (generic.id == null)
-                                            ? null
-                                            : add.addselectedworklocationCities;
+                                    if (generic.id != null) {
+                                      add.addselectedworklocationCities =
+                                          generic;
+                                      add.addselectedworklocationCities =
+                                          (generic.id == null)
+                                              ? null
+                                              : add
+                                                  .addselectedworklocationCities;
+                                    }
+                                    setState(() {});
                                   }
-                                  setState(() {});
                                 },
                                 hintText: add.addselectedworklocationCities
                                             ?.name ==
                                         ""
-                                    ? 'City'
+                                    ? 'city'.tr
                                     : add.addselectedworklocationCities?.name ==
                                             null
-                                        ? 'City'
+                                        ? 'city'.tr
                                         : add.addselectedworklocationCities
                                                 ?.name ??
                                             "",
@@ -399,13 +412,13 @@ class _WorkLocationState extends State<WorkLocation> {
                               visible: add.newworklocationisChecked == true,
                               child: EditProfileCustomTextField(
                                 controller: add.newworklocationnameaddress,
-                                hintText: 'Address',
+                                hintText: 'address'.tr,
                               ),
                             ),
                             SizedBox(height: Get.height * 0.03),
                             PrimaryButton(
                                 fontSize: 15,
-                                title: 'Add'.tr,
+                                title: 'add'.tr,
                                 onPressed: () async {
                                   ProfileController.i.updateaddval(false);
                                   setState(() {});

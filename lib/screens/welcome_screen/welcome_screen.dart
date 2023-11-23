@@ -6,7 +6,6 @@ import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../data/localDB/local_db.dart';
 import '../../utils/constants.dart';
 import '../auth_screens/login.dart';

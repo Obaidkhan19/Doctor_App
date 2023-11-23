@@ -5,6 +5,28 @@ import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalDb {
+  saveUsername(String? username) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var result = prefs.setString('Username', '$username');
+  }
+
+  Future<String?>? getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? result = prefs.getString('Username');
+    return result;
+  }
+
+  savePassword(String? password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var result = prefs.setString('Password', '$password');
+  }
+
+  Future<String?>? getPassword() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? result = prefs.getString('Password');
+    return result;
+  }
+
   static savefingerprint(bool val) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('fingerprint', val);

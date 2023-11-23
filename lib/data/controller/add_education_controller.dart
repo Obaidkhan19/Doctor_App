@@ -63,6 +63,11 @@ class AddEducationController extends GetxController implements GetxService {
   static DateTime? degreestart = DateTime.now();
   String? formatteddegreestart = degreestart!.toIso8601String();
   RxString? formatedegreestart = DateFormat.yMMMd().format(degreestart!).obs;
+  updatedegreestart(ardate) {
+    degreestart = ardate;
+    update();
+  }
+
   Future<void> selecteducationstartDateAndTime(
     BuildContext context,
     DateTime? date,
@@ -80,6 +85,7 @@ class AddEducationController extends GetxController implements GetxService {
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreestart = iso8601Format.format(date);
+      updatedegreestart(date);
       update();
     }
   }
@@ -89,6 +95,12 @@ class AddEducationController extends GetxController implements GetxService {
   static DateTime? degreeend = DateTime.now();
   String? formatteddegreeend = degreeend!.toIso8601String();
   RxString? formatedegreeend = DateFormat.yMMMd().format(degreeend!).obs;
+
+  updatedegreeend(ardate) {
+    degreeend = ardate;
+    update();
+  }
+
   Future<void> selecteducationendDateAndTime(
     BuildContext context,
     DateTime? date,
@@ -106,6 +118,7 @@ class AddEducationController extends GetxController implements GetxService {
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreeend = iso8601Format.format(date);
+      updatedegreeend(date);
       update();
     }
   }

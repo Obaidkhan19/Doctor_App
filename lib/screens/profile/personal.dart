@@ -2,6 +2,7 @@ import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
+import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
@@ -125,6 +126,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                       child: Column(
                         children: [
                           EditProfileCustomTextField(
+                            validator: (value) {
+                              if (edit.selectedpersonalTitle == null) {
+                                return 'selectpersonaltitle'.tr;
+                              } else {
+                                return null;
+                              }
+                            },
                             onTap: () async {
                               edit.selectedpersonalTitle = null;
                               PTitle generic = await searchabledropdown(
@@ -151,7 +159,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             child: EditProfileCustomTextField(
                               validator: (p0) {
                                 if (p0!.isEmpty) {
-                                  return 'Enter Title Prefix';
+                                  return 'EnterTitlePrefix'.tr;
                                 }
                                 return null;
                               },
@@ -162,7 +170,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                           EditProfileCustomTextField(
                             validator: (p0) {
                               if (p0!.isEmpty) {
-                                return 'Enter First Name';
+                                return 'enteryourfirstname'.tr;
                               }
                               return null;
                             },
@@ -170,19 +178,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             controller: edit.firstname,
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter Middle Name';
-                              }
-                              return null;
-                            },
                             hintText: 'middleName'.tr,
                             controller: edit.middlename,
                           ),
                           EditProfileCustomTextField(
                             validator: (p0) {
                               if (p0!.isEmpty) {
-                                return 'Enter Last Name';
+                                return 'enteryourlastname'.tr;
                               }
                               return null;
                             },
@@ -190,6 +192,12 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             controller: edit.lastname,
                           ),
                           EditProfileCustomTextField(
+                            validator: (p0) {
+                              if (edit.selectedgender == null) {
+                                return 'selectgender'.tr;
+                              }
+                              return null;
+                            },
                             onTap: () async {
                               edit.selectedgender = null;
                               GendersData generic = await searchabledropdown(
@@ -210,6 +218,12 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                 : edit.selectedgender?.name.toString(),
                           ),
                           EditProfileCustomTextField(
+                            validator: (p0) {
+                              if (edit.selectedmaritalStatus == null) {
+                                return 'selectmaritalstatus'.tr;
+                              }
+                              return null;
+                            },
                             onTap: () async {
                               edit.selectedmaritalStatus = null;
                               MSData generic = await searchabledropdown(
@@ -233,7 +247,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                           EditProfileCustomTextField(
                             validator: (p0) {
                               if (p0!.isEmpty) {
-                                return 'Enter your Id Number'.tr;
+                                return 'EnterIDNumber'.tr;
                               }
                               return null;
                             },
@@ -247,7 +261,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                           EditProfileCustomTextField(
                             validator: (p0) {
                               if (p0!.isEmpty) {
-                                return 'Enter Your Passport No';
+                                return 'EnterPassportNumber'.tr;
                               }
                               return null;
                             },
@@ -264,49 +278,49 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             controller: edit.imcno,
                             hintText: 'imcno'.tr,
                           ),
-                          InkWell(
+                          EditLMPCCustomTextField(
+                            readonly: true,
                             onTap: () {
                               edit.picksinglefile();
                             },
-                            child: Container(
-                              width:
-                                  Get.width * 1, // Adjust the width as needed
-                              height: Get.height * 0.07,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'addLMPC'.tr,
-                                  style: GoogleFonts.poppins(
-                                    color: ColorManager.kWhiteColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // validator: (p0) {
+                            //   if (edit.pmcfile == null) {
+                            //     return 'pleaseaddLMPC'.tr;
+                            //   }
+                            //   return null;
+                            // },
                           ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     edit.picksinglefile();
+                          //   },
+                          //   child: Container(
+                          //     width:
+                          //         Get.width * 1, // Adjust the width as needed
+                          //     height: Get.height * 0.07,
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.white.withOpacity(0.7),
+                          //       borderRadius: BorderRadius.circular(10.0),
+                          //     ),
+                          //     child: Center(
+                          //       child: Text(
+                          //         'addLMPC'.tr,
+                          //         style: GoogleFonts.poppins(
+                          //           color: ColorManager.kWhiteColor,
+                          //           fontWeight: FontWeight.bold,
+                          //           fontSize: 15,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(height: Get.height * 0.02),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter NTN Number';
-                              }
-                              return null;
-                            },
                             controller: edit.ntnnumber,
                             hintText: 'NTNNumber'.tr,
                             keyboardTypenew: TextInputType.number,
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter Consultancy Fee';
-                              }
-                              return null;
-                            },
                             keyboardTypenew:
                                 const TextInputType.numberWithOptions(
                                     decimal: true),
@@ -318,12 +332,6 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             controller: edit.consultancyfee,
                           ),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter Follow UP Fee';
-                              }
-                              return null;
-                            },
                             hintText: 'followupfee'.tr,
                             controller: edit.followupfee,
                             keyboardTypenew:
@@ -351,7 +359,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             },
                             readonly: true,
                             hintText: edit.selectedbloodgroup?.name == ""
-                                ? 'Blood Group'
+                                ? 'bloodGroup'.tr
                                 : edit.selectedbloodgroup?.name.toString(),
                           ),
                           EditProfileCustomTextField(
@@ -371,7 +379,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             },
                             readonly: true,
                             hintText: edit.selectedreligion?.name == ""
-                                ? 'Religion'
+                                ? 'religion'.tr
                                 : edit.selectedreligion?.name.toString(),
                           ),
                           EditProfileCustomTextField(
@@ -458,26 +466,20 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             ),
                           ),
                           EditProfileCustomTextField(
-                            onTap: () async {
-                              edit.ontap = true;
-                              edit.selectDateAndTime(
-                                  context,
-                                  EditProfileController.arrival,
-                                  edit.formatearrival);
-                            },
-                            readonly: true,
-                            hintText: DateFormat('MM-dd-y').format(
-                                DateTime.parse(edit.formattedArrival
-                                    .toString()
-                                    .split("T")[0])),
-                          ),
+                              onTap: () async {
+                                edit.ontap = true;
+                                edit.selectDateAndTime(
+                                    context,
+                                    EditProfileController.arrival,
+                                    edit.formatearrival);
+                              },
+                              readonly: true,
+                              // hintText: DateFormat('MM-dd-y').format(
+                              //     DateTime.parse(edit.formattedArrival
+                              //         .toString()
+                              //         .split("T")[0])),
+                              hintText: edit.formatearrival.toString()),
                           EditProfileCustomTextField(
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return 'Enter Guardian Name';
-                              }
-                              return null;
-                            },
                             hintText: 'guardianName'.tr,
                             controller: edit.guardianname,
                           ),
@@ -498,7 +500,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                             },
                             readonly: true,
                             hintText: edit.selectedrelation?.name == ""
-                                ? 'Relation'
+                                ? 'relation'.tr
                                 : edit.selectedrelation?.name.toString(),
                           ),
                           SizedBox(height: Get.height * 0.03),
@@ -506,43 +508,47 @@ class _PersonalDetailState extends State<PersonalDetail> {
                               fontSize: 15,
                               title: 'update'.tr,
                               onPressed: () async {
-                                String filepath = "";
+                                String? filepath;
                                 if (edit.pmcfile != null) {
                                   AuthRepo ar = AuthRepo();
-                                  await ar.uploadFile(edit.pmcfile!);
+                                  filepath = await ar.uploadFile(edit.pmcfile!);
                                 }
 
                                 ProfileRepo pr = ProfileRepo();
 
-                                String res = await pr.updatePersonalInfoCNIC(
-                                  edit.customprefixtitle.text,
-                                  edit.selectedpersonalTitle?.id ?? "",
-                                  edit.firstname.text,
-                                  edit.middlename.text,
-                                  edit.lastname.text,
-                                  edit.formattedArrival,
-                                  edit.selectedmaritalStatus?.id ?? "",
-                                  edit.guardianname.text,
-                                  edit.selectedrelation?.id ?? "",
-                                  edit.selectedgender?.id ?? "",
-                                  edit.idnumber.text,
-                                  edit.imcno.text,
-                                  filepath,
-                                  edit.ntnnumber.text,
-                                  edit.consultancyfee.text,
-                                  edit.followupfee.text,
-                                  edit.selectedbloodgroup?.id ?? "",
-                                  edit.selectedreligion?.id ?? "",
-                                  edit.selecteddesignationIdList,
-                                  edit.passportno.text,
-                                );
-                                if (res == "true") {
-                                  //  Get.back(result: true);
-                                  edit.selecteddesignationIdList.clear();
-                                  edit.selecteddesignationList.clear();
-                                  ProfileController.i.updateval(false);
-                                  _getDoctorBasicInfo();
-                                  setState(() {});
+                                if (_formKey.currentState!.validate()) {
+                                  String res = await pr.updatePersonalInfoCNIC(
+                                    edit.customprefixtitle.text,
+                                    edit.selectedpersonalTitle?.id ?? "",
+                                    edit.firstname.text,
+                                    edit.middlename.text,
+                                    edit.lastname.text,
+                                    edit.formattedArrival,
+                                    edit.selectedmaritalStatus?.id ?? "",
+                                    edit.guardianname.text,
+                                    edit.selectedrelation?.id ?? "",
+                                    edit.selectedgender?.id ?? "",
+                                    edit.idnumber.text,
+                                    edit.imcno.text,
+                                    filepath ??
+                                        profile.selectedbasicInfo
+                                            ?.pMDCCertificateAttachment,
+                                    edit.ntnnumber.text,
+                                    edit.consultancyfee.text,
+                                    edit.followupfee.text,
+                                    edit.selectedbloodgroup?.id ?? "",
+                                    edit.selectedreligion?.id ?? "",
+                                    edit.selecteddesignationIdList,
+                                    edit.passportno.text,
+                                  );
+                                  if (res == "true") {
+                                    //  Get.back(result: true);
+                                    edit.selecteddesignationIdList.clear();
+                                    edit.selecteddesignationList.clear();
+                                    ProfileController.i.updateval(false);
+                                    _getDoctorBasicInfo();
+                                    setState(() {});
+                                  }
                                 }
                               },
                               color: Colors.white.withOpacity(0.7),

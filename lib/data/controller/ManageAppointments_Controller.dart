@@ -39,6 +39,11 @@ class ManageAppointmentController extends GetxController
   bool? isLoadingDailyDoctorAppointment = false;
   bool? isLoadingDailyDoctorAppointmentSlots = false;
 
+  updateisLoadingSlots(value) {
+    isLoadingDailyDoctorAppointmentSlots = value;
+    update();
+  }
+
   bool? _selectall = false;
   bool? get selectall => _selectall;
 
@@ -62,6 +67,11 @@ class ManageAppointmentController extends GetxController
   }
 
   bool isLoadingMonthlyDoctorAppointment = false;
+
+  updateIsmonthly(bool value) {
+    isLoadingMonthlyDoctorAppointment = value;
+    update();
+  }
   // getmonthlyoctorAppointment(date, wlid, isonline) async {
   //   try {
   //     isLoadingMonthlyDoctorAppointment = true;
@@ -84,11 +94,13 @@ class ManageAppointmentController extends GetxController
   //   }
   // }
 
-  getmonthlyoctorAppointment(date, wlid, isonline, diffr) async {
+  getmonthlydoctorAppointment(date, wlid, isonline, diffr) async {
     monthlyappintment.clear();
+
     data.clear();
     try {
-      isLoadingMonthlyDoctorAppointment = true;
+      // isLoadingMonthlyDoctorAppointment = true;
+      // update();
       monthlyappintment =
           await Manageappointmentrepo.GetmonthlyDoctorAppointment(
               date.toString().split(' ')[0], wlid, isonline);
@@ -114,19 +126,6 @@ class ManageAppointmentController extends GetxController
       DateTime dt2 = DateTime.parse(
           "${diffr.toString().split(' ')[2]} ${diffr.toString().split(' ')[3]}");
       for (int i = 0; i < monthlyappintment.length; i++) {
-        // if (int.parse(monthlyappintment[i]
-        //             .date
-        //             .toString()
-        //             .split(‘T’)[0]
-        //             .split(‘-’)[2]) >
-        //         int.parse(diffr.toString().split(' ’)[0]) &&
-        //     int.parse(monthlyappintment[i]
-        //             .date
-        //             .toString()
-        //             .split(‘T’)[0]
-        //             .split(‘-’)[2]) <
-        //         int.parse(diffr.toString().split(' ’)[1]))
-        // if(DateTime.parse(diffr))
         if (dt1.isBefore(DateTime.parse(
                 "${monthlyappintment[i].date.toString().split('T')[0]} ${monthlyappintment[i].date.toString().split('T')[1]}")) &&
             dt2.isAfter(DateTime.parse(
@@ -138,11 +137,12 @@ class ManageAppointmentController extends GetxController
           }
         }
       }
-      isLoadingMonthlyDoctorAppointment = false;
-      update();
+      // isLoadingMonthlyDoctorAppointment = false;
+      // update();
     } catch (e) {
-      isLoadingMonthlyDoctorAppointment = false;
-      update();
+      // print("aaaaaaaaaaaaaaaaaaaaaaaaa $e");
+      // isLoadingMonthlyDoctorAppointment = false;
+      // update();
     }
   }
 
@@ -157,6 +157,7 @@ class ManageAppointmentController extends GetxController
 
   getDailyDoctorAppointment() async {
     isLoadingDailyDoctorAppointment = true;
+
     _dailyDoctorAppointmentsModel = DailyDoctorAppointmentsModel();
 
     try {
@@ -164,10 +165,9 @@ class ManageAppointmentController extends GetxController
       _dailyDoctorAppointmentsModel =
           await Manageappointmentrepo.getDailyDoctorAppointment();
       _isLoadingscreen = false;
-      update();
+      isLoadingDailyDoctorAppointment = false;
     } catch (e) {
       isLoadingDailyDoctorAppointment = false;
-      update();
     }
     // Timer(const Duration(milliseconds: 500), () {
     //   isLoadingDailyDoctorAppointment = false;
@@ -180,6 +180,7 @@ class ManageAppointmentController extends GetxController
       String Dates, String IsOnline, String WorkLocationId) async {
     _selectall = false;
     isLoadingDailyDoctorAppointmentSlots = true;
+    update();
     if (_dayViewAppointmentSlotModel.appointments != null) {
       _dayViewAppointmentSlotModel.appointments?.clear();
     }
@@ -188,10 +189,13 @@ class ManageAppointmentController extends GetxController
           await Manageappointmentrepo.getDailyDoctorAppointmentSlots(
               Dates, IsOnline, WorkLocationId);
       isLoadingDailyDoctorAppointmentSlots = false;
+      update();
     } catch (e) {
       isLoadingDailyDoctorAppointmentSlots = false;
+      update();
     }
     isLoadingDailyDoctorAppointmentSlots = false;
+
     update();
   }
 
@@ -262,6 +266,8 @@ class ManageAppointmentController extends GetxController
       reschedualAppointmentSlots.IsOnlineConsultation =
           element.isOnlineConsultation.toString();
       reschedualAppointmentSlots.PatientId = element.patientId;
+      reschedualAppointmentSlots.DoctorId = element.doctorId;
+      reschedualAppointmentSlots.BranchId = element.branchId;
       appointments.add(reschedualAppointmentSlots);
     }
     var resultResponse;
@@ -307,7 +313,6 @@ class ManageAppointmentController extends GetxController
       isLoadingDailyDoctorAppointmentSlots = false;
       update();
     } catch (e) {
-      print("eexectption$e");
       isLoadingDailyDoctorAppointmentSlots = false;
       update();
     }

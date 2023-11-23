@@ -1,5 +1,5 @@
 class pastMedicine {
-  int? status;
+  dynamic status;
   List<Medicinesss1>? medicines;
 
   pastMedicine({this.status, this.medicines});
@@ -25,30 +25,30 @@ class pastMedicine {
 }
 
 class Medicinesss1 {
-  String? eRNSId;
-  String? medicineName;
-  String? medicineDosage;
-  String? medicineDosageId;
-  int? dosageValue;
-  String? dosageName;
-  String? medicineStrengthId;
-  String? medicineRouteId;
-  String? routeName;
-  int? frequencyQuantity;
-  String? frequencyNumeric;
-  String? dayId;
-  String? dateId;
-  String? englishCounting;
-  String? englishDay;
-  String? medicineEventTimingId;
-  String? medicineDurationDetail;
-  String? medicineEnglishDescription;
-  String? medicineEventTimingDetail;
-  String? medicineEventTimingDisplay;
-  String? medicineUrduDescription;
-  String? tappedMedicinesDetail;
-  String? type;
-  String? urduType;
+  dynamic eRNSId;
+  dynamic medicineName;
+  dynamic medicineDosage;
+  dynamic medicineDosageId;
+  dynamic dosageValue;
+  dynamic dosageName;
+  dynamic medicineStrengthId;
+  dynamic medicineRouteId;
+  dynamic routeName;
+  dynamic frequencyQuantity;
+  dynamic frequencyNumeric;
+  dynamic dayId;
+  dynamic dateId;
+  dynamic englishCounting;
+  dynamic englishDay;
+  dynamic medicineEventTimingId;
+  dynamic medicineDurationDetail;
+  dynamic medicineEnglishDescription;
+  dynamic medicineEventTimingDetail;
+  dynamic medicineEventTimingDisplay;
+  dynamic medicineUrduDescription;
+  dynamic tappedMedicinesDetail;
+  dynamic type;
+  dynamic urduType;
 
   Medicinesss1(
       {this.eRNSId,

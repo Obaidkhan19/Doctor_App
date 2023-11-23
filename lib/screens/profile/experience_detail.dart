@@ -72,8 +72,14 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                         height: Get.height * 0.02,
                       ),
                       EditProfileCustomTextField(
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return 'PleaseEnterJobTitle'.tr;
+                          }
+                          return null;
+                        },
                         controller: edit.jobtitle,
-                        hintText: 'Job Title',
+                        hintText: 'JobTitle'.tr,
                       ),
                       EditProfileCustomTextField(
                         onTap: () async {
@@ -92,9 +98,9 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                         },
                         readonly: true,
                         hintText: edit.selectedexperiencelocation?.name == ""
-                            ? 'Location'.tr
+                            ? 'location'.tr
                             : edit.selectedexperiencelocation?.name ??
-                                "Select Location",
+                                "SelectLocation".tr,
                       ),
                       EditProfileCustomTextField(
                         onTap: () async {
@@ -108,7 +114,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                     .toString()
                                     .split("T")[0] ==
                                 DateTime.now().toString().split(" ")[0]
-                            ? "Select From Date"
+                            ? "SelectFromDate".tr
                             : DateFormat('MM-dd-y').format(DateTime.parse(edit
                                 .formattedexperiencefrom
                                 .toString()
@@ -138,7 +144,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                               activeColor: ColorManager.kWhiteColor,
                             ),
                             Text(
-                              'Currently Working',
+                              'CurrentlyWorking'.tr,
                               style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   color: ColorManager.kWhiteColor,
@@ -161,7 +167,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                       .toString()
                                       .split("T")[0] ==
                                   DateTime.now().toString().split(" ")[0]
-                              ? "Select To Date"
+                              ? "SelectToDate".tr
                               : DateFormat('MM-dd-y').format(DateTime.parse(edit
                                   .formattedexperienceto
                                   .toString()
@@ -181,7 +187,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                           ),
                           child: Center(
                             child: Text(
-                              'Attachment',
+                              'Attachment'.tr,
                               style: GoogleFonts.poppins(
                                 color: ColorManager.kWhiteColor,
                                 fontSize: 15,
@@ -195,12 +201,12 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                       ),
                       EditProfileCustomTextField(
                         controller: edit.experienceDescription,
-                        hintText: 'Description',
+                        hintText: 'Description'.tr,
                       ),
                       SizedBox(height: Get.height * 0.03),
                       PrimaryButton(
                           fontSize: 15,
-                          title: 'Edit'.tr,
+                          title: 'edit'.tr,
                           onPressed: () async {
                             ProfileController.i.updateval(false);
                             setState(() {});
@@ -225,8 +231,14 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                             height: Get.height * 0.02,
                           ),
                           EditProfileCustomTextField(
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return 'PleaseEnterJobTitle'.tr;
+                              }
+                              return null;
+                            },
                             controller: add.jobtitle,
-                            hintText: 'Job Title',
+                            hintText: 'JobTitle'.tr,
                           ),
                           EditProfileCustomTextField(
                             onTap: () async {
@@ -248,7 +260,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                 add.addselectedexperiencelocation?.name == ""
                                     ? 'Location'.tr
                                     : add.addselectedexperiencelocation?.name ??
-                                        "Select Location",
+                                        "SelectLocation".tr,
                           ),
                           EditProfileCustomTextField(
                             onTap: () async {
@@ -262,7 +274,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                         .toString()
                                         .split("T")[0] ==
                                     DateTime.now().toString().split(" ")[0]
-                                ? "Select From Date"
+                                ? "SelectFromDate".tr
                                 : DateFormat('MM-dd-y').format(DateTime.parse(
                                     add.formattedexperiencefrom
                                         .toString()
@@ -294,7 +306,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                   activeColor: ColorManager.kWhiteColor,
                                 ),
                                 Text(
-                                  'Currently Working',
+                                  'CurrentlyWorking'.tr,
                                   style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       color: ColorManager.kWhiteColor,
@@ -317,7 +329,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                           .toString()
                                           .split("T")[0] ==
                                       DateTime.now().toString().split(" ")[0]
-                                  ? "Select To Date"
+                                  ? "SelectToDate".tr
                                   : DateFormat('MM-dd-y').format(DateTime.parse(
                                       add.formattedexperienceto
                                           .toString()
@@ -338,7 +350,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Attachment',
+                                  'Attachment'.tr,
                                   style: GoogleFonts.poppins(
                                     color: ColorManager.kWhiteColor,
                                     fontSize: 15,
@@ -352,12 +364,12 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                           ),
                           EditProfileCustomTextField(
                             controller: add.experienceDescription,
-                            hintText: 'Description',
+                            hintText: 'Description'.tr,
                           ),
                           SizedBox(height: Get.height * 0.03),
                           PrimaryButton(
                               fontSize: 15,
-                              title: 'Add '.tr,
+                              title: 'add'.tr,
                               onPressed: () async {
                                 ProfileController.i.updateaddval(false);
 

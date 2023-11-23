@@ -77,12 +77,12 @@ class _MemberShipState extends State<MemberShip> {
                       children: [
                         EditProfileCustomTextField(
                           controller: edit.membershiptitle,
-                          hintText: 'Title',
+                          hintText: 'title'.tr,
                         ),
 
                         EditProfileCustomTextField(
                           controller: edit.membershipcode,
-                          hintText: 'Code',
+                          hintText: 'code'.tr,
                         ),
 
                         // organization
@@ -105,9 +105,9 @@ class _MemberShipState extends State<MemberShip> {
                           },
                           readonly: true,
                           hintText: edit.selectedmembershiplocation?.name == ""
-                              ? 'Location'.tr
+                              ? 'location'.tr
                               : edit.selectedmembershiplocation?.name ??
-                                  "Select Location",
+                                  "selectLocation".tr,
                         ),
 
                         EditProfileCustomTextField(
@@ -122,7 +122,7 @@ class _MemberShipState extends State<MemberShip> {
                                       .toString()
                                       .split("T")[0] ==
                                   DateTime.now().toString().split(" ")[0]
-                              ? "Select From Date"
+                              ? "SelectFromDate".tr
                               : DateFormat('MM-dd-y').format(DateTime.parse(edit
                                   .formattedmembershipfrom
                                   .toString()
@@ -141,7 +141,7 @@ class _MemberShipState extends State<MemberShip> {
                                       .toString()
                                       .split("T")[0] ==
                                   DateTime.now().toString().split(" ")[0]
-                              ? "Select From Date"
+                              ? "SelectToDate".tr
                               : DateFormat('MM-dd-y').format(DateTime.parse(edit
                                   .formattedmembershipto
                                   .toString()
@@ -150,12 +150,12 @@ class _MemberShipState extends State<MemberShip> {
 
                         EditProfileCustomTextField(
                           controller: edit.membershipdescription,
-                          hintText: 'Description',
+                          hintText: 'description'.tr,
                         ),
                         SizedBox(height: Get.height * 0.03),
                         PrimaryButton(
                             fontSize: 15,
-                            title: 'Edit'.tr,
+                            title: 'edit'.tr,
                             onPressed: () async {
                               ProfileController.i.updateval(false);
                               setState(() {});
@@ -187,12 +187,12 @@ class _MemberShipState extends State<MemberShip> {
                           children: [
                             EditProfileCustomTextField(
                               controller: add.membershiptitle,
-                              hintText: 'Title',
+                              hintText: 'title'.tr,
                             ),
 
                             EditProfileCustomTextField(
                               controller: add.membershipcode,
-                              hintText: 'Code',
+                              hintText: 'code'.tr,
                             ),
 
                             // organization
@@ -217,10 +217,10 @@ class _MemberShipState extends State<MemberShip> {
                               readonly: true,
                               hintText:
                                   add.addselectedmembershiplocation?.name == ""
-                                      ? 'Location'.tr
+                                      ? 'location'.tr
                                       : add.addselectedmembershiplocation
                                               ?.name ??
-                                          "Select Location",
+                                          "SelectLocation".tr,
                             ),
 
                             EditProfileCustomTextField(
@@ -235,7 +235,7 @@ class _MemberShipState extends State<MemberShip> {
                                           .toString()
                                           .split("T")[0] ==
                                       DateTime.now().toString().split(" ")[0]
-                                  ? "Select From Date"
+                                  ? "SelectFromDate".tr
                                   : DateFormat('MM-dd-y').format(DateTime.parse(
                                       add.formattedmembershipfrom
                                           .toString()
@@ -254,7 +254,7 @@ class _MemberShipState extends State<MemberShip> {
                                           .toString()
                                           .split("T")[0] ==
                                       DateTime.now().toString().split(" ")[0]
-                                  ? "Select From Date"
+                                  ? "SelectToDate".tr
                                   : DateFormat('MM-dd-y').format(DateTime.parse(
                                       add.formattedmembershipto
                                           .toString()
@@ -263,12 +263,12 @@ class _MemberShipState extends State<MemberShip> {
 
                             EditProfileCustomTextField(
                               controller: add.membershipdescription,
-                              hintText: 'Description',
+                              hintText: 'description'.tr,
                             ),
                             SizedBox(height: Get.height * 0.03),
                             PrimaryButton(
                                 fontSize: 15,
-                                title: 'Add'.tr,
+                                title: 'add'.tr,
                                 onPressed: () async {
                                   ProfileController.i.updateaddval(false);
                                   setState(() {});
@@ -338,7 +338,7 @@ class _MemberShipState extends State<MemberShip> {
                                           ),
                                         ),
                                         Text(
-                                          'Title',
+                                          'title'.tr,
                                           style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: ColorManager.kWhiteColor,
@@ -351,7 +351,7 @@ class _MemberShipState extends State<MemberShip> {
                                   SizedBox(
                                     width: Get.width * 0.24,
                                     child: Text(
-                                      'Organization',
+                                      'organization'.tr,
                                       style: GoogleFonts.poppins(
                                         fontSize: 12,
                                         color: ColorManager.kWhiteColor,
