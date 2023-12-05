@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:doctormobileapplication/components/custom_datepicker.dart';
+
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
@@ -171,7 +171,7 @@ class RegistrationController extends GetxController implements GetxService {
     DateTime? date,
     RxString? formattedDate,
   ) async {
-    final DateTime? pickedDate = await showCustomDatePicker(
+    final DateTime? pickedDate = await showDatePicker(
         context: context,
         confirmText: 'Ok',
         initialDate: date!,
