@@ -118,7 +118,7 @@ class RecordWidgetConfiguration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

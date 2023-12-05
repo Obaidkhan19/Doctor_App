@@ -2,10 +2,25 @@ import 'package:doctormobileapplication/data/controller/edit_profile_controller.
 import 'package:doctormobileapplication/models/designation.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController implements GetxService {
   static ProfileController get i => Get.put(ProfileController());
+
+  final zoomDrawerController = ZoomDrawerController();
+
+  bool fingerprint = false;
+  updatefingerprint(val) {
+    fingerprint = val;
+    update();
+  }
+
+  int selectedPage = 0;
+  updateselectedPage(val) {
+    selectedPage = val;
+    update();
+  }
 
   List<WorkLocations> displayprofileworkLocationsList = [];
 
@@ -114,7 +129,6 @@ class ProfileController extends GetxController implements GetxService {
     EditProfileController.i.lastname.text = selectedbasicInfo?.lastName ?? "";
 
     //  Designation
-
     if (selectedbasicInfo?.designation != null &&
         selectedbasicInfo?.designationIds != null) {
       String designationname = selectedbasicInfo?.designation;

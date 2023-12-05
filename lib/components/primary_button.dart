@@ -63,19 +63,22 @@ class PrimaryButton extends StatelessWidget {
                   width: 8,
                 ),
                 Center(
-                    child: cont.isLoading == false
-                        ? Text(
-                            title,
-                            style: TextStyle(
-                              fontSize: fontSize,
-                              color: textcolor,
-                              fontWeight: fontweight,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        : const CircularProgressIndicator(
-                            color: ColorManager.kWhiteColor,
-                          )),
+                    // child: cont.isLoading == false
+                    // ?
+                    child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    color: textcolor,
+                    fontWeight: fontweight,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+                    // :
+                    // const CircularProgressIndicator(
+                    //     color: ColorManager.kWhiteColor,
+                    //   )
+                    ),
               ],
             )),
       );

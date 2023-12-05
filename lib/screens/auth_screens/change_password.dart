@@ -161,9 +161,13 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 textColor: ColorManager.kWhiteColor,
                                 fontSize: 14.0);
                           } else {
+                            AuthController.i
+                                .updateIsChangePasswordloading(true);
                             AuthRepo ar = AuthRepo();
                             await ar.changePassword(oldpasswordController.text,
                                 passwordController.text);
+                            AuthController.i
+                                .updateIsChangePasswordloading(false);
                           }
                         }
                       },
@@ -175,14 +179,18 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
-                          child: Text(
-                            'changepassword'.tr,
-                            style: GoogleFonts.poppins(
-                                fontSize: 20,
-                                color: ColorManager.kWhiteColor,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
+                            child: AuthController.i.isChangePasswordLoading ==
+                                    false
+                                ? Text(
+                                    'changepassword'.tr,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        color: ColorManager.kWhiteColor,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                : const CircularProgressIndicator(
+                                    color: ColorManager.kWhiteColor,
+                                  )),
                       ),
                     ),
                   ],

@@ -37,13 +37,15 @@ class _SecurityScreenState extends State<SecurityScreen> {
           padding: EdgeInsets.only(
             left: Get.width * 0.05,
             right: Get.width * 0.05,
-            top: Get.height * 0.02,
           ),
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
                   GetBuilder<RegistrationController>(builder: (context) {
                     return AuthTextField(
                       onChangedwidget: (value) {

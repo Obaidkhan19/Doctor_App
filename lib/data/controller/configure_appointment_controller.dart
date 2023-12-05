@@ -18,6 +18,12 @@ class ConfigureAppointmentController extends GetxController
     update();
   }
 
+  bool isSavingLoading = false;
+  updateIsSavingloading(bool value) {
+    isSavingLoading = value;
+    update();
+  }
+
   bool hasOnlineConsultation = false;
   updatehasOnlineConsultation() {
     hasOnlineConsultation = true;

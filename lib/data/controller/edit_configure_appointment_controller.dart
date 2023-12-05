@@ -13,6 +13,12 @@ class EditConfigureAppointmentController extends GetxController
     update();
   }
 
+  bool isSavingLoading = false;
+  updateIsSavingloading(bool value) {
+    isSavingLoading = value;
+    update();
+  }
+
   TextEditingController consultancyfeeController = TextEditingController();
   TextEditingController followupfeeController = TextEditingController();
   TextEditingController followupdayController = TextEditingController();

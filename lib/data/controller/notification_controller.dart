@@ -17,10 +17,23 @@ class NotificationController extends GetxController implements GetxService {
     update();
   }
 
+  int today = 1;
+  int yesterday = 1;
+  int previous = 1;
+
+  updatedays() {
+    today = 1;
+    yesterday = 1;
+    previous = 1;
+    update();
+  }
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   updateIsloading(bool value) {
+    updatedays();
+    update();
     _isLoading = value;
     update();
   }

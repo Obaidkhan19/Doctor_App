@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // import 'package:webview_flutter/webview_flutter.dart';
@@ -56,8 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
     opencall();
     controller = WebViewController(
       onPermissionRequest: (ctx) async {
-        await Permission.camera.request();
-        await Permission.microphone.request();
+        // await Permission.camera.request();
+        // await Permission.microphone.request();
         ctx.grant();
       },
     )
@@ -65,6 +66,27 @@ class _MyHomePageState extends State<MyHomePage> {
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
+          onUrlChange: (change) {
+            log(change.url.toString());
+            if (change.url.toString() ==
+                'https://meet.greenhost.net/#config.disableDeepLinking=true') {
+              Get.back();
+            }
+          },
+
+          // onNavigationRequest: (value) async{
+          //   log(" navigationrandiaaa${value.url.toString()}");
+          //   return  SizedBox.shrink() ;
+          // },
+          onNavigationRequest: (NavigationRequest request) {
+            log('abbccc ${request.url.toString()}');
+            if (request.url.toString() ==
+                'https://meet.greenhost.net/#config.disableDeepLinking=true') {
+              Get.back();
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
           onProgress: (int progress) {},
           onPageStarted: (String url) async {},
           onPageFinished: (String url) {},
@@ -78,8 +100,53 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    ConsultingQueueController.i.updatecallresponse(false);
+    back();
     super.dispose();
+  }
+
+  back() {
+    controller = WebViewController(
+      onPermissionRequest: (ctx) async {
+        // await Permission.camera.request();
+        // await Permission.microphone.request();
+        ctx.deny();
+      },
+    )
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onUrlChange: (change) {
+            log(change.url.toString());
+            if (change.url.toString() ==
+                'https://meet.greenhost.net/#config.disableDeepLinking=true') {
+              Get.back();
+            }
+          },
+
+          // onNavigationRequest: (value) async{
+          //   log(" navigationrandiaaa${value.url.toString()}");
+          //   return  SizedBox.shrink() ;
+          // },
+          onNavigationRequest: (NavigationRequest request) {
+            log('abbccc ${request.url.toString()}');
+            if (request.url.toString() ==
+                'https://meet.greenhost.net/#config.disableDeepLinking=true') {
+              Get.back();
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+          onProgress: (int progress) {},
+          onPageStarted: (String url) async {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+        ),
+      )
+      ..loadRequest(
+          Uri.parse("${widget.title}#config.disableDeepLinking=true"));
+    ConsultingQueueController.i.updatecallresponse(false);
+    setState(() {});
   }
 
   @override
@@ -87,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return GetBuilder<ConsultingQueueController>(builder: (cnt) {
       return Scaffold(
         appBar: AppBar(
+          leading: const SizedBox.shrink(),
           toolbarHeight: 40,
         ),
         body: ConsultingQueueController.i.checkcallresponse == false

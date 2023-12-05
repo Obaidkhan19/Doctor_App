@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
@@ -30,14 +31,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isLoading = false;
+  // bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     // call();
+    getfingerprint();
     super.initState();
   }
 
+  getfingerprint() async {
+    isfingerprintEnable = await LocalDb.getfingerprint();
+    setState(() {
+      isfingerprintEnable;
+    });
+  }
+
+  bool isfingerprintEnable = false;
   // bool isBiometric = false;
   final LocalAuthentication auth = LocalAuthentication();
   List<BiometricType>? _availableBiometrics;
@@ -67,21 +77,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   call() async {
-    SharedPreferences sharedpref = await SharedPreferences.getInstance();
-    // String? username = sharedpref.getString(
-    //   'doctorusername',
-    // );
-    // String? userpassword = sharedpref.getString(
-    //   'doctorpassword',
-    // );
+    // SharedPreferences sharedpref = await SharedPreferences.getInstance();
 
     String? username = await LocalDb().getUsername();
     String? userpassword = await LocalDb().getPassword();
 
     bool fingerprint = await LocalDb.getfingerprint();
     if (username != null && userpassword != null && fingerprint) {
-      _authenticate();
+      // await _authenticate();
       bool auth = await Authentication.authentication();
+
       if (auth) {
         if (auth) {
           fingerprint = auth;
@@ -89,24 +94,24 @@ class _LoginScreenState extends State<LoginScreen> {
         if (fingerprint) {
           if (auth) {
             if (ProfileController.i.selectedbasicInfo?.id != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('You are already Logged in')));
+              Fluttertoast.showToast(
+                  msg: 'You are already Logged in',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: ColorManager.kRedColor,
+                  textColor: ColorManager.kWhiteColor,
+                  fontSize: 14.0);
               setState(() {
                 fingerprint = true;
               });
             } else {
-              AuthRepo.login(cnic: username, password: userpassword);
-
-              setState(() {
-                ProfileController.i.selectedbasicInfo;
-              });
+              AuthController.i.updateIsloading(true);
+              await AuthRepo.login(cnic: username, password: userpassword);
+              AuthController.i.updateIsloading(false);
             }
           }
         }
-      } else {
-        setState(() {
-          fingerprint = false;
-        });
       }
     }
   }
@@ -114,198 +119,208 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     var login = Get.put<AuthController>(AuthController());
-    return BlurryModalProgressHUD(
-        inAsyncCall: isLoading,
-        blurEffectIntensity: 4,
-        progressIndicator: const SpinKitSpinningLines(
-          color: Color(0xfff1272d3),
-          size: 60,
-        ),
-        dismissible: false,
-        opacity: 0.4,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: GetBuilder<AuthController>(builder: (cnt) {
-          return Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Form(
-                key: _formKey,
-                child: SafeArea(
-                  child: Stack(
-                    children: [
-                      const BackgroundLogoimage(),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-                        child: SizedBox(
-                          // alignment: Alignment.centerLeft,
-
-                          height: Get.height,
-                          width: Get.width,
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: Get.height * 0.03,
-                                ),
-                                SizedBox(
-                                  child: Center(
-                                    child: Image.asset(
-                                      Images.logo,
-                                      height: Get.height * 0.07,
+    return GetBuilder<AuthController>(builder: (cnt) {
+      return BlurryModalProgressHUD(
+          inAsyncCall: AuthController.i.isLoading,
+          blurEffectIntensity: 4,
+          progressIndicator: const SpinKitSpinningLines(
+            color: Color(0xfff1272d3),
+            size: 60,
+          ),
+          dismissible: false,
+          opacity: 0.4,
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: GetBuilder<AuthController>(builder: (cnt) {
+            return Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: Form(
+                  key: _formKey,
+                  child: SafeArea(
+                    child: Stack(
+                      children: [
+                        const BackgroundLogoimage(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Get.width * 0.05),
+                          child: SizedBox(
+                            height: Get.height,
+                            width: Get.width,
+                            child: SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: Get.height * 0.03,
+                                  ),
+                                  SizedBox(
+                                    child: Center(
+                                      child: Image.asset(
+                                        Images.logo,
+                                        height: Get.height * 0.07,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.14,
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.6,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'welcometo'.tr,
-                                        style: GoogleFonts.raleway(
-                                          textStyle: GoogleFonts.poppins(
-                                              fontSize: 40,
-                                              color: ColorManager.kPrimaryColor,
-                                              fontWeight: FontWeight.w900),
-                                        ),
-                                      ),
-                                      Text(
-                                        '${AppConstants.appName}.',
-                                        style: GoogleFonts.raleway(
-                                          textStyle: GoogleFonts.poppins(
-                                              fontSize: 25,
-                                              color: ColorManager.kPrimaryColor,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: Get.height * 0.04,
-                                      ),
-                                      AuthTextField(
-                                        validator: (p0) {
-                                          if (p0!.isEmpty) {
-                                            return 'EnterUsername'.tr;
-                                          }
-                                          return null;
-                                        },
-                                        controller: login.emailController,
-                                        hintText: 'username'.tr,
-                                      ),
-                                      SizedBox(
-                                        height: Get.height * 0.02,
-                                      ),
-                                      AuthTextField(
-                                        validator: (p0) {
-                                          if (p0!.isEmpty) {
-                                            return 'enteryourpassword'.tr;
-                                          }
-                                          return null;
-                                        },
-                                        obscureText: login.obsecure,
-                                        suffixIcon: InkWell(
-                                            onTap: () {
-                                              login.updateobsecurepassword(
-                                                  !login.obsecure);
-                                            },
-                                            child: login.obsecure
-                                                ? const Icon(
-                                                    CupertinoIcons.eye_slash)
-                                                : const Icon(
-                                                    CupertinoIcons.eye)),
-                                        controller: login.passwordController,
-                                        hintText: 'password'.tr,
-                                      ),
-                                      SizedBox(
-                                        height: Get.height * 0.02,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Get.to(
-                                                  () => const ForgetPassword());
-                                            },
-                                            child: Text(
-                                              'forgotPassword'.tr,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  color: ColorManager
-                                                      .kPrimaryColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: Get.height * 0.02,
-                                      ),
-                                      PrimaryButton(
-                                          title: 'login'.tr,
-                                          fontSize: 15,
-                                          fontweight: FontWeight.bold,
-                                          onPressed: () async {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              FocusScope.of(context).unfocus();
-                                              setState(() {
-                                                isLoading = true;
-                                              });
-                                              try {
-                                                await AuthRepo.login(
-                                                    cnic: login
-                                                        .emailController.text,
-                                                    password: login
-                                                        .passwordController
-                                                        .text);
-                                                setState(() {
-                                                  isLoading = false;
-                                                });
-                                              } catch (e) {
-                                                setState(() {
-                                                  isLoading = false;
-                                                });
-                                              }
-                                              setState(() {
-                                                isLoading = false;
-                                              });
-                                            }
-                                          },
-                                          color: ColorManager.kPrimaryColor,
-                                          textcolor: ColorManager.kWhiteColor),
-                                    ],
+                                  SizedBox(
+                                    height: Get.height * 0.14,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.04,
-                                ),
-                                SignupOrLoginText(
-                                  pre: 'donthaveanAccount'.tr,
-                                  suffix: 'register'.tr,
-                                  onTap: () {
-                                    //Get.to(() => const RegisterScreens());
-                                    AuthController.i.disposefields();
-                                    Get.to(const MainRegistrationScreen());
-                                  },
-                                )
-                              ],
+                                  SizedBox(
+                                    height: Get.height * 0.64,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'welcometo'.tr,
+                                          style: GoogleFonts.raleway(
+                                            textStyle: GoogleFonts.poppins(
+                                                fontSize: 40,
+                                                color:
+                                                    ColorManager.kPrimaryColor,
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                        ),
+                                        Text(
+                                          '${AppConstants.appName}.',
+                                          style: GoogleFonts.raleway(
+                                            textStyle: GoogleFonts.poppins(
+                                                fontSize: 25,
+                                                color:
+                                                    ColorManager.kPrimaryColor,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.04,
+                                        ),
+                                        AuthTextField(
+                                          validator: (p0) {
+                                            if (p0!.isEmpty) {
+                                              return 'EnterUsername'.tr;
+                                            }
+                                            return null;
+                                          },
+                                          controller: login.emailController,
+                                          hintText: 'username'.tr,
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.02,
+                                        ),
+                                        AuthTextField(
+                                          validator: (p0) {
+                                            if (p0!.isEmpty) {
+                                              return 'enteryourpassword'.tr;
+                                            }
+                                            return null;
+                                          },
+                                          obscureText: login.obsecure,
+                                          suffixIcon: InkWell(
+                                              onTap: () {
+                                                login.updateobsecurepassword(
+                                                    !login.obsecure);
+                                              },
+                                              child: login.obsecure
+                                                  ? const Icon(
+                                                      CupertinoIcons.eye_slash)
+                                                  : const Icon(
+                                                      CupertinoIcons.eye)),
+                                          controller: login.passwordController,
+                                          hintText: 'password'.tr,
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.02,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    const ForgetPassword());
+                                              },
+                                              child: Text(
+                                                'forgotPassword'.tr,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: ColorManager
+                                                        .kPrimaryColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.02,
+                                        ),
+                                        PrimaryButton(
+                                            title: 'login'.tr,
+                                            fontSize: 15,
+                                            fontweight: FontWeight.bold,
+                                            onPressed: () async {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                FocusScope.of(context)
+                                                    .unfocus();
+
+                                                try {
+                                                  await AuthRepo.login(
+                                                      cnic: login
+                                                          .emailController.text,
+                                                      password: login
+                                                          .passwordController
+                                                          .text);
+                                                } catch (e) {}
+                                              }
+                                            },
+                                            color: ColorManager.kPrimaryColor,
+                                            textcolor:
+                                                ColorManager.kWhiteColor),
+                                        SizedBox(
+                                          height: Get.height * 0.05,
+                                        ),
+                                        Visibility(
+                                          visible: isfingerprintEnable,
+                                          child: SizedBox(
+                                            height: Get.height * 0.08,
+                                            child: Center(
+                                                child: InkWell(
+                                              onTap: () {
+                                                call();
+                                              },
+                                              child: Image.asset(
+                                                  Images.fingerprint_icon),
+                                            )),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: Get.height * 0.02,
+                                  ),
+                                  SignupOrLoginText(
+                                    pre: 'donthaveanAccount'.tr,
+                                    suffix: 'register'.tr,
+                                    onTap: () {
+                                      //Get.to(() => const RegisterScreens());
+                                      AuthController.i.disposefields();
+                                      Get.to(const MainRegistrationScreen());
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ));
-        }));
+                ));
+          }));
+    });
   }
 }
 

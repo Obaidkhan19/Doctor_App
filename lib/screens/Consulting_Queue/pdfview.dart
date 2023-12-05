@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,7 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
         //   ),
         // ),
 
-        body: RefreshIndicator(
+        body: MyCustomRefreshIndicator(
             onRefresh: refreshscreen,
             child: Stack(
               children: [

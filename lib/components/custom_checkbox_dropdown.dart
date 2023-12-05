@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
+import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/perscribe_medicine_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
@@ -186,296 +187,450 @@ Future<dynamic> searchableDropdownCheckBox(
     barrierDismissible: false,
     context: context,
     builder: (context) {
-      return GetBuilder<ERXController>(
-        builder: (contx) => StatefulBuilder(
-          builder: (context, setState) {
-            return SizedBox(
-              width: Get.width,
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: AlertDialog(
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                content: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     // SizedBox(
-                      //     //   width: Get.width * 0.25,
-                      //     // ),
-                      //     Text(
-                      //       'Search',
-                      //       style: GoogleFonts.poppins(
-                      //         textStyle: GoogleFonts.poppins(
-                      //             fontSize: 15, fontWeight: FontWeight.bold),
-                      //       ),
-                      //     ),
-                      //     // SizedBox(
-                      //   width: Get.width * 0.15,
-                      // ),
-                      // InkWell(
-                      //   onTap: () {
-                      //     Get.back();
-                      //   },
-                      //   child: const Icon(
-                      //     Icons.close_outlined,
-                      //     size: 20,
-                      //   ),
-                      // ),
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //   height: Get.height * 0.03,
-                      // ),
-                      SizedBox(
-                        height: Get.height * 0.07,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 10),
-                            hintStyle: GoogleFonts.poppins(
-                                color: ColorManager.kPrimaryColor),
-                            hintText: 'Search',
-                            filled: true,
-                            disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            focusedBorder: OutlineInputBorder(
+      return StatefulBuilder(builder:
+          (BuildContext context, void Function(void Function()) setState) {
+        return GetBuilder<ERXController>(
+          builder: (contx) => StatefulBuilder(
+            builder: (context, setState) {
+              return SizedBox(
+                width: Get.width,
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: AlertDialog(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: Get.height * 0.07,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              hintStyle: GoogleFonts.poppins(
+                                  color: ColorManager.kPrimaryColor),
+                              hintText: 'Search',
+                              filled: true,
+                              disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: ColorManager.kPrimaryLightColor),
+                                  borderRadius: BorderRadius.circular(8)),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
                                     color: ColorManager.kPrimaryLightColor),
-                                borderRadius: BorderRadius.circular(8)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: ColorManager.kPrimaryLightColor),
-                            ),
-                            fillColor: ColorManager.kPrimaryLightColor,
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: ColorManager.kPrimaryColor,
-                            ),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: ColorManager.kPrimaryLightColor),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(0.0),
+                              ),
+                              fillColor: ColorManager.kPrimaryLightColor,
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                color: ColorManager.kPrimaryColor,
+                              ),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorManager.kPrimaryLightColor),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(0.0),
+                                ),
                               ),
                             ),
+                            controller: search,
+                            onFieldSubmitted: (value) async {
+                              PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+                              if (listname == 'complaints') {
+                                controller.updatecomplaintdata(
+                                  await pmr.getComplaints(search.text),
+                                );
+                                list = controller.complaintsList;
+                                checkboxselectedItems =
+                                    controller.checkboxselectedcomplaintssList;
+                                setState(() {});
+                              } else if (listname == "primary") {
+                                controller.updatePrimarydiagnosislist(
+                                  await pmr.getPrimaryDiagnosis(search.text),
+                                );
+                                list = controller.primarydiagnosisList;
+                                checkboxselectedItems = controller
+                                    .checkboxselectedprimarydiagnosisList;
+                                setState(() {});
+                              } else if (listname == "secondary") {
+                                controller.updateSecondarydiagnosislist(
+                                  await pmr.getSecondaryDiagnosis(search.text),
+                                );
+                                list = controller.secondaryDiagnosisList;
+                                checkboxselectedItems = controller
+                                    .checkboxselectedsecondarydiagnosisList;
+                                setState(() {});
+                              } else if (listname == "diagnostics") {
+                                controller.updatediagnosticslist(
+                                  await pmr.getDiagnostics(search.text),
+                                );
+                                list = controller.diagnosticsList;
+                                checkboxselectedItems =
+                                    controller.checkboxselectediagnosticsList;
+                                setState(() {});
+                              } else if (listname == "investigation") {
+                                controller.updateInvestigationlist(
+                                  await pmr.getInvestigations(search.text),
+                                );
+                                list = controller.investigationList;
+                                checkboxselectedItems = controller
+                                    .checkboxselectedinvestigationList;
+                                setState(() {});
+                              } else if (listname == "procedures") {
+                                controller.updateProcedureslist(
+                                  await pmr.getProcedures(search.text),
+                                );
+                                list = controller.proceduresList;
+                                checkboxselectedItems =
+                                    controller.checkboxselectedproceduresList;
+                                setState(() {});
+                              } else if (listname == "instruction") {
+                                controller.updateInstructionlist(
+                                  await pmr.getInstruction(search.text),
+                                );
+                                list = controller.instructionList;
+                                checkboxselectedItems =
+                                    controller.checkboxselectedinstructionList;
+                                setState(() {});
+                              }
+                            },
+                            onChanged: (val) async {
+                              int length = search.text.length;
+                              PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+                              if (length == 0) {
+                                if (listname == 'complaints') {
+                                  controller.updatecomplaintdata(
+                                    await pmr.getComplaints(""),
+                                  );
+                                  list = controller.complaintsList;
+                                  checkboxselectedItems = controller
+                                      .checkboxselectedcomplaintssList;
+                                  setState(() {});
+                                } else if (listname == "primary") {
+                                  controller.updatePrimarydiagnosislist(
+                                    await pmr.getPrimaryDiagnosis(""),
+                                  );
+                                  list = controller.primarydiagnosisList;
+                                  checkboxselectedItems = controller
+                                      .checkboxselectedprimarydiagnosisList;
+                                  setState(() {});
+                                } else if (listname == "secondary") {
+                                  controller.updateSecondarydiagnosislist(
+                                    await pmr.getSecondaryDiagnosis(""),
+                                  );
+                                  list = controller.secondaryDiagnosisList;
+                                  checkboxselectedItems = controller
+                                      .checkboxselectedsecondarydiagnosisList;
+                                  setState(() {});
+                                } else if (listname == "diagnostics") {
+                                  controller.updatediagnosticslist(
+                                    await pmr.getDiagnostics(""),
+                                  );
+                                  list = controller.diagnosticsList;
+                                  checkboxselectedItems =
+                                      controller.checkboxselectediagnosticsList;
+                                  setState(() {});
+                                } else if (listname == "investigation") {
+                                  controller.updateInvestigationlist(
+                                    await pmr.getInvestigations(""),
+                                  );
+                                  list = controller.investigationList;
+                                  checkboxselectedItems = controller
+                                      .checkboxselectedinvestigationList;
+                                  setState(() {});
+                                } else if (listname == "procedures") {
+                                  controller.updateProcedureslist(
+                                    await pmr.getProcedures(""),
+                                  );
+                                  list = controller.proceduresList;
+                                  checkboxselectedItems =
+                                      controller.checkboxselectedproceduresList;
+                                  setState(() {});
+                                } else if (listname == "instruction") {
+                                  controller.updateInstructionlist(
+                                    await pmr.getInstruction(""),
+                                  );
+                                  list = controller.instructionList;
+                                  checkboxselectedItems = controller
+                                      .checkboxselectedinstructionList;
+                                  setState(() {});
+                                }
+                              }
+                            },
+                            // onChanged: (val) {
+                            //   title = val;
+                            //   setState(() {
+                            //     title = val;
+                            //   });
+                            // },
                           ),
-                          controller: search,
-                          onChanged: (val) {
-                            title = val;
-                            setState(() {
-                              title = val;
-                            });
-                          },
                         ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.4,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: list.length,
-                          itemBuilder: ((context, index) {
-                            bool isSelected = dataList.any((selectedItem) =>
-                                selectedItem.id == list[index].id);
+                        if (list.isNotEmpty)
+                          SizedBox(
+                            height: Get.height * 0.4,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: list.length,
+                              itemBuilder: ((context, index) {
+                                bool isSelected = dataList.any((selectedItem) =>
+                                    selectedItem.id == list[index].id);
 
-                            if (search.text.isEmpty ||
-                                list[index]
-                                    .name!
-                                    .toLowerCase()
-                                    .contains(title.toLowerCase())) {
-                              return ListTile(
-                                dense: true,
-                                minVerticalPadding: 0,
-                                contentPadding: EdgeInsets.zero,
-                                visualDensity: const VisualDensity(
-                                    horizontal: 0, vertical: -4),
-                                title: Row(
-                                  children: [
-                                    Checkbox(
-                                      activeColor: ColorManager.kPrimaryColor,
-                                      visualDensity: const VisualDensity(
-                                          horizontal: 0.01, vertical: 0.0),
-                                      value: isSelected,
-                                      // onChanged: (bool? value) {
-                                      //   setState(() {
-                                      //     if (value != null) {
-                                      //       if (value) {
-                                      //         checkboxselectedItems
-                                      //             .add(list[index]);
-                                      //       } else {
-                                      //         checkboxselectedItems
-                                      //             .remove(list[index]);
-                                      //       }
-                                      //     }
-                                      //   });
-                                      // },
-                                      onChanged: (bool? value) {
-                                        ERXController.i.selectedComplaintsList;
+                                // if (search.text.isEmpty ||
+                                //     list[index]
+                                //         .name!
+                                //         .toLowerCase()
+                                //         .contains(title.toLowerCase())) {
+                                return ListTile(
+                                  dense: true,
+                                  minVerticalPadding: 0,
+                                  contentPadding: EdgeInsets.zero,
+                                  visualDensity: const VisualDensity(
+                                      horizontal: 0, vertical: -4),
+                                  title: Row(
+                                    children: [
+                                      Checkbox(
+                                        activeColor: ColorManager.kPrimaryColor,
+                                        visualDensity: const VisualDensity(
+                                            horizontal: 0.01, vertical: 0.0),
+                                        value: isSelected,
+                                        onChanged: (bool? value) {
+                                          ERXController
+                                              .i.selectedComplaintsList;
 
-                                        if (value != null) {
-                                          if (value) {
-                                            dataList.add(list[index]);
-                                            // if user remove and then add item again so remove that id from delete list
-                                            if (ERXController.i.deletedidlist
-                                                .contains(list[index].id)) {
+                                          if (value != null) {
+                                            if (value) {
+                                              dataList.add(list[index]);
+                                              // if user remove and then add item again so remove that id from delete list
+                                              if (ERXController.i.deletedidlist
+                                                  .contains(list[index].id)) {
+                                                ERXController.i.deletedidlist
+                                                    .remove(list[index].id);
+                                              }
+                                            } else {
+                                              // find the index of item to remove
+                                              int indexOfItemToRemove =
+                                                  dataList.indexWhere(
+                                                (selectedItem) =>
+                                                    selectedItem.id ==
+                                                    list[index].id,
+                                              );
                                               ERXController.i.deletedidlist
-                                                  .remove(list[index].id);
-                                            }
-                                          } else {
-                                            // find the index of item to remove
-                                            int indexOfItemToRemove =
-                                                dataList.indexWhere(
-                                              (selectedItem) =>
-                                                  selectedItem.id ==
-                                                  list[index].id,
-                                            );
-                                            ERXController.i.deletedidlist
-                                                .add(list[index].id);
-                                            if (indexOfItemToRemove != -1) {
-                                              dataList.removeAt(
-                                                  indexOfItemToRemove);
+                                                  .add(list[index].id);
+                                              if (indexOfItemToRemove != -1) {
+                                                dataList.removeAt(
+                                                    indexOfItemToRemove);
+                                              }
                                             }
                                           }
-                                        }
-                                        ERXController.i.selectedComplaintsList;
+                                          ERXController
+                                              .i.selectedComplaintsList;
 
-                                        setState(() {});
-                                      },
-                                    ),
-                                    if (trailingvisibility == false)
-                                      SizedBox(
-                                        width: Get.width * 0.42,
-                                        child: Text(
-                                          list[index].name.toString(),
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 10,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
+                                          setState(() {});
+                                        },
                                       ),
-                                    if (trailingvisibility == true)
-                                      SizedBox(
-                                        width: Get.width * 0.32,
-                                        child: Text(
-                                          list[index].name.toString(),
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 10,
+                                      if (trailingvisibility == false)
+                                        SizedBox(
+                                          width: Get.width * 0.42,
+                                          child: Text(
+                                            list[index].name.toString(),
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 10,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                           ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
                                         ),
-                                      )
-                                  ],
-                                ),
-                                trailing: Visibility(
-                                  visible: trailingvisibility,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      addComment(context, list[index].id ?? "",
-                                          list[index].comments ?? "", listname);
-                                    },
-                                    icon: const Icon(Icons.add_box_outlined),
+                                      if (trailingvisibility == true)
+                                        SizedBox(
+                                          width: Get.width * 0.32,
+                                          child: Text(
+                                            list[index].name.toString(),
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 10,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
+                                        )
+                                    ],
                                   ),
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          }),
+                                  trailing: Visibility(
+                                    visible: trailingvisibility,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        addComment(
+                                            context,
+                                            list[index].id ?? "",
+                                            list[index].comments ?? "",
+                                            listname);
+                                      },
+                                      icon: const Icon(Icons.add_box_outlined),
+                                    ),
+                                  ),
+                                );
+                                // }
+                                //  else {
+                                //   return Container();
+                                // }
+                              }),
+                            ),
+                          ),
+                        if (list.isEmpty)
+                          Center(child: Text('NoRecordFound'.tr)),
+                        SizedBox(
+                          height: Get.height * 0.02,
                         ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.02,
-                      ),
-                      PrimaryButton(
-                        title: 'Save',
-                        fontSize: 12,
-                        height: Get.height * 0.05,
-                        width: Get.width * 0.55,
-                        onPressed: () {
-                          if (listname == "primary") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i
-                                  .deleteselectedprimarydiagnosisList(
-                                      ERXController.i.deletedidlist[i]);
+                        PrimaryButton(
+                          title: 'Save',
+                          fontSize: 12,
+                          height: Get.height * 0.05,
+                          width: Get.width * 0.55,
+                          onPressed: () async {
+                            if (listname == "primary") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i
+                                    .deleteselectedprimarydiagnosisList(
+                                        ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
 
-                          if (listname == "secondary") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i
-                                  .deleteselectedsecondaryDiagnosisList(
-                                      ERXController.i.deletedidlist[i]);
+                            if (listname == "secondary") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i
+                                    .deleteselectedsecondaryDiagnosisList(
+                                        ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
 
-                          if (listname == "complaints") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i.deleteSelectedComplaintsList(
-                                  ERXController.i.deletedidlist[i]);
+                            if (listname == "complaints") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i.deleteSelectedComplaintsList(
+                                    ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
 
-                          if (listname == "diagnostics") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i.deleteSelecteddiagnosticsList(
-                                  ERXController.i.deletedidlist[i]);
+                            if (listname == "diagnostics") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i.deleteSelecteddiagnosticsList(
+                                    ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
 
-                          if (listname == "investigation") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i.deleteselectedInvestigationList(
-                                  ERXController.i.deletedidlist[i]);
+                            if (listname == "investigation") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i.deleteselectedInvestigationList(
+                                    ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
-                          if (listname == "procedures") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i.deleteSelectedProceduresList(
-                                  ERXController.i.deletedidlist[i]);
+                            if (listname == "procedures") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i.deleteSelectedProceduresList(
+                                    ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
 
-                          if (listname == "instruction") {
-                            for (int i = 0;
-                                i < ERXController.i.deletedidlist.length;
-                                i++) {
-                              ERXController.i.deleteSelectedinstructionList(
-                                  ERXController.i.deletedidlist[i]);
+                            if (listname == "instruction") {
+                              for (int i = 0;
+                                  i < ERXController.i.deletedidlist.length;
+                                  i++) {
+                                ERXController.i.deleteSelectedinstructionList(
+                                    ERXController.i.deletedidlist[i]);
+                              }
                             }
-                          }
 
-                          completer.complete(dataList);
-                          Get.back();
-                          ERXController.i.deletedidlist.clear();
-                        },
-                        color: ColorManager.kPrimaryColor,
-                        textcolor: ColorManager.kWhiteColor,
-                      ),
-                    ],
+                            completer.complete(dataList);
+                            Get.back();
+                            ERXController.i.deletedidlist.clear();
+
+                            //
+
+                            PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+
+                            if (listname == 'complaints') {
+                              controller.updatecomplaintdata(
+                                await pmr.getComplaints(""),
+                              );
+                              list = controller.complaintsList;
+                              checkboxselectedItems =
+                                  controller.checkboxselectedcomplaintssList;
+                              setState(() {});
+                            } else if (listname == "primary") {
+                              controller.updatePrimarydiagnosislist(
+                                await pmr.getPrimaryDiagnosis(""),
+                              );
+                              list = controller.primarydiagnosisList;
+                              checkboxselectedItems = controller
+                                  .checkboxselectedprimarydiagnosisList;
+                              setState(() {});
+                            } else if (listname == "secondary") {
+                              controller.updateSecondarydiagnosislist(
+                                await pmr.getSecondaryDiagnosis(""),
+                              );
+                              list = controller.secondaryDiagnosisList;
+                              checkboxselectedItems = controller
+                                  .checkboxselectedsecondarydiagnosisList;
+                              setState(() {});
+                            } else if (listname == "diagnostics") {
+                              controller.updatediagnosticslist(
+                                await pmr.getDiagnostics(""),
+                              );
+                              list = controller.diagnosticsList;
+                              checkboxselectedItems =
+                                  controller.checkboxselectediagnosticsList;
+                              setState(() {});
+                            } else if (listname == "investigation") {
+                              controller.updateInvestigationlist(
+                                await pmr.getInvestigations(""),
+                              );
+                              list = controller.investigationList;
+                              checkboxselectedItems =
+                                  controller.checkboxselectedinvestigationList;
+                              setState(() {});
+                            } else if (listname == "procedures") {
+                              controller.updateProcedureslist(
+                                await pmr.getProcedures(""),
+                              );
+                              list = controller.proceduresList;
+                              checkboxselectedItems =
+                                  controller.checkboxselectedproceduresList;
+                              setState(() {});
+                            } else if (listname == "instruction") {
+                              controller.updateInstructionlist(
+                                await pmr.getInstruction(""),
+                              );
+                              list = controller.instructionList;
+                              checkboxselectedItems =
+                                  controller.checkboxselectedinstructionList;
+                              setState(() {});
+                            }
+                          },
+                          color: ColorManager.kPrimaryColor,
+                          textcolor: ColorManager.kWhiteColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-      );
+              );
+            },
+          ),
+        );
+      });
     },
   );
   //return selectedItems;
@@ -656,6 +811,82 @@ deleteSelected(
                     //   EditProfileController.i.deleteSelectedComplaintsList(id);
                     // }
 
+                    Get.back();
+                  },
+                  color: ColorManager.kPrimaryColor,
+                  textcolor: ColorManager.kWhiteColor,
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+deleteMedicine(
+  BuildContext context,
+  int medicineindex,
+) async {
+  await showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(width: Get.width * 0.05),
+                    Text(
+                      'delete'.tr,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: const Icon(
+                        Icons.close_outlined,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                ),
+                Text(
+                  'doyouwanttodeleteit'.tr,
+                  style: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.poppins(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: Get.height * 0.04,
+                ),
+                PrimaryButton(
+                  title: 'yes'.tr,
+                  fontSize: 14,
+                  height: Get.height * 0.06,
+                  width: Get.width * 0.5,
+                  onPressed: () {
+                    controller.removefinalmedindex(medicineindex);
                     Get.back();
                   },
                   color: ColorManager.kPrimaryColor,
@@ -932,12 +1163,29 @@ addMedicine(
                         ),
                       ),
                       controller: medController,
-                      onChanged: (val) {
-                        medtitle = val;
-                        setState(() {
-                          medtitle = val;
-                        });
+                      onFieldSubmitted: (value) async {
+                        PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+                        controller.updateMedicinelist(
+                          await pmr.getMedicines(medController.text),
+                        );
+                        setState(() {});
                       },
+                      onChanged: (val) async {
+                        int length = medController.text.length;
+                        PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+                        if (length == 0) {
+                          controller.updateMedicinelist(
+                            await pmr.getMedicines(""),
+                          );
+                        }
+                        setState(() {});
+                      },
+                      // onChanged: (val) {
+                      //   medtitle = val;
+                      //   setState(() {
+                      //     medtitle = val;
+                      //   });
+                      // },
                     ),
                     SizedBox(
                       height: Get.height * 0.009,
@@ -949,53 +1197,56 @@ addMedicine(
                           shrinkWrap: true,
                           itemCount: controller.medicineList.length,
                           itemBuilder: (context, index) {
-                            if (medController.text.isEmpty ||
-                                controller.medicineList[index].name!
-                                    .toLowerCase()
-                                    .contains(medtitle.toLowerCase())) {
-                              final medicine = controller.medicineList[index];
-                              final isSelected = controller.selectedmedicineList
-                                  .contains(medicine);
+                            // if (medController.text.isEmpty ||
+                            //     controller.medicineList[index].name!
+                            //         .toLowerCase()
+                            //         .contains(medtitle.toLowerCase()))
+                            //         {
 
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: Get.height * 0.005),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if (isSelected) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("Already Selected")));
-                                      } else {
-                                        controller.selectedmedicineList.clear();
-                                        controller.selectedmedicineList
-                                            .add(medicine);
-                                      }
-                                    });
-                                  },
-                                  child: Container(
-                                    color: isSelected
-                                        ? ColorManager.kPrimaryColor
-                                        : ColorManager.kWhiteColor,
-                                    child: Text(
-                                      medicine.name ?? "",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 10,
-                                        color: isSelected
-                                            ? ColorManager.kWhiteColor
-                                            : ColorManager.kblackColor,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 4,
+                            final medicine = controller.medicineList[index];
+                            final isSelected = controller.selectedmedicineList
+                                .contains(medicine);
+
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: Get.height * 0.005),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (isSelected) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content:
+                                                  Text("Already Selected")));
+                                    } else {
+                                      controller.selectedmedicineList.clear();
+                                      controller.selectedmedicineList
+                                          .add(medicine);
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  color: isSelected
+                                      ? ColorManager.kPrimaryColor
+                                      : ColorManager.kWhiteColor,
+                                  child: Text(
+                                    medicine.name ?? "",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 10,
+                                      color: isSelected
+                                          ? ColorManager.kWhiteColor
+                                          : ColorManager.kblackColor,
                                     ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 4,
                                   ),
                                 ),
-                              );
-                            } else {
-                              return Container();
-                            }
+                              ),
+                            );
+                            //  }
+                            // else {
+                            //   return Container();
+                            // }
                           },
                         ),
                       );
@@ -1224,7 +1475,7 @@ addMedicine(
                         title: 'save'.tr,
                         fontSize: 14,
                         height: Get.height * 0.06,
-                        onPressed: () {
+                        onPressed: () async {
                           if (controller.selectedmedicineList.isNotEmpty) {
                             if (controller.medicineRoutes != null) {
                               if (controller.medicineFrequencies != null) {
@@ -1261,6 +1512,12 @@ addMedicine(
                                     // Medicine
 
                                     completer.complete(selectedMedicine);
+                                    PrescribeMedicinRepo pmr =
+                                        PrescribeMedicinRepo();
+                                    controller.updateMedicinelist(
+                                      await pmr.getMedicines(""),
+                                    );
+
                                     Get.back();
                                   } else {
                                     Fluttertoast.showToast(
@@ -1325,7 +1582,12 @@ addMedicine(
         },
       );
     },
-  );
+  ).then((val) async {
+    PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
+    controller.updateMedicinelist(
+      await pmr.getMedicines(""),
+    );
+  });
   return completer.future;
 }
 

@@ -125,7 +125,7 @@ class ConfigureAppointmentRepo {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: ColorManager.kPrimaryColor,
+              backgroundColor: ColorManager.kRedColor,
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
           return 'false';
@@ -133,11 +133,11 @@ class ConfigureAppointmentRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Something went wrong',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
+          backgroundColor: ColorManager.kRedColor,
           textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
       return 'false';
@@ -203,7 +203,7 @@ class ConfigureAppointmentRepo {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: ColorManager.kPrimaryColor,
+              backgroundColor: ColorManager.kRedColor,
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
 
@@ -212,11 +212,11 @@ class ConfigureAppointmentRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Something went wrong',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
+          backgroundColor: ColorManager.kRedColor,
           textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
 
@@ -263,7 +263,7 @@ class ConfigureAppointmentRepo {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: ColorManager.kPrimaryColor,
+              backgroundColor: ColorManager.kRedColor,
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
           return msg;
@@ -271,11 +271,11 @@ class ConfigureAppointmentRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Something went wrong',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
+          backgroundColor: ColorManager.kRedColor,
           textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
       return 'false';
@@ -323,7 +323,7 @@ class ConfigureAppointmentRepo {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: ColorManager.kPrimaryColor,
+              backgroundColor: ColorManager.kRedColor,
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
           return msg;
@@ -331,11 +331,11 @@ class ConfigureAppointmentRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Something went wrong',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
+          backgroundColor: ColorManager.kRedColor,
           textColor: ColorManager.kWhiteColor,
           fontSize: 14.0);
       return 'false';

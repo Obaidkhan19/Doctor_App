@@ -121,14 +121,17 @@ class _RegisterScreensState extends State<RegisterScreens> {
         body: GetBuilder<RegistrationController>(builder: (cont) {
           return Padding(
             padding: EdgeInsets.only(
-                left: Get.width * 0.05,
-                right: Get.width * 0.05,
-                top: Get.height * 0.02),
+              left: Get.width * 0.05,
+              right: Get.width * 0.05,
+            ),
             child: Form(
               key: _formKey,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: Get.height * 0.04,
+                    ),
                     RegisterCustomTextField(
                       validator: (value) {
                         if (controller.selectedpersonalTitle == null) {
@@ -287,6 +290,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       hintText: controller.selectedmaritalStatus == null
                           ? 'maritalstatus'.tr
                           : controller.selectedmaritalStatus!.name.toString(),
+                      isSizedBoxAvailable: false,
                     ),
 
                     Center(
@@ -556,7 +560,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       languageCode: "en",
                     ),
                     SizedBox(
-                      height: Get.height * 0.02,
+                      height: Get.height * 0.01,
                     ),
                     AuthTextField(
                       validator: (p0) {
@@ -778,7 +782,7 @@ class _RegisterScreensState extends State<RegisterScreens> {
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
-                                backgroundColor: ColorManager.kRedColor,
+                                backgroundColor: ColorManager.KgreenColor,
                                 textColor: ColorManager.kWhiteColor,
                                 fontSize: 14.0);
 

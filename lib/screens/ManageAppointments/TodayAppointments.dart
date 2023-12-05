@@ -684,7 +684,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
                                                         FontWeight.w700),
                                               ),
                                             ),
-                                            SizedBox(width: Get.width * 0.105),
+                                            SizedBox(width: Get.width * 0.111),
                                             ManageAppointmentController
                                                         .i
                                                         .dailyDoctorAppointmentsModel

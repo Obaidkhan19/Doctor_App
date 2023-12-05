@@ -51,7 +51,7 @@ class _CustomDialogState extends State<CustomDialog_DatePicker> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Text(
                     'Appointment Reschedule',
                     style: GoogleFonts.poppins(

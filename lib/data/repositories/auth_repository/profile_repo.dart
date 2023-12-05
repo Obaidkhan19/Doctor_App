@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/models/institutes.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:doctormobileapplication/models/provinces_model.dart';
@@ -39,7 +40,14 @@ class ProfileRepo {
         ProfileController.i.updateIsloading(false);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       ProfileController.i.updateIsloading(false);
       return false;
     }
@@ -179,9 +187,7 @@ class ProfileRepo {
       Iterable data = jsonData['Data']; //Data
       List<Provinces> provincesList =
           data.map((json) => Provinces.fromJson(json)).toList();
-      // if (provincesList.isEmpty) {
-      //   showSnackbar(Get.context!, 'No Province');
-      // }
+
       return provincesList;
     } else {
       throw Exception('Failed to fetch provinces details');
@@ -202,9 +208,7 @@ class ProfileRepo {
       Iterable data = jsonData['Data']; //Data
       List<Cities> citiesList =
           data.map((json) => Cities.fromJson(json)).toList();
-      // if (citiesList.isEmpty) {
-      //   showSnackbar(Get.context!, 'No City');
-      // }
+
       return citiesList;
     } else {
       throw Exception('Failed to fetch cities details');
@@ -268,7 +272,14 @@ class ProfileRepo {
         ProfileController.i.updateIsloading(false);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: "Something went wrong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       ProfileController.i.updateIsloading(false);
       return false;
     }
@@ -396,11 +407,25 @@ class ProfileRepo {
 
         if (status == 1) {
           if (msg == "Successfully Updated") {
-            showSnackbar(Get.context!, msg);
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
             Get.back(result: true);
             return 'true';
           } else {
-            showSnackbar(Get.context!, 'Failed to update');
+            Fluttertoast.showToast(
+                msg: 'Failed to update',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
             return 'false';
           }
         } else {
@@ -408,7 +433,14 @@ class ProfileRepo {
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -429,12 +461,33 @@ class ProfileRepo {
       Map<String, dynamic> responseData = json.decode(response.body);
       int status = responseData['Status'];
       if (status == 1) {
-        showSnackbar(Get.context!, "Updated");
+        Fluttertoast.showToast(
+            msg: "Updated",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kPrimaryColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
       } else {
-        showSnackbar(Get.context!, "Failed to update");
+        Fluttertoast.showToast(
+            msg: "Failed to update",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
       }
     } else {
-      showSnackbar(Get.context!, "Failed to update");
+      Fluttertoast.showToast(
+          msg: "Failed to update",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
 
     return r;
@@ -501,17 +554,38 @@ class ProfileRepo {
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
           if (msg == "Successfully Updated") {
-            showSnackbar(Get.context!, msg);
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
             return 'true';
           }
         } else if (status == -5) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         } else {
           return 'false';
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -570,7 +644,6 @@ class ProfileRepo {
       "DesignationList": designationslist,
     };
 
-    print(body);
     try {
       var response = await http.post(
           Uri.parse(AppConstants.updatedoctorpersonalinfo),
@@ -582,17 +655,38 @@ class ProfileRepo {
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
           if (msg == "Successfully Updated") {
-            showSnackbar(Get.context!, msg);
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
             return 'true';
           }
         } else if (status == -5) {
-          showSnackbar(Get.context!, msg);
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         } else {
           return 'false';
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';
@@ -643,11 +737,25 @@ class ProfileRepo {
         var msg = responseData['ErrorMessage'];
         if (status == 1) {
           if (msg == "Successfully Updated") {
-            showSnackbar(Get.context!, msg);
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
 
             return 'true';
           } else {
-            showSnackbar(Get.context!, 'Failed to update');
+            Fluttertoast.showToast(
+                msg: "Failed to update",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
             return 'false';
           }
         } else {
@@ -655,7 +763,14 @@ class ProfileRepo {
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
       return 'false';
     }
     return 'false';

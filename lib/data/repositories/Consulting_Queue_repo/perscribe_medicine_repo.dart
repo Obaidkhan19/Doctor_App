@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/advice.dart';
 import 'package:doctormobileapplication/models/complaints.dart';
 import 'package:doctormobileapplication/models/diagnostics.dart';
@@ -18,11 +19,12 @@ import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class PrescribeMedicinRepo {
-  Future<List<Diagnostics1>> getDiagnostics() async {
+  Future<List<Diagnostics1>> getDiagnostics(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -34,11 +36,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Diagnostics'];
       List<Diagnostics1> diagnosticsList =
@@ -66,7 +74,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<Investigations1>> getInvestigations() async {
+  Future<List<Investigations1>> getInvestigations(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -78,11 +86,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Investigations'];
       List<Investigations1> investigationList =
@@ -93,7 +107,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<Complaints1>> getComplaints() async {
+  Future<List<Complaints1>> getComplaints(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -105,11 +119,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Complaints'];
       List<Complaints1> complaints1List =
@@ -121,7 +141,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<PrimaryDiagnosis1>> getPrimaryDiagnosis() async {
+  Future<List<PrimaryDiagnosis1>> getPrimaryDiagnosis(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -133,11 +153,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Diagnosis'];
       List<PrimaryDiagnosis1> primaryDiagnosis1List =
@@ -148,7 +174,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<SecondaryDiagnosis1>> getSecondaryDiagnosis() async {
+  Future<List<SecondaryDiagnosis1>> getSecondaryDiagnosis(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -160,11 +186,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['SecondaryDiagnosis'];
       List<SecondaryDiagnosis1> secondaryDiagnosisList =
@@ -175,7 +207,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<Procedures1>> getProcedures() async {
+  Future<List<Procedures1>> getProcedures(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -187,11 +219,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Procedures'];
       List<Procedures1> proceduresList =
@@ -202,7 +240,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<Instructions1>> getInstruction() async {
+  Future<List<Instructions1>> getInstruction(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -214,11 +252,17 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Instructions'];
       List<Instructions1> instructionList =
@@ -229,7 +273,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<FollowUps1>> getFollowUps() async {
+  Future<List<FollowUps1>> getFollowUps(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -241,6 +285,7 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
     var response = await http.post(uri,
         body: body,
@@ -256,7 +301,7 @@ class PrescribeMedicinRepo {
     }
   }
 
-  Future<List<Medicines1>> getMedicines() async {
+  Future<List<Medicines1>> getMedicines(search) async {
     String doctorid = await LocalDb().getDoctorId() ?? "";
     String branchid = await LocalDb().getBranchId() ?? "";
     String pl = "150";
@@ -268,12 +313,18 @@ class PrescribeMedicinRepo {
       "PageLength": pl,
       "DoctorId": did,
       "BranchId": bid,
+      "Search": search
     });
 
     var response = await http.post(uri,
         body: body,
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['Status'];
+      if (status == -5) {
+        return [];
+      }
       dynamic jsonData = jsonDecode(response.body);
       Iterable data = jsonData['Medicines'];
       List<Medicines1> medicinesList =
@@ -304,7 +355,14 @@ class PrescribeMedicinRepo {
         medicinematric mm = medicinematric.fromJson(responseData);
         return mm;
       } else {
-        showSnackbar(Get.context!, 'Failed to update');
+        Fluttertoast.showToast(
+            msg: "Failed to update",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
         return medicinematric();
       }
     } else {
@@ -379,13 +437,20 @@ class PrescribeMedicinRepo {
           ERXController.i.updateIsloading(false);
           return 'Ok';
         } else {
-          showSnackbar(Get.context!, 'Failed to get');
+          Fluttertoast.showToast(
+              msg: 'Failed to fetch details',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           ERXController.i.updateIsloading(false);
           return 'NotOk';
         }
       } else {
         ERXController.i.updateIsloading(false);
-        throw Exception('Failed to fetch  details');
+        throw Exception('Failed to fetch details');
       }
     } catch (e) {
       ERXController.i.updateIsloading(false);
@@ -527,7 +592,14 @@ class PrescribeMedicinRepo {
           ERXController.i.updateIsloading(false);
           return 'Ok';
         } else {
-          showSnackbar(Get.context!, 'Failed to get');
+          Fluttertoast.showToast(
+              msg: 'Failed to fetch details',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           ERXController.i.updateIsloading(false);
           return 'NotOk';
         }

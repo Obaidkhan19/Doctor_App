@@ -1,6 +1,7 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
+import 'package:doctormobileapplication/components/custom_time_picker.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/configure_appointment_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/ConfigureAppointment_repo/configure_appointment_repo.dart';
@@ -17,7 +18,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:interval_time_picker/interval_time_picker.dart';
 
 enum _MenuValues { view, update, pause, makedefault, resume }
 
@@ -35,13 +35,13 @@ class _ConfigureAppointmentScreenState
       Get.put<ConfigureAppointmentController>(ConfigureAppointmentController());
   TimeOfDay _time = const TimeOfDay(hour: 00, minute: 00);
   final int _interval = 5;
-  final VisibleStep _visibleStep = VisibleStep.fifths;
+  final CustomVisibleStep _visibleStep = CustomVisibleStep.fifths;
   void _selectTime() async {
-    final TimeOfDay? newTime = await showIntervalTimePicker(
+    final TimeOfDay? newTime = await showCustomIntervalTimePicker(
       context: context,
       initialTime: _time,
       interval: _interval,
-      visibleStep: _visibleStep,
+      CustomVisibleStep: _visibleStep,
     );
     if (newTime != null) {
       setState(() {
@@ -52,13 +52,13 @@ class _ConfigureAppointmentScreenState
 
   TimeOfDay _fromtime = const TimeOfDay(hour: 00, minute: 00);
   final int _frominterval = 5;
-  final VisibleStep _fromvisibleStep = VisibleStep.fifths;
+  final CustomVisibleStep _fromvisibleStep = CustomVisibleStep.fifths;
   void _fromselectTime() async {
-    final TimeOfDay? newTime = await showIntervalTimePicker(
+    final TimeOfDay? newTime = await showCustomIntervalTimePicker(
       context: context,
       initialTime: _fromtime,
       interval: _frominterval,
-      visibleStep: _fromvisibleStep,
+      CustomVisibleStep: _fromvisibleStep,
     );
     if (newTime != null) {
       setState(() {
@@ -69,13 +69,13 @@ class _ConfigureAppointmentScreenState
 
   TimeOfDay _tilltime = const TimeOfDay(hour: 00, minute: 00);
   final int _tillinterval = 5;
-  final VisibleStep _tillvisibleStep = VisibleStep.fifths;
+  final CustomVisibleStep _tillvisibleStep = CustomVisibleStep.fifths;
   void _tillselectTime() async {
-    final TimeOfDay? newTime = await showIntervalTimePicker(
+    final TimeOfDay? newTime = await showCustomIntervalTimePicker(
       context: context,
       initialTime: _tilltime,
       interval: _tillinterval,
-      visibleStep: _tillvisibleStep,
+      CustomVisibleStep: _tillvisibleStep,
     );
     if (newTime != null) {
       setState(() {
@@ -176,7 +176,7 @@ class _ConfigureAppointmentScreenState
               ),
             ),
           ),
-          body: RefreshIndicator(
+          body: MyCustomRefreshIndicator(
             onRefresh: _getAppointmentConfiguration,
             child: BlurryModalProgressHUD(
               inAsyncCall: ConfigureAppointmentController.i.isLoading,
@@ -524,6 +524,30 @@ class _ConfigureAppointmentScreenState
                                 Transform.scale(
                                   scale: 0.55,
                                   child: Switch(
+                                    trackOutlineColor:
+                                        MaterialStateProperty.resolveWith(
+                                      (final Set<MaterialState> states) {
+                                        if (states
+                                            .contains(MaterialState.selected)) {
+                                          return null;
+                                        }
+
+                                        return ColorManager.kPrimaryColor;
+                                      },
+                                    ),
+                                    thumbColor: MaterialStateProperty
+                                        .resolveWith<Color?>(
+                                            (Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return ColorManager.kWhiteColor;
+                                      }
+                                      return ColorManager.kPrimaryColor;
+                                    }),
+                                    activeTrackColor: ColorManager.kPrimaryColor
+                                        .withOpacity(0.9),
+                                    inactiveTrackColor: ColorManager.kWhiteColor
+                                        .withOpacity(0.5),
                                     value: contr.isOnline,
                                     activeColor: ColorManager.kPrimaryColor,
                                     onChanged: (value) {
@@ -538,7 +562,7 @@ class _ConfigureAppointmentScreenState
                                             gravity: ToastGravity.BOTTOM,
                                             timeInSecForIosWeb: 1,
                                             backgroundColor:
-                                                ColorManager.kPrimaryColor,
+                                                ColorManager.kRedColor,
                                             textColor: ColorManager.kWhiteColor,
                                             fontSize: 14.0);
                                       } else {
@@ -585,24 +609,23 @@ class _ConfigureAppointmentScreenState
                                     InkWell(
                                       onTap: () async {
                                         contr.selectedhospital = null;
-                                        HospitalORClinics? generic =
-                                            await searchabledropdown(context,
-                                                contr.hospitalList ?? []);
+                                        HospitalORClinics generic =
+                                            await searchabledropdown(
+                                                context, contr.hospitalList);
                                         contr.selectedhospital = null;
-                                        contr.updatehospital(
-                                            generic ?? HospitalORClinics());
+                                        contr.updatehospital(generic);
 
-                                        if (generic != '') {
+                                        if (generic.id != null) {
                                           contr.selectedhospital = generic;
                                           contr.selectedhospital =
-                                              (generic == '')
+                                              (generic.id == null)
                                                   ? null
                                                   : contr.selectedhospital;
                                         }
                                         setState(() {});
                                       },
                                       child: Container(
-                                        width: Get.width * 1,
+                                        width: Get.width * 0.81,
                                         height: Get.height * 0.06,
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -721,6 +744,36 @@ class _ConfigureAppointmentScreenState
                                         Transform.scale(
                                           scale: 0.55,
                                           child: Switch(
+                                            trackOutlineColor:
+                                                MaterialStateProperty
+                                                    .resolveWith(
+                                              (final Set<MaterialState>
+                                                  states) {
+                                                if (states.contains(
+                                                    MaterialState.selected)) {
+                                                  return null;
+                                                }
+
+                                                return ColorManager
+                                                    .kPrimaryColor;
+                                              },
+                                            ),
+                                            thumbColor: MaterialStateProperty
+                                                .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
+                                                return ColorManager.kWhiteColor;
+                                              }
+                                              return ColorManager.kPrimaryColor;
+                                            }),
+                                            activeTrackColor: ColorManager
+                                                .kPrimaryColor
+                                                .withOpacity(0.9),
+                                            inactiveTrackColor: ColorManager
+                                                .kWhiteColor
+                                                .withOpacity(0.5),
                                             value: contr.switchStates[index],
                                             activeColor:
                                                 ColorManager.kPrimaryColor,
@@ -812,7 +865,7 @@ class _ConfigureAppointmentScreenState
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
-                                  height: Get.height * 0.02,
+                                  height: Get.height * 0.01,
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -981,13 +1034,14 @@ class _ConfigureAppointmentScreenState
                                 BorderRadius.all(Radius.circular(10.0)),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 5, right: 5, bottom: 10, top: 10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Get.width * 0.02,
+                                vertical: Get.height * 0.02),
                             child: Row(children: [
                               Expanded(
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, right: 5),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Get.width * 0.01),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -1020,6 +1074,7 @@ class _ConfigureAppointmentScreenState
                                                     right: Get.width * 0.02,
                                                     bottom: Get.height * 0.015),
                                                 child: TextField(
+                                                  textAlign: TextAlign.right,
                                                   keyboardType:
                                                       const TextInputType
                                                           .numberWithOptions(
@@ -1083,6 +1138,7 @@ class _ConfigureAppointmentScreenState
                                                     right: Get.width * 0.02,
                                                     bottom: Get.height * 0.015),
                                                 child: TextField(
+                                                  textAlign: TextAlign.right,
                                                   controller: contr
                                                       .followupfeeController,
                                                   keyboardType:
@@ -1121,8 +1177,8 @@ class _ConfigureAppointmentScreenState
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, right: 5),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Get.width * 0.01),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -1141,44 +1197,103 @@ class _ConfigureAppointmentScreenState
                                         onTap: () {
                                           _selectTime();
                                         },
-                                        child: TextField(
-                                          enabled: false,
-                                          cursorColor:
-                                              ColorManager.kPrimaryColor,
-                                          decoration: InputDecoration(
-                                            prefixIcon: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10, right: 10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Icon(
-                                                      CupertinoIcons.clock),
-                                                  Text(
-                                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
-                                                    style: GoogleFonts.poppins(
-                                                        fontSize: 12,
-                                                        color: ColorManager
-                                                            .kblackColor,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  )
-                                                ],
-                                              ),
+                                        child: Container(
+                                          height: Get.height * 0.065,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            border: Border.all(
+                                              color: ColorManager.kPrimaryColor,
                                             ),
-                                            disabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              borderSide: const BorderSide(
-                                                color:
-                                                    ColorManager.kPrimaryColor,
+                                          ),
+                                          child: TextField(
+                                            enabled: false,
+                                            cursorColor:
+                                                ColorManager.kPrimaryColor,
+                                            decoration: InputDecoration(
+                                              prefixIcon: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        Get.width * 0.04),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Icon(
+                                                        CupertinoIcons.clock),
+                                                    Text(
+                                                      "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 12,
+                                                          color: ColorManager
+                                                              .kblackColor,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              disabledBorder:
+                                                  OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                borderSide: const BorderSide(
+                                                  color: ColorManager
+                                                      .kPrimaryLightColor,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
+                                      // InkWell(
+                                      //   onTap: () {
+                                      //     _selectTime();
+                                      //   },
+                                      //   child: SizedBox(
+                                      //     height: Get.height * 0.065,
+                                      //     child: TextField(
+                                      //       enabled: false,
+                                      //       cursorColor:
+                                      //           ColorManager.kPrimaryColor,
+                                      //       decoration: InputDecoration(
+                                      //         prefixIcon: Padding(
+                                      //           padding: EdgeInsets.symmetric(
+                                      //               horizontal:
+                                      //                   Get.width * 0.04),
+                                      //           child: Row(
+                                      //             mainAxisAlignment:
+                                      //                 MainAxisAlignment
+                                      //                     .spaceBetween,
+                                      //             children: [
+                                      //               const Icon(
+                                      //                   CupertinoIcons.clock),
+                                      //               Text(
+                                      //                 "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                      //                 style: GoogleFonts.poppins(
+                                      //                     fontSize: 12,
+                                      //                     color: ColorManager
+                                      //                         .kblackColor,
+                                      //                     fontWeight:
+                                      //                         FontWeight.w500),
+                                      //               )
+                                      //             ],
+                                      //           ),
+                                      //         ),
+                                      //         disabledBorder:
+                                      //             OutlineInputBorder(
+                                      //           borderRadius:
+                                      //               BorderRadius.circular(15),
+                                      //           borderSide: const BorderSide(
+                                      //             color: ColorManager
+                                      //                 .kPrimaryColor,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       SizedBox(
                                         height: Get.height * 0.01,
                                       ),
@@ -1213,6 +1328,7 @@ class _ConfigureAppointmentScreenState
                                                     right: Get.width * 0.02,
                                                     bottom: Get.height * 0.015),
                                                 child: TextField(
+                                                  textAlign: TextAlign.right,
                                                   maxLength: 4,
                                                   controller: contr
                                                       .followupdayController,
@@ -1258,7 +1374,7 @@ class _ConfigureAppointmentScreenState
                                 BorderRadius.all(Radius.circular(10.0)),
                           ),
                           child: Align(
-                            alignment: Alignment.centerLeft,
+                            //alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
@@ -1303,7 +1419,7 @@ class _ConfigureAppointmentScreenState
                                       setState(() {});
                                     },
                                     child: Container(
-                                      width: Get.width * 1,
+                                      width: Get.width * 0.81,
                                       height: Get.height * 0.06,
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -1352,6 +1468,8 @@ class _ConfigureAppointmentScreenState
                         ),
                         InkWell(
                           onTap: () async {
+                            ConfigureAppointmentController.i
+                                .updateIsSavingloading(true);
                             String? hospitalid = contr.selectedhospital?.id;
                             String hid = '';
                             if (contr.daylst.isNotEmpty) {
@@ -1364,13 +1482,15 @@ class _ConfigureAppointmentScreenState
                                     ConfigureAppointmentRepo();
                                 if (_time ==
                                     const TimeOfDay(hour: 0, minute: 0)) {
+                                  ConfigureAppointmentController.i
+                                      .updateIsSavingloading(false);
                                   Fluttertoast.showToast(
                                       msg: "PleaseselectSlotDuration".tr,
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1,
-                                      backgroundColor: ColorManager.kWhiteColor,
-                                      textColor: ColorManager.kPrimaryColor,
+                                      backgroundColor: ColorManager.kRedColor,
+                                      textColor: ColorManager.kWhiteColor,
                                       fontSize: 14.0);
                                 }
                                 // else if (_fromtime ==
@@ -1431,20 +1551,25 @@ class _ConfigureAppointmentScreenState
                                       contr.disposefunction();
                                       ConfigureAppointmentController.i
                                           .falseSwitch();
+                                      ConfigureAppointmentController.i
+                                          .updateIsSavingloading(false);
                                     }
                                   } else {
+                                    ConfigureAppointmentController.i
+                                        .updateIsSavingloading(false);
                                     Fluttertoast.showToast(
                                         msg: "SlotDurationisincorrect".tr,
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
-                                        backgroundColor:
-                                            ColorManager.kWhiteColor,
-                                        textColor: ColorManager.kPrimaryColor,
+                                        backgroundColor: ColorManager.kRedColor,
+                                        textColor: ColorManager.kWhiteColor,
                                         fontSize: 14.0);
                                   }
                                 }
                               } else {
+                                ConfigureAppointmentController.i
+                                    .updateIsSavingloading(false);
                                 Fluttertoast.showToast(
                                     msg:
                                         "SelectHospitalorenableonlineconsultation"
@@ -1452,21 +1577,25 @@ class _ConfigureAppointmentScreenState
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.BOTTOM,
                                     timeInSecForIosWeb: 1,
-                                    backgroundColor: ColorManager.kWhiteColor,
-                                    textColor: ColorManager.kPrimaryColor,
+                                    backgroundColor: ColorManager.kRedColor,
+                                    textColor: ColorManager.kWhiteColor,
                                     fontSize: 14.0);
                               }
                             } else {
+                              ConfigureAppointmentController.i
+                                  .updateIsSavingloading(false);
                               Fluttertoast.showToast(
                                   msg: "SelectatleastOneDay".tr,
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: ColorManager.kWhiteColor,
-                                  textColor: ColorManager.kPrimaryColor,
+                                  backgroundColor: ColorManager.kRedColor,
+                                  textColor: ColorManager.kWhiteColor,
                                   fontSize: 14.0);
                               // showSnackbar(context, "SelectatleastOneDay".tr);
                             }
+                            ConfigureAppointmentController.i
+                                .updateIsSavingloading(false);
                           },
                           child: Container(
                             height: Get.height * 0.07,
@@ -1476,14 +1605,19 @@ class _ConfigureAppointmentScreenState
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Center(
-                              child: Text(
-                                'save'.tr,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorManager.kWhiteColor),
-                              ),
-                            ),
+                                child: ConfigureAppointmentController
+                                            .i.isSavingLoading ==
+                                        false
+                                    ? Text(
+                                        'save'.tr,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorManager.kWhiteColor),
+                                      )
+                                    : const CircularProgressIndicator(
+                                        color: ColorManager.kWhiteColor,
+                                      )),
                           ),
                         ),
 

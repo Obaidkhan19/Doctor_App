@@ -1,3 +1,4 @@
+import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
@@ -11,6 +12,7 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -37,7 +39,7 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
 
   var experience = Get.put<ProfileController>(ProfileController());
   var edit = Get.put<EditProfileController>(EditProfileController());
-
+  var profile = Get.put<ProfileController>(ProfileController());
   var add = Get.put<AddExperienceController>(AddExperienceController());
 
   _getaddLocation() async {
@@ -61,167 +63,16 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (contr) => contr.editval
-          ? GetBuilder<EditProfileController>(
-              builder: (contr) => Padding(
-                padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: Get.height * 0.02,
-                      ),
-                      EditProfileCustomTextField(
-                        validator: (p0) {
-                          if (p0!.isEmpty) {
-                            return 'PleaseEnterJobTitle'.tr;
-                          }
-                          return null;
-                        },
-                        controller: edit.jobtitle,
-                        hintText: 'JobTitle'.tr,
-                      ),
-                      EditProfileCustomTextField(
-                        onTap: () async {
-                          Degrees generic = await searchabledropdown(
-                              context, edit.experiencelocationList);
-                          edit.selectedexperiencelocation = null;
-                          edit.updateselectedexperiencelocation(generic);
-
-                          if (generic.id != null) {
-                            edit.selectedexperiencelocation = generic;
-                            edit.selectedexperiencelocation =
-                                (generic.id == null)
-                                    ? null
-                                    : edit.selectedexperiencelocation;
-                          }
-                        },
-                        readonly: true,
-                        hintText: edit.selectedexperiencelocation?.name == ""
-                            ? 'location'.tr
-                            : edit.selectedexperiencelocation?.name ??
-                                "SelectLocation".tr,
-                      ),
-                      EditProfileCustomTextField(
-                        onTap: () async {
-                          await edit.selectexperiencefromDateAndTime(
-                              context,
-                              EditProfileController.experiencefrom,
-                              edit.formateexperiencefrom);
-                        },
-                        readonly: true,
-                        hintText: edit.formattedexperiencefrom
-                                    .toString()
-                                    .split("T")[0] ==
-                                DateTime.now().toString().split(" ")[0]
-                            ? "SelectFromDate".tr
-                            : DateFormat('MM-dd-y').format(DateTime.parse(edit
-                                .formattedexperiencefrom
-                                .toString()
-                                .split(" ")[0])),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.05,
-                        child: Row(
-                          children: <Widget>[
-                            Checkbox(
-                              side: MaterialStateBorderSide.resolveWith(
-                                (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.selected)) {
-                                    return const BorderSide(
-                                        color: Colors.white);
-                                  }
-                                  return const BorderSide(color: Colors.white);
-                                },
-                              ),
-                              value: edit.currentlyworkingisChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  edit.currentlyworkingisChecked = value!;
-                                });
-                              },
-                              checkColor: ColorManager.kPrimaryColor,
-                              activeColor: ColorManager.kWhiteColor,
-                            ),
-                            Text(
-                              'CurrentlyWorking'.tr,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  color: ColorManager.kWhiteColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: edit.currentlyworkingisChecked == false,
-                        child: EditProfileCustomTextField(
-                          onTap: () async {
-                            await edit.selectexperiencetoDateAndTime(
-                                context,
-                                EditProfileController.experienceto,
-                                edit.formateexperienceto);
-                          },
-                          readonly: true,
-                          hintText: edit.formattedexperienceto
-                                      .toString()
-                                      .split("T")[0] ==
-                                  DateTime.now().toString().split(" ")[0]
-                              ? "SelectToDate".tr
-                              : DateFormat('MM-dd-y').format(DateTime.parse(edit
-                                  .formattedexperienceto
-                                  .toString()
-                                  .split(" ")[0])),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          edit.picksingleexperiencefile();
-                        },
-                        child: Container(
-                          width: Get.width * 1, // Adjust the width as needed
-                          height: Get.height * 0.065,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.7),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Attachment'.tr,
-                              style: GoogleFonts.poppins(
-                                color: ColorManager.kWhiteColor,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.02,
-                      ),
-                      EditProfileCustomTextField(
-                        controller: edit.experienceDescription,
-                        hintText: 'Description'.tr,
-                      ),
-                      SizedBox(height: Get.height * 0.03),
-                      PrimaryButton(
-                          fontSize: 15,
-                          title: 'edit'.tr,
-                          onPressed: () async {
-                            ProfileController.i.updateval(false);
-                            setState(() {});
-                          },
-                          color: Colors.white.withOpacity(0.7),
-                          textcolor: ColorManager.kWhiteColor),
-                      SizedBox(height: Get.height * 0.03),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          : contr.addval
-              // add new Controller
-              ? GetBuilder<AddExperienceController>(
+      builder: (contt) => BlurryModalProgressHUD(
+        inAsyncCall: profile.isLoading,
+        blurEffectIntensity: 4,
+        progressIndicator: const SpinKitSpinningLines(
+          color: Color(0xfff1272d3),
+          size: 60,
+        ),
+        child: GetBuilder<ProfileController>(
+          builder: (contr) => contr.editval
+              ? GetBuilder<EditProfileController>(
                   builder: (contr) => Padding(
                     padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
                     child: SingleChildScrollView(
@@ -237,46 +88,46 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                               }
                               return null;
                             },
-                            controller: add.jobtitle,
+                            controller: edit.jobtitle,
                             hintText: 'JobTitle'.tr,
                           ),
                           EditProfileCustomTextField(
                             onTap: () async {
                               Degrees generic = await searchabledropdown(
-                                  context, add.addexperiencelocationList);
-                              add.addselectedexperiencelocation = null;
-                              add.updateaddselectedexperiencelocation(generic);
+                                  context, edit.experiencelocationList);
+                              edit.selectedexperiencelocation = null;
+                              edit.updateselectedexperiencelocation(generic);
 
                               if (generic.id != null) {
-                                add.addselectedexperiencelocation = generic;
-                                add.addselectedexperiencelocation =
+                                edit.selectedexperiencelocation = generic;
+                                edit.selectedexperiencelocation =
                                     (generic.id == null)
                                         ? null
-                                        : add.addselectedexperiencelocation;
+                                        : edit.selectedexperiencelocation;
                               }
                             },
                             readonly: true,
                             hintText:
-                                add.addselectedexperiencelocation?.name == ""
-                                    ? 'Location'.tr
-                                    : add.addselectedexperiencelocation?.name ??
+                                edit.selectedexperiencelocation?.name == ""
+                                    ? 'location'.tr
+                                    : edit.selectedexperiencelocation?.name ??
                                         "SelectLocation".tr,
                           ),
                           EditProfileCustomTextField(
                             onTap: () async {
-                              await add.selectexperiencefromDateAndTime(
+                              await edit.selectexperiencefromDateAndTime(
                                   context,
-                                  AddExperienceController.experiencefrom,
-                                  add.formateexperiencefrom);
+                                  EditProfileController.experiencefrom,
+                                  edit.formateexperiencefrom);
                             },
                             readonly: true,
-                            hintText: add.formattedexperiencefrom
+                            hintText: edit.formattedexperiencefrom
                                         .toString()
                                         .split("T")[0] ==
                                     DateTime.now().toString().split(" ")[0]
                                 ? "SelectFromDate".tr
                                 : DateFormat('MM-dd-y').format(DateTime.parse(
-                                    add.formattedexperiencefrom
+                                    edit.formattedexperiencefrom
                                         .toString()
                                         .split(" ")[0])),
                           ),
@@ -296,10 +147,10 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                                           color: Colors.white);
                                     },
                                   ),
-                                  value: add.currentlyworkingisChecked,
+                                  value: edit.currentlyworkingisChecked,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      add.currentlyworkingisChecked = value!;
+                                      edit.currentlyworkingisChecked = value!;
                                     });
                                   },
                                   checkColor: ColorManager.kPrimaryColor,
@@ -316,29 +167,29 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                             ),
                           ),
                           Visibility(
-                            visible: add.currentlyworkingisChecked == false,
+                            visible: edit.currentlyworkingisChecked == false,
                             child: EditProfileCustomTextField(
                               onTap: () async {
-                                await add.selectexperiencetoDateAndTime(
+                                await edit.selectexperiencetoDateAndTime(
                                     context,
-                                    AddExperienceController.experienceto,
-                                    add.formateexperienceto);
+                                    EditProfileController.experienceto,
+                                    edit.formateexperienceto);
                               },
                               readonly: true,
-                              hintText: add.formattedexperienceto
+                              hintText: edit.formattedexperienceto
                                           .toString()
                                           .split("T")[0] ==
                                       DateTime.now().toString().split(" ")[0]
                                   ? "SelectToDate".tr
                                   : DateFormat('MM-dd-y').format(DateTime.parse(
-                                      add.formattedexperienceto
+                                      edit.formattedexperienceto
                                           .toString()
                                           .split(" ")[0])),
                             ),
                           ),
                           InkWell(
                             onTap: () {
-                              add.picksingleexperiencefile();
+                              edit.picksingleexperiencefile();
                             },
                             child: Container(
                               width:
@@ -363,16 +214,15 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                             height: Get.height * 0.02,
                           ),
                           EditProfileCustomTextField(
-                            controller: add.experienceDescription,
+                            controller: edit.experienceDescription,
                             hintText: 'Description'.tr,
                           ),
                           SizedBox(height: Get.height * 0.03),
                           PrimaryButton(
                               fontSize: 15,
-                              title: 'add'.tr,
+                              title: 'edit'.tr,
                               onPressed: () async {
-                                ProfileController.i.updateaddval(false);
-
+                                ProfileController.i.updateval(false);
                                 setState(() {});
                               },
                               color: Colors.white.withOpacity(0.7),
@@ -383,245 +233,433 @@ class _ExperienceDetailState extends State<ExperienceDetail> {
                     ),
                   ),
                 )
-              : Container(
-                  height: Get.height * 1,
-                  color: ColorManager.kPrimaryColor,
-                  padding: EdgeInsets.only(
-                    top: Get.height * 0.02,
-                    left: Get.width * 0.02,
-                    right: Get.width * 0.02,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: Get.width * 0.04),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+              : contr.addval
+                  // add new Controller
+                  ? GetBuilder<AddExperienceController>(
+                      builder: (contr) => Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
-                              ImageContainer(
-                                onpressed: () {
-                                  ProfileController.i.updateaddval(true);
-                                  ProfileController.i.updateisEdit(true);
-                                  setState(() {});
+                              SizedBox(
+                                height: Get.height * 0.02,
+                              ),
+                              EditProfileCustomTextField(
+                                validator: (p0) {
+                                  if (p0!.isEmpty) {
+                                    return 'PleaseEnterJobTitle'.tr;
+                                  }
+                                  return null;
                                 },
-                                imagePath: Images.add,
-                                isSvg: false,
-                                color: ColorManager.kPrimaryColor,
-                                backgroundColor: ColorManager.kWhiteColor,
-                                boxheight: Get.height * 0.04,
-                                boxwidth: Get.width * 0.08,
-                              )
+                                controller: add.jobtitle,
+                                hintText: 'JobTitle'.tr,
+                              ),
+                              EditProfileCustomTextField(
+                                onTap: () async {
+                                  Degrees generic = await searchabledropdown(
+                                      context, add.addexperiencelocationList);
+                                  add.addselectedexperiencelocation = null;
+                                  add.updateaddselectedexperiencelocation(
+                                      generic);
+
+                                  if (generic.id != null) {
+                                    add.addselectedexperiencelocation = generic;
+                                    add.addselectedexperiencelocation =
+                                        (generic.id == null)
+                                            ? null
+                                            : add.addselectedexperiencelocation;
+                                  }
+                                },
+                                readonly: true,
+                                hintText: add.addselectedexperiencelocation
+                                            ?.name ==
+                                        ""
+                                    ? 'Location'.tr
+                                    : add.addselectedexperiencelocation?.name ??
+                                        "SelectLocation".tr,
+                              ),
+                              EditProfileCustomTextField(
+                                onTap: () async {
+                                  await add.selectexperiencefromDateAndTime(
+                                      context,
+                                      AddExperienceController.experiencefrom,
+                                      add.formateexperiencefrom);
+                                },
+                                readonly: true,
+                                hintText: add.formattedexperiencefrom
+                                            .toString()
+                                            .split("T")[0] ==
+                                        DateTime.now().toString().split(" ")[0]
+                                    ? "SelectFromDate".tr
+                                    : DateFormat('MM-dd-y').format(
+                                        DateTime.parse(add
+                                            .formattedexperiencefrom
+                                            .toString()
+                                            .split(" ")[0])),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.05,
+                                child: Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                      side: MaterialStateBorderSide.resolveWith(
+                                        (Set<MaterialState> states) {
+                                          if (states.contains(
+                                              MaterialState.selected)) {
+                                            return const BorderSide(
+                                                color: Colors.white);
+                                          }
+                                          return const BorderSide(
+                                              color: Colors.white);
+                                        },
+                                      ),
+                                      value: add.currentlyworkingisChecked,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          add.currentlyworkingisChecked =
+                                              value!;
+                                        });
+                                      },
+                                      checkColor: ColorManager.kPrimaryColor,
+                                      activeColor: ColorManager.kWhiteColor,
+                                    ),
+                                    Text(
+                                      'CurrentlyWorking'.tr,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          color: ColorManager.kWhiteColor,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Visibility(
+                                visible: add.currentlyworkingisChecked == false,
+                                child: EditProfileCustomTextField(
+                                  onTap: () async {
+                                    await add.selectexperiencetoDateAndTime(
+                                        context,
+                                        AddExperienceController.experienceto,
+                                        add.formateexperienceto);
+                                  },
+                                  readonly: true,
+                                  hintText: add.formattedexperienceto
+                                              .toString()
+                                              .split("T")[0] ==
+                                          DateTime.now()
+                                              .toString()
+                                              .split(" ")[0]
+                                      ? "SelectToDate".tr
+                                      : DateFormat('MM-dd-y').format(
+                                          DateTime.parse(add
+                                              .formattedexperienceto
+                                              .toString()
+                                              .split(" ")[0])),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  add.picksingleexperiencefile();
+                                },
+                                child: Container(
+                                  width: Get.width *
+                                      1, // Adjust the width as needed
+                                  height: Get.height * 0.065,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Attachment'.tr,
+                                      style: GoogleFonts.poppins(
+                                        color: ColorManager.kWhiteColor,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.02,
+                              ),
+                              EditProfileCustomTextField(
+                                controller: add.experienceDescription,
+                                hintText: 'Description'.tr,
+                              ),
+                              SizedBox(height: Get.height * 0.03),
+                              PrimaryButton(
+                                  fontSize: 15,
+                                  title: 'add'.tr,
+                                  onPressed: () async {
+                                    ProfileController.i.updateaddval(false);
+
+                                    setState(() {});
+                                  },
+                                  color: Colors.white.withOpacity(0.7),
+                                  textcolor: ColorManager.kWhiteColor),
+                              SizedBox(height: Get.height * 0.03),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: Get.height * 0.02,
-                        ),
-                        experience.experienceList.isNotEmpty
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                      ),
+                    )
+                  : Container(
+                      height: Get.height * 1,
+                      color: ColorManager.kPrimaryColor,
+                      padding: EdgeInsets.only(
+                        top: Get.height * 0.02,
+                        left: Get.width * 0.02,
+                        right: Get.width * 0.02,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: Get.width * 0.04),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  SizedBox(
-                                    width: Get.width * 0.4,
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                          child: SizedBox(
-                                            height: Get.height * 0.04,
-                                            width: Get.width * 0.15,
-                                            child: Image.asset(
-                                              Images.edit,
-                                              color: ColorManager.kPrimaryColor,
+                                  ImageContainer(
+                                    onpressed: () {
+                                      ProfileController.i.updateaddval(true);
+                                      ProfileController.i.updateisEdit(true);
+                                      setState(() {});
+                                    },
+                                    imagePath: Images.add,
+                                    isSvg: false,
+                                    color: ColorManager.kPrimaryColor,
+                                    backgroundColor: ColorManager.kWhiteColor,
+                                    boxheight: Get.height * 0.04,
+                                    boxwidth: Get.width * 0.08,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.02,
+                            ),
+                            experience.experienceList.isNotEmpty
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: Get.width * 0.4,
+                                        child: Row(
+                                          children: [
+                                            InkWell(
+                                              child: SizedBox(
+                                                height: Get.height * 0.04,
+                                                width: Get.width * 0.15,
+                                                child: Image.asset(
+                                                  Images.edit,
+                                                  color: ColorManager
+                                                      .kPrimaryColor,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Text(
+                                              'title'.tr,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color: ColorManager.kWhiteColor,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          'title'.tr,
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.24,
+                                        child: Text(
+                                          'organization'.tr,
                                           style: GoogleFonts.poppins(
                                             fontSize: 12,
                                             color: ColorManager.kWhiteColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.24,
-                                    child: Text(
-                                      'organization'.tr,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor,
-                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Get.width * 0.2,
-                                    child: Text(
-                                      'date'.tr,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const SizedBox.shrink(),
-                        experience.experienceList.isNotEmpty
-                            ? ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: experience.experienceList.length,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
                                       SizedBox(
-                                        height: Get.height * 0.01,
+                                        width: Get.width * 0.2,
+                                        child: Text(
+                                          'date'.tr,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            color: ColorManager.kWhiteColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
-                                      Row(
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                            experience.experienceList.isNotEmpty
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: experience.experienceList.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            width: Get.width * 0.4,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                ImageContainerNew(
-                                                  onpressed: () {
-                                                    deleteSelected(
-                                                        context, "2");
-                                                  },
-                                                  imagePath: AppImages.cross,
-                                                  //  imageheight: Get.height * 0.03,
-                                                  isSvg: false,
-                                                  color: ColorManager.kRedColor,
-                                                  backgroundColor:
-                                                      ColorManager.kWhiteColor,
-                                                  boxheight: Get.height * 0.03,
-                                                  boxwidth: Get.width * 0.06,
-                                                ),
-                                                SizedBox(
-                                                  width: Get.width * 0.004,
-                                                ),
-                                                ImageContainerNew(
-                                                  onpressed: () {
-                                                    edit.editSelectedExperience =
-                                                        null;
-                                                    edit.updateEditSelectedExperience(
-                                                        experience
+                                            height: Get.height * 0.01,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                width: Get.width * 0.4,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    ImageContainerNew(
+                                                      onpressed: () {
+                                                        deleteSelected(
+                                                            context, "2");
+                                                      },
+                                                      imagePath:
+                                                          AppImages.cross,
+                                                      //  imageheight: Get.height * 0.03,
+                                                      isSvg: false,
+                                                      color: ColorManager
+                                                          .kRedColor,
+                                                      backgroundColor:
+                                                          ColorManager
+                                                              .kWhiteColor,
+                                                      boxheight:
+                                                          Get.height * 0.03,
+                                                      boxwidth:
+                                                          Get.width * 0.06,
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.004,
+                                                    ),
+                                                    ImageContainerNew(
+                                                      onpressed: () {
+                                                        edit.editSelectedExperience =
+                                                            null;
+                                                        edit.updateEditSelectedExperience(
+                                                            experience
+                                                                    .experienceList[
+                                                                index]);
+                                                        ProfileController.i
+                                                            .updateval(true);
+                                                        ProfileController.i
+                                                            .updateisEdit(true);
+                                                        setState(() {});
+                                                      },
+                                                      imagePath:
+                                                          AppImages.editbig,
+                                                      isSvg: false,
+                                                      color: ColorManager
+                                                          .kPrimaryColor,
+                                                      backgroundColor:
+                                                          ColorManager
+                                                              .kWhiteColor,
+                                                      // imageheight: Get.height * 0.02,
+                                                      boxheight:
+                                                          Get.height * 0.03,
+                                                      boxwidth:
+                                                          Get.width * 0.06,
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.002,
+                                                    ),
+                                                    SizedBox(
+                                                      width: Get.width * 0.25,
+                                                      child: Text(
+                                                        ProfileController
+                                                                .i
                                                                 .experienceList[
-                                                            index]);
-                                                    ProfileController.i
-                                                        .updateval(true);
-                                                    ProfileController.i
-                                                        .updateisEdit(true);
-                                                    setState(() {});
-                                                  },
-                                                  imagePath: AppImages.editbig,
-                                                  isSvg: false,
-                                                  color: ColorManager
-                                                      .kPrimaryColor,
-                                                  backgroundColor:
-                                                      ColorManager.kWhiteColor,
-                                                  // imageheight: Get.height * 0.02,
-                                                  boxheight: Get.height * 0.03,
-                                                  boxwidth: Get.width * 0.06,
+                                                                    index]
+                                                                .title ??
+                                                            "",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontSize: 11,
+                                                          color: ColorManager
+                                                              .kWhiteColor,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: Get.width * 0.002,
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.24,
+                                                child: Text(
+                                                  ProfileController
+                                                          .i
+                                                          .experienceList[index]
+                                                          .organizationName ??
+                                                      "",
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 11,
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  width: Get.width * 0.25,
+                                              ),
+                                              SizedBox(
+                                                  width: Get.width * 0.2,
                                                   child: Text(
-                                                    ProfileController
-                                                            .i
-                                                            .experienceList[
-                                                                index]
-                                                            .title ??
-                                                        "",
+                                                    (ProfileController
+                                                                .i
+                                                                .experienceList[
+                                                                    index]
+                                                                .fromDate !=
+                                                            null)
+                                                        ? ((ProfileController
+                                                                    .i
+                                                                    .experienceList[
+                                                                        index]
+                                                                    .toDate !=
+                                                                null)
+                                                            ? '${DateFormat('MM-dd-y').format(DateTime.parse(ProfileController.i.experienceList[index].fromDate!.split("T")[0]))} To ${DateFormat('MM-dd-y').format(DateTime.parse(ProfileController.i.experienceList[index].toDate!.split("T")[0]))}'
+                                                            : '${DateFormat('MM-dd-y').format(DateTime.parse(ProfileController.i.experienceList[index].fromDate!.split("T")[0]))} To Present')
+                                                        : "-",
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 11,
                                                       color: ColorManager
                                                           .kWhiteColor,
                                                     ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                                  )),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: Get.width * 0.24,
-                                            child: Text(
-                                              ProfileController
-                                                      .i
-                                                      .experienceList[index]
-                                                      .organizationName ??
-                                                  "",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 11,
-                                                color: ColorManager.kWhiteColor,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              width: Get.width * 0.2,
-                                              child: Text(
-                                                (ProfileController
-                                                            .i
-                                                            .experienceList[
-                                                                index]
-                                                            .fromDate !=
-                                                        null)
-                                                    ? DateFormat('MM-dd-y')
-                                                        .format(DateTime.parse(
-                                                            ProfileController
-                                                                .i
-                                                                .experienceList[
-                                                                    index]
-                                                                .fromDate!
-                                                                .split("T")[0]))
-                                                    : "-",
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  color:
-                                                      ColorManager.kWhiteColor,
-                                                ),
-                                              )),
                                         ],
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: Text(
+                                      "NoRecordFound".tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w300,
                                       ),
-                                    ],
-                                  );
-                                },
-                              )
-                            : Center(
-                                child: Text(
-                                  "NoRecordFound".tr,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w300,
+                                    ),
                                   ),
-                                ),
-                              ),
-                      ],
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+        ),
+      ),
     );
   }
 }

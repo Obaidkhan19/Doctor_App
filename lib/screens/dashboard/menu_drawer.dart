@@ -1,3 +1,4 @@
+import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -14,15 +15,16 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
-    return const ZoomDrawer(
+    return ZoomDrawer(
         dragOffset: 40,
+        controller: ProfileController.i.zoomDrawerController,
         showShadow: true,
-        shadowLayer2Color: Color(0xFF2157B2),
+        shadowLayer2Color: const Color(0xFF2157B2),
         menuBackgroundColor: ColorManager.kPrimaryColor,
         angle: 0,
         slideWidth: 300,
         drawerShadowsBackgroundColor: ColorManager.kPrimaryColor,
-        menuScreen: MenuScreen(),
-        mainScreen: DashBoard());
+        menuScreen: const MenuScreen(),
+        mainScreen: const DashBoard());
   }
 }

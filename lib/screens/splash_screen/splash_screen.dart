@@ -17,6 +17,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  // instance() async {
+  //   final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+  //   await remoteConfig.setConfigSettings(
+  //     RemoteConfigSettings(
+  //       fetchTimeout: const Duration(seconds: 10),
+  //       minimumFetchInterval: const Duration(minutes: 2),
+  //     ),
+  //   );
+  //   await remoteConfig.fetchAndActivate();
+  //   String? doctorid = await LocalDb().getDoctorId();
+  //   log(doctorid ?? "");
+  //   baseURL = remoteConfig.getString('URL');
+  //   if (baseURL == "") {
+  //     baseURL = 'https://patient.helpful.ihealthcure.com/';
+  //   }
+  //   // baseURL = remoteConfig.getString('URLQA');
+  //   // if (baseURL == "") {
+  //   // baseURL = 'http://192.168.88.254:324/';
+  //   // }
+  // }
   instance() async {
     final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.setConfigSettings(
@@ -25,17 +45,20 @@ class _SplashScreenState extends State<SplashScreen> {
         minimumFetchInterval: const Duration(minutes: 2),
       ),
     );
-    await remoteConfig.fetchAndActivate();
+    await remoteConfig.fetchAndActivate().then((value) {
+      if (value == true) {
+        baseURL = remoteConfig.getString('URLQA');
+        // baseURL = remoteConfig.getString('URL');
+      } else {
+        baseURL = 'http://192.168.88.254:324/';
+        // baseURL = 'https://patient.helpful.ihealthcure.com/';
+      }
+    }).onError((error, stackTrace) {
+      baseURL = 'http://192.168.88.254:324/';
+      // baseURL = 'https://patient.helpful.ihealthcure.com/';
+    });
     String? doctorid = await LocalDb().getDoctorId();
     log(doctorid ?? "");
-    baseURL = remoteConfig.getString('URL');
-    // if (baseURL == "") {
-    //   baseURL = 'https://patient.helpful.ihealthcure.com/';
-    // }
-    // baseURL = remoteConfig.getString('URLQA');
-    // if (baseURL == "") {
-    baseURL = 'http://192.168.88.254:324/';
-    // }
   }
 
   @override

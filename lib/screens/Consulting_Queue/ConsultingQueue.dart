@@ -78,104 +78,107 @@ class _ConsultingQueueState extends State<ConsultingQueue>
             backgroundColor: Colors.transparent,
           ),
           body: GetBuilder<ConsultingQueueController>(builder: (cont) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.helpfulbackgroundlogo),
-                  alignment: Alignment.center,
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.helpfulbackgroundlogo),
+                    alignment: Alignment.center,
+                  ),
                 ),
-              ),
-              child: SafeArea(
-                  child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SafeArea(
-                      minimum: const EdgeInsets.only(
-                        right: AppPadding.p14,
-                        left: AppPadding.p14,
-                        top: AppPadding.p14,
-                        bottom: AppPadding.p10,
-                      ).copyWith(top: 0),
-                      child: Column(
-                        children: [
-                          TabBar(
-                            padding: const EdgeInsets.all(0),
-                            labelPadding:
-                                const EdgeInsets.only(left: 0, right: 0),
-                            indicator: const UnderlineTabIndicator(
-                                borderSide: BorderSide(
-                                  width: 2,
-                                  color: Colors.blue,
-                                ),
-                                insets: EdgeInsets.only(left: 0, right: 8)),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            onTap: (index) {
-                              cont.updateselectedindex(index);
-                              FocusScope.of(context).unfocus();
-                            },
-                            tabs: [
-                              Tab(
-                                child: Text(
-                                  'clinicalPractice'.tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                          color: cont.tabindex == 0
-                                              ? ColorManager.kPrimaryColor
-                                              : ColorManager.kblackColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12),
-                                ),
-                              ),
-                              Tab(
-                                child: Text(
-                                  'hold'.tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                          color: cont.tabindex == 1
-                                              ? ColorManager.kPrimaryColor
-                                              : ColorManager.kblackColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12),
-                                ),
-                              ),
-                              Tab(
-                                child: Text(
-                                  'consulted'.tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                          color: cont.tabindex == 2
-                                              ? ColorManager.kPrimaryColor
-                                              : ColorManager.kblackColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.77,
-                      child: TabBarView(
-                          physics: const NeverScrollableScrollPhysics(),
+                child: SafeArea(
+                    child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SafeArea(
+                        minimum: const EdgeInsets.only(
+                          // right: AppPadding.p14,
+                          // left: AppPadding.p14,
+                          //top: AppPadding.p14,
+                          bottom: AppPadding.p10,
+                        ).copyWith(top: 0),
+                        child: Column(
                           children: [
-                            ClinicalPracticeQueueDataList(Status: "1"),
-                            HoldQueueDataList(Status: "2"),
-                            ConsultedQueueDataList(status: "3"),
-                          ]),
-                    ),
-                  ],
-                ),
-              )),
+                            TabBar(
+                              padding: const EdgeInsets.all(0),
+                              labelPadding:
+                                  const EdgeInsets.only(left: 0, right: 0),
+                              indicator: const UnderlineTabIndicator(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: Colors.blue,
+                                  ),
+                                  insets: EdgeInsets.only(left: 0, right: 8)),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              onTap: (index) {
+                                cont.updateselectedindex(index);
+                                FocusScope.of(context).unfocus();
+                              },
+                              tabs: [
+                                Tab(
+                                  child: Text(
+                                    'clinicalPractice'.tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                            color: cont.tabindex == 0
+                                                ? ColorManager.kPrimaryColor
+                                                : ColorManager.kblackColor,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12),
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    'hold'.tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                            color: cont.tabindex == 1
+                                                ? ColorManager.kPrimaryColor
+                                                : ColorManager.kblackColor,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12),
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    'consulted'.tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                            color: cont.tabindex == 2
+                                                ? ColorManager.kPrimaryColor
+                                                : ColorManager.kblackColor,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.77,
+                        child: TabBarView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              ClinicalPracticeQueueDataList(Status: "1"),
+                              HoldQueueDataList(Status: "2"),
+                              ConsultedQueueDataList(status: "3"),
+                            ]),
+                      ),
+                    ],
+                  ),
+                )),
+              ),
             );
           })),
     );

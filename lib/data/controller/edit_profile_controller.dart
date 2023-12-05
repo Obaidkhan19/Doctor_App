@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/blood_group.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
@@ -19,8 +20,10 @@ import 'package:doctormobileapplication/models/speciality.dart';
 import 'package:doctormobileapplication/models/work_locations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class EditProfileController extends GetxController implements GetxService {
   static EditProfileController get i => Get.put(EditProfileController());
@@ -402,7 +405,26 @@ class EditProfileController extends GetxController implements GetxService {
         return file;
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      bool permissioncheck = await Permission.storage.isGranted;
+      if (!permissioncheck) {
+        Fluttertoast.showToast(
+            msg: 'PleasegivestoragePermissiontoapplication'.tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
+      } else {
+        Fluttertoast.showToast(
+            msg: 'Somethingwentwrong'.tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
+      }
     }
     update();
     return file;

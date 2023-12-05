@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doctormobileapplication/data/repositories/ManageAppointment_repo/manageAppointment_repo.dart';
 import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:get/get.dart';
@@ -137,12 +135,12 @@ class ManageAppointmentController extends GetxController
           }
         }
       }
-      // isLoadingMonthlyDoctorAppointment = false;
-      // update();
+      //isLoadingMonthlyDoctorAppointment = false;
+      update();
     } catch (e) {
-      // print("aaaaaaaaaaaaaaaaaaaaaaaaa $e");
-      // isLoadingMonthlyDoctorAppointment = false;
-      // update();
+      print("aaaaaaaaaaaaaaaaaaaaaaaaa $e");
+      //  isLoadingMonthlyDoctorAppointment = false;
+      update();
     }
   }
 

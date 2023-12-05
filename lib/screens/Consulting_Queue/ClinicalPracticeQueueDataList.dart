@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -117,8 +118,8 @@ class _ClinicalPracticeQueueDataListState
                 ),
               ),
               child: SafeArea(
-                minimum: const EdgeInsets.all(AppPadding.p14)
-                    .copyWith(top: 0, bottom: -10),
+                // minimum: const EdgeInsets.all(AppPadding.p14)
+                //     .copyWith(top: 0, bottom: -10),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -139,7 +140,7 @@ class _ClinicalPracticeQueueDataListState
                         height: Get.height * 0.68,
                         child: ConsultingQueueController
                                 .i.consultingqueuewait.isNotEmpty
-                            ? RefreshIndicator(
+                            ? MyCustomRefreshIndicator(
                                 onRefresh: callback,
                                 child: ListView.builder(
                                     controller: _scrollController,
@@ -178,7 +179,7 @@ class _ClinicalPracticeQueueDataListState
                                                 ),
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
-                                                      top: Get.height * 0.02,
+                                                      top: Get.height * 0.01,
                                                       bottom:
                                                           Get.height * 0.02),
                                                   child: Column(
@@ -188,7 +189,7 @@ class _ClinicalPracticeQueueDataListState
                                                             .symmetric(
                                                                 horizontal:
                                                                     Get.width *
-                                                                        0.03),
+                                                                        0.0),
                                                         child: ListTile(
                                                           leading: CircleAvatar(
                                                             backgroundColor:
@@ -306,9 +307,9 @@ class _ClinicalPracticeQueueDataListState
                                                                         color: ColorManager
                                                                             .kPrimaryColor,
                                                                         width: Get.width *
-                                                                            0.097,
-                                                                        height: Get.height *
                                                                             0.09,
+                                                                        height: Get.height *
+                                                                            0.05,
                                                                       ),
                                                                     )
                                                                   : InkWell(
@@ -342,14 +343,11 @@ class _ClinicalPracticeQueueDataListState
                                                             Get.height * 0.01,
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left:
-                                                                    Get.width *
-                                                                        0.08,
-                                                                right:
-                                                                    Get.width *
-                                                                        0.065),
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal:
+                                                              Get.width * 0.065,
+                                                        ),
                                                         child:
                                                             const MySeparator(
                                                           color: ColorManager
@@ -361,14 +359,11 @@ class _ClinicalPracticeQueueDataListState
                                                             Get.height * 0.01,
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left:
-                                                                    Get.width *
-                                                                        0.08,
-                                                                right:
-                                                                    Get.width *
-                                                                        0.06),
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal:
+                                                              Get.width * 0.065,
+                                                        ),
                                                         child: Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -426,13 +421,12 @@ class _ClinicalPracticeQueueDataListState
                                             ?.length
                                         : 0) ==
                                     0
-                                ? RefreshIndicator(
+                                ? MyCustomRefreshIndicator(
                                     onRefresh: callback,
                                     child: Stack(
                                       children: <Widget>[
                                         ListView(),
-                                        const Center(
-                                            child: Text('No Record Found!'))
+                                        Center(child: Text('NoRecordFound'.tr))
                                       ],
                                     ),
                                   )

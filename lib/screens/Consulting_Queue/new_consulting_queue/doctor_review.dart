@@ -4,6 +4,7 @@ import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/feedback_submit.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -227,8 +228,14 @@ class _DoctorReviewScreenState extends State<DoctorReviewScreen> {
                       InkWell(
                         onTap: () {
                           if (feedbackController.text.isEmpty) {
-                            showSnackbar(Get.context!, 'pleaseenterfeedback'.tr,
-                                color: Colors.red);
+                            Fluttertoast.showToast(
+                                msg: 'pleaseenterfeedback'.tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: ColorManager.kRedColor,
+                                textColor: ColorManager.kWhiteColor,
+                                fontSize: 14.0);
                           } else {
                             Get.to(() => const FeedbackSubmitScreen());
                           }

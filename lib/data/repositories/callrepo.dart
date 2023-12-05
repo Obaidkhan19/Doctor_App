@@ -3,9 +3,11 @@ import 'dart:developer';
 
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,7 +30,14 @@ class Callrepo {
         if (result["Status"] == 1) {
           return result["Status"];
         } else {
-          showSnackbar(Get.context!, "${result["ErrorMessage"]}");
+          Fluttertoast.showToast(
+              msg: "${result["ErrorMessage"]}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
       }
     } catch (e) {}
@@ -63,8 +72,14 @@ class Callrepo {
         }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Something went wrong!")));
+      Fluttertoast.showToast(
+          msg: "Something went wrong!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 }

@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/biometric_auth.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/helpers/values_manager.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/screens/auth_screens/change_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -38,7 +40,9 @@ class _MenuScreenState extends State<MenuScreen> {
     setState(() {});
   }
 
-  getDetail() {
+  getDetail() async {
+    bool val = await LocalDb.getfingerprint();
+    ProfileController.i.updatefingerprint(val);
     ProfileRepo pr = ProfileRepo();
     pr.getDoctorBasicInfo();
   }
@@ -85,17 +89,6 @@ class _MenuScreenState extends State<MenuScreen> {
                     ZoomDrawer.of(context)!.close();
                   },
                 ),
-                // InkWell(
-                //   splashColor: Colors.transparent,
-                //   highlightColor: Colors.transparent,
-                //   onTap: () {
-                //     ZoomDrawer.of(context)!.close();
-                //   },
-                //   child: Image.asset(
-                //     AppImages.back,
-                //     color: ColorManager.kWhiteColor,
-                //   ),
-                // ),
 
                 SizedBox(
                   height: Get.height * 0.04,
@@ -351,7 +344,27 @@ class _MenuScreenState extends State<MenuScreen> {
                   trailing: Transform.scale(
                     scale: 0.55,
                     child: Switch(
-                        value: fingerprint,
+                        trackOutlineColor: MaterialStateProperty.resolveWith(
+                          (final Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return ColorManager.kWhiteColor;
+                            }
+
+                            return ColorManager.kWhiteColor;
+                          },
+                        ),
+                        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.selected)) {
+                            return ColorManager.kWhiteColor;
+                          }
+                          return ColorManager.kWhiteColor;
+                        }),
+                        activeTrackColor:
+                            ColorManager.kWhiteColor.withOpacity(0),
+                        inactiveTrackColor:
+                            ColorManager.kWhiteColor.withOpacity(0),
+                        value: ProfileController.i.fingerprint,
                         onChanged: (val) async {
                           bool auth = await Authentication.authentication();
                           if (val == true) {
@@ -360,22 +373,22 @@ class _MenuScreenState extends State<MenuScreen> {
                               if (auth) {
                                 if (ProfileController.i.selectedbasicInfo?.id ==
                                     null) {
-                                  fingerprint = auth;
+                                  ProfileController.i.fingerprint = auth;
                                 } else {
                                   LocalDb.savefingerprint(true);
                                   // Utils().toastmessage(“You are already Logged in”);
-                                  fingerprint = true;
+                                  ProfileController.i.fingerprint = true;
                                 }
                                 setState(() {});
                               } else {}
-                              if (fingerprint) {
+                              if (ProfileController.i.fingerprint) {
                                 if (auth) {
                                   if (ProfileController
                                           .i.selectedbasicInfo?.id !=
                                       null) {
                                     LocalDb.savefingerprint(true);
                                     setState(() {
-                                      fingerprint = true;
+                                      ProfileController.i.fingerprint = true;
                                     });
                                   }
                                   setState(() {
@@ -384,18 +397,21 @@ class _MenuScreenState extends State<MenuScreen> {
                                 } else {
                                   setState(() {
                                     LocalDb.savefingerprint(true);
-                                    fingerprint = true;
+                                    ProfileController.i.fingerprint = true;
                                   });
                                 }
                               }
                             } else {
                               setState(() {
                                 LocalDb.savefingerprint(false);
-                                fingerprint = false;
+                                ProfileController.i.fingerprint = false;
                               });
                             }
                           } else {
-                            fingerprint = val;
+                            if (auth) {
+                              LocalDb.savefingerprint(false);
+                              ProfileController.i.fingerprint = val;
+                            }
                             setState(() {});
                           }
                         }),
@@ -467,7 +483,9 @@ class _MenuScreenState extends State<MenuScreen> {
                       ),
                     ),
                   ),
-                  onTap: () async {},
+                  onTap: () async {
+                    await deleteAccount(context);
+                  },
                 ),
 
                 ListTile(
@@ -490,6 +508,21 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ),
                   onTap: () async {
+                    ProfileController.i.updatedDoctorInfo(BasicInfo());
+                    AuthController.i.emailController.clear();
+                    AuthController.i.passwordController.clear();
+
+                    String? id = await LocalDb().getDoctorId();
+                    String? token = await LocalDb().getToken();
+                    bool? loginStatus = await LocalDb().getLoginStatus();
+                    String? DeviceToken = await LocalDb().getDeviceToken();
+                    if (loginStatus ?? true) {
+                      AuthRepo.logout(
+                          DoctorId: id,
+                          token: token,
+                          DeviceToken: DeviceToken,
+                          IsLogOffAllDevice: 'false');
+                    }
                     Get.offAll(() => const LoginScreen());
                   },
                 ),
@@ -540,7 +573,7 @@ class _MenuScreenState extends State<MenuScreen> {
     return authenticated;
   }
 
-  bool fingerprint = false;
+  // bool fingerprint = false;
 
   customListTile(BuildContext context,
       {String? title,
@@ -570,4 +603,58 @@ class _MenuScreenState extends State<MenuScreen> {
             ? CupertinoSwitch(value: true, onChanged: (value) {})
             : const SizedBox.shrink());
   }
+}
+
+Future<String?> deleteAccount(context) {
+  return showDialog<String>(
+    context: context,
+    builder: (BuildContext context) =>
+        StatefulBuilder(builder: (context, newState) {
+      return AlertDialog(
+        backgroundColor: Theme.of(context).primaryColorDark,
+        title: Text('DeleteAccount'.tr,
+            style: GoogleFonts.poppins(
+                fontSize: 14, color: ColorManager.kWhiteColor)),
+        content: Text('Doyoureallywanttodeleteaccount'.tr,
+            style: GoogleFonts.poppins(
+                fontSize: 12, color: ColorManager.kWhiteColor)),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorManager.kWhiteColor),
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: Text(
+                      'cancel'.tr,
+                      style: const TextStyle(color: ColorManager.kPrimaryColor),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorManager.kWhiteColor),
+                      onPressed: () {},
+                      child: Text(
+                        'delete'.tr,
+                        style:
+                            const TextStyle(color: ColorManager.kPrimaryColor),
+                      )),
+                ),
+              ],
+            ),
+          )
+        ],
+      );
+    }),
+  );
 }

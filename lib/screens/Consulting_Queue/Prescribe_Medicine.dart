@@ -137,63 +137,63 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
   _getComplaints() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updatecomplaintdata(
-      await pmr.getComplaints(),
+      await pmr.getComplaints(""),
     );
   }
 
   _getPrimaryDiagnosis() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updatePrimarydiagnosislist(
-      await pmr.getPrimaryDiagnosis(),
+      await pmr.getPrimaryDiagnosis(""),
     );
   }
 
   _getSecondaryDiagnosis() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updateSecondarydiagnosislist(
-      await pmr.getSecondaryDiagnosis(),
+      await pmr.getSecondaryDiagnosis(""),
     );
   }
 
   _getInvestigations() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updateInvestigationlist(
-      await pmr.getInvestigations(),
+      await pmr.getInvestigations(""),
     );
   }
 
   _getDiagnostics() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updatediagnosticslist(
-      await pmr.getDiagnostics(),
+      await pmr.getDiagnostics(""),
     );
   }
 
   _getProceduress() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updateProcedureslist(
-      await pmr.getProcedures(),
+      await pmr.getProcedures(""),
     );
   }
 
   _getFollowup() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updateFollowuplist(
-      await pmr.getFollowUps(),
+      await pmr.getFollowUps(""),
     );
   }
 
   _getInstructions() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updateInstructionlist(
-      await pmr.getInstruction(),
+      await pmr.getInstruction(""),
     );
   }
 
   _getMediciness() async {
     PrescribeMedicinRepo pmr = PrescribeMedicinRepo();
     controller.updateMedicinelist(
-      await pmr.getMedicines(),
+      await pmr.getMedicines(""),
     );
   }
 
@@ -280,15 +280,18 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          titleSpacing: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            color: ColorManager.kPrimaryColor,
-            onPressed: () {
-              // clear all selected and deleted list
-              Navigator.pop(context);
-            },
+          leading: Padding(
+            padding: EdgeInsets.only(left: Get.width * 0.04),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              color: ColorManager.kPrimaryColor,
+              onPressed: () {
+                // clear all selected and deleted list
+                Navigator.pop(context);
+              },
+            ),
           ),
+          centerTitle: true,
           title: Text(
             'erx'.tr,
             style: GoogleFonts.poppins(
@@ -320,49 +323,53 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              controller.clearLists();
-                              _getErnsDetailHistory();
-                              _getErnsHistory();
-                              _getMediciness();
-                              _getInstructions();
-                              _getFollowup();
-                              _getProceduress();
-                              _getPrimaryDiagnosis();
-                              _getSecondaryDiagnosis();
-                              _getComplaints();
-                              _getInvestigations();
-                              _getDiagnostics();
-                              setState(() {});
-                            },
-                            child: SizedBox(
-                              height: Get.height * 0.05,
-                              width: Get.width * 0.1,
-                              child: ImageContainer(
-                                imagePath: AppImages.recycle,
-                                imageheight: Get.height * 0.05,
-                                isSvg: false,
-                                color: ColorManager.kWhiteColor,
-                                backgroundColor: ColorManager.kPrimaryColor,
+                      Padding(
+                        padding: EdgeInsets.only(left: Get.width * 0.01),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                controller.clearLists();
+                                _getErnsDetailHistory();
+                                _getErnsHistory();
+                                _getMediciness();
+                                _getInstructions();
+                                _getFollowup();
+                                _getProceduress();
+                                _getPrimaryDiagnosis();
+                                _getSecondaryDiagnosis();
+                                _getComplaints();
+                                _getInvestigations();
+                                _getDiagnostics();
+                                setState(() {});
+                              },
+                              child: SizedBox(
+                                height: Get.height * 0.045,
+                                width: Get.width * 0.1,
+                                child: ImageContainer(
+                                  imagePath: AppImages.recycle,
+                                  imageheight: Get.height * 0.04,
+                                  isSvg: false,
+                                  color: ColorManager.kWhiteColor,
+                                  backgroundColor: ColorManager.kPrimaryColor,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.28,
-                          ),
-                          Text(
-                            'history'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                            Text(
+                              'history'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: Get.width * 0.1,
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: Get.height * 0.02,
@@ -374,7 +381,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                             surfaceTintColor: ColorManager.kWhiteColor,
                             child: Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: Get.width * 0.01),
+                                horizontal: Get.width * 0.02,
+                              ),
                               child: MyCustomTile(
                                 title: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -589,109 +597,117 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               ),
                             ),
                           )),
-                      Row(
-                        children: [
-                          Text(
-                            '${'smoker'.tr}${'  '}',
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ),
-                          Obx(
-                            () => Radio(
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) => ColorManager.kPrimaryColor),
-                              value: true,
-                              groupValue: controller.smokeryesSelected.value,
-                              onChanged: (value) =>
-                                  controller.smokerupdateYes(true),
-                            ),
-                          ),
-                          Text(
-                            'yes'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ),
-                          Obx(
-                            () => Radio(
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) => ColorManager.kPrimaryColor),
-                              value: false,
-                              groupValue: controller.smokeryesSelected.value,
-                              onChanged: (value) =>
-                                  controller.smokerupdateYes(false),
-                            ),
-                          ),
-                          Text(
-                            'no'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
 
+                      Padding(
+                        padding: EdgeInsets.only(left: Get.width * 0.01),
+                        child: Row(
+                          children: [
+                            Text(
+                              '${'smoker'.tr}${'  '}',
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Obx(
+                              () => Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => ColorManager.kPrimaryColor),
+                                value: true,
+                                groupValue: controller.smokeryesSelected.value,
+                                onChanged: (value) =>
+                                    controller.smokerupdateYes(true),
+                              ),
+                            ),
+                            Text(
+                              'yes'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Obx(
+                              () => Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => ColorManager.kPrimaryColor),
+                                value: false,
+                                groupValue: controller.smokeryesSelected.value,
+                                onChanged: (value) =>
+                                    controller.smokerupdateYes(false),
+                              ),
+                            ),
+                            Text(
+                              'no'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       // diabetic
-                      Row(
-                        children: [
-                          Text(
-                            'diabetic'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                      Padding(
+                        padding: EdgeInsets.only(left: Get.width * 0.01),
+                        child: Row(
+                          children: [
+                            Text(
+                              'diabetic'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Obx(
-                            () => Radio(
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) => ColorManager.kPrimaryColor),
-                              value: true,
-                              groupValue: controller.diabeticyesSelected.value,
-                              onChanged: (value) =>
-                                  controller.diabeticupdateYes(true),
+                            Obx(
+                              () => Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => ColorManager.kPrimaryColor),
+                                value: true,
+                                groupValue:
+                                    controller.diabeticyesSelected.value,
+                                onChanged: (value) =>
+                                    controller.diabeticupdateYes(true),
+                              ),
                             ),
-                          ),
-                          Text(
-                            'yes'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                            Text(
+                              'yes'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
-                          ),
-                          Obx(
-                            () => Radio(
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) => ColorManager.kPrimaryColor),
-                              value: false,
-                              groupValue: controller.diabeticyesSelected.value,
-                              onChanged: (value) =>
-                                  controller.diabeticupdateYes(false),
+                            Obx(
+                              () => Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => ColorManager.kPrimaryColor),
+                                value: false,
+                                groupValue:
+                                    controller.diabeticyesSelected.value,
+                                onChanged: (value) =>
+                                    controller.diabeticupdateYes(false),
+                              ),
                             ),
-                          ),
-                          Text(
-                            'no'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                            Text(
+                              'no'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
 
                       Card(
@@ -701,18 +717,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'complains'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'complains'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -722,8 +740,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -755,84 +773,99 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selectedComplaintsList.isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis
-                                            .horizontal, // Make sure items are laid out horizontally
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selectedComplaintsList
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selectedComplaintsList[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selectedComplaintsList.isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis
+                                              .horizontal, // Make sure items are laid out horizontally
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selectedComplaintsList,
-                                                    cid,
-                                                    "complaints");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selectedComplaintsList[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selectedComplaintsList
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selectedComplaintsList[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selectedComplaintsList,
+                                                      cid,
+                                                      "complaints");
+                                                },
+                                                child: Card(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  elevation: 4,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selectedComplaintsList[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -849,18 +882,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'primaryDiagnosis'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'primaryDiagnosis'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -870,8 +905,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -907,83 +942,99 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selectedprimarydiagnosisList.isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis.horizontal,
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selectedprimarydiagnosisList
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selectedprimarydiagnosisList[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selectedprimarydiagnosisList
+                                        .isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis.horizontal,
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selectedprimarydiagnosisList,
-                                                    cid,
-                                                    "pd");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selectedprimarydiagnosisList[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selectedprimarydiagnosisList
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selectedprimarydiagnosisList[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selectedprimarydiagnosisList,
+                                                      cid,
+                                                      "pd");
+                                                },
+                                                child: Card(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  elevation: 4,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selectedprimarydiagnosisList[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -1001,18 +1052,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'secondaryDiagnosis'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'secondaryDiagnosis'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1022,8 +1075,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -1060,85 +1113,100 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selectedsecondaryDiagnosisList
-                                      .isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis
-                                            .horizontal, // Make sure items are laid out horizontally
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selectedsecondaryDiagnosisList
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selectedsecondaryDiagnosisList[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selectedsecondaryDiagnosisList
+                                        .isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis
+                                              .horizontal, // Make sure items are laid out horizontally
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selectedsecondaryDiagnosisList,
-                                                    cid,
-                                                    "sd");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selectedsecondaryDiagnosisList[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selectedsecondaryDiagnosisList
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selectedsecondaryDiagnosisList[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selectedsecondaryDiagnosisList,
+                                                      cid,
+                                                      "sd");
+                                                },
+                                                child: Card(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  elevation: 4,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selectedsecondaryDiagnosisList[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -1155,18 +1223,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'diagnostics'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'diagnostics'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1176,8 +1246,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -1210,84 +1280,99 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selecteddiagnosticslist.isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis
-                                            .horizontal, // Make sure items are laid out horizontally
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selecteddiagnosticslist
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selecteddiagnosticslist[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selecteddiagnosticslist.isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis
+                                              .horizontal, // Make sure items are laid out horizontally
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selecteddiagnosticslist,
-                                                    cid,
-                                                    "diagnostics");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selecteddiagnosticslist[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selecteddiagnosticslist
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selecteddiagnosticslist[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selecteddiagnosticslist,
+                                                      cid,
+                                                      "diagnostics");
+                                                },
+                                                child: Card(
+                                                  elevation: 4,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selecteddiagnosticslist[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -1493,29 +1578,28 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'labinvestigation'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'labinvestigation'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.01,
                               ),
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -1551,84 +1635,99 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selectedinvestigationList.isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis
-                                            .horizontal, // Make sure items are laid out horizontally
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selectedinvestigationList
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selectedinvestigationList[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selectedinvestigationList.isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis
+                                              .horizontal, // Make sure items are laid out horizontally
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selectedinvestigationList,
-                                                    cid,
-                                                    "Investigations");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selectedinvestigationList[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selectedinvestigationList
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selectedinvestigationList[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selectedinvestigationList,
+                                                      cid,
+                                                      "Investigations");
+                                                },
+                                                child: Card(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  elevation: 4,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selectedinvestigationList[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -1648,18 +1747,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'procedures'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'procedures'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1669,8 +1770,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -1702,84 +1803,99 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selectedproceduresList.isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis
-                                            .horizontal, // Make sure items are laid out horizontally
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selectedproceduresList
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selectedproceduresList[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selectedproceduresList.isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis
+                                              .horizontal, // Make sure items are laid out horizontally
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selectedproceduresList,
-                                                    cid,
-                                                    "procedures");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selectedproceduresList[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selectedproceduresList
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selectedproceduresList[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selectedproceduresList,
+                                                      cid,
+                                                      "procedures");
+                                                },
+                                                child: Card(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  elevation: 4,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selectedproceduresList[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -1799,18 +1915,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               // height: Get.height * 0.09,
                               width: Get.width * 0.9,
                               child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
                                       height: Get.height * 0.01,
                                     ),
-                                    Text(
-                                      'medicines'.tr,
-                                      style: GoogleFonts.poppins(
-                                        textStyle: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
+                                    Center(
+                                      child: Text(
+                                        'medicines'.tr,
+                                        style: GoogleFonts.poppins(
+                                          textStyle: GoogleFonts.poppins(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -1834,6 +1952,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                               controller.selectedmedicineList,
                                               controller.selectedmedicine,
                                             );
+
                                             controller
                                                 .updateselectedmedicine(result);
                                           },
@@ -1902,9 +2021,11 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    controller
-                                                        .removefinalmedindex(
-                                                            index);
+                                                    deleteMedicine(
+                                                        context, index);
+                                                    // controller
+                                                    //     .removefinalmedindex(
+                                                    //         index);
                                                   },
                                                   child: SizedBox(
                                                     height: Get.height * 0.03,
@@ -2222,18 +2343,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'followUp'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'followUp'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -2243,8 +2366,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -2263,72 +2386,84 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller.selectedfup?.id != "",
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis.horizontal,
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          InkWell(
-                                            onTap: () {
-                                              String? cid =
-                                                  controller.selectedfup!.id;
-                                              // controller.deletefollowup();
-                                              deleteSelectedObject(
-                                                  context,
-                                                  controller.selectedfup,
-                                                  cid ?? "",
-                                                  "followup");
-                                            },
-                                            child: Card(
-                                              elevation: 4,
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: Get.width * 0.01,
-                                                    right: Get.width * 0.01),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    SizedBox(
-                                                      height: Get.height * 0.03,
-                                                      width: Get.width * 0.03,
-                                                      child: Image.asset(
-                                                          AppImages.cross),
-                                                    ),
-                                                    SizedBox(
-                                                      width: Get.width * 0.01,
-                                                    ),
-                                                    Flexible(
-                                                      child: Text(
-                                                        controller.selectedfup
-                                                                ?.name
-                                                                .toString() ??
-                                                            "Names",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontSize: 10,
-                                                          color: ColorManager
-                                                              .kblackColor,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller.selectedfup?.id != "",
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis.horizontal,
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            InkWell(
+                                              onTap: () {
+                                                String? cid =
+                                                    controller.selectedfup!.id;
+                                                // controller.deletefollowup();
+                                                deleteSelectedObject(
+                                                    context,
+                                                    controller.selectedfup,
+                                                    cid ?? "",
+                                                    "followup");
+                                              },
+                                              child: Card(
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10)),
+                                                ),
+                                                elevation: 4,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: Get.width * 0.01,
+                                                      right: Get.width * 0.01),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      SizedBox(
+                                                        height:
+                                                            Get.height * 0.03,
+                                                        width: Get.width * 0.03,
+                                                        child: Image.asset(
+                                                            AppImages.cross),
+                                                      ),
+                                                      SizedBox(
+                                                        width: Get.width * 0.01,
+                                                      ),
+                                                      Flexible(
+                                                        child: Text(
+                                                          controller.selectedfup
+                                                                  ?.name
+                                                                  .toString() ??
+                                                              "Names",
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 10,
+                                                            color: ColorManager
+                                                                .kblackColor,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -2344,18 +2479,20 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                           // height: Get.height * 0.09,
                           width: Get.width * 0.9,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: Get.height * 0.01,
+                                height: Get.height * 0.015,
                               ),
-                              Text(
-                                'instructions'.tr,
-                                style: GoogleFonts.poppins(
-                                  textStyle: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                              Center(
+                                child: Text(
+                                  'instructions'.tr,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -2365,8 +2502,8 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
-                                      left: Get.width * 0.06,
-                                      right: Get.width * 0.06),
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04),
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
@@ -2399,84 +2536,99 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              GetBuilder<ERXController>(
-                                builder: (contr) => Visibility(
-                                  visible: controller
-                                      .selectedinstructionList.isNotEmpty,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Wrap(
-                                        direction: Axis
-                                            .horizontal, // Make sure items are laid out horizontally
-                                        runSpacing: 8.0,
-                                        children: <Widget>[
-                                          for (int index = 0;
-                                              index <
-                                                  controller
-                                                      .selectedinstructionList
-                                                      .length;
-                                              index++)
-                                            InkWell(
-                                              onTap: () {
-                                                String cid = controller
-                                                    .selectedinstructionList[
-                                                        index]
-                                                    .id!;
-                                                deleteSelected(
-                                                    context,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: Get.width * 0.03,
+                                    right: Get.width * 0.03),
+                                child: GetBuilder<ERXController>(
+                                  builder: (contr) => Visibility(
+                                    visible: controller
+                                        .selectedinstructionList.isNotEmpty,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Wrap(
+                                          direction: Axis
+                                              .horizontal, // Make sure items are laid out horizontally
+                                          runSpacing: 2.0,
+                                          children: <Widget>[
+                                            for (int index = 0;
+                                                index <
                                                     controller
-                                                        .selectedinstructionList,
-                                                    cid,
-                                                    "instructions");
-                                              },
-                                              child: Card(
-                                                elevation: 4,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: Get.width * 0.01,
-                                                      right: Get.width * 0.01),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.03,
-                                                        width: Get.width * 0.03,
-                                                        child: Image.asset(
-                                                            AppImages.cross),
-                                                      ),
-                                                      SizedBox(
-                                                        width: Get.width * 0.01,
-                                                      ),
-                                                      Flexible(
-                                                        child: Text(
-                                                          controller
-                                                              .selectedinstructionList[
-                                                                  index]
-                                                              .name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 10,
-                                                            color: ColorManager
-                                                                .kblackColor,
+                                                        .selectedinstructionList
+                                                        .length;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  String cid = controller
+                                                      .selectedinstructionList[
+                                                          index]
+                                                      .id!;
+                                                  deleteSelected(
+                                                      context,
+                                                      controller
+                                                          .selectedinstructionList,
+                                                      cid,
+                                                      "instructions");
+                                                },
+                                                child: Card(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                  ),
+                                                  elevation: 4,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: Get.width * 0.01,
+                                                        right:
+                                                            Get.width * 0.01),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height:
+                                                              Get.height * 0.03,
+                                                          width:
+                                                              Get.width * 0.03,
+                                                          child: Image.asset(
+                                                              AppImages.cross),
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              Get.width * 0.01,
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            controller
+                                                                .selectedinstructionList[
+                                                                    index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 10,
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.015,
                               ),
                             ],
                           ),
@@ -2516,7 +2668,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width: Get.width * 0.4,
+                            width: Get.width * 0.42,
                             child: PrimaryButton(
                                 title: 'hold'.tr,
                                 onPressed: () async {
@@ -2533,7 +2685,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                 textcolor: ColorManager.kWhiteColor),
                           ),
                           SizedBox(
-                            width: Get.width * 0.4,
+                            width: Get.width * 0.42,
                             child: PrimaryButton(
                                 title: 'consult'.tr,
                                 onPressed: () async {
@@ -2551,7 +2703,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                         ],
                       ),
                       SizedBox(
-                        height: Get.height * 0.01,
+                        height: Get.height * 0.03,
                       ),
                     ],
                   ),

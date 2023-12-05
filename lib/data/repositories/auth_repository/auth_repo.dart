@@ -24,7 +24,6 @@ import 'package:doctormobileapplication/screens/auth_screens/sucessfull_registra
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -95,7 +94,14 @@ class AuthRepo {
         }
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Somethingwentwrong'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -111,12 +117,33 @@ class AuthRepo {
           CountriesData countries = CountriesData.fromJson(result);
           return countries.data;
         } else {
-          showSnackbar(Get.context!, '${result['Message']}');
+          Fluttertoast.showToast(
+              msg: '${result['Message']}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
       }
-      showSnackbar(Get.context!, '${response.statusCode}');
+      Fluttertoast.showToast(
+          msg: '${response.statusCode}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Somethingwentwrong'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -134,12 +161,33 @@ class AuthRepo {
           ProvincesData provinces = ProvincesData.fromJson(result);
           return provinces.data;
         } else {
-          showSnackbar(Get.context!, '${result['Message']}');
+          Fluttertoast.showToast(
+              msg: '${result['Message']}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
       }
-      showSnackbar(Get.context!, '${response.statusCode}');
+      Fluttertoast.showToast(
+          msg: '${response.statusCode}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Somethingwentwrong'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -155,12 +203,33 @@ class AuthRepo {
           CitiesDatas cities = CitiesDatas.fromJson(result);
           return cities.data;
         } else {
-          showSnackbar(Get.context!, '${result['Message']}');
+          Fluttertoast.showToast(
+              msg: '${result['Message']}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
       }
-      showSnackbar(Get.context!, '${response.statusCode}');
+      Fluttertoast.showToast(
+          msg: '${response.statusCode}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Somethingwentwrong'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -231,7 +300,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -309,7 +378,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -385,15 +454,13 @@ class AuthRepo {
 
   static login({String? cnic, String? password}) async {
     //TODO : Values should be dynamics
-
+    AuthController.i.updateIsloading(true);
     String? DeviceToken = await LocalDb().getDeviceToken();
-
     String? Manufacturer = "Browser";
     String? Model = "Infinix-X680B Infinix X680B";
     String? AppVersion = "Web";
     String? DeviceVersion =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36";
-
     var body = {
       "UserName": "$cnic",
       "Password": "$password",
@@ -411,6 +478,7 @@ class AuthRepo {
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
+          AuthController.i.updateIsloading(false);
           Get.offAll(() => const DrawerScreen());
           LocalDb().saveLoginDataObject(result);
           LocalDb().saveDoctorId(result['Id']);
@@ -420,11 +488,11 @@ class AuthRepo {
           LocalDb().saveDoctorFullName(result['FullName']);
           LocalDb().saveDoctorPMDCNumber(result['PMDCNumber']);
           LocalDb().saveDoctorUserImagePath(result['UserImagePath']);
-
           LocalDb().saveUsername(cnic);
           LocalDb().savePassword(password);
           LocalDb().saveOnlineStatus(0);
         } else {
+          AuthController.i.updateIsloading(false);
           Fluttertoast.showToast(
               msg: result['ErrorMessage'],
               toastLength: Toast.LENGTH_SHORT,
@@ -435,6 +503,7 @@ class AuthRepo {
               fontSize: 14.0);
         }
       } else {
+        AuthController.i.updateIsloading(false);
         Fluttertoast.showToast(
             msg: response.statusCode.toString(),
             toastLength: Toast.LENGTH_SHORT,
@@ -445,8 +514,9 @@ class AuthRepo {
             fontSize: 14.0);
       }
     } catch (e) {
+      AuthController.i.updateIsloading(false);
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -470,16 +540,44 @@ class AuthRepo {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
           Get.offAll(() => const LoginScreen());
-          showSnackbar(Get.context!, '${result['ErrorMessage']}');
+          Fluttertoast.showToast(
+              msg: '${result['ErrorMessage']}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           LocalDb().saveLoginStatus(false);
         } else {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}');
+          Fluttertoast.showToast(
+              msg: '${result['ErrorMessage']}',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
       } else {
-        showSnackbar(Get.context!, '${response.statusCode}');
+        Fluttertoast.showToast(
+            msg: '${response.statusCode}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Somethingwentwrong'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -502,18 +600,38 @@ class AuthRepo {
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
-          Get.offAll(() => const LoginScreen());
-          // showSnackbar(Get.context!, '${result['ErrorMessage']}');
+         // Get.offAll(() => const LoginScreen());
           LocalDb().saveLoginStatus(false);
           LocalDb().removeUserData();
         } else {
-          showSnackbar(Get.context!, '${result['ErrorMessage']}');
+          Fluttertoast.showToast(
+              msg: result['ErrorMessage'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         }
       } else {
-        showSnackbar(Get.context!, '${response.statusCode}');
+        Fluttertoast.showToast(
+            msg: '${response.statusCode}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
       }
     } catch (e) {
-      showSnackbar(Get.context!, e.toString());
+      Fluttertoast.showToast(
+          msg: 'Somethingwentwrong'.tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
     }
   }
 
@@ -645,7 +763,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -701,7 +819,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -758,7 +876,7 @@ class AuthRepo {
     } catch (e) {
       AuthController.i.updateIsotploading(false);
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -805,7 +923,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -852,7 +970,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -898,7 +1016,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -944,7 +1062,7 @@ class AuthRepo {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,

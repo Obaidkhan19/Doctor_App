@@ -159,7 +159,6 @@ class NotificationsRepo {
       'OrderColumn': 0,
       'Token': DeviceToken,
     };
-    print(body);
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.notification),

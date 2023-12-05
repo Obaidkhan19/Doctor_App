@@ -18,6 +18,12 @@ import 'package:doctormobileapplication/models/provinces_model.dart';
 import '../../models/cities_model.dart';
 
 class AuthController extends GetxController implements GetxService {
+  bool isChangePasswordLoading = false;
+  updateIsChangePasswordloading(bool value) {
+    isChangePasswordLoading = value;
+    update();
+  }
+
   bool _isotpLoading = false;
   bool get isotpLoading => _isotpLoading;
   bool obsecure = true;
@@ -169,7 +175,7 @@ class AuthController extends GetxController implements GetxService {
       }
     } catch (e) {
       Fluttertoast.showToast(
-          msg: e.toString(),
+          msg: 'Somethingwentwrong'.tr,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,

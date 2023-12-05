@@ -57,8 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String path = '';
 
   _getimagepath() async {
-    path = ProfileController.i.selectedbasicInfo?.picturePath ??
-        ""; // (await LocalDb().getDoctorUserImagePath())!;
+    path = ProfileController.i.selectedbasicInfo?.picturePath ?? "";
     String baseurl = baseURL;
     imagepath = baseurl + path;
   }
@@ -68,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _getDoctorBasicInfo();
     _getUserName();
     _getimagepath();
+
     super.initState();
   }
 

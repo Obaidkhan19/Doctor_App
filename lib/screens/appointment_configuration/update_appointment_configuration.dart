@@ -1,4 +1,5 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:doctormobileapplication/components/custom_time_picker.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/edit_configure_appointment_controller.dart';
@@ -126,13 +127,13 @@ class _UpdateAppointmentConfigurationState
 
   TimeOfDay _time = const TimeOfDay(hour: 00, minute: 00);
   final int _interval = 5;
-  final VisibleStep _visibleStep = VisibleStep.fifths;
+  final CustomVisibleStep _visibleStep = CustomVisibleStep.fifths;
   void _selectTime() async {
-    final TimeOfDay? newTime = await showIntervalTimePicker(
+    final TimeOfDay? newTime = await showCustomIntervalTimePicker(
       context: context,
       initialTime: _time,
       interval: _interval,
-      visibleStep: _visibleStep,
+      CustomVisibleStep: _visibleStep,
     );
     if (newTime != null) {
       setState(() {
@@ -143,13 +144,13 @@ class _UpdateAppointmentConfigurationState
 
   TimeOfDay _fromtime = const TimeOfDay(hour: 00, minute: 00);
   final int _frominterval = 5;
-  final VisibleStep _fromvisibleStep = VisibleStep.fifths;
+  final CustomVisibleStep _fromvisibleStep = CustomVisibleStep.fifths;
   void _fromselectTime() async {
-    final TimeOfDay? newTime = await showIntervalTimePicker(
+    final TimeOfDay? newTime = await showCustomIntervalTimePicker(
       context: context,
       initialTime: _fromtime,
       interval: _frominterval,
-      visibleStep: _fromvisibleStep,
+      CustomVisibleStep: _fromvisibleStep,
     );
     if (newTime != null) {
       setState(() {
@@ -160,13 +161,13 @@ class _UpdateAppointmentConfigurationState
 
   TimeOfDay _tilltime = const TimeOfDay(hour: 00, minute: 00);
   final int _tillinterval = 5;
-  final VisibleStep _tillvisibleStep = VisibleStep.fifths;
+  final CustomVisibleStep _tillvisibleStep = CustomVisibleStep.fifths;
   void _tillselectTime() async {
-    final TimeOfDay? newTime = await showIntervalTimePicker(
+    final TimeOfDay? newTime = await showCustomIntervalTimePicker(
       context: context,
       initialTime: _tilltime,
       interval: _tillinterval,
-      visibleStep: _tillvisibleStep,
+      CustomVisibleStep: _tillvisibleStep,
     );
     if (newTime != null) {
       setState(() {
@@ -199,7 +200,7 @@ class _UpdateAppointmentConfigurationState
       ),
       body: GetBuilder<EditConfigureAppointmentController>(
         builder: (cont) => Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.03),
+          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
           child: BlurryModalProgressHUD(
             inAsyncCall: EditConfigureAppointmentController.i.isLoading,
             blurEffectIntensity: 4,
@@ -869,6 +870,8 @@ class _UpdateAppointmentConfigurationState
                     InkWell(
                       onTap: () async {
                         if (contr.daylst.isNotEmpty) {
+                          EditConfigureAppointmentController.i
+                              .updateIsSavingloading(true);
                           String? dit = await LocalDb().getDoctorId();
                           ConfigureAppointmentRepo car =
                               ConfigureAppointmentRepo();
@@ -878,8 +881,8 @@ class _UpdateAppointmentConfigurationState
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
-                                backgroundColor: ColorManager.kWhiteColor,
-                                textColor: ColorManager.kPrimaryColor,
+                                backgroundColor: ColorManager.kRedColor,
+                                textColor: ColorManager.kWhiteColor,
                                 fontSize: 14.0);
                           }
                           String mainId = widget.configureAppointment.id;
@@ -907,16 +910,20 @@ class _UpdateAppointmentConfigurationState
                                 true,
                               );
                               if (res == 'Successfully Updated') {
+                                EditConfigureAppointmentController.i
+                                    .updateIsSavingloading(false);
                                 Get.back(result: true);
                               }
                             } else {
+                              EditConfigureAppointmentController.i
+                                  .updateIsSavingloading(false);
                               Fluttertoast.showToast(
                                   msg: "SlotDurationisincorrect".tr,
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: ColorManager.kWhiteColor,
-                                  textColor: ColorManager.kPrimaryColor,
+                                  backgroundColor: ColorManager.kRedColor,
+                                  textColor: ColorManager.kWhiteColor,
                                   fontSize: 14.0);
                             }
                           }
@@ -926,10 +933,14 @@ class _UpdateAppointmentConfigurationState
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
-                              backgroundColor: ColorManager.kWhiteColor,
-                              textColor: ColorManager.kPrimaryColor,
+                              backgroundColor: ColorManager.kRedColor,
+                              textColor: ColorManager.kWhiteColor,
                               fontSize: 14.0);
+                          EditConfigureAppointmentController.i
+                              .updateIsSavingloading(false);
                         }
+                        EditConfigureAppointmentController.i
+                            .updateIsSavingloading(false);
                       },
                       child: Container(
                         height: Get.height * 0.07,
@@ -939,14 +950,19 @@ class _UpdateAppointmentConfigurationState
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
-                          child: Text(
-                            'update'.tr,
-                            style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: ColorManager.kWhiteColor),
-                          ),
-                        ),
+                            child: EditConfigureAppointmentController
+                                        .i.isSavingLoading ==
+                                    false
+                                ? Text(
+                                    'update'.tr,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: ColorManager.kWhiteColor),
+                                  )
+                                : const CircularProgressIndicator(
+                                    color: ColorManager.kWhiteColor,
+                                  )),
                       ),
                     ),
                     SizedBox(

@@ -110,38 +110,43 @@ class CustomFormFieldNotes extends StatefulWidget {
 class _CustomFormFieldNotesState extends State<CustomFormFieldNotes> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      focusNode: widget.focusNode,
-      onChanged: widget.onchange,
-      obscureText: widget.obscureText ?? false,
-      inputFormatters: widget.formatters,
-      maxLines: widget.lines,
-      readOnly: widget.readOnly ?? false,
-      validator: widget.validator,
-      controller: widget.controller,
-      autofocus: widget.focusnode ?? false,
-      decoration: InputDecoration(
-          errorStyle: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: ColorManager.kRedColor, fontSize: 12),
-          suffixIcon: widget.suffixIcon,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          hintText: widget.hintText,
-          hintStyle: GoogleFonts.poppins(
-            color: ColorManager.kGreyColor,
-            fontSize: 12,
-            height: Get.height * 0.005,
-          ),
-          disabledBorder: const OutlineInputBorder(),
-          errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: ColorManager.kRedColor)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: ColorManager.kGreyColor)),
-          border: const OutlineInputBorder(
-              borderSide: BorderSide(color: ColorManager.kGreyColor))),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.012),
+      child: TextFormField(
+        focusNode: widget.focusNode,
+        onChanged: widget.onchange,
+        obscureText: widget.obscureText ?? false,
+        inputFormatters: widget.formatters,
+        maxLines: widget.lines,
+        readOnly: widget.readOnly ?? false,
+        validator: widget.validator,
+        controller: widget.controller,
+        autofocus: widget.focusnode ?? false,
+        decoration: InputDecoration(
+            errorStyle: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+            suffixIcon: widget.suffixIcon,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: Get.width * 0.04,
+              vertical: Get.height * 0.02,
+            ),
+            hintText: widget.hintText,
+            hintStyle: GoogleFonts.poppins(
+              color: ColorManager.kGreyColor,
+              fontSize: 12,
+              height: Get.height * 0.005,
+            ),
+            disabledBorder: const OutlineInputBorder(),
+            errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.kRedColor)),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: ColorManager.kblackColor)),
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.kblackColor))),
+      ),
     );
   }
 }

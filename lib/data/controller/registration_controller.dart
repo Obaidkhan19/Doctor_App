@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:doctormobileapplication/components/custom_datepicker.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:doctormobileapplication/components/snackbar.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RegistrationController extends GetxController implements GetxService {
   static RegistrationController get i => Get.put(RegistrationController());
@@ -169,7 +171,7 @@ class RegistrationController extends GetxController implements GetxService {
     DateTime? date,
     RxString? formattedDate,
   ) async {
-    final DateTime? pickedDate = await showDatePicker(
+    final DateTime? pickedDate = await showCustomDatePicker(
         context: context,
         confirmText: 'Ok',
         initialDate: date!,
@@ -199,15 +201,26 @@ class RegistrationController extends GetxController implements GetxService {
         file = File(result.files.first.path!);
       }
     } catch (e) {
-      //  showSnackbar(Get.context!, e.toString());
-      Fluttertoast.showToast(
-          msg: e.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: ColorManager.kPrimaryColor,
-          textColor: ColorManager.kWhiteColor,
-          fontSize: 14.0);
+      bool permissioncheck = await Permission.storage.isGranted;
+      if (!permissioncheck) {
+        Fluttertoast.showToast(
+            msg: 'PleasegivestoragePermissiontoapplication'.tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
+      } else {
+        Fluttertoast.showToast(
+            msg: 'Somethingwentwrong'.tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
+      }
     }
     update();
     return file;
@@ -215,10 +228,32 @@ class RegistrationController extends GetxController implements GetxService {
 
   PlatformFile? pmcfile;
   Future<void> picksinglefile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      pmcfile = result.files.first;
-      // pmcfile == null ? false : OpenAppFile.open(pmcfile!.path.toString());
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        pmcfile = result.files.first;
+      }
+    } catch (e) {
+      bool permissioncheck = await Permission.storage.isGranted;
+      if (!permissioncheck) {
+        Fluttertoast.showToast(
+            msg: 'PleasegivestoragePermissiontoapplication'.tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
+      } else {
+        Fluttertoast.showToast(
+            msg: 'Somethingwentwrong'.tr,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: ColorManager.kRedColor,
+            textColor: ColorManager.kWhiteColor,
+            fontSize: 14.0);
+      }
     }
   }
 
