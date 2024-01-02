@@ -85,7 +85,11 @@ searchabledropdown(BuildContext context, List<dynamic> list) async {
                                             MediaQuery.of(context).size.height *
                                                 0.02,
                                       ),
-                                      Text(list[index].name.toString()),
+                                      Text(
+                                        list[index].name.toString(),
+                                        style: const TextStyle(
+                                            color: ColorManager.kblackColor),
+                                      ),
                                       const Divider()
                                     ],
                                   ),
@@ -110,7 +114,11 @@ searchabledropdown(BuildContext context, List<dynamic> list) async {
                                             MediaQuery.of(context).size.height *
                                                 0.02,
                                       ),
-                                      Text(list[index].name.toString()),
+                                      Text(
+                                        list[index].name.toString(),
+                                        style: const TextStyle(
+                                            color: ColorManager.kblackColor),
+                                      ),
                                       const Divider()
                                     ],
                                   ),

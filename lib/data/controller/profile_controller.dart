@@ -131,20 +131,34 @@ class ProfileController extends GetxController implements GetxService {
     //  Designation
     if (selectedbasicInfo?.designation != null &&
         selectedbasicInfo?.designationIds != null) {
+      // String designationname = selectedbasicInfo?.designation;
+      // String designationids = selectedbasicInfo?.designationIds;
+
+      // List<String> idList = designationids.split(',');
+
+      // EditProfileController.i.selecteddesignationList = idList.map((id) {
+      //   return Designations()..id = id.trim();
+      // }).toList();
+
+      // List<String> nameList = designationname.split(',');
+
+      // EditProfileController.i.selecteddesignationList = nameList.map((name) {
+      //   return Designations()..name = name.trim();
+      // }).toList();
+
       String designationname = selectedbasicInfo?.designation;
       String designationids = selectedbasicInfo?.designationIds;
 
       List<String> idList = designationids.split(',');
-
-      EditProfileController.i.selecteddesignationList = idList.map((id) {
-        return Designations()..id = id.trim();
-      }).toList();
-
       List<String> nameList = designationname.split(',');
 
-      EditProfileController.i.selecteddesignationList = nameList.map((name) {
-        return Designations()..name = name.trim();
-      }).toList();
+      EditProfileController.i.selecteddesignationList = List.generate(
+        idList.length,
+        (index) => Designations()
+          ..id = idList[index].trim()
+          ..name = nameList.length > index ? nameList[index].trim() : '',
+      );
+      // EditProfileController.i.selecteddesignationIdList = idList;
     }
 
     // if (selectedbasicInfo?.cNICNumber == null) {

@@ -3,6 +3,7 @@ import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/add_education_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -93,6 +94,7 @@ class _EducationDetailState extends State<EducationDetail> {
 
   @override
   void initState() {
+    _getInstitution(EditProfileController.i.educationselectedCountry?.id);
     _getCountries();
     _getaddCountries();
     _getaddFieldofStudies();
@@ -255,37 +257,22 @@ class _EducationDetailState extends State<EducationDetail> {
                                               "SelectFieldofStudy".tr,
                                 ),
                                 EditProfileCustomTextField(
-                                  onTap: () async {
-                                    await edit.selecteducationstartDateAndTime(
-                                        context,
-                                        EditProfileController.degreestart,
-                                        edit.formatedegreestart);
-                                  },
-                                  validator: (value) {
-                                    if (edit.formatteddegreestart
-                                            .toString()
-                                            .split("T")[0] ==
-                                        DateTime.now()
-                                            .toString()
-                                            .split(" ")[0]) {
-                                      return 'SelectStartDate'.tr;
-                                    }
-                                    return null;
-                                  },
-                                  readonly: true,
-                                  hintText: edit.formatteddegreestart
-                                              .toString()
-                                              .split("T")[0] ==
-                                          DateTime.now()
-                                              .toString()
-                                              .split(" ")[0]
-                                      ? "SelectStartDate".tr
-                                      : DateFormat('MM-dd-y').format(
-                                          DateTime.parse(edit
-                                              .formatteddegreestart
-                                              .toString()
-                                              .split(" ")[0])),
-                                ),
+                                    isSizedBoxAvailable: false,
+                                    onTap: () async {
+                                      await edit
+                                          .selecteducationstartDateAndTime(
+                                              context,
+                                              EditProfileController.degreestart,
+                                              edit.formatedegreestart);
+                                    },
+                                    readonly: true,
+                                    hintText:
+                                        edit.educationstartdatetextvisible ==
+                                                true
+                                            ? "SelectStartDate".tr
+                                            : edit.formatteddegreestart
+                                                .toString()
+                                                .split("T")[0]),
                                 Row(
                                   children: <Widget>[
                                     Checkbox(
@@ -321,61 +308,39 @@ class _EducationDetailState extends State<EducationDetail> {
                                 Visibility(
                                   visible: edit.inprogressisChecked == false,
                                   child: EditProfileCustomTextField(
-                                    onTap: () async {
-                                      edit.selecteducationendDateAndTime(
-                                          context,
-                                          EditProfileController.degreeend,
-                                          edit.formatedegreeend);
-                                    },
-                                    validator: (value) {
-                                      if (edit.formatteddegreeend
-                                              .toString()
-                                              .split("T")[0] ==
-                                          DateTime.now()
-                                              .toString()
-                                              .split(" ")[0]) {
-                                        return 'SelectEndDate'.tr;
-                                      }
-                                      return null;
-                                    },
-                                    readonly: true,
-                                    hintText: edit.formatteddegreeend
-                                                .toString()
-                                                .split("T")[0] ==
-                                            DateTime.now()
-                                                .toString()
-                                                .split(" ")[0]
-                                        ? "SelectEndDate".tr
-                                        : DateFormat('MM-dd-y').format(
-                                            DateTime.parse(edit
-                                                .formatteddegreeend
-                                                .toString()
-                                                .split(" ")[0])),
-                                  ),
+                                      onTap: () async {
+                                        edit.selecteducationendDateAndTime(
+                                            context,
+                                            EditProfileController.degreeend,
+                                            edit.formatedegreeend);
+                                      },
+                                      readonly: true,
+                                      hintText:
+                                          edit.educationenddatetextvisible ==
+                                                  true
+                                              ? "SelectEndDate".tr
+                                              : edit.formatteddegreeend
+                                                  .toString()
+                                                  .split("T")[0]),
                                 ),
+
                                 Visibility(
                                   visible: edit.inprogressisChecked == false,
                                   child: EditProfileCustomTextField(
-                                    onTap: () async {
-                                      edit.selecteducationissueDateAndTime(
-                                          context,
-                                          EditProfileController.degreeissue,
-                                          edit.formatedegreeissue);
-                                    },
-                                    readonly: true,
-                                    hintText: edit.formatteddegreeissue
-                                                .toString()
-                                                .split("T")[0] ==
-                                            DateTime.now()
-                                                .toString()
-                                                .split(" ")[0]
-                                        ? "SelectIssueDate".tr
-                                        : DateFormat('MM-dd-y').format(
-                                            DateTime.parse(edit
-                                                .formatteddegreeissue
-                                                .toString()
-                                                .split(" ")[0])),
-                                  ),
+                                      onTap: () async {
+                                        edit.selecteducationissueDateAndTime(
+                                            context,
+                                            EditProfileController.degreeissue,
+                                            edit.formatedegreeissue);
+                                      },
+                                      readonly: true,
+                                      hintText:
+                                          edit.educationissuedatetextvisible ==
+                                                  true
+                                              ? "SelectIssueDate".tr
+                                              : edit.formatteddegreeissue
+                                                  .toString()
+                                                  .split("T")[0]),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -500,18 +465,102 @@ class _EducationDetailState extends State<EducationDetail> {
                                   ],
                                 ),
                                 SizedBox(height: Get.height * 0.03),
-                                PrimaryButton(
-                                    fontSize: 15,
-                                    title: 'edit'.tr,
-                                    onPressed: () async {
-                                      if (_editformKey.currentState!
-                                          .validate()) {
+
+                                InkWell(
+                                  onTap: () async {
+                                    edit.updateisloading(true);
+                                    if (_editformKey.currentState!.validate()) {
+                                      bool inprogress = false;
+                                      if (edit.inprogressisChecked == true) {
+                                        edit.formatteddegreeend = null;
+                                        edit.formatteddegreeissue = null;
+                                        inprogress = true;
+                                      } else {
+                                        inprogress = false;
+                                      }
+
+                                      int gradingscale = 1;
+                                      if (edit.radioselectedValue == "CGPA") {
+                                        gradingscale = 1;
+                                      } else if (edit.radioselectedValue ==
+                                          "Marks") {
+                                        gradingscale = 2;
+                                      } else if (edit.radioselectedValue ==
+                                          "Percentage") {
+                                        gradingscale = 3;
+                                      } else {
+                                        gradingscale = 1;
+                                      }
+
+                                      if (edit.formatteddegreeend ==
+                                          DateTime.now().toString()) {
+                                        edit.formatteddegreeend = "";
+                                      }
+                                      if (edit.formatteddegreeissue ==
+                                          DateTime.now().toString()) {
+                                        edit.formatteddegreeissue = "";
+                                      }
+                                      ProfileRepo pr = ProfileRepo();
+                                      String res = await pr.editEducation(
+                                          edit.editselectededucationid,
+                                          edit.educationselectedCountry?.id,
+                                          edit.selectedinstitution?.id,
+                                          edit.selecteddegree?.id,
+                                          edit.selectedfieldofstudy?.id,
+                                          edit.formatteddegreestart,
+                                          edit.formatteddegreeend ?? "",
+                                          edit.formatteddegreeissue ?? "",
+                                          inprogress,
+                                          gradingscale,
+                                          edit.totalmarks.text,
+                                          edit.obtainedmarks.text,
+                                          edit.percentage.text);
+
+                                      if (res == "true") {
+                                        _getDoctorBasicInfo();
                                         ProfileController.i.updateval(false);
+                                        edit.inprogressisChecked = false;
+                                        edit.updateisloading(false);
                                         setState(() {});
                                       }
-                                    },
-                                    color: Colors.white.withOpacity(0.7),
-                                    textcolor: ColorManager.kWhiteColor),
+                                      edit.updateisloading(false);
+                                    }
+                                    edit.updateisloading(false);
+                                  },
+                                  child: Container(
+                                    height: Get.height * 0.07,
+                                    width: Get.width * 1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.7),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                        child: edit.isloading == false
+                                            ? Text(
+                                                'edit'.tr,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: ColorManager
+                                                        .kWhiteColor),
+                                              )
+                                            : const CircularProgressIndicator(
+                                                color: ColorManager.kWhiteColor,
+                                              )),
+                                  ),
+                                ),
+                                // PrimaryButton(
+                                //     fontSize: 15,
+                                //     title: 'edit'.tr,
+                                //     onPressed: () async {
+                                //       if (_editformKey.currentState!
+                                //           .validate()) {
+                                //         ProfileController.i.updateval(false);
+                                //         setState(() {});
+                                //       }
+                                //     },
+                                //     color: Colors.white.withOpacity(0.7),
+                                //     textcolor: ColorManager.kWhiteColor),
                                 SizedBox(height: Get.height * 0.03),
                               ],
                             ),
@@ -687,6 +736,7 @@ class _EducationDetailState extends State<EducationDetail> {
                                               "SelectFieldofStudy".tr,
                                     ),
                                     EditProfileCustomTextField(
+                                      isSizedBoxAvailable: false,
                                       validator: (value) {
                                         if (add.formatteddegreestart
                                                 .toString()
@@ -720,44 +770,39 @@ class _EducationDetailState extends State<EducationDetail> {
                                                   .toString()
                                                   .split(" ")[0])),
                                     ),
-                                    SizedBox(
-                                      height: Get.height * 0.06,
-                                      child: Row(
-                                        children: <Widget>[
-                                          Checkbox(
-                                            side: MaterialStateBorderSide
-                                                .resolveWith(
-                                              (Set<MaterialState> states) {
-                                                if (states.contains(
-                                                    MaterialState.selected)) {
-                                                  return const BorderSide(
-                                                      color: Colors.white);
-                                                }
+                                    Row(
+                                      children: <Widget>[
+                                        Checkbox(
+                                          side: MaterialStateBorderSide
+                                              .resolveWith(
+                                            (Set<MaterialState> states) {
+                                              if (states.contains(
+                                                  MaterialState.selected)) {
                                                 return const BorderSide(
                                                     color: Colors.white);
-                                              },
-                                            ),
-                                            value: add.inprogressisChecked,
-                                            onChanged: (bool? value) {
-                                              setState(() {
-                                                add.inprogressisChecked =
-                                                    value!;
-                                              });
+                                              }
+                                              return const BorderSide(
+                                                  color: Colors.white);
                                             },
-                                            checkColor:
-                                                ColorManager.kWhiteColor,
-                                            activeColor:
-                                                ColorManager.kPrimaryColor,
                                           ),
-                                          Text(
-                                            'InProgress'.tr,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                color: ColorManager.kWhiteColor,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
+                                          value: add.inprogressisChecked,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              add.inprogressisChecked = value!;
+                                            });
+                                          },
+                                          checkColor: ColorManager.kWhiteColor,
+                                          activeColor:
+                                              ColorManager.kPrimaryColor,
+                                        ),
+                                        Text(
+                                          'InProgress'.tr,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12,
+                                              color: ColorManager.kWhiteColor,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
                                     Visibility(
                                       visible: add.inprogressisChecked == false,
@@ -949,20 +994,96 @@ class _EducationDetailState extends State<EducationDetail> {
                                       ],
                                     ),
                                     SizedBox(height: Get.height * 0.03),
-                                    PrimaryButton(
-                                        fontSize: 15,
-                                        title: 'add'.tr,
-                                        onPressed: () async {
-                                          if (_addformKey.currentState!
-                                              .validate()) {
+                                    InkWell(
+                                      onTap: () async {
+                                        add.updateisaddloading(true);
+                                        if (_addformKey.currentState!
+                                            .validate()) {
+                                          int inprogress = 0;
+                                          if (add.inprogressisChecked == true) {
+                                            inprogress = 1;
+                                          } else {
+                                            inprogress = 0;
+                                          }
+
+                                          int gradingscale = 1;
+                                          if (add.radioselectedValue ==
+                                              "CGPA") {
+                                            gradingscale = 1;
+                                          } else if (add.radioselectedValue ==
+                                              "Marks") {
+                                            gradingscale = 2;
+                                          } else if (add.radioselectedValue ==
+                                              "Percentage") {
+                                            gradingscale = 3;
+                                          } else {
+                                            gradingscale = 1;
+                                          }
+
+                                          if (add.formatteddegreeend ==
+                                              DateTime.now()) {
+                                            add.formatteddegreeend = "";
+                                          }
+                                          if (add.formatteddegreeissue ==
+                                              DateTime.now()) {
+                                            add.formatteddegreeissue = "";
+                                          }
+                                          ProfileRepo pr = ProfileRepo();
+                                          String res = await pr.addEducation(
+                                              add.selectededucationaddcountry
+                                                  ?.id,
+                                              add.educationaddselectedinstitution
+                                                  ?.id,
+                                              add.educationaddselecteddegree
+                                                  ?.id,
+                                              add.educationaddselectedfieldofstudy
+                                                  ?.id,
+                                              add.formatteddegreestart,
+                                              add.formatteddegreeend,
+                                              add.formatteddegreeissue,
+                                              inprogress,
+                                              gradingscale,
+                                              add.totalmarks.text,
+                                              add.obtainedmarks.text,
+                                              add.percentage.text);
+
+                                          if (res == "true") {
+                                            _getDoctorBasicInfo();
                                             ProfileController.i
                                                 .updateaddval(false);
 
+                                            add.updateisaddloading(false);
                                             setState(() {});
                                           }
-                                        },
-                                        color: Colors.white.withOpacity(0.7),
-                                        textcolor: ColorManager.kWhiteColor),
+                                          add.updateisaddloading(false);
+                                        }
+                                        add.updateisaddloading(false);
+                                      },
+                                      child: Container(
+                                        height: Get.height * 0.07,
+                                        width: Get.width * 1,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.7),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                            child: add.isaddloading == false
+                                                ? Text(
+                                                    'add'.tr,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: ColorManager
+                                                            .kWhiteColor),
+                                                  )
+                                                : const CircularProgressIndicator(
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  )),
+                                      ),
+                                    ),
                                     SizedBox(height: Get.height * 0.03),
                                   ],
                                 ),
@@ -991,6 +1112,9 @@ class _EducationDetailState extends State<EducationDetail> {
                                     children: [
                                       ImageContainer(
                                         onpressed: () {
+                                          // clear
+                                          add.clearAddValues();
+
                                           ProfileController.i
                                               .updateaddval(true);
                                           ProfileController.i
@@ -1100,21 +1224,28 @@ class _EducationDetailState extends State<EducationDetail> {
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        ImageContainerNew(
-                                                          onpressed: () {},
-                                                          imagePath:
-                                                              AppImages.cross,
-                                                          isSvg: false,
-                                                          color: ColorManager
-                                                              .kRedColor,
-                                                          backgroundColor:
-                                                              ColorManager
-                                                                  .kWhiteColor,
-                                                          boxheight:
-                                                              Get.height * 0.03,
-                                                          boxwidth:
-                                                              Get.width * 0.06,
-                                                        ),
+                                                        // ImageContainerNew(
+                                                        //   onpressed: () {
+                                                        //     deleteEducation(
+                                                        //         context,
+                                                        //         contr
+                                                        //             .educationList[
+                                                        //                 index]
+                                                        //             .id!);
+                                                        //   },
+                                                        //   imagePath:
+                                                        //       AppImages.cross,
+                                                        //   isSvg: false,
+                                                        //   color: ColorManager
+                                                        //       .kRedColor,
+                                                        //   backgroundColor:
+                                                        //       ColorManager
+                                                        //           .kWhiteColor,
+                                                        //   boxheight:
+                                                        //       Get.height * 0.03,
+                                                        //   boxwidth:
+                                                        //       Get.width * 0.06,
+                                                        // ),
                                                         SizedBox(
                                                           width:
                                                               Get.width * 0.004,
@@ -1123,12 +1254,20 @@ class _EducationDetailState extends State<EducationDetail> {
                                                           onpressed: () {
                                                             // send object
 
-                                                            edit.editSelectedEducation =
-                                                                null;
-                                                            edit.updateEditSelectedEducation(
-                                                                education
-                                                                        .educationList[
-                                                                    index]);
+                                                            // edit.editSelectedEducation =
+                                                            //     null;
+                                                            // edit.updateEditSelectedEducation(
+                                                            //     education
+                                                            //             .educationList[
+                                                            //         index]);
+
+                                                            Educations e =
+                                                                Educations();
+                                                            e = education
+                                                                    .educationList[
+                                                                index];
+                                                            edit.updateeditSelectedEducation(
+                                                                e);
                                                             ProfileController.i
                                                                 .updateval(
                                                                     true);
@@ -1239,6 +1378,89 @@ class _EducationDetailState extends State<EducationDetail> {
                         ),
                       )),
       ),
+    );
+  }
+
+  deleteEducation(BuildContext context, String id) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: Get.width * 0.05),
+                      Text(
+                        'delete'.tr,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.close_outlined,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'doyouwanttodeleteit'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  PrimaryButton(
+                    title: 'yes'.tr,
+                    fontSize: 14,
+                    height: Get.height * 0.06,
+                    width: Get.width * 0.5,
+                    onPressed: () async {
+                      ProfileRepo pr = ProfileRepo();
+
+                      String res = await pr.deleteEducation(id);
+
+                      if (res == "true") {
+                        _getDoctorBasicInfo();
+
+                        setState(() {});
+                      }
+
+                      // Call API
+                      Get.back();
+                    },
+                    color: ColorManager.kPrimaryColor,
+                    textcolor: ColorManager.kWhiteColor,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

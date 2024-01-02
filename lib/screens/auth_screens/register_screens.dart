@@ -4,7 +4,7 @@ import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
+import 'package:doctormobileapplication/data/controller/preference_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
@@ -18,10 +18,13 @@ import 'package:doctormobileapplication/models/speciality.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RegisterScreens extends StatefulWidget {
   const RegisterScreens({super.key});
@@ -298,7 +301,8 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomRadioTile(
-                            title: 'nationalid'.tr,
+                            title:
+                                '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}',
                             value: 'idno',
                             groupValue: controller.selectedRadioValue,
                             onChanged: (value) {
@@ -325,28 +329,24 @@ class _RegisterScreensState extends State<RegisterScreens> {
 
                     Visibility(
                       visible: controller.selectedRadioValue == "idno",
-                      child: IdNoAuthTextField(
-                        onChangedwidget: (value) {
-                          AuthRepo ar = AuthRepo();
-                          ar.pmdcAvaibility(controller.imcno.text);
-                        },
-                        validator: (p0) {
-                          if (p0!.isEmpty) {
-                            return 'EnterIDNumber'.tr;
-                          }
-                          return null;
-                        },
-                        controller: controller.idnumber,
-                        hintText: 'nationalid'.tr,
+                      child: GetBuilder<PreferenceController>(
+                        builder: (cont) => IdNoAuthTextField(
+                          validator: (p0) {
+                            if (p0!.isEmpty) {
+                              return "${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}";
+                            }
+                            return null;
+                          },
+                          controller: controller.idnumber,
+                          hintText:
+                              '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}',
+                        ),
                       ),
                     ),
                     Visibility(
                       visible: controller.selectedRadioValue == "passport",
                       child: AuthTextField(
-                        onChangedwidget: (value) {
-                          AuthRepo ar = AuthRepo();
-                          ar.pmdcAvaibility(controller.imcno.text);
-                        },
+                        onChangedwidget: (value) {},
                         validator: (p0) {
                           if (p0!.isEmpty) {
                             return 'EnterPassportNumber'.tr;
@@ -361,35 +361,40 @@ class _RegisterScreensState extends State<RegisterScreens> {
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
-                    AuthTextField(
-                      onChangedwidget: (value) {
-                        AuthRepo ar = AuthRepo();
-                        ar.pmdcAvaibility(controller.imcno.text);
-                      },
-                      validator: (p0) {
-                        if (p0!.isEmpty) {
-                          return 'enteryourimcno'.tr;
-                        }
-                        return null;
-                      },
-                      controller: controller.imcno,
-                      hintText: 'imcno'.tr,
+                    GetBuilder<PreferenceController>(
+                      builder: (cont) => AuthTextField(
+                        onChangedwidget: (value) {
+                          AuthRepo ar = AuthRepo();
+                          ar.pmdcAvaibility(controller.imcno.text);
+                        },
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return '${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}';
+                          }
+                          return null;
+                        },
+                        controller: controller.imcno,
+                        hintText:
+                            '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}',
+                      ),
                     ),
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
 
-                    RegisterLMPCCustomTextField(
-                      readonly: true,
-                      onTap: () {
-                        controller.picksinglefile();
-                      },
-                      validator: (p0) {
-                        if (controller.pmcfile == null) {
-                          return 'pleaseaddLMPC'.tr;
-                        }
-                        return null;
-                      },
+                    GetBuilder<PreferenceController>(
+                      builder: (cont) => RegisterLMPCCustomTextField(
+                        readonly: true,
+                        onTap: () {
+                          controller.picksinglefile();
+                        },
+                        validator: (p0) {
+                          if (controller.pmcfile == null) {
+                            return '${'Pleaseaddyour'.tr} ${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalCertificateLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr}';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: Get.height * 0.02,

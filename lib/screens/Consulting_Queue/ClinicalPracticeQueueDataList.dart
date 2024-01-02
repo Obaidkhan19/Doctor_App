@@ -9,6 +9,7 @@ import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 import 'package:doctormobileapplication/models/cosultingqueuepatient.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
+import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:doctormobileapplication/utils/testing.dart';
 import 'package:flutter/material.dart';
@@ -110,163 +111,287 @@ class _ClinicalPracticeQueueDataListState
           color: Theme.of(context).scaffoldBackgroundColor,
           child: Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.helpfulbackgroundlogo),
-                  alignment: Alignment.centerLeft,
-                ),
-              ),
-              child: SafeArea(
-                // minimum: const EdgeInsets.all(AppPadding.p14)
-                //     .copyWith(top: 0, bottom: -10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        onSubmitted: (String value) {
-                          SearchFieldController.text = value;
-                          didChangeDependencies();
-                        },
-                        prefixIcon: const Icon(
-                          Icons.search_outlined,
-                          color: ColorManager.kPrimaryColor,
-                          size: 35,
-                        ),
-                        controller: SearchFieldController,
-                        hintText: 'search'.tr,
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.68,
-                        child: ConsultingQueueController
-                                .i.consultingqueuewait.isNotEmpty
-                            ? MyCustomRefreshIndicator(
-                                onRefresh: callback,
-                                child: ListView.builder(
-                                    controller: _scrollController,
-                                    // physics: const BouncingScrollPhysics(),
-                                    physics:
-                                        const AlwaysScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: ConsultingQueueController
-                                        .i.consultingqueuewait.length,
-                                    itemBuilder: (context, index) {
-                                      final manageAppointment =
-                                          ConsultingQueueController
-                                                  .i
-                                                  .consultingqueuewait
-                                                  .isNotEmpty
-                                              ? ConsultingQueueController
-                                                  .i.consultingqueuewait[index]
-                                              : null;
+            body: Stack(
+              children: [
+                const BackgroundLogoimage1(),
+                Container(
+                  // decoration: const BoxDecoration(
+                  //   image: DecorationImage(
+                  //     image: AssetImage(Images.logoBackground),
+                  //     alignment: Alignment.centerLeft,
+                  //   ),
+                  // ),
+                  child: SafeArea(
+                    // minimum: const EdgeInsets.all(AppPadding.p14)
+                    //     .copyWith(top: 0, bottom: -10),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            onSubmitted: (String value) {
+                              SearchFieldController.text = value;
+                              didChangeDependencies();
+                            },
+                            prefixIcon: const Icon(
+                              Icons.search_outlined,
+                              color: ColorManager.kPrimaryColor,
+                              size: 35,
+                            ),
+                            controller: SearchFieldController,
+                            hintText: 'search'.tr,
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.68,
+                            child: ConsultingQueueController
+                                    .i.consultingqueuewait.isNotEmpty
+                                ? MyCustomRefreshIndicator(
+                                    onRefresh: callback,
+                                    child: ListView.builder(
+                                        controller: _scrollController,
+                                        // physics: const BouncingScrollPhysics(),
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: ConsultingQueueController
+                                            .i.consultingqueuewait.length,
+                                        itemBuilder: (context, index) {
+                                          final manageAppointment =
+                                              ConsultingQueueController
+                                                      .i
+                                                      .consultingqueuewait
+                                                      .isNotEmpty
+                                                  ? ConsultingQueueController.i
+                                                          .consultingqueuewait[
+                                                      index]
+                                                  : null;
 
-                                      {
-                                        return ((manageAppointment != null &&
-                                                (manageAppointment
-                                                        .patientStatusValue
-                                                        .toString() ==
-                                                    widget.Status.toString()))
-                                            ? Card(
-                                                elevation: 4,
-                                                surfaceTintColor:
-                                                    ColorManager.kWhiteColor,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: Get.height * 0.01,
-                                                      bottom:
-                                                          Get.height * 0.02),
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    Get.width *
-                                                                        0.0),
-                                                        child: ListTile(
-                                                          leading: CircleAvatar(
-                                                            backgroundColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                                    0,
-                                                                    207,
-                                                                    166,
-                                                                    166),
-                                                            radius: 30,
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30),
-                                                              child: manageAppointment
-                                                                          .patientImagePath !=
-                                                                      null
-                                                                  ? CachedNetworkImage(
-                                                                      height: Get
-                                                                              .width *
-                                                                          0.16,
-                                                                      imageUrl:
-                                                                          baseURL +
-                                                                              manageAppointment.patientImagePath,
-                                                                      fit: BoxFit
-                                                                          .fill,
-                                                                      errorWidget: (context,
-                                                                              url,
-                                                                              error) =>
-                                                                          Image.asset(
-                                                                              Images.avator),
-                                                                    )
-                                                                  : Image.asset(
-                                                                      Images
-                                                                          .avator),
+                                          {
+                                            return ((manageAppointment !=
+                                                        null &&
+                                                    (manageAppointment
+                                                            .patientStatusValue
+                                                            .toString() ==
+                                                        widget.Status
+                                                            .toString()))
+                                                ? Card(
+                                                    elevation: 4,
+                                                    surfaceTintColor:
+                                                        ColorManager
+                                                            .kWhiteColor,
+                                                    shape:
+                                                        const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10.0)),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top:
+                                                              Get.height * 0.01,
+                                                          bottom: Get.height *
+                                                              0.02),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        Get.width *
+                                                                            0.0),
+                                                            child: ListTile(
+                                                              leading:
+                                                                  CircleAvatar(
+                                                                backgroundColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                        0,
+                                                                        207,
+                                                                        166,
+                                                                        166),
+                                                                radius: 30,
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              30),
+                                                                  child: manageAppointment
+                                                                              .patientImagePath !=
+                                                                          null
+                                                                      ? CachedNetworkImage(
+                                                                          height:
+                                                                              Get.width * 0.16,
+                                                                          imageUrl:
+                                                                              baseURL + manageAppointment.patientImagePath,
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                          errorWidget: (context, url, error) =>
+                                                                              Image.asset(Images.avator),
+                                                                        )
+                                                                      : Image.asset(
+                                                                          Images
+                                                                              .avator),
+                                                                ),
+                                                              ),
+                                                              title: Transform
+                                                                  .translate(
+                                                                offset:
+                                                                    const Offset(
+                                                                        -0, 0),
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      manageAppointment
+                                                                              .patientName ??
+                                                                          "",
+                                                                      style: GoogleFonts
+                                                                          .poppins(
+                                                                        fontSize:
+                                                                            13,
+                                                                        color: ColorManager
+                                                                            .kPrimaryColor,
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      manageAppointment
+                                                                              .mRNO ??
+                                                                          "",
+                                                                      style: GoogleFonts
+                                                                          .poppins(
+                                                                        fontSize:
+                                                                            10,
+                                                                        color: ColorManager
+                                                                            .kPrimaryColor,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
+                                                                      style: GoogleFonts
+                                                                          .poppins(
+                                                                        fontSize:
+                                                                            10,
+                                                                        color: ColorManager
+                                                                            .kblackColor,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              trailing:
+                                                                  manageAppointment
+                                                                              .chatURL ==
+                                                                          null
+                                                                      ? InkWell(
+                                                                          onTap:
+                                                                              () async {
+                                                                            bool res = await Get.to(() =>
+                                                                                PrescribeMedicineScreen(
+                                                                                  checkfirst: "1",
+                                                                                  patientstatusvalue: manageAppointment.patientStatusValue.toString(),
+                                                                                  patientid: manageAppointment.patientId,
+                                                                                  visitno: manageAppointment.visitNo,
+                                                                                  prescribedvalue: manageAppointment.prescribedInValue,
+                                                                                ));
+                                                                            if (res ==
+                                                                                true) {
+                                                                              callback();
+                                                                              setState(() {});
+                                                                            }
+                                                                          },
+                                                                          child:
+                                                                              Image.asset(
+                                                                            Images.rxedit,
+                                                                            color:
+                                                                                ColorManager.kPrimaryColor,
+                                                                            width:
+                                                                                Get.width * 0.09,
+                                                                            height:
+                                                                                Get.height * 0.05,
+                                                                          ),
+                                                                        )
+                                                                      : InkWell(
+                                                                          onTap:
+                                                                              () async {
+                                                                            Get.to(() =>
+                                                                                MyHomePage(
+                                                                                  data: manageAppointment,
+                                                                                  checkfirst: "1",
+                                                                                  patientstatusvalue: manageAppointment.patientStatusValue.toString(),
+                                                                                  patientid: manageAppointment.patientId,
+                                                                                  visitno: manageAppointment.visitNo,
+                                                                                  prescribedvalue: manageAppointment.prescribedInValue.toString(),
+                                                                                  title: manageAppointment.chatURL,
+                                                                                ));
+                                                                          },
+                                                                          child:
+                                                                              Image.asset(
+                                                                            Images.videocall,
+                                                                            width:
+                                                                                Get.width * 0.09,
+                                                                            height:
+                                                                                Get.height * 0.09,
+                                                                          ),
+                                                                        ),
                                                             ),
                                                           ),
-                                                          title: Transform
-                                                              .translate(
-                                                            offset:
-                                                                const Offset(
-                                                                    -0, 0),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
+                                                          SizedBox(
+                                                            height: Get.height *
+                                                                0.01,
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                              horizontal:
+                                                                  Get.width *
+                                                                      0.065,
+                                                            ),
+                                                            child:
+                                                                const MySeparator(
+                                                              color: ColorManager
+                                                                  .kblackColor,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: Get.height *
+                                                                0.01,
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                              horizontal:
+                                                                  Get.width *
+                                                                      0.065,
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                               children: [
-                                                                Text(
-                                                                  manageAppointment
-                                                                          .patientName ??
-                                                                      "",
-                                                                  style: GoogleFonts
-                                                                      .poppins(
-                                                                    fontSize:
-                                                                        13,
-                                                                    color: ColorManager
-                                                                        .kPrimaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    // 'Waiting Since ${manageAppointment.waitingTime ?? ""}',
+                                                                    '${'waitingSince'.tr} ${contr.startTimeswait[index] ?? ""}',
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      fontSize:
+                                                                          10,
+                                                                      color: ColorManager
+                                                                          .kblackColor,
+                                                                    ),
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    maxLines: 1,
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  manageAppointment
-                                                                          .mRNO ??
-                                                                      "",
-                                                                  style: GoogleFonts
-                                                                      .poppins(
-                                                                    fontSize:
-                                                                        10,
-                                                                    color: ColorManager
-                                                                        .kPrimaryColor,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
+                                                                  '${manageAppointment.status ?? ""}',
                                                                   style: GoogleFonts
                                                                       .poppins(
                                                                     fontSize:
@@ -278,164 +403,47 @@ class _ClinicalPracticeQueueDataListState
                                                               ],
                                                             ),
                                                           ),
-                                                          trailing:
-                                                              manageAppointment
-                                                                          .chatURL ==
-                                                                      null
-                                                                  ? InkWell(
-                                                                      onTap:
-                                                                          () async {
-                                                                        bool res = await Get.to(() =>
-                                                                            PrescribeMedicineScreen(
-                                                                              checkfirst: "1",
-                                                                              patientstatusvalue: manageAppointment.patientStatusValue.toString(),
-                                                                              patientid: manageAppointment.patientId,
-                                                                              visitno: manageAppointment.visitNo,
-                                                                              prescribedvalue: manageAppointment.prescribedInValue,
-                                                                            ));
-                                                                        if (res ==
-                                                                            true) {
-                                                                          callback();
-                                                                          setState(
-                                                                              () {});
-                                                                        }
-                                                                      },
-                                                                      child: Image
-                                                                          .asset(
-                                                                        Images
-                                                                            .rxedit,
-                                                                        color: ColorManager
-                                                                            .kPrimaryColor,
-                                                                        width: Get.width *
-                                                                            0.09,
-                                                                        height: Get.height *
-                                                                            0.05,
-                                                                      ),
-                                                                    )
-                                                                  : InkWell(
-                                                                      onTap:
-                                                                          () async {
-                                                                        Get.to(() =>
-                                                                            MyHomePage(
-                                                                              data: manageAppointment,
-                                                                              checkfirst: "1",
-                                                                              patientstatusvalue: manageAppointment.patientStatusValue.toString(),
-                                                                              patientid: manageAppointment.patientId,
-                                                                              visitno: manageAppointment.visitNo,
-                                                                              prescribedvalue: manageAppointment.prescribedInValue.toString(),
-                                                                              title: manageAppointment.chatURL,
-                                                                            ));
-                                                                      },
-                                                                      child: Image
-                                                                          .asset(
-                                                                        Images
-                                                                            .videocall,
-                                                                        width: Get.width *
-                                                                            0.09,
-                                                                        height: Get.height *
-                                                                            0.09,
-                                                                      ),
-                                                                    ),
-                                                        ),
+                                                        ],
                                                       ),
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.01,
-                                                      ),
-                                                      Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          horizontal:
-                                                              Get.width * 0.065,
-                                                        ),
-                                                        child:
-                                                            const MySeparator(
-                                                          color: ColorManager
-                                                              .kblackColor,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height:
-                                                            Get.height * 0.01,
-                                                      ),
-                                                      Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                          horizontal:
-                                                              Get.width * 0.065,
-                                                        ),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                // 'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                                '${'waitingSince'.tr} ${contr.startTimeswait[index] ?? ""}',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .poppins(
-                                                                  fontSize: 10,
-                                                                  color: ColorManager
-                                                                      .kblackColor,
-                                                                ),
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                maxLines: 1,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              '${manageAppointment.status ?? ""}',
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                fontSize: 10,
-                                                                color: ColorManager
-                                                                    .kblackColor,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : Container());
-                                      }
-                                    }),
-                              )
-                            : (((ConsultingQueueController.i
-                                                    .ClinicalPracticeDataList !=
-                                                null) &&
-                                            (ConsultingQueueController
-                                                    .i
-                                                    .ClinicalPracticeDataList
-                                                    .queue !=
-                                                null))
-                                        ? ConsultingQueueController
-                                            .i
-                                            .ClinicalPracticeDataList
-                                            .queue
-                                            ?.length
-                                        : 0) ==
-                                    0
-                                ? MyCustomRefreshIndicator(
-                                    onRefresh: callback,
-                                    child: Stack(
-                                      children: <Widget>[
-                                        ListView(),
-                                        Center(child: Text('NoRecordFound'.tr))
-                                      ],
-                                    ),
+                                                    ),
+                                                  )
+                                                : Container());
+                                          }
+                                        }),
                                   )
-                                : Container(),
+                                : (((ConsultingQueueController.i
+                                                        .ClinicalPracticeDataList !=
+                                                    null) &&
+                                                (ConsultingQueueController
+                                                        .i
+                                                        .ClinicalPracticeDataList
+                                                        .queue !=
+                                                    null))
+                                            ? ConsultingQueueController
+                                                .i
+                                                .ClinicalPracticeDataList
+                                                .queue
+                                                ?.length
+                                            : 0) ==
+                                        0
+                                    ? MyCustomRefreshIndicator(
+                                        onRefresh: callback,
+                                        child: Stack(
+                                          children: <Widget>[
+                                            ListView(),
+                                            Center(
+                                                child: Text('NoRecordFound'.tr))
+                                          ],
+                                        ),
+                                      )
+                                    : Container(),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           )),
     );

@@ -13,8 +13,6 @@ import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/DialogBoxes/language_dialog.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
@@ -144,7 +142,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   height: Get.height * 0.01,
                 ),
                 SizedBox(
-                  width: Get.width * 0.55,
+                  width: Get.width * 0.65,
                   child: Text(
                     ProfileController.i.selectedbasicInfo?.fullName ?? "",
                     // style: GoogleFonts.poppins(
@@ -343,7 +341,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                   trailing: Transform.scale(
                     scale: 0.55,
-                    child: Switch(
+                    child: Switch.adaptive(
                         trackOutlineColor: MaterialStateProperty.resolveWith(
                           (final Set<MaterialState> states) {
                             if (states.contains(MaterialState.selected)) {
@@ -511,7 +509,6 @@ class _MenuScreenState extends State<MenuScreen> {
                     ProfileController.i.updatedDoctorInfo(BasicInfo());
                     AuthController.i.emailController.clear();
                     AuthController.i.passwordController.clear();
-
                     String? id = await LocalDb().getDoctorId();
                     String? token = await LocalDb().getToken();
                     bool? loginStatus = await LocalDb().getLoginStatus();
@@ -523,6 +520,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           DeviceToken: DeviceToken,
                           IsLogOffAllDevice: 'false');
                     }
+                    LocalDb().saveLoginStatus(false);
                     Get.offAll(() => const LoginScreen());
                   },
                 ),
@@ -534,44 +532,43 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  final LocalAuthentication auth = LocalAuthentication();
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
-  bool authentication = false;
+  // final LocalAuthentication auth = LocalAuthentication();
+  // List<BiometricType>? _availableBiometrics;
+  // String _authorized = 'Not Authorized';
+  // bool _isAuthenticating = false;
+  // bool authentication = false;
 
-  Future<bool> _authenticate() async {
-    bool authenticated = false;
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
-      });
-      authenticated = await auth.authenticate(
-        localizedReason: 'Let OS determine authentication method',
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-        ),
-      );
-      setState(() {
-        _isAuthenticating = false;
-      });
-    } on PlatformException catch (e) {
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
-        print(e.message.toString());
-      });
-      return authenticated;
-    }
-    if (!mounted) {
-      return authenticated;
-    }
+  // Future<bool> _authenticate() async {
+  //   bool authenticated = false;
+  //   try {
+  //     setState(() {
+  //       _isAuthenticating = true;
+  //       _authorized = 'Authenticating';
+  //     });
+  //     authenticated = await auth.authenticate(
+  //       localizedReason: 'Let OS determine authentication method',
+  //       options: const AuthenticationOptions(
+  //           stickyAuth: true, biometricOnly: true, useErrorDialogs: true),
+  //     );
+  //     setState(() {
+  //       _isAuthenticating = false;
+  //     });
+  //   } on PlatformException catch (e) {
+  //     setState(() {
+  //       _isAuthenticating = false;
+  //       _authorized = 'Error - ${e.message}';
+  //       print(e.message.toString());
+  //     });
+  //     return authenticated;
+  //   }
+  //   if (!mounted) {
+  //     return authenticated;
+  //   }
 
-    setState(
-        () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
-    return authenticated;
-  }
+  //   setState(
+  //       () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
+  //   return authenticated;
+  // }
 
   // bool fingerprint = false;
 

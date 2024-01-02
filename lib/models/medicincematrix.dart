@@ -191,6 +191,7 @@ class MedicineDosages {
   dynamic createdOn;
   dynamic modifiedById;
   dynamic modifiedOn;
+  dynamic dosageName;
 
   MedicineDosages(
       {this.id,
@@ -206,7 +207,8 @@ class MedicineDosages {
       this.createdById,
       this.createdOn,
       this.modifiedById,
-      this.modifiedOn});
+      this.modifiedOn,
+      this.dosageName});
 
   MedicineDosages.fromJson(Map<dynamic, dynamic> json) {
     id = json['Id'];
@@ -223,6 +225,7 @@ class MedicineDosages {
     createdOn = json['CreatedOn'];
     modifiedById = json['ModifiedById'];
     modifiedOn = json['ModifiedOn'];
+    dosageName = json['DosageName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -241,6 +244,7 @@ class MedicineDosages {
     data['CreatedOn'] = createdOn;
     data['ModifiedById'] = modifiedById;
     data['ModifiedOn'] = modifiedOn;
+    data['DosageName'] = dosageName;
     return data;
   }
 }

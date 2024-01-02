@@ -9,11 +9,11 @@ class AppImages {
   static String cross = 'assets/images/cross.png';
   static String editbig = 'assets/images/edit.png';
 
-  static String helpfulbackgroundlogo =
-      'assets/images/helpful_background_logo.png';
+  // static String helpfulbackgroundlogo =
+  //     'assets/images/helpful_background_logo.png';
   static String editPrescriptionlogo = 'assets/images/prescription.png';
   static String filterlogo = 'assets/images/filter.png';
-  static String backgroundimage = 'assets/images/helpbackgraound.png';
+  // static String backgroundimage = 'assets/images/helpbackgraound.png';
   static String searchimage = 'assets/images/search.png';
   static String vector = 'assets/images/Vector.png';
   static String wallet = 'assets/images/wallet.png';

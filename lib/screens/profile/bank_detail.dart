@@ -7,9 +7,12 @@ import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/add_bank_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/degree.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -44,8 +47,10 @@ class _BankDetailState extends State<BankDetail> {
     AddBankController.i.updatedaddbankList(
       await pr.getBanks(),
     );
+    // token = await LocalDb().getToken() ?? "";
   }
 
+  // String token = "";
   @override
   void initState() {
     _getBanks();
@@ -63,6 +68,7 @@ class _BankDetailState extends State<BankDetail> {
   final GlobalKey<FormState> _editformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    // print("aaaa print token $token");
     return GetBuilder<ProfileController>(
       builder: (contt) => BlurryModalProgressHUD(
         inAsyncCall: profile.isLoading,
@@ -87,7 +93,7 @@ class _BankDetailState extends State<BankDetail> {
                           EdgeInsets.symmetric(horizontal: Get.width * 0.02),
                       child: SingleChildScrollView(
                         child: Form(
-                          key: _addformKey,
+                          key: _editformKey,
                           child: Column(
                             children: [
                               EditProfileCustomTextField(
@@ -155,18 +161,59 @@ class _BankDetailState extends State<BankDetail> {
                                 ),
                               ),
                               SizedBox(height: Get.height * 0.03),
-                              PrimaryButton(
-                                  fontSize: 15,
-                                  title: 'edit'.tr,
-                                  onPressed: () async {
-                                    if (_editformKey.currentState!.validate()) {
+                              InkWell(
+                                onTap: () async {
+                                  ProfileRepo pr = ProfileRepo();
+                                  AuthRepo ar = AuthRepo();
+
+                                  edit.updateisloading(true);
+                                  if (_editformKey.currentState!.validate()) {
+                                    // upload image
+
+                                    if (edit.bankfile != null) {
+                                      edit.editbankaccountfilepath =
+                                          await ar.uploadFile(edit.bankfile!);
+                                    }
+
+                                    String res = await pr.editBankAccount(
+                                        edit.editbankaccountid,
+                                        edit.selectedbank?.id,
+                                        edit.accountNo.text,
+                                        edit.accountTitle.text,
+                                        edit.editbankaccountfilepath);
+                                    if (res == "true") {
+                                      _getDoctorBasicInfo();
                                       ProfileController.i.updateval(false);
                                       setState(() {});
+
+                                      edit.updateisloading(false);
                                     }
-                                  },
-                                  color:
-                                      ColorManager.kWhiteColor.withOpacity(0.7),
-                                  textcolor: ColorManager.kWhiteColor),
+                                    edit.updateisloading(false);
+                                  }
+                                  edit.updateisloading(false);
+                                },
+                                child: Container(
+                                  height: Get.height * 0.07,
+                                  width: Get.width * 1,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: edit.isloading == false
+                                          ? Text(
+                                              'edit'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      ColorManager.kWhiteColor),
+                                            )
+                                          : const CircularProgressIndicator(
+                                              color: ColorManager.kWhiteColor,
+                                            )),
+                                ),
+                              ),
                               SizedBox(height: Get.height * 0.03),
                             ],
                           ),
@@ -261,19 +308,62 @@ class _BankDetailState extends State<BankDetail> {
                                     ),
                                   ),
                                   SizedBox(height: Get.height * 0.03),
-                                  PrimaryButton(
-                                      fontSize: 15,
-                                      title: 'add'.tr,
-                                      onPressed: () async {
-                                        if (_addformKey.currentState!
-                                            .validate()) {
+                                  InkWell(
+                                    onTap: () async {
+                                      ProfileRepo pr = ProfileRepo();
+                                      AuthRepo ar = AuthRepo();
+
+                                      add.updateisloading(true);
+                                      if (_addformKey.currentState!
+                                          .validate()) {
+                                        // upload image
+                                        String path = "";
+                                        if (add.bankfile != null) {
+                                          path = await ar
+                                              .uploadFile(add.bankfile!);
+                                        }
+
+                                        String res = await pr.addBankAccount(
+                                            add.addselectedbank?.id,
+                                            add.accountNo.text,
+                                            add.accountTitle.text,
+                                            path);
+                                        if (res == "true") {
+                                          _getDoctorBasicInfo();
                                           ProfileController.i
                                               .updateaddval(false);
                                           setState(() {});
+
+                                          add.updateisloading(false);
                                         }
-                                      },
-                                      color: Colors.white.withOpacity(0.7),
-                                      textcolor: ColorManager.kWhiteColor),
+                                        add.updateisloading(false);
+                                      }
+                                      add.updateisloading(false);
+                                    },
+                                    child: Container(
+                                      height: Get.height * 0.07,
+                                      width: Get.width * 1,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.7),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                          child: add.isloading == false
+                                              ? Text(
+                                                  'add'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: ColorManager
+                                                          .kWhiteColor),
+                                                )
+                                              : const CircularProgressIndicator(
+                                                  color:
+                                                      ColorManager.kWhiteColor,
+                                                )),
+                                    ),
+                                  ),
                                   SizedBox(height: Get.height * 0.03),
                                 ],
                               ),
@@ -403,27 +493,44 @@ class _BankDetailState extends State<BankDetail> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    ImageContainerNew(
-                                                      onpressed: () {},
-                                                      imagePath:
-                                                          AppImages.cross,
-                                                      //  imageheight: Get.height * 0.03,
-                                                      isSvg: false,
-                                                      color: ColorManager
-                                                          .kRedColor,
-                                                      backgroundColor:
-                                                          ColorManager
-                                                              .kWhiteColor,
-                                                      boxheight:
-                                                          Get.height * 0.03,
-                                                      boxwidth:
-                                                          Get.width * 0.06,
-                                                    ),
+                                                    // ImageContainerNew(
+                                                    //   onpressed: () async {
+                                                    //     String id =
+                                                    //         ProfileController
+                                                    //                 .i
+                                                    //                 .bankDetailList[
+                                                    //                     index]
+                                                    //                 .id ??
+                                                    //             "";
+                                                    //     deleteBank(context, id);
+                                                    //   },
+                                                    //   imagePath:
+                                                    //       AppImages.cross,
+                                                    //   //  imageheight: Get.height * 0.03,
+                                                    //   isSvg: false,
+                                                    //   color: ColorManager
+                                                    //       .kRedColor,
+                                                    //   backgroundColor:
+                                                    //       ColorManager
+                                                    //           .kWhiteColor,
+                                                    //   boxheight:
+                                                    //       Get.height * 0.03,
+                                                    //   boxwidth:
+                                                    //       Get.width * 0.06,
+                                                    // ),
                                                     SizedBox(
                                                       width: Get.width * 0.004,
                                                     ),
                                                     ImageContainerNew(
                                                       onpressed: () {
+                                                        BankAccounts ba =
+                                                            BankAccounts();
+
+                                                        ba = ProfileController.i
+                                                                .bankDetailList[
+                                                            index];
+                                                        edit.updateeditSelectedBankAccount(
+                                                            ba);
                                                         ProfileController.i
                                                             .updateval(true);
                                                         ProfileController.i
@@ -485,14 +592,39 @@ class _BankDetailState extends State<BankDetail> {
                                               SizedBox(
                                                   width: Get.width * 0.2,
                                                   child: InkWell(
-                                                    onTap: () {},
+                                                    onTap: () async {
+                                                      String id =
+                                                          ProfileController
+                                                              .i
+                                                              .bankDetailList[
+                                                                  index]
+                                                              .id!;
+
+                                                      if (ProfileController
+                                                              .i
+                                                              .bankDetailList[
+                                                                  index]
+                                                              .isDefault !=
+                                                          true) {
+                                                        ProfileRepo pr =
+                                                            ProfileRepo();
+
+                                                        String res = await pr
+                                                            .setdefaultBank(id);
+
+                                                        if (res == "true") {
+                                                          _getDoctorBasicInfo();
+                                                          setState(() {});
+                                                        }
+                                                      }
+                                                    },
                                                     child: Text(
                                                       (ProfileController
                                                                   .i
                                                                   .bankDetailList[
                                                                       index]
                                                                   .isDefault ==
-                                                              1
+                                                              true
                                                           ? "default".tr
                                                           : "SetDefault".tr),
                                                       style:
@@ -525,6 +657,92 @@ class _BankDetailState extends State<BankDetail> {
                     ),
         ),
       ),
+    );
+  }
+
+  deleteBank(
+    BuildContext context,
+    String bankid,
+  ) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: Get.width * 0.05),
+                      Text(
+                        'delete'.tr,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.close_outlined,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'doyouwanttodeleteit'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  PrimaryButton(
+                    title: 'yes'.tr,
+                    fontSize: 14,
+                    height: Get.height * 0.06,
+                    width: Get.width * 0.5,
+                    onPressed: () async {
+                      ProfileRepo pr = ProfileRepo();
+
+                      String res = await pr.deleteBank(bankid);
+
+                      if (res == "true") {
+                        _getDoctorBasicInfo();
+
+                        setState(() {});
+                      }
+
+                      // Call API
+                      Get.back();
+                    },
+                    color: ColorManager.kPrimaryColor,
+                    textcolor: ColorManager.kWhiteColor,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

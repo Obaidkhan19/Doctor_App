@@ -25,12 +25,16 @@ class NotificationsRepo {
 // final _messageStreamController = BehaviorSubject<RemoteMessage>();
 
   Future<void> initNotifications() async {
-    _fcm.requestPermission();
-    final fcm = await _fcm.getToken().then((value) {
-      // _fcm.subscribeToTopic('all');
-      log('saved token is $value');
-      LocalDb().saveDeviceToken(value);
-    });
+    try {
+      await _fcm.requestPermission();
+      final fcm = await _fcm.getToken().then((value) {
+        // _fcm.subscribeToTopic('all');
+        log('saved token is $value');
+        LocalDb().saveDeviceToken(value);
+      });
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> showNotifications(RemoteMessage message) async {

@@ -6,6 +6,12 @@ class AddSpecializationController extends GetxController
   static AddSpecializationController get i =>
       Get.put(AddSpecializationController());
 
+  bool isloading = false;
+  updateisloading(value) {
+    isloading = value;
+    update();
+  }
+
   List<Specialities1> addspecialitiesList = [];
   Specialities1? addselectedspecialities;
   updateaddspecialitiesList(List<Specialities1> slist) {

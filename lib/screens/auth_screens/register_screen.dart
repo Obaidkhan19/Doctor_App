@@ -206,11 +206,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
-                        AuthTextField(
-                          formatters: [Masks().maskFormatter],
-                          controller: cont.identity,
-                          hintText: 'Enter your Identity number',
-                        ),
+                        // AuthTextField(
+                        //   formatters: [Masks().maskFormatter],
+                        //   controller: cont.identity,
+                        //   hintText: 'Enter your Identity number',
+                        // ),
                         SizedBox(
                           height: Get.height * 0.02,
                         ),

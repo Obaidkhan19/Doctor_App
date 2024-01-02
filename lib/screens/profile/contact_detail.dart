@@ -500,35 +500,87 @@ class _ContactDetailState extends State<ContactDetail> {
                                 ],
                               ),
                               SizedBox(height: Get.height * 0.02),
-                              PrimaryButton(
-                                  fontSize: 15,
-                                  title: 'update'.tr,
-                                  onPressed: () async {
-                                    ProfileRepo pr = ProfileRepo();
-                                    if (_formKey.currentState!.validate()) {
-                                      String res = await pr.updateContact(
-                                          edit.selectedcountry?.id,
-                                          edit.selectedprovince?.id,
-                                          edit.selectedcity?.id,
-                                          edit.addressController.text,
-                                          edit.privatemobileno.text,
-                                          edit.telephone.text,
-                                          edit.publicmobileno.text,
-                                          edit.nokfirstname.text,
-                                          edit.noklastname.text,
-                                          edit.selectednokrelation?.id,
-                                          edit.nokidno.text,
-                                          edit.nokmobileno.text,
-                                          edit.emailController.text);
-                                      if (res == "true") {
-                                        ProfileController.i.updateval(false);
-                                        _getDoctorBasicInfo();
-                                        setState(() {});
-                                      }
+                              // PrimaryButton(
+                              //     fontSize: 15,
+                              //     title: 'update'.tr,
+                              //     onPressed: () async {
+                              //       ProfileRepo pr = ProfileRepo();
+                              //       if (_formKey.currentState!.validate()) {
+                              //         String res = await pr.updateContact(
+                              //             edit.selectedcountry?.id,
+                              //             edit.selectedprovince?.id,
+                              //             edit.selectedcity?.id,
+                              //             edit.addressController.text,
+                              //             edit.privatemobileno.text,
+                              //             edit.telephone.text,
+                              //             edit.publicmobileno.text,
+                              //             edit.nokfirstname.text,
+                              //             edit.noklastname.text,
+                              //             edit.selectednokrelation?.id,
+                              //             edit.nokidno.text,
+                              //             edit.nokmobileno.text,
+                              //             edit.emailController.text);
+                              //         if (res == "true") {
+                              //           ProfileController.i.updateval(false);
+                              //           _getDoctorBasicInfo();
+                              //           setState(() {});
+                              //         }
+                              //       }
+                              //     },
+                              //     color: Colors.white.withOpacity(0.7),
+                              //     textcolor: ColorManager.kWhiteColor),
+
+                              InkWell(
+                                onTap: () async {
+                                  edit.updateiseditloading(true);
+                                  ProfileRepo pr = ProfileRepo();
+                                  if (_formKey.currentState!.validate()) {
+                                    String res = await pr.updateContact(
+                                        edit.selectedcountry?.id,
+                                        edit.selectedprovince?.id,
+                                        edit.selectedcity?.id,
+                                        edit.addressController.text,
+                                        edit.privatemobileno.text,
+                                        edit.telephone.text,
+                                        edit.publicmobileno.text,
+                                        edit.nokfirstname.text,
+                                        edit.noklastname.text,
+                                        edit.selectednokrelation?.id,
+                                        edit.nokidno.text,
+                                        edit.nokmobileno.text,
+                                        edit.emailController.text);
+                                    edit.updateiseditloading(false);
+                                    if (res == "true") {
+                                      ProfileController.i.updateval(false);
+                                      _getDoctorBasicInfo();
+                                      setState(() {});
+                                      edit.updateiseditloading(false);
                                     }
-                                  },
-                                  color: Colors.white.withOpacity(0.7),
-                                  textcolor: ColorManager.kWhiteColor),
+                                  }
+                                  edit.updateiseditloading(false);
+                                },
+                                child: Container(
+                                  height: Get.height * 0.07,
+                                  width: Get.width * 1,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: edit.iseditloading == false
+                                          ? Text(
+                                              'update'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      ColorManager.kWhiteColor),
+                                            )
+                                          : const CircularProgressIndicator(
+                                              color: ColorManager.kWhiteColor,
+                                            )),
+                                ),
+                              ),
                               SizedBox(height: Get.height * 0.03),
                             ],
                           ),

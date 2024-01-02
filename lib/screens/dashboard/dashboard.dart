@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
@@ -8,12 +7,12 @@ import 'package:doctormobileapplication/screens/ManageAppointments/TodayAppointm
 import 'package:doctormobileapplication/screens/dashboard/home.dart';
 import 'package:doctormobileapplication/screens/profile/detail_profile_main.dart';
 import 'package:doctormobileapplication/screens/wallet_screens/wallet.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../data/localDB/local_db.dart';
 import '../auth_screens/login.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,11 +25,11 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   _launchWhatsApp() async {
-    const contact = "";
-    const androidUrl =
-        "whatsapp://send?phone=$contact&text=Hi, I need some help";
-    const iosUrl = "https://wa.me/$contact?text=Hi,%20I%20need%20some%20help";
-
+    // const contact = "";
+    String androidUrl =
+        "whatsapp://send?phone=$contactnumber&text=Hi, I need some help";
+    String iosUrl =
+        "https://wa.me/$contactnumber?text=Hi,%20I%20need%20some%20help";
     try {
       if (Platform.isIOS) {
         await launchUrl(Uri.parse(iosUrl));
@@ -101,48 +100,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   Future<bool> showExitPopup() async {
     if (ZoomDrawer.of(context)!.isOpen()) {
       ZoomDrawer.of(context)!.close();
-    }
-    //  else {
-    //   return await showDialog(
-    //         context: Get.context!,
-    //         builder: (context) => AlertDialog(
-    //           backgroundColor: ColorManager.kPrimaryColor,
-    //           title: Text(
-    //             'ExitApp'.tr,
-    //             style: GoogleFonts.poppins(
-    //                 fontSize: 14, color: ColorManager.kWhiteColor),
-    //           ),
-    //           content: Text(
-    //             'DoyouwanttoexitanApp'.tr,
-    //             style: GoogleFonts.poppins(
-    //                 fontSize: 12, color: ColorManager.kWhiteColor),
-    //           ),
-    //           actions: [
-    //             ElevatedButton(
-    //               style: ElevatedButton.styleFrom(
-    //                   backgroundColor: ColorManager.kWhiteColor),
-    //               onPressed: () => Navigator.of(context).pop(false),
-    //               child: Text(
-    //                 'no'.tr,
-    //                 style: const TextStyle(color: ColorManager.kPrimaryColor),
-    //               ),
-    //             ),
-    //             ElevatedButton(
-    //               style: ElevatedButton.styleFrom(
-    //                   backgroundColor: ColorManager.kWhiteColor),
-    //               onPressed: () => Navigator.of(context).pop(true),
-    //               child: Text(
-    //                 'yes'.tr,
-    //                 style: const TextStyle(color: ColorManager.kPrimaryColor),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ) ??
-    //       false;
-    // }
-
-    else if (tap == 0) {
+    } else if (tap == 0) {
       tap++;
       return false;
     } else if (tap == 1) {

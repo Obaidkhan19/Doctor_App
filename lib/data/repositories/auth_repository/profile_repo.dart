@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+import 'package:doctormobileapplication/data/controller/add_specialization_controller.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -111,6 +114,25 @@ class ProfileRepo {
       return degreeList;
     } else {
       throw Exception('Failed to fetch Locations details');
+    }
+  }
+
+  Future<List<Degrees>> getOrganization() async {
+    String url = AppConstants.getOrganization;
+    Uri uri = Uri.parse(url);
+    var body = jsonEncode(<String, dynamic>{});
+    var response = await http.post(uri,
+        body: body,
+        headers: <String, String>{'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      dynamic jsonData = jsonDecode(response.body);
+      Iterable data = jsonData['Organizations']; //Data
+      List<Degrees> degreeList =
+          data.map((json) => Degrees.fromJson(json)).toList();
+
+      return degreeList;
+    } else {
+      throw Exception('Failed to fetch Organization details');
     }
   }
 
@@ -564,7 +586,7 @@ class ProfileRepo {
                 fontSize: 14.0);
             return 'true';
           }
-        } else if (status == -5) {
+        } else if (status == -5 || status == 0) {
           Fluttertoast.showToast(
               msg: msg,
               toastLength: Toast.LENGTH_SHORT,
@@ -618,6 +640,20 @@ class ProfileRepo {
     };
     String did = await LocalDb().getDoctorId() ?? "";
 
+    // String designationids = "";
+    // for (int i = 0; i < designationslist.length; i++) {
+    //   designationids += designationslist[i].id;
+    //   if (i < designationslist.length - 1) {
+    //     designationids += ',';
+    //   }
+    // }
+
+    // List<String> designationid = [];
+    // for (int i = 0; i < designationslist.length; i++) {
+    //   String id = designationslist[i].id;
+    //   designationid.add(id);
+    // }
+
     var body = {
       "DoctorId": did,
       "Prefix": prefix,
@@ -641,9 +677,9 @@ class ProfileRepo {
       "BloodGroupId": bloodgroupid,
       "ReligionId": religionid,
       //"DesignationList": jsonEncode(designationslist)
-      "DesignationList": designationslist,
+      "DesignationList": jsonEncode(designationslist),
     };
-
+    print(body);
     try {
       var response = await http.post(
           Uri.parse(AppConstants.updatedoctorpersonalinfo),
@@ -665,7 +701,7 @@ class ProfileRepo {
                 fontSize: 14.0);
             return 'true';
           }
-        } else if (status == -5) {
+        } else if (status == -5 || status == 0) {
           Fluttertoast.showToast(
               msg: msg,
               toastLength: Toast.LENGTH_SHORT,
@@ -675,6 +711,14 @@ class ProfileRepo {
               textColor: ColorManager.kWhiteColor,
               fontSize: 14.0);
         } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
           return 'false';
         }
       }
@@ -689,6 +733,14 @@ class ProfileRepo {
           fontSize: 14.0);
       return 'false';
     }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
     return 'false';
   }
 
@@ -758,6 +810,1831 @@ class ProfileRepo {
                 fontSize: 14.0);
             return 'false';
           }
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> editSpecilization(id, sid, ssid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+    String bid = await LocalDb().getBranchId() ?? "";
+
+    var body = {
+      "Id": id,
+      "SpecialityId": sid,
+      "SubSpecialityId": ssid,
+      "DoctorId": did,
+      "BranchId": bid
+    };
+
+    try {
+      EditProfileController.i.updateisloading(true);
+      var response = await http.post(Uri.parse(AppConstants.editSpecilaity),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            EditProfileController.i.updateisloading(false);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          EditProfileController.i.updateisloading(false);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          EditProfileController.i.updateisloading(false);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      EditProfileController.i.updateisloading(false);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    EditProfileController.i.updateisloading(false);
+    return 'false';
+  }
+
+  Future<String> addSpecilization(sid, ssid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+    String bid = await LocalDb().getBranchId() ?? "";
+
+    var body = {
+      "SpecialityId": sid,
+      "SubSpecialityId": ssid,
+      "DoctorId": did,
+      "BranchId": bid
+    };
+
+    try {
+      AddSpecializationController.i.updateisloading(true);
+      var response = await http.post(Uri.parse(AppConstants.addSpecilaity),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            AddSpecializationController.i.updateisloading(false);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          AddSpecializationController.i.updateisloading(false);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          AddSpecializationController.i.updateisloading(false);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      AddSpecializationController.i.updateisloading(false);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    AddSpecializationController.i.updateisloading(false);
+    return 'false';
+  }
+
+  Future<String> deleteSpecilization(sid, ssid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "SpecialityId": sid,
+      "SubSpecialityId": ssid,
+      "DoctorId": did,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.deleteSpecilaity),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Deleted") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> setdefaultSpecilization(sid, ssid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "SpecialityId": sid,
+      "SubSpecialityId": ssid,
+      "DoctorId": did,
+    };
+
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.setdefaultSpecilaity),
+          body: jsonEncode(body),
+          headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Default Speciality Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> setdefaultBank(id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {"Id": id, "DoctorId": did};
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.setdefaultBank),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Default Account Updated Successfully") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> updatePrescriptionConfiguration(
+    userdisplayeducation,
+    userdisplaydesignation,
+    professionalsummary,
+    stamp,
+    margintop,
+    marginbottom,
+    eduenglish,
+    eduurdu,
+    designationenglish,
+    designationurdu,
+    othersenglish,
+    othersurdu,
+  ) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+    var body = {
+      "DoctorId": did,
+      "UserDisplayEducation": userdisplayeducation,
+      "UserDisplayDesignation": userdisplaydesignation,
+      "ProfessionalSummary": professionalsummary,
+      "Stamp": stamp,
+      "MarginTop": margintop,
+      "MarginBottom": marginbottom,
+      "EducationEnglish": eduenglish,
+      "EducationUrdu": eduurdu,
+      "DesignationEnglish": designationenglish,
+      "DesignationUrdu": designationurdu,
+      "OthersEnglish": othersenglish,
+      "OthersUrdu": othersurdu
+    };
+    EditProfileController.i.updateisloading(true);
+    try {
+      var response = await http.post(
+          Uri.parse(AppConstants.updateprescriptionConfiguration),
+          body: jsonEncode(body),
+          headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            EditProfileController.i.updateisloading(false);
+            return 'true';
+          } else {
+            Fluttertoast.showToast(
+                msg: "Failed to update",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            EditProfileController.i.updateisloading(false);
+            return 'false';
+          }
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          EditProfileController.i.updateisloading(false);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      EditProfileController.i.updateisloading(false);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    EditProfileController.i.updateisloading(false);
+    return 'false';
+  }
+
+  Future<String> addEducation(
+      countryid,
+      schoolid,
+      degreeid,
+      fieldofstudyid,
+      startdate,
+      enddate,
+      issuedate,
+      isActive,
+      gradingsystem,
+      totalmarks,
+      obtainedmarks,
+      obtainedpercentage) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "CountryId": countryid,
+      "InstitutionId": schoolid,
+      "DegreeId": degreeid,
+      "FieldOfStudyId": fieldofstudyid,
+      "StartDate": startdate,
+      "EndDate": enddate,
+      "IsActive": isActive,
+      "GradingSystem": gradingsystem,
+      "TotalMarks": totalmarks,
+      "ObtainedMarks": obtainedmarks,
+      "ObtainedPercentage": obtainedpercentage,
+      "IssueDate": issuedate
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.addeducation),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> editEducation(
+      id,
+      countryid,
+      schoolid,
+      degreeid,
+      fieldofstudyid,
+      startdate,
+      enddate,
+      issuedate,
+      isActive,
+      gradingsystem,
+      totalmarks,
+      obtainedmarks,
+      obtainedpercentage) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "Id": id,
+      "DoctorId": did,
+      "CountryId": countryid,
+      "InstitutionId": schoolid,
+      "DegreeId": degreeid,
+      "FieldOfStudyId": fieldofstudyid,
+      "StartDate": startdate,
+      "EndDate": enddate,
+      "IsActive": isActive,
+      "GradingSystem": gradingsystem,
+      "TotalMarks": totalmarks,
+      "ObtainedMarks": obtainedmarks,
+      "ObtainedPercentage": obtainedpercentage,
+      "IssueDate": issuedate
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.editeducation),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> addExperience(title, description, iscurrentlyworking, orgid,
+      locid, fromdate, todate, path) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "Title": title,
+      "Description": description,
+      "IsCurrentWorking": iscurrentlyworking,
+      "OrganizationId": orgid,
+      "LocationId": locid,
+      "FromDate": fromdate,
+      "ToDate": todate,
+      "Path": path,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.addexperience),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> editExperience(id, title, description, iscurrentlyworking,
+      orgid, locid, fromdate, todate, path) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "Id": id,
+      "DoctorId": did,
+      "Title": title,
+      "Description": description,
+      "IsCurrentWorking": iscurrentlyworking,
+      "OrganizationId": orgid,
+      "LocationId": locid,
+      "FromDate": fromdate,
+      "ToDate": todate,
+      "Path": path,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.editexperience),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> deleteEducation(id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    // String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "Id": id,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.deleteEducation),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Deleted") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> addAwards(
+      title, code, awardeddate, description, organizationId, locationid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "Title": title,
+      "Code": code,
+      "AwardedDate": awardeddate,
+      "Description": description,
+      "OrganizationId": organizationId,
+      "LocationId": locationid,
+    };
+
+    try {
+      AddSpecializationController.i.updateisloading(true);
+      var response = await http.post(Uri.parse(AppConstants.addAward),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            AddSpecializationController.i.updateisloading(false);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          AddSpecializationController.i.updateisloading(false);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          AddSpecializationController.i.updateisloading(false);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      AddSpecializationController.i.updateisloading(false);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    AddSpecializationController.i.updateisloading(false);
+    return 'false';
+  }
+
+  Future<String> editAwards(id, title, code, awardeddate, description,
+      organizationId, locationid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "Id": id,
+      "DoctorId": did,
+      "Title": title,
+      "Code": code,
+      "AwardedDate": awardeddate,
+      "Description": description,
+      "OrganizationId": organizationId,
+      "LocationId": locationid,
+    };
+    try {
+      var response = await http.post(Uri.parse(AppConstants.editAward),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+
+    return 'false';
+  }
+
+  Future<String> editMembership(id, title, code, fromdate, todate, description,
+      organizationId, locationid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "Id": id,
+      "DoctorId": did,
+      "Title": title,
+      "Code": code,
+      "FromDate": fromdate,
+      "ToDate": todate,
+      "Description": description,
+      "OrganizationId": organizationId,
+      "LocationId": locationid,
+    };
+    try {
+      var response = await http.post(Uri.parse(AppConstants.editMembership),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+
+    return 'false';
+  }
+
+  Future<String> addMembership(title, code, fromdate, todate, description,
+      organizationId, locationid) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "Title": title,
+      "Code": code,
+      "FromDate": fromdate,
+      "ToDate": todate,
+      "Description": description,
+      "OrganizationId": organizationId,
+      "LocationId": locationid,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.addMembership),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> deleteAward(id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var body = {
+      "Id": id,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.deleteAward),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Deleted") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> deleteMemebership(id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var body = {
+      "Id": id,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.deleteMemebership),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Deleted") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> deleteBank(id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var body = {
+      "Id": id,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.deleteBank),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Deleted") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> deleteExperience(id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String? did = await LocalDb().getDoctorId();
+
+    var body = {
+      "Id": id,
+      "DoctorId": did,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.deleteExperience),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Deleted") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        } else {
+          Fluttertoast.showToast(
+              msg: 'Something went wrong',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    Fluttertoast.showToast(
+        msg: 'Something went wrong',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: ColorManager.kRedColor,
+        textColor: ColorManager.kWhiteColor,
+        fontSize: 14.0);
+    return 'false';
+  }
+
+  Future<String> addBankAccount(bankid, accountno, title, path) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "BankId": bankid,
+      "AccountNumber": accountno,
+      "Title": title,
+      "Path": path,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.addBankAccount),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> addOldWorklocation(worlocationid, pref) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+    String bid = await LocalDb().getBranchId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "WorkLocationId": worlocationid,
+      "Preference": pref,
+      "BranchId": bid,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.addworklocation),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> addNewWorklocation(
+    name,
+    address,
+    countryid,
+    provinceid,
+    cityid,
+  ) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "DoctorId": did,
+      "Name": name,
+      "Address": address,
+      "CountryId": countryid,
+      "StateOrProvinceId": provinceid,
+      "CityId": cityid,
+      "IsActive": "1"
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.addworklocation),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Added") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kRedColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
+        } else {
+          return 'false';
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      return 'false';
+    }
+    return 'false';
+  }
+
+  Future<String> editBankAccount(id, bankid, accountno, title, path) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    String did = await LocalDb().getDoctorId() ?? "";
+
+    var body = {
+      "Id": id,
+      "DoctorId": did,
+      "BankId": bankid,
+      "AccountNumber": accountno,
+      "Title": title,
+      "Path": path,
+    };
+
+    try {
+      var response = await http.post(Uri.parse(AppConstants.editBankAccount),
+          body: jsonEncode(body), headers: headers);
+      if (response.statusCode == 200) {
+        var responseData = jsonDecode(response.body);
+        var status = responseData['Status'];
+        var msg = responseData['ErrorMessage'];
+        if (status == 1) {
+          if (msg == "Successfully Updated") {
+            Fluttertoast.showToast(
+                msg: msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: ColorManager.kPrimaryColor,
+                textColor: ColorManager.kWhiteColor,
+                fontSize: 14.0);
+            return 'true';
+          }
+        } else if (status == -5 || status == 0) {
+          Fluttertoast.showToast(
+              msg: msg,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: ColorManager.kRedColor,
+              textColor: ColorManager.kWhiteColor,
+              fontSize: 14.0);
         } else {
           return 'false';
         }

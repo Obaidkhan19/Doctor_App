@@ -47,7 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   )),
             ),
             Center(
-              child: Text('${AppConstants.appName}.',
+              child: Text('$appName.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                       fontSize: 32,

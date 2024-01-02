@@ -5,6 +5,7 @@ import 'package:doctormobileapplication/data/controller/add_worklocation_control
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/ConfigureAppointment_repo/configure_appointment_repo.dart';
+import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -118,8 +119,9 @@ class _WorkLocationState extends State<WorkLocation> {
   var worklocation = Get.put<ProfileController>(ProfileController());
   var add = Get.put<AddWorklocationController>(AddWorklocationController());
   var edit = Get.put<EditProfileController>(EditProfileController());
-  // bool editchk = false;
-  // bool addchck = false;
+
+  final GlobalKey<FormState> _addformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _editformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
@@ -196,14 +198,13 @@ class _WorkLocationState extends State<WorkLocation> {
                         builder: (contr) => Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: Get.width * 0.05),
-                          child: Column(
-                            children: [
-                              SingleChildScrollView(
+                          child: SizedBox(
+                            height: Get.height * 1,
+                            child: SingleChildScrollView(
+                              child: Form(
+                                key: _addformKey,
                                 child: Column(
                                   children: [
-                                    SizedBox(
-                                      height: Get.height * 0.02,
-                                    ),
                                     Row(
                                       children: <Widget>[
                                         Checkbox(
@@ -243,6 +244,15 @@ class _WorkLocationState extends State<WorkLocation> {
                                       visible:
                                           add.newworklocationisChecked == false,
                                       child: EditProfileCustomTextField(
+                                        validator: (p0) {
+                                          if (add.addworklocationselectedhospital
+                                                  ?.id ==
+                                              null) {
+                                            return 'SelectHospital'.tr;
+                                          } else {
+                                            return null;
+                                          }
+                                        },
                                         onTap: () async {
                                           add.addworklocationselectedhospital =
                                               null;
@@ -280,6 +290,12 @@ class _WorkLocationState extends State<WorkLocation> {
                                       visible:
                                           add.newworklocationisChecked == false,
                                       child: EditProfileCustomTextField(
+                                        validator: (p0) {
+                                          if (p0!.isEmpty) {
+                                            return 'EnterPreference'.tr;
+                                          }
+                                          return null;
+                                        },
                                         controller: add.worklocationpreference,
                                         hintText: 'Preference'.tr,
                                       ),
@@ -288,6 +304,12 @@ class _WorkLocationState extends State<WorkLocation> {
                                       visible:
                                           add.newworklocationisChecked == true,
                                       child: EditProfileCustomTextField(
+                                        validator: (p0) {
+                                          if (p0!.isEmpty) {
+                                            return 'EnterName'.tr;
+                                          }
+                                          return null;
+                                        },
                                         controller: add.newworklocationname,
                                         hintText: 'name'.tr,
                                       ),
@@ -297,7 +319,9 @@ class _WorkLocationState extends State<WorkLocation> {
                                           add.newworklocationisChecked == true,
                                       child: EditProfileCustomTextField(
                                         validator: (value) {
-                                          if (value == "Country") {
+                                          if (add.addselectedworklocationcountry
+                                                  ?.id ==
+                                              null) {
                                             return 'pleaseselectyourcountry'.tr;
                                           }
                                           return null;
@@ -352,7 +376,9 @@ class _WorkLocationState extends State<WorkLocation> {
                                           add.newworklocationisChecked == true,
                                       child: EditProfileCustomTextField(
                                         validator: (value) {
-                                          if (value == "Province") {
+                                          if (add.addselectedworklocationstate
+                                                  ?.id ==
+                                              null) {
                                             return 'pleaseselectyourprovince'
                                                 .tr;
                                           }
@@ -413,7 +439,9 @@ class _WorkLocationState extends State<WorkLocation> {
                                           add.newworklocationisChecked == true,
                                       child: EditProfileCustomTextField(
                                         validator: (value) {
-                                          if (value == "City") {
+                                          if (add.addselectedworklocationCities
+                                                  ?.id ==
+                                              null) {
                                             return 'pleaseselectyourcity'.tr;
                                           }
                                           return null;
@@ -465,27 +493,98 @@ class _WorkLocationState extends State<WorkLocation> {
                                       visible:
                                           add.newworklocationisChecked == true,
                                       child: EditProfileCustomTextField(
+                                        validator: (p0) {
+                                          if (p0!.isEmpty) {
+                                            return 'pleaseselectyouraddress'.tr;
+                                          }
+                                          return null;
+                                        },
                                         controller:
                                             add.newworklocationnameaddress,
                                         hintText: 'address'.tr,
                                       ),
                                     ),
                                     SizedBox(height: Get.height * 0.03),
-                                    PrimaryButton(
-                                        fontSize: 15,
-                                        title: 'add'.tr,
-                                        onPressed: () async {
-                                          ProfileController.i
-                                              .updateaddval(false);
-                                          setState(() {});
-                                        },
-                                        color: Colors.white.withOpacity(0.7),
-                                        textcolor: ColorManager.kWhiteColor),
+                                    InkWell(
+                                      onTap: () async {
+                                        ProfileRepo pr = ProfileRepo();
+
+                                        add.updateisloading(true);
+                                        if (_addformKey.currentState!
+                                            .validate()) {
+                                          if (add.newworklocationisChecked !=
+                                              true) {
+                                            String res =
+                                                await pr.addOldWorklocation(
+                                                    add.addworklocationselectedhospital
+                                                        ?.id,
+                                                    add.worklocationpreference
+                                                        .text);
+
+                                            if (res == "true") {
+                                              _getDoctorBasicInfo();
+                                              ProfileController.i
+                                                  .updateaddval(false);
+                                              setState(() {});
+
+                                              add.updateisloading(false);
+                                            }
+                                            add.updateisloading(false);
+                                          } else {
+                                            String res = await pr.addNewWorklocation(
+                                                add.newworklocationname.text,
+                                                add.newworklocationnameaddress
+                                                    .text,
+                                                add.addselectedworklocationcountry
+                                                    ?.id,
+                                                add.addselectedworklocationstate
+                                                    ?.id,
+                                                add.addselectedworklocationCities
+                                                    ?.id);
+
+                                            if (res == "true") {
+                                              _getDoctorBasicInfo();
+                                              ProfileController.i
+                                                  .updateaddval(false);
+                                              setState(() {});
+
+                                              add.updateisloading(false);
+                                            }
+                                            add.updateisloading(false);
+                                          }
+                                        }
+                                        add.updateisloading(false);
+                                      },
+                                      child: Container(
+                                        height: Get.height * 0.07,
+                                        width: Get.width * 1,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.7),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                            child: add.isloading == false
+                                                ? Text(
+                                                    'add'.tr,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: ColorManager
+                                                            .kWhiteColor),
+                                                  )
+                                                : const CircularProgressIndicator(
+                                                    color: ColorManager
+                                                        .kWhiteColor,
+                                                  )),
+                                      ),
+                                    ),
                                     SizedBox(height: Get.height * 0.03),
                                   ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       )
@@ -725,6 +824,92 @@ class _WorkLocationState extends State<WorkLocation> {
                         ),
                       )),
       ),
+    );
+  }
+
+  deleteWorklocation(
+    BuildContext context,
+    String worklocationid,
+  ) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: Get.width * 0.05),
+                      Text(
+                        'delete'.tr,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.close_outlined,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'doyouwanttodeleteit'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  PrimaryButton(
+                    title: 'yes'.tr,
+                    fontSize: 14,
+                    height: Get.height * 0.06,
+                    width: Get.width * 0.5,
+                    onPressed: () async {
+                      ProfileRepo pr = ProfileRepo();
+
+                      String res = await pr.deleteBank(worklocationid);
+
+                      if (res == "true") {
+                        _getDoctorBasicInfo();
+
+                        setState(() {});
+                      }
+
+                      // Call API
+                      Get.back();
+                    },
+                    color: ColorManager.kPrimaryColor,
+                    textcolor: ColorManager.kWhiteColor,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

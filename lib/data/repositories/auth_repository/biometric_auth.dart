@@ -9,9 +9,10 @@ class Authentication {
   static Future<bool> authentication() async {
     try {
       if (!await canAuthenticate()) return false;
-      return await _auth.authenticate(localizedReason: "Get into the App");
+      return await _auth.authenticate(
+        localizedReason: "Get into the App",
+      );
     } catch (e) {
-      print("Error $e");
       return false;
     }
   }

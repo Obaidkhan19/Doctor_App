@@ -21,8 +21,6 @@ TextStyle getRegularStyle({
       fontSize, FontConstants.fontFamily, color, FontWeightManager.regular);
 }
 
-// light text style
-
 TextStyle getLightTextStyle(
     {double fontSize = FontSize.s12, required Color color}) {
   return _getTextStyle(

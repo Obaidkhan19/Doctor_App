@@ -49,6 +49,7 @@ class Images {
   static const String add = '$path/add.png';
 
   static const String fingerprint_icon = '$path/fingerprint_icon.png';
+  static const String qrscan_icon = '$path/qrscan.png';
   static const String masterCard = '$path/mastercard.png';
   static const String bike = '$path/bike.png';
   static const String cross = '$path/cross.png';

@@ -4,8 +4,10 @@ import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
+import 'package:doctormobileapplication/data/controller/add_award_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/models/degree.dart';
+import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 
@@ -31,11 +33,33 @@ class _AwardsDetailState extends State<AwardsDetail> {
   }
 
   var edit = Get.put<EditProfileController>(EditProfileController());
+  var add = Get.put<AddAwardController>(AddAwardController());
 
   _getLocations() async {
     ProfileRepo pr = ProfileRepo();
     EditProfileController.i.updateawardList(
       await pr.getLocations(),
+    );
+  }
+
+  _getLocationsadd() async {
+    ProfileRepo pr = ProfileRepo();
+    AddAwardController.i.updateawardList(
+      await pr.getLocations(),
+    );
+  }
+
+  _getOrganizationadd() async {
+    ProfileRepo pr = ProfileRepo();
+    AddAwardController.i.updateOrganizationList(
+      await pr.getOrganization(),
+    );
+  }
+
+  _getOrganizationedit() async {
+    ProfileRepo pr = ProfileRepo();
+    EditProfileController.i.updateOrganizationList(
+      await pr.getOrganization(),
     );
   }
 
@@ -46,11 +70,17 @@ class _AwardsDetailState extends State<AwardsDetail> {
     Future.delayed(Duration.zero, () async {
       ProfileController.i.updateselectedindex(6);
     });
+    _getOrganizationedit();
+    _getOrganizationadd();
     _getLocations();
+    _getLocationsadd();
   }
 
   var profile = Get.put<ProfileController>(ProfileController());
   var awards = Get.put<ProfileController>(ProfileController());
+
+  final GlobalKey<FormState> _addformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _editformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
@@ -76,79 +106,151 @@ class _AwardsDetailState extends State<AwardsDetail> {
                       padding:
                           EdgeInsets.symmetric(horizontal: Get.width * 0.02),
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            EditProfileCustomTextField(
-                              controller: edit.awardtitle,
-                              hintText: 'title'.tr,
-                            ),
-
-                            EditProfileCustomTextField(
-                              controller: edit.awardcode,
-                              hintText: 'code'.tr,
-                            ),
-
-                            // organization
-
-                            // location
-                            EditProfileCustomTextField(
-                              onTap: () async {
-                                Degrees generic = await searchabledropdown(
-                                    context, edit.awardList);
-                                edit.selectedawardlocation = null;
-                                edit.updateselectedaward(generic);
-
-                                if (generic.id != null) {
-                                  edit.selectedawardlocation = generic;
-                                  edit.selectedawardlocation =
-                                      (generic.id == null)
-                                          ? null
-                                          : edit.selectedawardlocation;
-                                }
-                              },
-                              readonly: true,
-                              hintText: edit.selectedawardlocation?.name == ""
-                                  ? 'location'.tr
-                                  : edit.selectedawardlocation?.name ??
-                                      "selectLocation".tr,
-                            ),
-
-                            EditProfileCustomTextField(
-                              onTap: () async {
-                                await edit.selectformattedawardedDateAndTime(
-                                    context,
-                                    EditProfileController.awardeddate,
-                                    edit.formateawardeddate);
-                              },
-                              readonly: true,
-                              hintText: edit.formattedawardeddate
-                                          .toString()
-                                          .split("T")[0] ==
-                                      DateTime.now().toString().split(" ")[0]
-                                  ? "SelectAwardedDate".tr
-                                  : DateFormat('MM-dd-y').format(DateTime.parse(
-                                      edit.formattedawardeddate
-                                          .toString()
-                                          .split(" ")[0])),
-                            ),
-
-                            EditProfileCustomTextField(
-                              controller: edit.awarddescription,
-                              hintText: 'description'.tr,
-                            ),
-                            SizedBox(height: Get.height * 0.03),
-                            PrimaryButton(
-                                fontSize: 15,
-                                title: 'edit'.tr,
-                                onPressed: () async {
-                                  ProfileController.i.updateval(false);
-                                  setState(() {});
+                        child: Form(
+                          key: _editformKey,
+                          child: Column(
+                            children: [
+                              EditProfileCustomTextField(
+                                validator: (p0) {
+                                  if (p0!.isEmpty) {
+                                    return 'entertitle'.tr;
+                                  }
+                                  return null;
                                 },
-                                color:
-                                    ColorManager.kWhiteColor.withOpacity(0.7),
-                                textcolor: ColorManager.kWhiteColor),
-                            SizedBox(height: Get.height * 0.03),
-                          ],
+                                controller: edit.awardtitle,
+                                hintText: 'title'.tr,
+                              ),
+
+                              EditProfileCustomTextField(
+                                controller: edit.awardcode,
+                                hintText: 'code'.tr,
+                              ),
+
+                              // organization
+                              EditProfileCustomTextField(
+                                validator: (p0) {
+                                  if (edit.selectedOrganization?.id == null) {
+                                    return 'SelectOrganization'.tr;
+                                  }
+                                  return null;
+                                },
+                                onTap: () async {
+                                  Degrees generic = await searchabledropdown(
+                                      context, edit.OrganizationList);
+                                  edit.selectedOrganization = null;
+                                  edit.updateselectedOrganization(generic);
+
+                                  if (generic.id != null) {
+                                    edit.selectedOrganization = generic;
+                                    edit.selectedOrganization =
+                                        (generic.id == null)
+                                            ? null
+                                            : edit.selectedOrganization;
+                                  }
+                                },
+                                readonly: true,
+                                hintText: edit.selectedOrganization?.name == ""
+                                    ? 'organization'.tr
+                                    : edit.selectedOrganization?.name ??
+                                        "SelectOrganization".tr,
+                              ),
+                              // location
+                              EditProfileCustomTextField(
+                                validator: (p0) {
+                                  if (edit.selectedawardlocation?.id == null) {
+                                    return 'selectlocation'.tr;
+                                  }
+                                  return null;
+                                },
+                                onTap: () async {
+                                  Degrees generic = await searchabledropdown(
+                                      context, edit.awardList);
+                                  edit.selectedawardlocation = null;
+                                  edit.updateselectedaward(generic);
+
+                                  if (generic.id != null) {
+                                    edit.selectedawardlocation = generic;
+                                    edit.selectedawardlocation =
+                                        (generic.id == null)
+                                            ? null
+                                            : edit.selectedawardlocation;
+                                  }
+                                },
+                                readonly: true,
+                                hintText: edit.selectedawardlocation?.name == ""
+                                    ? 'location'.tr
+                                    : edit.selectedawardlocation?.name ??
+                                        "selectLocation".tr,
+                              ),
+
+                              EditProfileCustomTextField(
+                                  onTap: () async {
+                                    await edit
+                                        .selectformattedawardedDateAndTime(
+                                            context,
+                                            EditProfileController.awardeddate,
+                                            edit.formateawardeddate);
+                                  },
+                                  readonly: true,
+                                  hintText: edit.formattedawardeddate
+                                      .toString()
+                                      .split("T")[0]),
+
+                              EditProfileCustomTextField(
+                                controller: edit.awarddescription,
+                                hintText: 'description'.tr,
+                              ),
+                              SizedBox(height: Get.height * 0.03),
+
+                              InkWell(
+                                onTap: () async {
+                                  ProfileRepo pr = ProfileRepo();
+                                  if (_editformKey.currentState!.validate()) {
+                                    edit.updateisloading(true);
+                                    String res = await pr.editAwards(
+                                        edit.editawardid,
+                                        edit.awardtitle.text,
+                                        edit.awardcode.text,
+                                        edit.formattedawardeddate,
+                                        edit.awarddescription.text,
+                                        edit.selectedOrganization?.id,
+                                        edit.selectedawardlocation?.id);
+                                    if (res == "true") {
+                                      _getDoctorBasicInfo();
+                                      ProfileController.i.updateval(false);
+                                      setState(() {});
+                                      edit.updateisloading(false);
+                                    }
+                                    edit.updateisloading(false);
+                                  }
+                                  edit.updateisloading(false);
+                                },
+                                child: Container(
+                                  height: Get.height * 0.07,
+                                  width: Get.width * 1,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: edit.isloading == false
+                                          ? Text(
+                                              'edit'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      ColorManager.kWhiteColor),
+                                            )
+                                          : const CircularProgressIndicator(
+                                              color: ColorManager.kWhiteColor,
+                                            )),
+                                ),
+                              ),
+
+                              SizedBox(height: Get.height * 0.03),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -163,89 +265,173 @@ class _AwardsDetailState extends State<AwardsDetail> {
                         left: Get.width * 0.02,
                         right: Get.width * 0.02,
                       ),
-                      child: GetBuilder<EditProfileController>(
+                      child: GetBuilder<AddAwardController>(
                         builder: (contr) => Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: Get.width * 0.02),
                           child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                EditProfileCustomTextField(
-                                  controller: edit.awardtitle,
-                                  hintText: 'title'.tr,
-                                ),
-
-                                EditProfileCustomTextField(
-                                  controller: edit.awardcode,
-                                  hintText: 'code'.tr,
-                                ),
-
-                                // organization
-
-                                // location
-                                EditProfileCustomTextField(
-                                  onTap: () async {
-                                    Degrees generic = await searchabledropdown(
-                                        context, edit.awardList);
-                                    edit.selectedawardlocation = null;
-                                    edit.updateselectedaward(generic);
-
-                                    if (generic.id != null) {
-                                      edit.selectedawardlocation = generic;
-                                      edit.selectedawardlocation =
-                                          (generic.id == null)
-                                              ? null
-                                              : edit.selectedawardlocation;
-                                    }
-                                  },
-                                  readonly: true,
-                                  hintText:
-                                      edit.selectedawardlocation?.name == ""
-                                          ? 'location'.tr
-                                          : edit.selectedawardlocation?.name ??
-                                              "SelectLocation".tr,
-                                ),
-
-                                EditProfileCustomTextField(
-                                  onTap: () async {
-                                    await edit
-                                        .selectformattedawardedDateAndTime(
-                                            context,
-                                            EditProfileController.awardeddate,
-                                            edit.formateawardeddate);
-                                  },
-                                  readonly: true,
-                                  hintText: edit.formattedawardeddate
-                                              .toString()
-                                              .split("T")[0] ==
-                                          DateTime.now()
-                                              .toString()
-                                              .split(" ")[0]
-                                      ? "SelectAwardedDate".tr
-                                      : DateFormat('MM-dd-y').format(
-                                          DateTime.parse(edit
-                                              .formattedawardeddate
-                                              .toString()
-                                              .split(" ")[0])),
-                                ),
-
-                                EditProfileCustomTextField(
-                                  controller: edit.awarddescription,
-                                  hintText: 'description'.tr,
-                                ),
-                                SizedBox(height: Get.height * 0.03),
-                                PrimaryButton(
-                                    fontSize: 15,
-                                    title: 'add'.tr,
-                                    onPressed: () async {
-                                      ProfileController.i.updateaddval(false);
-                                      setState(() {});
+                            child: Form(
+                              key: _addformKey,
+                              child: Column(
+                                children: [
+                                  EditProfileCustomTextField(
+                                    validator: (p0) {
+                                      if (p0!.isEmpty) {
+                                        return 'entertitle'.tr;
+                                      }
+                                      return null;
                                     },
-                                    color: ColorManager.kWhiteColor
-                                        .withOpacity(0.7),
-                                    textcolor: ColorManager.kWhiteColor),
-                                SizedBox(height: Get.height * 0.03),
-                              ],
+                                    controller: add.title,
+                                    hintText: 'title'.tr,
+                                  ),
+
+                                  EditProfileCustomTextField(
+                                    controller: add.code,
+                                    hintText: 'code'.tr,
+                                  ),
+
+                                  // organization
+                                  EditProfileCustomTextField(
+                                    validator: (p0) {
+                                      if (add.selectedOrganization?.id ==
+                                          null) {
+                                        return 'SelectOrganization'.tr;
+                                      }
+                                      return null;
+                                    },
+                                    onTap: () async {
+                                      Degrees generic =
+                                          await searchabledropdown(
+                                              context, add.OrganizationList);
+                                      add.selectedOrganization = null;
+                                      add.updateselectedOrganization(generic);
+
+                                      if (generic.id != null) {
+                                        add.selectedOrganization = generic;
+                                        add.selectedOrganization =
+                                            (generic.id == null)
+                                                ? null
+                                                : add.selectedOrganization;
+                                      }
+                                    },
+                                    readonly: true,
+                                    hintText:
+                                        add.selectedOrganization?.name == ""
+                                            ? 'organization'.tr
+                                            : add.selectedOrganization?.name ??
+                                                "SelectOrganization".tr,
+                                  ),
+                                  // location
+                                  EditProfileCustomTextField(
+                                    validator: (p0) {
+                                      if (add.selectedawardlocation?.id ==
+                                          null) {
+                                        return 'selectlocation'.tr;
+                                      }
+                                      return null;
+                                    },
+                                    onTap: () async {
+                                      Degrees generic =
+                                          await searchabledropdown(
+                                              context, add.awardList);
+                                      add.selectedawardlocation = null;
+                                      add.updateselectedaward(generic);
+
+                                      if (generic.id != null) {
+                                        add.selectedawardlocation = generic;
+                                        add.selectedawardlocation =
+                                            (generic.id == null)
+                                                ? null
+                                                : add.selectedawardlocation;
+                                      }
+                                    },
+                                    readonly: true,
+                                    hintText:
+                                        add.selectedawardlocation?.name == ""
+                                            ? 'location'.tr
+                                            : add.selectedawardlocation?.name ??
+                                                "selectLocation".tr,
+                                  ),
+
+                                  EditProfileCustomTextField(
+                                      validator: (p0) {
+                                        if (add.awarddateselect == false) {
+                                          return 'SelectAwardedDate'.tr;
+                                        }
+                                        return null;
+                                      },
+                                      onTap: () async {
+                                        await add
+                                            .selectformattedawardedDateAndTime(
+                                                context,
+                                                AddAwardController.awardeddate,
+                                                add.formateawardeddate);
+                                      },
+                                      readonly: true,
+                                      hintText: add.awarddateselect == true
+                                          ? add.formattedawardeddate
+                                              .toString()
+                                              .split("T")[0]
+                                          : "SelectAwardedDate".tr),
+
+                                  EditProfileCustomTextField(
+                                    controller: add.description,
+                                    hintText: 'description'.tr,
+                                  ),
+                                  SizedBox(height: Get.height * 0.03),
+
+                                  InkWell(
+                                    onTap: () async {
+                                      ProfileRepo pr = ProfileRepo();
+                                      if (_addformKey.currentState!
+                                          .validate()) {
+                                        add.updateisaddloading(true);
+                                        String res = await pr.addAwards(
+                                            add.title.text,
+                                            add.code.text,
+                                            add.formattedawardeddate,
+                                            add.description.text,
+                                            add.selectedOrganization?.id,
+                                            add.selectedawardlocation?.id);
+                                        if (res == "true") {
+                                          _getDoctorBasicInfo();
+                                          ProfileController.i
+                                              .updateaddval(false);
+                                          setState(() {});
+                                          add.updateisaddloading(false);
+                                        }
+                                        add.updateisaddloading(false);
+                                      }
+                                      add.updateisaddloading(false);
+                                    },
+                                    child: Container(
+                                      height: Get.height * 0.07,
+                                      width: Get.width * 1,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.7),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                          child: add.isaddloading == false
+                                              ? Text(
+                                                  'add'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: ColorManager
+                                                          .kWhiteColor),
+                                                )
+                                              : const CircularProgressIndicator(
+                                                  color:
+                                                      ColorManager.kWhiteColor,
+                                                )),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: Get.height * 0.03),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -269,6 +455,14 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                 children: [
                                   ImageContainer(
                                     onpressed: () {
+                                      add.updateawarddateselect(false);
+                                      add.title.clear();
+                                      add.code.clear();
+                                      add.formattedawardeddate =
+                                          DateTime.now().toString();
+                                      add.description.clear();
+                                      add.selectedOrganization = null;
+                                      add.selectedawardlocation = null;
                                       ProfileController.i.updateaddval(true);
                                       ProfileController.i.updateisEdit(true);
                                       setState(() {});
@@ -307,7 +501,7 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                               ),
                                             ),
                                             Text(
-                                              'Title',
+                                              'title'.tr,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 12,
                                                 color: ColorManager.kWhiteColor,
@@ -372,27 +566,42 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    ImageContainerNew(
-                                                      onpressed: () {},
-                                                      imagePath:
-                                                          AppImages.cross,
-                                                      //  imageheight: Get.height * 0.03,
-                                                      isSvg: false,
-                                                      color: ColorManager
-                                                          .kRedColor,
-                                                      backgroundColor:
-                                                          ColorManager
-                                                              .kWhiteColor,
-                                                      boxheight:
-                                                          Get.height * 0.03,
-                                                      boxwidth:
-                                                          Get.width * 0.06,
-                                                    ),
+                                                    // ImageContainerNew(
+                                                    //   onpressed: () async {
+                                                    //     String id =
+                                                    //         ProfileController
+                                                    //                 .i
+                                                    //                 .awardsList[
+                                                    //                     index]
+                                                    //                 .id ??
+                                                    //             "";
+                                                    //     deleteAward(
+                                                    //         context, id);
+                                                    //   },
+                                                    //   imagePath:
+                                                    //       AppImages.cross,
+                                                    //   //  imageheight: Get.height * 0.03,
+                                                    //   isSvg: false,
+                                                    //   color: ColorManager
+                                                    //       .kRedColor,
+                                                    //   backgroundColor:
+                                                    //       ColorManager
+                                                    //           .kWhiteColor,
+                                                    //   boxheight:
+                                                    //       Get.height * 0.03,
+                                                    //   boxwidth:
+                                                    //       Get.width * 0.06,
+                                                    // ),
                                                     SizedBox(
                                                       width: Get.width * 0.004,
                                                     ),
                                                     ImageContainerNew(
                                                       onpressed: () {
+                                                        Awards a = Awards();
+                                                        a = ProfileController.i
+                                                            .awardsList[index];
+                                                        edit.updateeditSelectedAward(
+                                                            a);
                                                         ProfileController.i
                                                             .updateval(true);
                                                         ProfileController.i
@@ -498,6 +707,92 @@ class _AwardsDetailState extends State<AwardsDetail> {
                     ),
         ),
       ),
+    );
+  }
+
+  deleteAward(
+    BuildContext context,
+    String awardid,
+  ) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: Get.width * 0.05),
+                      Text(
+                        'delete'.tr,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.close_outlined,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'doyouwanttodeleteit'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  PrimaryButton(
+                    title: 'yes'.tr,
+                    fontSize: 14,
+                    height: Get.height * 0.06,
+                    width: Get.width * 0.5,
+                    onPressed: () async {
+                      ProfileRepo pr = ProfileRepo();
+
+                      String res = await pr.deleteAward(awardid);
+
+                      if (res == "true") {
+                        _getDoctorBasicInfo();
+
+                        setState(() {});
+                      }
+
+                      // Call API
+                      Get.back();
+                    },
+                    color: ColorManager.kPrimaryColor,
+                    textcolor: ColorManager.kWhiteColor,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

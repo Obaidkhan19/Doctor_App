@@ -654,10 +654,14 @@ class PrescribeMedicinRepo {
         headers: <String, String>{'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       dynamic jsonData = jsonDecode(response.body);
-      Iterable data = jsonData['Medicines'];
-      List<Medicinesss1> pastmedList =
-          data.map((json) => Medicinesss1.fromJson(json)).toList();
-      return pastmedList;
+      try {
+        Iterable data = jsonData['Medicines'];
+        List<Medicinesss1> pastmedList =
+            data.map((json) => Medicinesss1.fromJson(json)).toList();
+        return pastmedList;
+      } catch (e) {
+        throw Exception(e);
+      }
     } else {
       throw Exception('Failed to fetch past medicine');
     }

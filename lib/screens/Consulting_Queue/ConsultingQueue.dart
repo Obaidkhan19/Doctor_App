@@ -1,3 +1,5 @@
+import 'package:doctormobileapplication/components/images.dart';
+import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -83,9 +85,9 @@ class _ConsultingQueueState extends State<ConsultingQueue>
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(AppImages.helpfulbackgroundlogo),
+                    image: AssetImage(Images.logoBackground),
                     alignment: Alignment.center,
                   ),
                 ),

@@ -33,6 +33,18 @@ class EditProfileController extends GetxController implements GetxService {
     update();
   }
 
+  bool iseditloading = false;
+  updateiseditloading(value) {
+    iseditloading = value;
+    update();
+  }
+
+  bool isloading = false;
+  updateisloading(value) {
+    isloading = value;
+    update();
+  }
+
   bool ontap = false;
 
   bool _isLoading = false;
@@ -46,6 +58,8 @@ class EditProfileController extends GetxController implements GetxService {
   disposefile() {
     file = null;
   }
+
+  String updateselectedsepcilizationid = "";
 
   List<HospitalORClinics> hospitalList = [];
   HospitalORClinics? selectedhospital = HospitalORClinics();
@@ -133,7 +147,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -165,7 +179,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -173,6 +187,7 @@ class EditProfileController extends GetxController implements GetxService {
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreestart = iso8601Format.format(date);
       updatedegreestart(date);
+      educationstartdatetextvisible = false;
       update();
     }
   }
@@ -196,7 +211,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -204,6 +219,7 @@ class EditProfileController extends GetxController implements GetxService {
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreeend = iso8601Format.format(date);
       updatedegreeend(date);
+      educationenddatetextvisible = false;
       update();
     }
   }
@@ -218,13 +234,14 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreeissue = iso8601Format.format(date);
+      educationissuedatetextvisible = false;
       update();
     }
   }
@@ -239,7 +256,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -260,13 +277,14 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formattedexperienceto = iso8601Format.format(date);
+      todatetextvisible = false;
       update();
     }
   }
@@ -290,7 +308,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -311,7 +329,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -343,7 +361,7 @@ class EditProfileController extends GetxController implements GetxService {
       DateFormat.yMMMd().format(experiencefrom!).obs;
 
   static DateTime? experienceto = DateTime.now();
-  String? formattedexperienceto = experienceto!.toIso8601String();
+  String? formattedexperienceto = "";
   RxString? formateexperienceto = DateFormat.yMMMd().format(experienceto!).obs;
 
   static DateTime? awardeddate = DateTime.now();
@@ -360,7 +378,7 @@ class EditProfileController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -528,6 +546,45 @@ class EditProfileController extends GetxController implements GetxService {
 
   updateselectedmembershiplocation(Degrees ins) {
     selectedmembershiplocation = ins;
+    update();
+  }
+
+  List<Degrees> OrganizationList = [];
+  Degrees? selectedOrganization = Degrees();
+
+  updateOrganizationList(List<Degrees> olist) {
+    OrganizationList = olist;
+    update();
+  }
+
+  updateselectedOrganization(Degrees org) {
+    selectedOrganization = org;
+    update();
+  }
+
+  List<Degrees> ExperienceOrganizationList = [];
+  Degrees? selectedExperienceOrganization = Degrees();
+
+  updateExperienceOrganizationList(List<Degrees> olist) {
+    ExperienceOrganizationList = olist;
+    update();
+  }
+
+  updateselectedExperienceOrganization(Degrees org) {
+    selectedExperienceOrganization = org;
+    update();
+  }
+
+  List<Degrees> MembershipOrganizationList = [];
+  Degrees? selectedMembershipOrganization = Degrees();
+
+  updateMembershipOrganizationList(List<Degrees> olist) {
+    MembershipOrganizationList = olist;
+    update();
+  }
+
+  updateselectedMembershipOrganization(Degrees org) {
+    selectedMembershipOrganization = org;
     update();
   }
 
@@ -745,7 +802,7 @@ class EditProfileController extends GetxController implements GetxService {
   List<Designations> designationList = [];
   List<Designations> selecteddesignationList = [];
   List<String> deleteddesignationList = [];
-  List<String> selecteddesignationIdList = [];
+  // List<String> selecteddesignationIdList = [];
 
   updatedesignationdata(List<Designations> clist) {
     designationList = clist;
@@ -757,18 +814,23 @@ class EditProfileController extends GetxController implements GetxService {
       showSnackbar(ctx, "Already Added");
     }
     selecteddesignationList.add(c);
-    selecteddesignationIdList.add(c.id!);
+    // selecteddesignationIdList.add(c.id!);
     update();
   }
 
-  updateselectedComplaintsList(List<Designations> cmplist) {
-    selecteddesignationList = cmplist;
-    update();
-  }
+  // updateselectedDesignationsList(List<Designations> cmplist) {
+  //   selecteddesignationList = cmplist;
+  //   update();
+  // }
 
-  deleteSelectedComplaintsList(String id) {
+  // deleteSelectedDesignationIdList(String id) {
+  //   selecteddesignationIdList.removeWhere((element) => element == id);
+  //   update();
+  // }
+
+  deleteSelectedDesignationList(String id) {
     selecteddesignationList.removeWhere((element) => element.id == id);
-    deleteddesignationList.add(id);
+    // deleteddesignationList.add(id);
     update();
   }
   //   List<Designations> designationList = [];
@@ -997,9 +1059,23 @@ class EditProfileController extends GetxController implements GetxService {
   }
 
   // EDIT OBJECTS
-  Expereinces? editSelectedExperience = Expereinces();
+
+  String editexperienceid = "";
+  String editexperiencepath = "";
+  bool todatetextvisible = false;
   updateEditSelectedExperience(Expereinces expobj) {
-    editSelectedExperience = expobj;
+    //
+    experiencefrom = DateTime.parse(expobj.fromDate!);
+    if (expobj.toDate != null) {
+      experienceto = DateTime.parse(expobj.toDate!);
+      todatetextvisible = false;
+    }
+    if (expobj.toDate == null) {
+      todatetextvisible = true;
+      update();
+    }
+
+    editexperienceid = expobj.id ?? "";
     jobtitle.text = expobj.title ?? "";
     selectedexperiencelocation?.id = expobj.locationId;
     selectedexperiencelocation?.name = expobj.locatioName;
@@ -1007,18 +1083,23 @@ class EditProfileController extends GetxController implements GetxService {
     if (expobj.toDate != null) {
       formattedexperienceto = expobj.toDate;
     }
+    selectedExperienceOrganization?.id = expobj.organizationId;
+    selectedExperienceOrganization?.name = expobj.organizationName;
     currentlyworkingisChecked = expobj.isCurrentWorking;
+
     experienceDescription.text = expobj.description;
     // if user upload attachment then give new path to this attachmentpath
-    String attachmentpath = expobj.path ?? "";
+    editexperiencepath = expobj.path ?? "";
     update();
   }
 
-  updateEditSelectedSpecialities(id, name, subid, subname) {
+  String selectedupdateid = "";
+  updateEditSelectedSpecialities(id, name, subid, subname, updateid) {
     selectedspecialities?.id = id;
     selectedspecialities?.name = name;
     selectedsubspecialities?.id = subid;
     selectedsubspecialities?.name = subname;
+    selectedupdateid = updateid;
     update();
   }
 
@@ -1033,6 +1114,118 @@ class EditProfileController extends GetxController implements GetxService {
     selectedhospital?.name = worklocationobj.workLocationName;
     selectedhospital?.id = worklocationobj.userWorkLocationId;
     worklocationpreference.text = worklocationobj.preference.toString();
+    update();
+  }
+
+  String editbankaccountid = "";
+  String editbankaccountfilepath = "";
+  updateeditSelectedBankAccount(BankAccounts ba) {
+    editbankaccountid = ba.id ?? "";
+    selectedbank?.id = ba.bankId ?? "";
+    selectedbank?.name = ba.bankName ?? "";
+    accountNo.text = ba.accountNumber ?? "";
+    accountTitle.text = ba.title ?? "";
+    editbankaccountfilepath = ba.path ?? "";
+    update();
+  }
+
+  String editawardid = "";
+  updateeditSelectedAward(Awards a) {
+    awardeddate = DateTime.parse(a.awardedDate!);
+    editawardid = a.id ?? "";
+    awardtitle.text = a.title ?? "";
+    awardcode.text = a.code ?? "";
+    formattedawardeddate = a.awardedDate;
+    awarddescription.text = a.description ?? "";
+    selectedOrganization?.id = a.organizationId;
+    selectedOrganization?.name = a.organizationName;
+    selectedawardlocation?.id = a.locationId;
+    selectedawardlocation?.name = a.location;
+    update();
+  }
+
+  String editmembershipid = "";
+  updateeditSelectedMemberhsip(Memberships a) {
+    membershipfrom = DateTime.parse(a.fromDate!);
+    membershipto = DateTime.parse(a.toDate!);
+
+    editmembershipid = a.id ?? "";
+    membershiptitle.text = a.title ?? "";
+    membershipcode.text = a.code ?? "";
+    formattedmembershipfrom = a.fromDate ?? "";
+    formattedmembershipto = a.toDate ?? "";
+    membershipdescription.text = a.description ?? "";
+    selectedMembershipOrganization?.id = a.organizationId ?? "";
+    selectedMembershipOrganization?.name = a.organizationName ?? "";
+    selectedmembershiplocation?.id = a.locationId ?? "";
+    selectedmembershiplocation?.name = a.location ?? "";
+    update();
+  }
+
+  String editselectededucationid = "";
+  bool educationstartdatetextvisible = false;
+  bool educationenddatetextvisible = false;
+  bool educationissuedatetextvisible = false;
+  updateeditSelectedEducation(Educations a) {
+    if (a.startDate != null) {
+      degreestart = DateTime.parse(a.startDate!);
+      formatteddegreestart = a.startDate;
+      educationstartdatetextvisible = false;
+    }
+    if (a.endDate != null) {
+      degreeend = DateTime.parse(a.endDate!);
+      formatteddegreeend = a.endDate;
+      educationenddatetextvisible = false;
+    }
+    if (a.issueDate != null) {
+      degreeissue = DateTime.parse(a.issueDate!);
+      formatteddegreeissue = a.issueDate;
+      educationissuedatetextvisible = false;
+    }
+
+    if (a.endDate == null) {
+      inprogressisChecked = true;
+    }
+
+    if (a.startDate == null) {
+      educationstartdatetextvisible = true;
+    }
+    if (a.endDate == null) {
+      educationenddatetextvisible = true;
+    }
+    if (a.issueDate == null) {
+      educationissuedatetextvisible = true;
+    }
+
+    editselectededucationid = a.id ?? "";
+    educationselectedCountry?.id = a.countryId;
+    educationselectedCountry?.name = a.countryName;
+
+    selectedinstitution?.id = a.institutionId;
+    selectedinstitution?.name = a.instituteName;
+
+    selecteddegree?.id = a.degreeId;
+    selecteddegree?.name = a.degreeName;
+
+    selectedfieldofstudy?.id = a.fieldOfStudyId;
+    selectedfieldofstudy?.name = a.fieldName;
+
+    totalmarks.text = a.totalMarks.toString();
+    obtainedmarks.text = a.obtainedMarks.toString();
+    percentage.text = a.obtainedPercentage.toString();
+
+// inprogressisChecked = a.
+
+    if (a.gradingCriteria == 1.toString()) {
+      radioselectedValue == "CGPA";
+    } else if (a.gradingCriteria == 2.toString()) {
+      radioselectedValue == "Marks";
+    } else if (a.gradingCriteria == 3.toString()) {
+      radioselectedValue == "Percentage";
+    } else {
+      radioselectedValue == "CGPA";
+    }
+
     update();
   }
 }

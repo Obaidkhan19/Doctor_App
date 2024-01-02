@@ -263,7 +263,7 @@ class _UpdateAppointmentConfigurationState
                                     ),
                                     Transform.scale(
                                       scale: 0.55,
-                                      child: Switch(
+                                      child: Switch.adaptive(
                                         value: contr.switchStates[index],
                                         activeColor: ColorManager.kPrimaryColor,
                                         onChanged: (value) {

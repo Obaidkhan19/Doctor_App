@@ -3,6 +3,7 @@ import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/data/controller/preference_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -179,13 +180,19 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                                 height: Get.height * 0.02,
                               ),
                               Center(
-                                child: Text(
-                                  'arabic'.tr,
-                                  style: GoogleFonts.poppins(
-                                    textStyle: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: ColorManager.kWhiteColor),
+                                child: GetBuilder<PreferenceController>(
+                                  builder: (cont) => Text(
+                                    PreferenceController.i.preferenceObject
+                                                .customLanguageKeyBoardType ==
+                                            0
+                                        ? "urdu".tr
+                                        : 'arabic'.tr,
+                                    style: GoogleFonts.poppins(
+                                      textStyle: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorManager.kWhiteColor),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -213,19 +220,54 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                                 hintText: 'others'.tr,
                               ),
                               SizedBox(height: Get.height * 0.03),
-                              PrimaryButton(
-                                  fontSize: 15,
-                                  title: 'update'.tr,
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      ProfileRepo pr = ProfileRepo();
+                              InkWell(
+                                onTap: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    ProfileRepo pr = ProfileRepo();
+
+                                    String res = await pr
+                                        .updatePrescriptionConfiguration(
+                                            edit.displayeducation.text,
+                                            edit.displaydesignation.text,
+                                            edit.professionalsummary.text,
+                                            edit.stamp.text,
+                                            edit.topmargin.text,
+                                            edit.bottommargin.text,
+                                            edit.displayenglisheducation.text,
+                                            edit.displayurdueducation.text,
+                                            edit.displayenglishdesignation.text,
+                                            edit.displayurduothers.text,
+                                            edit.displayenglishothers.text,
+                                            edit.displayurduothers.text);
+                                    if (res == "true") {
                                       ProfileController.i.updateval(false);
                                       _getDoctorBasicInfo();
                                       setState(() {});
                                     }
-                                  },
-                                  color: Colors.white.withOpacity(0.7),
-                                  textcolor: ColorManager.kWhiteColor),
+                                  }
+                                },
+                                child: Container(
+                                  height: Get.height * 0.07,
+                                  width: Get.width * 1,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: edit.isloading == false
+                                          ? Text(
+                                              'update'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      ColorManager.kWhiteColor),
+                                            )
+                                          : const CircularProgressIndicator(
+                                              color: ColorManager.kWhiteColor,
+                                            )),
+                                ),
+                              ),
                               SizedBox(height: Get.height * 0.03),
                             ],
                           ),
@@ -428,13 +470,19 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                           height: Get.height * 0.02,
                         ),
                         Center(
-                          child: Text(
-                            'arabic'.tr,
-                            style: GoogleFonts.poppins(
-                              textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorManager.kWhiteColor),
+                          child: GetBuilder<PreferenceController>(
+                            builder: (cont) => Text(
+                              PreferenceController.i.preferenceObject
+                                          .customLanguageKeyBoardType ==
+                                      0
+                                  ? "urdu".tr
+                                  : 'arabic'.tr,
+                              style: GoogleFonts.poppins(
+                                textStyle: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorManager.kWhiteColor),
+                              ),
                             ),
                           ),
                         ),

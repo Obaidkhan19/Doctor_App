@@ -9,6 +9,13 @@ class AddWorklocationController extends GetxController implements GetxService {
   static AddWorklocationController get i =>
       Get.put(AddWorklocationController());
 
+  bool isloading = false;
+
+  updateisloading(value) {
+    isloading = value;
+    update();
+  }
+
   late TextEditingController worklocationpreference;
   late TextEditingController newworklocationname;
   late TextEditingController newworklocationnameaddress;

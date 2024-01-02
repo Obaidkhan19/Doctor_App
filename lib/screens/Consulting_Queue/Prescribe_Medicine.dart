@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+ // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
 import 'dart:developer';
@@ -1595,6 +1595,9 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                height: Get.height * 0.01,
+                              ),
                               GetBuilder<ERXController>(
                                 builder: (cont) => Padding(
                                   padding: EdgeInsets.only(
@@ -2072,7 +2075,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "freq".tr,
+                                            "dos".tr,
                                             style: GoogleFonts.poppins(
                                               textStyle: GoogleFonts.poppins(
                                                 fontSize: 10,
@@ -2103,7 +2106,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                             .selectedlst
                                                             .medicineFrequencies?[
                                                                 index]
-                                                            .quantity
+                                                            .numericDisplay
                                                             .toString() ??
                                                         "",
                                                     style: GoogleFonts.poppins(
@@ -2133,7 +2136,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "dos".tr,
+                                            "freq".tr,
                                             style: GoogleFonts.poppins(
                                               textStyle: GoogleFonts.poppins(
                                                 fontSize: 10,
@@ -2159,12 +2162,25 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                                   width: Get.width * 0.06,
                                                   child: Text(
                                                     controller
-                                                            .selectedlst
-                                                            .medicineDosages?[
-                                                                index]
-                                                            .dosageValue
-                                                            .toString() ??
-                                                        "",
+                                                                .selectedlst
+                                                                .medicineDosages?[
+                                                                    index]
+                                                                .abbreviation ==
+                                                            null
+                                                        ? controller
+                                                                .selectedlst
+                                                                .medicineDosages![
+                                                                    index]
+                                                                .dosageName
+                                                                .toString() ??
+                                                            ""
+                                                        : controller
+                                                                .selectedlst
+                                                                .medicineDosages?[
+                                                                    index]
+                                                                .abbreviation
+                                                                .toString() ??
+                                                            "",
                                                     style: GoogleFonts.poppins(
                                                       textStyle:
                                                           GoogleFonts.poppins(
@@ -2721,7 +2737,7 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
     String qyt = "";
     for (int i = 0; i < ERXController.i.finalmedicinellist.length; i++) {
       String doseng = ERXController
-              .i.selectedlst.medicineDosages?[i].dosageValue
+              .i.selectedlst.medicineDosages?[i].abbreviation
               .toString() ??
           "";
       String dateng =
@@ -2746,12 +2762,32 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
         qyt = (int.parse(dateng) * 30).toString();
       }
       String diff = dateeng.toString().split(' ')[0];
-      String englishdiscription = "$doseng for $dateng $dayeng    [" +
-          performancestartdate!.split(' ')[0] +
-          ' - ' +
-          diff +
-          "]";
-
+      String englishdiscription = "";
+      //  "${ERXController.i.finalmedicinellist[i].numericDisplay} ${ERXController.i.finalmedicinellist[i].medicine}  $dateng $dayeng ${ERXController.i.selectedlst.medicineDosages?[i].englishDefinition}  [" +
+      //           performancestartdate!.split(' ')[0] +
+      //           ' - ' +
+      //           diff +
+      //           "]";
+      if (dateng == "continue" || dayeng == "continue") {
+        englishdiscription =
+            "${ERXController.i.selectedlst.medicineFrequencies?[i].numericDisplay} {0} $dateng $dayeng ${ERXController.i.selectedlst.medicineDosages?[i].englishDefinition}  [" +
+                performancestartdate!.split(' ')[0] +
+                ' - ' +
+                'continue' +
+                "]";
+      } else {
+        englishdiscription =
+            "${ERXController.i.selectedlst.medicineFrequencies?[i].numericDisplay} {0} for $dateng $dayeng ${ERXController.i.selectedlst.medicineDosages?[i].englishDefinition}  [" +
+                performancestartdate!.split(' ')[0] +
+                ' - ' +
+                diff +
+                "]";
+      }
+      // String urdudiscription = "$doseng ${ERXController.i.finalmedicinellist[i].medicine} for $daturdu $dayurdu ${ERXController.i.selectedlst.medicineDosages?[i].englishDefinition}  [" +
+      // performancestartdate!.split(' ')[0] +
+      // ' - ' +
+      // diff +
+      // "]";
       String daturdu =
           ERXController.i.selectedlst.dateList?[i].urduCounting.toString() ??
               "";
@@ -2773,12 +2809,22 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
             dateeng.add(Duration(days: (30 * (int.parse(dateng))).toInt()));
         qyt = (int.parse(dateng) * 30).toString();
       }
-
-      String urdudiscription = "$doseng for $daturdu $dayurdu  [" +
-          performancestartdate!.split(' ')[0] +
-          ' - ' +
-          diff +
-          "]";
+      String urdudiscription = "";
+      if (dateng == "continue" || dayeng == "continue") {
+        urdudiscription =
+            "${ERXController.i.selectedlst.medicineFrequencies?[i].numericDisplay}  ${ERXController.i.finalmedicinellist[i].urduType} $daturdu $dayurdu ${ERXController.i.selectedlst.medicineDosages?[i].urduDefinition}  [" +
+                performancestartdate!.split(' ')[0] +
+                ' - ' +
+                "${ERXController.i.selectedlst.dateList?[i].urduCounting}" +
+                "]";
+      } else {
+        urdudiscription =
+            "${ERXController.i.selectedlst.medicineFrequencies?[i].numericDisplay} ${ERXController.i.finalmedicinellist[i].urduType} $daturdu $dayurdu ${ERXController.i.selectedlst.medicineDosages?[i].urduDefinition}  [" +
+                performancestartdate!.split(' ')[0] +
+                ' - ' +
+                diff +
+                "]";
+      }
 
       data.add(pm.MedicineList(
           id: ERXController.i.finalmedicinellist[i].id,

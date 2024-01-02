@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
+import 'package:doctormobileapplication/data/controller/preference_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/specialities_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
@@ -221,11 +222,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 maxLines: 1,
                               ),
                             ),
-                            Text(
-                              '${''}${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
-                              style: GoogleFonts.poppins(
-                                color: ColorManager.kWhiteColor,
-                                fontSize: 10,
+                            GetBuilder<PreferenceController>(
+                              builder: (cont) => Text(
+                                //   '${''}${'regno'.tr}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                                '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}${' '}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                                style: GoogleFonts.poppins(
+                                  color: ColorManager.kWhiteColor,
+                                  fontSize: 10,
+                                ),
                               ),
                             ),
                           ],
@@ -384,7 +388,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent),
                         onPressed: () {
-                          Get.to(const ConfigureAppointmentScreen());
+                          Get.to(() => const ConfigureAppointmentScreen());
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,

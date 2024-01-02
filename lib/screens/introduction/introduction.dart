@@ -37,7 +37,7 @@ class Introduction extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    AppConstants.appName,
+                    appName,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: ColorManager.kPrimaryColor, fontSize: 16),
                   ),

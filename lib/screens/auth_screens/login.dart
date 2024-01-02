@@ -4,12 +4,12 @@ import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
+import 'package:doctormobileapplication/data/controller/preference_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/biometric_auth.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/helpers/values_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/forget_password.dart';
 import 'package:doctormobileapplication/screens/auth_screens/main_registration_screen.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
@@ -21,7 +21,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -50,41 +50,39 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isfingerprintEnable = false;
   // bool isBiometric = false;
   final LocalAuthentication auth = LocalAuthentication();
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = "Not Authorized";
-  bool _isAuthenticating = false;
-  bool authentication = false;
-  Future<bool> _authenticate() async {
-    bool authenticated = false;
-    try {
-      _isAuthenticating = true;
-      _authorized = "Authenticating";
-      authenticated = await auth.authenticate(
-        localizedReason: "Let OS determine authentication method",
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-        ),
-      );
-      _isAuthenticating = false;
-    } on PlatformException catch (e) {
-      _isAuthenticating = false;
-      _authorized = "Error - ${e.message}";
 
-      return authenticated;
-    }
-    () => _authorized = authenticated ? "Authorized" : "Not Authorized";
-    return authenticated;
-  }
+  //List<BiometricType>? _availableBiometrics;
+  // String _authorized = "Not Authorized";
+  // bool _isAuthenticating = false;
+  // bool authentication = false;
+  // Future<bool> _authenticate() async {
+  //   bool authenticated = false;
+  //   try {
+  //     _isAuthenticating = true;
+  //     _authorized = "Authenticating";
+  //     authenticated = await auth.authenticate(
+  //       localizedReason: "Let OS determine authentication method",
+  //       options: const AuthenticationOptions(
+  //           stickyAuth: true, biometricOnly: true, useErrorDialogs: true),
+  //     );
+  //     _isAuthenticating = false;
+  //   } on PlatformException catch (e) {
+  //     _isAuthenticating = false;
+  //     _authorized = "Error - ${e.message}";
+
+  //     return authenticated;
+  //   }
+  //   () => _authorized = authenticated ? "Authorized" : "Not Authorized";
+  //   return authenticated;
+  // }
 
   call() async {
-    // SharedPreferences sharedpref = await SharedPreferences.getInstance();
-
     String? username = await LocalDb().getUsername();
     String? userpassword = await LocalDb().getPassword();
 
     bool fingerprint = await LocalDb.getfingerprint();
     if (username != null && userpassword != null && fingerprint) {
-      // await _authenticate();
+      // bool auth = await _authenticate();
       bool auth = await Authentication.authentication();
 
       if (auth) {
@@ -114,6 +112,15 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     }
+  }
+
+  callQRScanner() async {
+    String? username = "";
+    String? userpassword = "";
+
+    AuthController.i.updateIsloading(true);
+    await AuthRepo.login(cnic: username, password: userpassword);
+    AuthController.i.updateIsloading(false);
   }
 
   @override
@@ -182,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                         ),
                                         Text(
-                                          '${AppConstants.appName}.',
+                                          '$appName.',
                                           style: GoogleFonts.raleway(
                                             textStyle: GoogleFonts.poppins(
                                                 fontSize: 25,
@@ -295,6 +302,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                             )),
                                           ),
                                         ),
+                                        // Visibility(
+                                        //   visible: !isfingerprintEnable,
+                                        //   child: SizedBox(
+                                        //     height: Get.height * 0.08,
+                                        //     child: Center(
+                                        //         child: InkWell(
+                                        //       onTap: () {
+                                        //         // callQRScanner();
+                                        //         Get.to(const MyHomePage());
+                                        //       },
+                                        //       child: Image.asset(
+                                        //           Images.qrscan_icon),
+                                        //     )),
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -333,6 +355,29 @@ class BackgroundLogoimage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: 100,
+      right: 0,
+      child: Container(
+        height: Get.height * 0.8,
+        width: Get.width,
+        alignment: Alignment.centerLeft,
+        child: Image.asset(
+          Images.logoBackground,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+
+class BackgroundLogoimage1 extends StatelessWidget {
+  const BackgroundLogoimage1({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 0,
       right: 0,
       child: Container(
         height: Get.height * 0.8,
@@ -447,7 +492,19 @@ class AuthTextField extends StatelessWidget {
   }
 }
 
-class IdNoAuthTextField extends StatelessWidget {
+class Masks {
+  var maskFormatter = MaskTextInputFormatter(
+      mask: PreferenceController
+          .i.preferenceObject.dynamicMaskingForIdentityNumber,
+      filter: {"9": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
+}
+
+class Masks1 {
+  var maskFormatter = MaskTextInputFormatter();
+}
+
+class IdNoAuthTextField extends StatefulWidget {
   final bool? obscureText;
   final List<TextInputFormatter>? formatters;
   final TextEditingController? controller;
@@ -470,39 +527,205 @@ class IdNoAuthTextField extends StatelessWidget {
   });
 
   @override
+  State<IdNoAuthTextField> createState() => _IdNoAuthTextFieldState();
+}
+
+class _IdNoAuthTextFieldState extends State<IdNoAuthTextField> {
+  @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      style: const TextStyle(
-        fontSize: 12,
-        color: ColorManager.kGreyColor,
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: onChangedwidget,
-      obscureText: obscureText ?? false,
-      inputFormatters: [LengthLimitingTextInputFormatter(15)],
-      readOnly: readOnly ?? false,
-      validator: validator,
-      controller: controller,
-      decoration: InputDecoration(
-        errorStyle: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: ColorManager.kRedColor, fontSize: 12),
-        suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-        hintText: hintText,
-        hintStyle:
-            GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
-        disabledBorder: const OutlineInputBorder(),
-        errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: ColorManager.kRedColor)),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: ColorManager.kGreyColor)),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.kGreyColor),
+    return GetBuilder<PreferenceController>(
+      builder: (cont) => TextFormField(
+        style: const TextStyle(
+          fontSize: 12,
+          color: ColorManager.kGreyColor,
+        ),
+        keyboardType: TextInputType.number,
+        onChanged: widget.onChangedwidget,
+        obscureText: widget.obscureText ?? false,
+        // inputFormatters: const [],
+        inputFormatters: [
+          PreferenceController
+                          .i.preferenceObject.dynamicMaskingForIdentityNumber !=
+                      null ||
+                  PreferenceController
+                          .i.preferenceObject.dynamicMaskingForIdentityNumber !=
+                      "null"
+              ? Masks().maskFormatter
+              : Masks1().maskFormatter
+          // LengthLimitingTextInputFormatter(PreferenceController
+          //                 .i
+          //                 .preferenceObject
+          //                 .dynamicNumberOfDigitsForIdentityNumber ==
+          //             null ||
+          //         PreferenceController.i.preferenceObject
+          //                 .dynamicNumberOfDigitsForIdentityNumber ==
+          //             "null"
+          //     ? 11
+          //     : PreferenceController
+          //         .i.preferenceObject.dynamicNumberOfDigitsForIdentityNumber)
+        ],
+        readOnly: widget.readOnly ?? false,
+        validator: widget.validator,
+        controller: widget.controller,
+        decoration: InputDecoration(
+          errorStyle: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+          suffixIcon: widget.suffixIcon,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          hintText: widget.hintText,
+          hintStyle:
+              GoogleFonts.poppins(color: ColorManager.kGreyColor, fontSize: 12),
+          disabledBorder: const OutlineInputBorder(),
+          errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: ColorManager.kRedColor)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: ColorManager.kGreyColor)),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: ColorManager.kGreyColor),
+          ),
         ),
       ),
     );
   }
 }
+
+// class MyHomePage extends StatefulWidget {
+//   const MyHomePage({Key? key}) : super(key: key);
+
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+
+// class _MyHomePageState extends State<MyHomePage> {
+//   MobileScannerController cameraController = MobileScannerController();
+//   bool _screenOpened = false;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Mobile Scanner"),
+//         actions: [
+//           IconButton(
+//             color: Colors.white,
+//             icon: ValueListenableBuilder(
+//               valueListenable: cameraController.torchState,
+//               builder: (context, state, child) {
+//                 switch (state) {
+//                   case TorchState.off:
+//                     return const Icon(Icons.flash_off, color: Colors.grey);
+//                   case TorchState.on:
+//                     return const Icon(Icons.flash_on, color: Colors.yellow);
+//                 }
+//               },
+//             ),
+//             iconSize: 32.0,
+//             onPressed: () => cameraController.toggleTorch(),
+//           ),
+//           IconButton(
+//             color: Colors.white,
+//             icon: ValueListenableBuilder(
+//               valueListenable: cameraController.cameraFacingState,
+//               builder: (context, state, child) {
+//                 switch (state) {
+//                   case CameraFacing.front:
+//                     return const Icon(Icons.camera_front);
+//                   case CameraFacing.back:
+//                     return const Icon(Icons.camera_rear);
+//                 }
+//               },
+//             ),
+//             iconSize: 32.0,
+//             onPressed: () => cameraController.switchCamera(),
+//           ),
+//         ],
+//       ),
+//       body: MobileScanner(
+//         // allowDuplicates: true,
+//         controller: cameraController,
+//         onDetect: _foundBarcode,
+//       ),
+//     );
+//   }
+
+//   void _foundBarcode(BarcodeCapture barcode) {
+//     /// open screen
+//     if (!_screenOpened) {
+//       final String code = barcode.raw ?? "---";
+//       debugPrint('Barcode found! $code');
+//       _screenOpened = true;
+//       Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) =>
+//                 FoundCodeScreen(screenClosed: _screenWasClosed, value: code),
+//           ));
+//     }
+//   }
+
+//   void _screenWasClosed() {
+//     _screenOpened = false;
+//   }
+// }
+
+// class FoundCodeScreen extends StatefulWidget {
+//   final String value;
+//   final Function() screenClosed;
+//   const FoundCodeScreen({
+//     Key? key,
+//     required this.value,
+//     required this.screenClosed,
+//   }) : super(key: key);
+
+//   @override
+//   State<FoundCodeScreen> createState() => _FoundCodeScreenState();
+// }
+
+// class _FoundCodeScreenState extends State<FoundCodeScreen> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Found Code"),
+//         centerTitle: true,
+//         leading: IconButton(
+//           onPressed: () {
+//             widget.screenClosed();
+//             Navigator.pop(context);
+//           },
+//           icon: const Icon(
+//             Icons.arrow_back_outlined,
+//           ),
+//         ),
+//       ),
+//       body: Center(
+//         child: Padding(
+//           padding: const EdgeInsets.all(20),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               const Text(
+//                 "Scanned Code:",
+//                 style: TextStyle(
+//                   fontSize: 20,
+//                 ),
+//               ),
+//               const SizedBox(
+//                 height: 20,
+//               ),
+//               Text(
+//                 widget.value,
+//                 style: const TextStyle(
+//                   fontSize: 16,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

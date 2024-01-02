@@ -3,7 +3,15 @@ import 'dart:ui';
 import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:get/get.dart';
 
-String baseURL = 'http://192.168.88.254:324';
+String baseURL = '';
+
+//helpfull
+String contactnumber = '';
+String TaxLabel = "NTN";
+String IDLabel = "National ID";
+String MedicalCertificateLabel = "LMPC";
+String MedicalNumberLabel = "DHA";
+String appName = 'Helpful';
 
 class AppConstants {
   // Base Url
@@ -42,6 +50,7 @@ class AppConstants {
 
   static String getDegree = '$baseURL/api/ddl/GetDegrees';
   static String getLocations = '$baseURL/api/ddl/Location';
+  static String getOrganization = '$baseURL/api/ddl/Organization';
 
   static String getBank = '$baseURL/api/ddl/GetBanks';
   static String getfieldofstudy = '$baseURL/api/ddl/GetFieldOfStudies';
@@ -54,9 +63,48 @@ class AppConstants {
   static String getDoctorBasicInfo = "$baseURL/api/account/GetDoctorDetail";
   static String updatedoctorpersonalinfo =
       "$baseURL/api/doctor/UpdatePersonalInfo";
+
+  static String addBankAccount = "$baseURL/api/doctor/BankDetail";
+
+  static String editBankAccount = "$baseURL/api/doctor/UpdateBankDetail";
+
+  static String addworklocation = "$baseURL/api/doctor/HosiptalORClinic";
+
+  static String addeducation = "$baseURL/api/doctor/EducationalDetail";
+
+  static String editeducation = "$baseURL/api/doctor/UpdateEducation";
+
+  static String addexperience = "$baseURL/api/doctor/ExpereinceDetail";
+  static String editexperience = "$baseURL/api/doctor/UpdateExpereince";
+  static String addSpecilaity = "$baseURL/api/doctor/Speciality";
+  static String addAward = "$baseURL/api/doctor/DoctorAward";
+
+  static String editAward = "$baseURL/api/doctor/UpdateAward";
+
+  static String editMembership = "$baseURL/api/doctor/UpdateMemberShip";
+
+  static String addMembership = "$baseURL/api/doctor/MemberShip";
+  static String editSpecilaity = "$baseURL/api/doctor/UpdateSpeciality";
+  static String deleteSpecilaity = "$baseURL/api/doctor/DeleteSpeciality";
+
+  static String deleteAward = "$baseURL/api/doctor/DeleteAward";
+  static String deleteMemebership = "$baseURL/api/doctor/DeleteMemberShip";
+  static String deleteBank = "$baseURL/api/doctor/DeleteBankAccount";
+
+  static String deleteExperience = "$baseURL/api/doctor/DeleteExperience";
+
+  static String deleteEducation = "$baseURL/api/doctor/DeleteEducation";
+
+  static String setdefaultSpecilaity = "$baseURL/api/doctor/DefaultSpeciality";
+
+  static String setdefaultBank = "$baseURL/api/doctor/DefaultBankAccount";
+
   static String updatedoctorprofile = "$baseURL/api/doctor/UpdatePersonalInfo";
 
   static String updatedoctorcontact = "$baseURL/api/doctor/UpdateContact";
+
+  static String updateprescriptionConfiguration =
+      "$baseURL/api/doctor/PrescriptionConfiguration";
 
   static String cancelcall = "$baseURL/api/doctor/DropCall";
 
@@ -81,6 +129,7 @@ class AppConstants {
       "$baseURL/api/doctor/SignUp"; //http://58.65.158.107:64
 
   static String changePassword = "$baseURL/api/doctor/ChangePassword";
+  static String getpreferences = "$baseURL/api/account/GetBranchPreference";
   static String forgetPassword = "$baseURL/api/doctor/ForgetPassword";
   static String newPassword = "$baseURL/api/doctor/ResetPassword";
 
@@ -134,7 +183,7 @@ class AppConstants {
   // static String postPrescription =
   //     "http://58.65.158.107:64/api/doctor/Prescription";
   // ======================>
-  static String appName = 'Helpful';
+
   static String requestText =
       'Muhammad Yousaf has requested to add you as Family Member, if you accept, He/She will be able to see your complete medical history, medical appointments and will be able to reserve appointments on your behalf.';
   static String appointmentSuccessful =

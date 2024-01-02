@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:doctormobileapplication/components/primary_button.dart';
+import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/perscribe_medicine_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -437,8 +438,9 @@ Future<dynamic> searchableDropdownCheckBox(
                                           child: Text(
                                             list[index].name.toString(),
                                             style: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                            ),
+                                                fontSize: 10,
+                                                color:
+                                                    ColorManager.kblackColor),
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                           ),
@@ -449,8 +451,9 @@ Future<dynamic> searchableDropdownCheckBox(
                                           child: Text(
                                             list[index].name.toString(),
                                             style: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                            ),
+                                                fontSize: 10,
+                                                color:
+                                                    ColorManager.kblackColor),
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                           ),
@@ -467,7 +470,8 @@ Future<dynamic> searchableDropdownCheckBox(
                                             list[index].comments ?? "",
                                             listname);
                                       },
-                                      icon: const Icon(Icons.add_box_outlined),
+                                      icon: const Icon(Icons.add_box_outlined,
+                                          color: ColorManager.kblackColor),
                                     ),
                                   ),
                                 );
@@ -746,8 +750,7 @@ deleteSelected(
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
-                          fontSize: 14,
-                        ),
+                            fontSize: 14, color: ColorManager.kblackColor),
                       ),
                     ),
                     InkWell(
@@ -768,8 +771,7 @@ deleteSelected(
                   'doyouwanttodeleteit'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
-                      fontSize: 12,
-                    ),
+                        fontSize: 12, color: ColorManager.kblackColor),
                   ),
                 ),
                 SizedBox(
@@ -806,10 +808,87 @@ deleteSelected(
                     } else if (name == 'complaints') {
                       controller.deleteSelectedComplaintsList(id);
                     }
-                    // for edit profile
-                    //  else if (name == 'designation') {
-                    //   EditProfileController.i.deleteSelectedComplaintsList(id);
-                    // }
+
+                    Get.back();
+                  },
+                  color: ColorManager.kPrimaryColor,
+                  textcolor: ColorManager.kWhiteColor,
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+deleteSelectedDesignation(
+  BuildContext context,
+  List<dynamic> selectedItems,
+  String id,
+  String name,
+) async {
+  await showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(width: Get.width * 0.05),
+                    Text(
+                      'delete'.tr,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                            fontSize: 14, color: ColorManager.kblackColor),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: const Icon(
+                        Icons.close_outlined,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                ),
+                Text(
+                  'doyouwanttodeleteit'.tr,
+                  style: GoogleFonts.poppins(
+                    textStyle: GoogleFonts.poppins(
+                        fontSize: 12, color: ColorManager.kblackColor),
+                  ),
+                ),
+                SizedBox(
+                  height: Get.height * 0.04,
+                ),
+                PrimaryButton(
+                  title: 'yes'.tr,
+                  fontSize: 14,
+                  height: Get.height * 0.06,
+                  width: Get.width * 0.5,
+                  onPressed: () {
+                    if (name == 'designation') {
+                      EditProfileController.i.deleteSelectedDesignationList(id);
+                      // EditProfileController.i
+                      //     .deleteSelectedDesignationIdList(id);
+                    }
 
                     Get.back();
                   },
@@ -851,8 +930,7 @@ deleteMedicine(
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
-                          fontSize: 14,
-                        ),
+                            fontSize: 14, color: ColorManager.kblackColor),
                       ),
                     ),
                     InkWell(
@@ -873,8 +951,7 @@ deleteMedicine(
                   'doyouwanttodeleteit'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
-                      fontSize: 12,
-                    ),
+                        fontSize: 12, color: ColorManager.kblackColor),
                   ),
                 ),
                 SizedBox(
@@ -1008,7 +1085,9 @@ addComment(
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            color: ColorManager.kblackColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     InkWell(
@@ -1029,7 +1108,9 @@ addComment(
                   'addcomments'.tr,
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
-                        fontSize: 12, fontWeight: FontWeight.w400),
+                        color: ColorManager.kblackColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
 
@@ -1266,9 +1347,9 @@ addMedicine(
                               'route'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.kblackColor),
                               ),
                             ),
                             SizedBox(
@@ -1316,9 +1397,9 @@ addMedicine(
                               'duration'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.kblackColor),
                               ),
                             ),
                             SizedBox(
@@ -1371,12 +1452,12 @@ addMedicine(
                               height: Get.height * 0.01,
                             ),
                             Text(
-                              'frequency'.tr,
+                              'dosage'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.kblackColor),
                               ),
                             ),
                             SizedBox(
@@ -1406,7 +1487,7 @@ addMedicine(
                                               null
                                           ? ERXController.i.medicineFrequencies!
                                               .numericDisplay!
-                                          : "Frequency",
+                                          : "Dosages",
                                       style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
@@ -1420,12 +1501,12 @@ addMedicine(
                               height: Get.height * 0.01,
                             ),
                             Text(
-                              'dosage'.tr,
+                              'frequency'.tr,
                               style: GoogleFonts.raleway(
                                 textStyle: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorManager.kblackColor),
                               ),
                             ),
                             SizedBox(
@@ -1453,9 +1534,9 @@ addMedicine(
                                     return Text(
                                       ERXController.i.medicineDosages != null
                                           ? ERXController
-                                              .i.medicineDosages!.dosageValue!
+                                              .i.medicineDosages!.abbreviation
                                               .toString()
-                                          : "Dosages",
+                                          : "Frequency",
                                       style: GoogleFonts.poppins(
                                         color: ColorManager.kblackColor,
                                         fontSize: 10,
@@ -1514,11 +1595,10 @@ addMedicine(
                                     completer.complete(selectedMedicine);
                                     PrescribeMedicinRepo pmr =
                                         PrescribeMedicinRepo();
+                                    Get.back();
                                     controller.updateMedicinelist(
                                       await pmr.getMedicines(""),
                                     );
-
-                                    Get.back();
                                   } else {
                                     Fluttertoast.showToast(
                                         msg: 'SelectDosagesFirst'.tr,
@@ -1910,7 +1990,7 @@ showdosages(
                                                     .i
                                                     .medicinelst
                                                     .medicineDosages?[index]
-                                                    .dosageValue
+                                                    .abbreviation
                                                     .toString() ??
                                                 "",
                                             style: GoogleFonts.poppins(
@@ -2505,8 +2585,7 @@ deleteSelectedMedicine(
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: GoogleFonts.poppins(
-                          fontSize: 14,
-                        ),
+                            fontSize: 14, color: ColorManager.kblackColor),
                       ),
                     ),
                     InkWell(
@@ -2527,8 +2606,7 @@ deleteSelectedMedicine(
                   medicineobject.name ?? "",
                   style: GoogleFonts.poppins(
                     textStyle: GoogleFonts.poppins(
-                      fontSize: 12,
-                    ),
+                        fontSize: 12, color: ColorManager.kblackColor),
                   ),
                 ),
                 SizedBox(
@@ -2573,9 +2651,9 @@ deleteSelectedMedicine(
                           '  Duration',
                           style: GoogleFonts.poppins(
                             textStyle: GoogleFonts.poppins(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: ColorManager.kblackColor),
                           ),
                         ),
                         Container(

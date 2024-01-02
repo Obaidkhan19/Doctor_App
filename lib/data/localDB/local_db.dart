@@ -5,6 +5,17 @@ import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalDb {
+  setBaseURL(String? url) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var result = prefs.setString('baseurl', '$url');
+  }
+
+  Future<String?>? getBaseURL() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? result = prefs.getString('baseurl');
+    return result;
+  }
+
   saveUsername(String? username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var result = prefs.setString('Username', '$username');
@@ -51,6 +62,9 @@ class LocalDb {
     prefs.remove('status');
     prefs.remove('Email');
     prefs.remove('PhoneNo');
+    prefs.remove('Username');
+    prefs.remove('Password');
+    prefs.remove('Onlinestatus');
   }
 
   saveBranchId(String? branchId) async {
@@ -134,7 +148,7 @@ class LocalDb {
   Future<String?>? getDoctorId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? result = prefs.getString('DoctorId');
-    return result;
+    return result ?? "";
   }
 
   saveToken(String? token) async {

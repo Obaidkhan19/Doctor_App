@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:doctormobileapplication/data/controller/dependency_injection.dart';
 import 'package:doctormobileapplication/data/controller/language_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
-import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/helpers/theme_manager.dart';
 import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:doctormobileapplication/screens/splash_screen/splash_screen.dart';

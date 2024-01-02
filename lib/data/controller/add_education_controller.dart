@@ -8,6 +8,30 @@ import 'package:intl/intl.dart';
 class AddEducationController extends GetxController implements GetxService {
   static AddEducationController get i => Get.put(AddEducationController());
 
+  clearAddValues() {
+    DateTime? day = DateTime.now();
+    formatteddegreestart = day.toIso8601String();
+    formatteddegreeend = day.toIso8601String();
+    formatteddegreeissue = day.toIso8601String();
+    selectededucationaddcountry = null;
+    educationaddselectedinstitution = null;
+    educationaddselecteddegree = null;
+    educationaddselectedfieldofstudy = null;
+
+    totalmarks.clear();
+    obtainedmarks.clear();
+    percentage.clear();
+    inprogressisChecked = false;
+    radioselectedValue = "CGPA";
+    update();
+  }
+
+  bool isaddloading = false;
+  updateisaddloading(value) {
+    isaddloading = value;
+    update();
+  }
+
   List<Countries> educationaddcountriesList = [];
   Countries? selectededucationaddcountry = Countries();
   updateeducationaddcountriesList(List<Countries> clist) {
@@ -78,7 +102,7 @@ class AddEducationController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -111,7 +135,7 @@ class AddEducationController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
@@ -121,6 +145,11 @@ class AddEducationController extends GetxController implements GetxService {
       updatedegreeend(date);
       update();
     }
+  }
+
+  updatedegreeissue(ardate) {
+    degreeissue = ardate;
+    update();
   }
 
   static DateTime? degreeissue = DateTime.now();
@@ -137,13 +166,14 @@ class AddEducationController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);
       formattedDate.value = DateFormat.yMMMd().format(date);
       final iso8601Format = DateFormat("yyyy-MM-dd'T'00:00:00");
       formatteddegreeissue = iso8601Format.format(date);
+      updatedegreeissue(date);
       update();
     }
   }

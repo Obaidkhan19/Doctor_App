@@ -1,5 +1,6 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
+import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -42,6 +43,7 @@ class _TodayAppointmentsState extends State<TodayAppointments> {
             icon: const Icon(Icons.arrow_back_ios),
             color: ColorManager.kPrimaryColor,
             onPressed: () {
+              ProfileController.i.updateselectedPage(0);
               Get.offAll(() => const DrawerScreen());
             },
           ),

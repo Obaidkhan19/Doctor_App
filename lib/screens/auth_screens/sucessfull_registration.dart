@@ -28,19 +28,20 @@ class _SucessfullRegistrationScreenState
       ),
       body: Stack(
         children: [
-          Positioned(
-            top: 100,
-            right: 0,
-            child: Container(
-              height: Get.height * 0.8,
-              width: Get.width,
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                Images.logoBackground,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 100,
+          //   right: 0,
+          //   child: Container(
+          //     height: Get.height * 0.8,
+          //     width: Get.width,
+          //     alignment: Alignment.centerLeft,
+          //     child: Image.asset(
+          //       Images.logoBackground,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+          const BackgroundLogoimage1(),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,6 @@
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomRadioTile extends StatelessWidget {
@@ -31,9 +32,14 @@ class CustomRadioTile extends StatelessWidget {
             activeColor: ColorManager.kPrimaryColor,
             // overlayColor: ColorManager.kPrimaryColor,
           ),
-          Text(
-            title,
-            style: GoogleFonts.poppins(fontSize: 12),
+          SizedBox(
+            width: Get.width * 0.2,
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: GoogleFonts.poppins(fontSize: 12),
+            ),
           ),
         ],
       ),

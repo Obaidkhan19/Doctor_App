@@ -208,7 +208,6 @@ class ERXController extends GetxController implements GetxService {
   List<Complaints1> complaintList = [];
   updateComplaintList(Complaints1 complaint) {
     String name = complaint.name?.trim() ?? "";
-
     if (name.isEmpty) {
       showSnackbar(Get.context!, 'Complaint cannot be empty');
     } else if (complaintList
@@ -750,7 +749,9 @@ class ERXController extends GetxController implements GetxService {
           Medicines1(id: pmlist[i].eRNSId, medicine: pmlist[i].medicineName));
       dosage.add(med.MedicineDosages(
           id: pmlist[i].medicineDosageId,
-          dosageValue: pmlist[i].dosageValue.toString()));
+          dosageValue: pmlist[i].dosageValue.toString(),
+          dosageName: pmlist[i].dosageName.toString()));
+
       freq.add(med.MedicineFrequencies(
           quantity: pmlist[i].frequencyQuantity.toString(),
           numericDisplay: pmlist[i].frequencyNumeric));

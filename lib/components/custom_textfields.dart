@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doctormobileapplication/data/controller/preference_controller.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -138,59 +140,63 @@ class RegisterLMPCCustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        TextFormField(
-          controller: controller,
-          onChanged: onchanged,
-          validator: validator,
-          onTap: onTap ?? () {},
-          maxLines: maxlines ?? 1,
-          readOnly: readonly,
-          style: GoogleFonts.poppins(
-              color: ColorManager.kblackColor, fontSize: 12),
-          decoration: InputDecoration(
-            errorStyle: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: ColorManager.kRedColor, fontSize: 12),
-            contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: GoogleFonts.poppins(
-                color: ColorManager.kWhiteColor,
-                fontSize: 12,
-                fontWeight: FontWeight.bold),
-            hintText: 'addlegalmedicalpractisingcertificate'.tr,
-            filled: true,
-            disabledBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: ColorManager.kPrimaryColor),
-            ),
-            errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: ColorManager.kRedColor)),
-            fillColor: ColorManager.kPrimaryColor,
-            suffixIcon: suffixIcon,
-            suffixText: suffixText,
-            suffixStyle: suffixStyle,
-            prefixIcon: prefixIcon,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(color: ColorManager.kPrimaryColor),
-              borderRadius: BorderRadius.all(
-                Radius.circular(0.0),
+    return GetBuilder<PreferenceController>(
+      builder: (cont) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextFormField(
+            controller: controller,
+            onChanged: onchanged,
+            validator: validator,
+            onTap: onTap ?? () {},
+            maxLines: maxlines ?? 1,
+            readOnly: readonly,
+            style: GoogleFonts.poppins(
+                color: ColorManager.kblackColor, fontSize: 12),
+            decoration: InputDecoration(
+              errorStyle: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: ColorManager.kRedColor, fontSize: 12),
+              contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
+              hintStyle: GoogleFonts.poppins(
+                  color: ColorManager.kWhiteColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
+              hintText:
+                  // '${'Add'} ${'${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? "" : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'}'}',
+                  '${'add'.tr} (${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalCertificateLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr})',
+              filled: true,
+              disabledBorder:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: ColorManager.kPrimaryColor),
+              ),
+              errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorManager.kRedColor)),
+              fillColor: ColorManager.kPrimaryColor,
+              suffixIcon: suffixIcon,
+              suffixText: suffixText,
+              suffixStyle: suffixStyle,
+              prefixIcon: prefixIcon,
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.kPrimaryColor),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(0.0),
+                ),
               ),
             ),
+            inputFormatters: inputFormatters,
           ),
-          inputFormatters: inputFormatters,
-        ),
-        isSizedBoxAvailable == true
-            ? SizedBox(
-                //  height: Get.height * 0.02,
-                )
-            : SizedBox.shrink()
-      ],
+          isSizedBoxAvailable == true
+              ? SizedBox(
+                  //  height: Get.height * 0.02,
+                  )
+              : SizedBox.shrink()
+        ],
+      ),
     );
   }
 }
@@ -232,67 +238,71 @@ class EditLMPCCustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        TextFormField(
-          controller: controller,
-          onChanged: onchanged,
-          validator: validator,
-          onTap: onTap ?? () {},
-          maxLines: maxlines ?? 1,
-          readOnly: readonly,
-          style: GoogleFonts.poppins(
-              color: ColorManager.kblackColor, fontSize: 12),
-          decoration: InputDecoration(
-            errorStyle: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: ColorManager.kWhiteColor, fontSize: 12),
-            contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
-            hintStyle: GoogleFonts.poppins(
-                color: ColorManager.kWhiteColor,
-                fontSize: 12,
-                fontWeight: FontWeight.bold),
-            hintText: 'addlegalmedicalpractisingcertificate'.tr,
-            filled: true,
-            disabledBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide:
-                  BorderSide(color: ColorManager.kWhiteColor.withOpacity(0.6)),
-            ),
-            focusedBorder: OutlineInputBorder(
+    return GetBuilder<PreferenceController>(
+      builder: (cont) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TextFormField(
+            controller: controller,
+            onChanged: onchanged,
+            validator: validator,
+            onTap: onTap ?? () {},
+            maxLines: maxlines ?? 1,
+            readOnly: readonly,
+            style: GoogleFonts.poppins(
+                color: ColorManager.kblackColor, fontSize: 12),
+            decoration: InputDecoration(
+              errorStyle: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: ColorManager.kWhiteColor, fontSize: 12),
+              contentPadding: padding ?? EdgeInsets.symmetric(horizontal: 20),
+              hintStyle: GoogleFonts.poppins(
+                  color: ColorManager.kWhiteColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
+              hintText:
+                  // '${'add'.tr} ${'${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? "" : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr}'}',
+                  '${'add'.tr} (${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalCertificateLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr})',
+              filled: true,
+              disabledBorder:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                    color: ColorManager.kWhiteColor.withOpacity(0.6)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white.withOpacity(0.1),
+                  ),
+                  borderRadius: BorderRadius.circular(8)),
+              errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorManager.kRedColor)),
+              fillColor: Colors.white.withOpacity(0.7),
+              suffixIcon: suffixIcon,
+              suffixText: suffixText,
+              suffixStyle: suffixStyle,
+              prefixIcon: prefixIcon,
+              border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.white.withOpacity(0.1),
                 ),
-                borderRadius: BorderRadius.circular(8)),
-            errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: ColorManager.kRedColor)),
-            fillColor: Colors.white.withOpacity(0.7),
-            suffixIcon: suffixIcon,
-            suffixText: suffixText,
-            suffixStyle: suffixStyle,
-            prefixIcon: prefixIcon,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white.withOpacity(0.1),
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(0.0),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(0.0),
+                ),
               ),
             ),
+            inputFormatters: inputFormatters,
           ),
-          inputFormatters: inputFormatters,
-        ),
-        isSizedBoxAvailable == true
-            ? SizedBox(
-                //  height: Get.height * 0.02,
-                )
-            : SizedBox.shrink()
-      ],
+          isSizedBoxAvailable == true
+              ? SizedBox(
+                  //  height: Get.height * 0.02,
+                  )
+              : SizedBox.shrink()
+        ],
+      ),
     );
   }
 }

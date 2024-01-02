@@ -7,6 +7,7 @@ import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/add_specialization_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
+import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -174,19 +175,77 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                             .toString(),
                                   ),
                                   SizedBox(height: Get.height * 0.03),
-                                  PrimaryButton(
-                                      fontSize: 15,
-                                      title: 'add'.tr,
-                                      onPressed: () async {
-                                        if (_addformKey.currentState!
-                                            .validate()) {
+
+                                  InkWell(
+                                    onTap: () async {
+                                      ProfileRepo pr = ProfileRepo();
+
+                                      if (_addformKey.currentState!
+                                          .validate()) {
+                                        String res = await pr.addSpecilization(
+                                            add.addselectedspecialities!.id ??
+                                                "",
+                                            add.addselectedsubspecialities
+                                                    ?.id ??
+                                                "");
+
+                                        if (res == "true") {
                                           ProfileController.i
                                               .updateaddval(false);
+                                          _getDoctorBasicInfo();
                                           setState(() {});
                                         }
-                                      },
-                                      color: Colors.white.withOpacity(0.7),
-                                      textcolor: ColorManager.kWhiteColor),
+                                      }
+                                    },
+                                    child: Container(
+                                      height: Get.height * 0.07,
+                                      width: Get.width * 1,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.7),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                          child: add.isloading == false
+                                              ? Text(
+                                                  'add'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: ColorManager
+                                                          .kWhiteColor),
+                                                )
+                                              : const CircularProgressIndicator(
+                                                  color:
+                                                      ColorManager.kWhiteColor,
+                                                )),
+                                    ),
+                                  ),
+                                  // PrimaryButton(
+                                  // fontSize: 15,
+                                  // title:  'add'.tr,
+                                  // onPressed: () async {
+                                  //   ProfileRepo pr = ProfileRepo();
+                                  //   if (_addformKey.currentState!
+                                  //       .validate()) {
+                                  //     add.updateisloading(true);
+                                  //     String res = await pr.addSpecilization(
+                                  //         add.addselectedspecialities!.id ??
+                                  //             "",
+                                  //         add.addselectedsubspecialities!
+                                  //                 .id ??
+                                  //             "");
+
+                                  //             add.updateisloading(false);
+                                  //     if (res == "true") {
+                                  //       ProfileController.i
+                                  //           .updateaddval(false);
+                                  //       setState(() {});
+                                  //     }
+                                  //   }
+                                  // },
+                                  // color: Colors.white.withOpacity(0.7),
+                                  // textcolor: ColorManager.kWhiteColor),
                                   SizedBox(height: Get.height * 0.03),
                                 ],
                               ),
@@ -234,7 +293,7 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                           });
                                         },
                                         validator: (p0) {
-                                          if (edit.selectedspecialities!.id ==
+                                          if (edit.selectedspecialities?.id ==
                                               null) {
                                             return 'SelectSpeciality'.tr;
                                           } else {
@@ -291,19 +350,59 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                                     .toString(),
                                       ),
                                       SizedBox(height: Get.height * 0.03),
-                                      PrimaryButton(
-                                          fontSize: 15,
-                                          title: 'edit'.tr,
-                                          onPressed: () async {
-                                            if (_editformKey.currentState!
-                                                .validate()) {
+
+                                      InkWell(
+                                        onTap: () async {
+                                          ProfileRepo pr = ProfileRepo();
+
+                                          if (_editformKey.currentState!
+                                              .validate()) {
+                                            String res =
+                                                await pr.editSpecilization(
+                                              // send id
+                                              edit.selectedupdateid,
+                                              edit.selectedspecialities!.id ??
+                                                  "",
+                                              edit.selectedsubspecialities
+                                                      ?.id ??
+                                                  "",
+                                            );
+
+                                            if (res == "true") {
                                               ProfileController.i
-                                                  .updateval(false);
+                                                  .updateaddval(false);
+                                              _getDoctorBasicInfo();
                                               setState(() {});
                                             }
-                                          },
-                                          color: Colors.white.withOpacity(0.7),
-                                          textcolor: ColorManager.kWhiteColor),
+                                          }
+                                        },
+                                        child: Container(
+                                          height: Get.height * 0.07,
+                                          width: Get.width * 1,
+                                          decoration: BoxDecoration(
+                                            color:
+                                                Colors.white.withOpacity(0.7),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                              child: edit.isloading == false
+                                                  ? Text(
+                                                      'edit'.tr,
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: ColorManager
+                                                              .kWhiteColor),
+                                                    )
+                                                  : const CircularProgressIndicator(
+                                                      color: ColorManager
+                                                          .kWhiteColor,
+                                                    )),
+                                        ),
+                                      ),
+
                                       SizedBox(height: Get.height * 0.03),
                                     ],
                                   ),
@@ -333,6 +432,8 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                     children: [
                                       ImageContainer(
                                         onpressed: () {
+                                          add.addselectedsubspecialities = null;
+                                          add.addselectedspecialities = null;
                                           ProfileController.i
                                               .updateaddval(true);
                                           ProfileController.i
@@ -442,74 +543,125 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                                           MainAxisAlignment
                                                               .spaceBetween,
                                                       children: [
-                                                        ImageContainerNew(
-                                                          onpressed: () {},
-                                                          imagePath:
-                                                              AppImages.cross,
-                                                          isSvg: false,
-                                                          color: ColorManager
-                                                              .kRedColor,
-                                                          backgroundColor:
-                                                              ColorManager
-                                                                  .kWhiteColor,
-                                                          boxheight:
-                                                              Get.height * 0.03,
-                                                          boxwidth:
-                                                              Get.width * 0.06,
-                                                        ),
                                                         SizedBox(
                                                           width:
                                                               Get.width * 0.004,
                                                         ),
-                                                        ImageContainerNew(
-                                                          onpressed: () {
-                                                            _getDoctorBasicInfo();
-                                                            EditProfileController
+                                                        if (ProfileController
                                                                 .i
-                                                                .updateEditSelectedSpecialities(
-                                                              ProfileController
-                                                                  .i
-                                                                  .specilizationList[
-                                                                      index]
-                                                                  .specialityId,
-                                                              ProfileController
-                                                                  .i
-                                                                  .specilizationList[
-                                                                      index]
-                                                                  .speciality,
-                                                              ProfileController
-                                                                  .i
-                                                                  .specilizationList[
-                                                                      index]
-                                                                  .subSpecialityId,
-                                                              ProfileController
-                                                                  .i
-                                                                  .specilizationList[
-                                                                      index]
-                                                                  .subSpeciality,
-                                                            );
-                                                            ProfileController.i
-                                                                .updateval(
-                                                                    true);
-                                                            ProfileController.i
-                                                                .updateisEdit(
-                                                                    true);
-                                                            setState(() {});
-                                                          },
-                                                          imagePath:
-                                                              AppImages.editbig,
-                                                          isSvg: false,
-                                                          color: ColorManager
-                                                              .kPrimaryColor,
-                                                          backgroundColor:
-                                                              ColorManager
-                                                                  .kWhiteColor,
-                                                          // imageheight: Get.height * 0.02,
-                                                          boxheight:
-                                                              Get.height * 0.03,
-                                                          boxwidth:
-                                                              Get.width * 0.06,
-                                                        ),
+                                                                .specilizationList[
+                                                                    index]
+                                                                .isDefault !=
+                                                            1)
+                                                          InkWell(
+                                                            onTap: () {
+                                                              String sid =
+                                                                  ProfileController
+                                                                      .i
+                                                                      .specilizationList[
+                                                                          index]
+                                                                      .specialityId!;
+                                                              String ssid = ProfileController
+                                                                          .i
+                                                                          .specilizationList[
+                                                                              index]
+                                                                          .subSpecialityId ==
+                                                                      null
+                                                                  ? ""
+                                                                  : ProfileController
+                                                                      .i
+                                                                      .specilizationList[
+                                                                          index]
+                                                                      .subSpecialityId!;
+
+                                                              deleteSpecilization(
+                                                                  context,
+                                                                  sid,
+                                                                  ssid);
+                                                            },
+                                                            child:
+                                                                ImageContainerNew(
+                                                              imagePath:
+                                                                  AppImages
+                                                                      .cross,
+                                                              isSvg: false,
+                                                              color: ColorManager
+                                                                  .kRedColor,
+                                                              backgroundColor:
+                                                                  ColorManager
+                                                                      .kWhiteColor,
+                                                              boxheight:
+                                                                  Get.height *
+                                                                      0.03,
+                                                              boxwidth:
+                                                                  Get.width *
+                                                                      0.06,
+                                                            ),
+                                                          ),
+                                                        if (ProfileController
+                                                                .i
+                                                                .specilizationList[
+                                                                    index]
+                                                                .isDefault ==
+                                                            1)
+                                                          SizedBox(
+                                                            height: Get.height *
+                                                                0.03,
+                                                            width: Get.width *
+                                                                0.06,
+                                                          ),
+
+                                                        // ImageContainerNew(
+                                                        //   onpressed: () {
+                                                        //     _getDoctorBasicInfo();
+                                                        //     EditProfileController.i.updateEditSelectedSpecialities(
+                                                        //         ProfileController
+                                                        //             .i
+                                                        //             .specilizationList[
+                                                        //                 index]
+                                                        //             .specialityId,
+                                                        //         ProfileController
+                                                        //             .i
+                                                        //             .specilizationList[
+                                                        //                 index]
+                                                        //             .speciality,
+                                                        //         ProfileController
+                                                        //             .i
+                                                        //             .specilizationList[
+                                                        //                 index]
+                                                        //             .subSpecialityId,
+                                                        //         ProfileController
+                                                        //             .i
+                                                        //             .specilizationList[
+                                                        //                 index]
+                                                        //             .subSpeciality,
+                                                        //         ProfileController
+                                                        //             .i
+                                                        //             .specilizationList[
+                                                        //                 index]
+                                                        //             .id);
+                                                        //     ProfileController.i
+                                                        //         .updateval(
+                                                        //             true);
+                                                        //     ProfileController.i
+                                                        //         .updateisEdit(
+                                                        //             true);
+                                                        //     setState(() {});
+                                                        //   },
+                                                        //   imagePath:
+                                                        //       AppImages.editbig,
+                                                        //   isSvg: false,
+                                                        //   color: ColorManager
+                                                        //       .kPrimaryColor,
+                                                        //   backgroundColor:
+                                                        //       ColorManager
+                                                        //           .kWhiteColor,
+                                                        //   // imageheight: Get.height * 0.02,
+                                                        //   boxheight:
+                                                        //       Get.height * 0.03,
+                                                        //   boxwidth:
+                                                        //       Get.width * 0.06,
+                                                        // ),
                                                         SizedBox(
                                                           width:
                                                               Get.width * 0.002,
@@ -555,7 +707,46 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                                   SizedBox(
                                                       width: Get.width * 0.2,
                                                       child: InkWell(
-                                                        onTap: () {},
+                                                        onTap: () async {
+                                                          String sid =
+                                                              ProfileController
+                                                                  .i
+                                                                  .specilizationList[
+                                                                      index]
+                                                                  .specialityId!;
+                                                          String ssid = ProfileController
+                                                                      .i
+                                                                      .specilizationList[
+                                                                          index]
+                                                                      .subSpecialityId ==
+                                                                  null
+                                                              ? ""
+                                                              : ProfileController
+                                                                  .i
+                                                                  .specilizationList[
+                                                                      index]
+                                                                  .subSpecialityId!;
+
+                                                          if (ProfileController
+                                                                  .i
+                                                                  .specilizationList[
+                                                                      index]
+                                                                  .isDefault !=
+                                                              1) {
+                                                            ProfileRepo pr =
+                                                                ProfileRepo();
+
+                                                            String res = await pr
+                                                                .setdefaultSpecilization(
+                                                                    sid, ssid);
+
+                                                            if (res == "true") {
+                                                              _getDoctorBasicInfo();
+
+                                                              setState(() {});
+                                                            }
+                                                          }
+                                                        },
                                                         child: Text(
                                                           (ProfileController
                                                                       .i
@@ -596,6 +787,94 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                         ),
                       )),
       ),
+    );
+  }
+
+  deleteSpecilization(
+    BuildContext context,
+    String specilizationid,
+    String subspecilizationid,
+  ) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(width: Get.width * 0.05),
+                      Text(
+                        'delete'.tr,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          textStyle: GoogleFonts.poppins(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.close_outlined,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  Text(
+                    'doyouwanttodeleteit'.tr,
+                    style: GoogleFonts.poppins(
+                      textStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  PrimaryButton(
+                    title: 'yes'.tr,
+                    fontSize: 14,
+                    height: Get.height * 0.06,
+                    width: Get.width * 0.5,
+                    onPressed: () async {
+                      ProfileRepo pr = ProfileRepo();
+
+                      String res = await pr.deleteSpecilization(
+                          specilizationid, subspecilizationid);
+
+                      if (res == "true") {
+                        _getDoctorBasicInfo();
+
+                        setState(() {});
+                      }
+
+                      // Call API
+                      Get.back();
+                    },
+                    color: ColorManager.kPrimaryColor,
+                    textcolor: ColorManager.kWhiteColor,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -176,7 +176,7 @@ class RegistrationController extends GetxController implements GetxService {
         confirmText: 'Ok',
         initialDate: date!,
         firstDate: DateTime(1950),
-        lastDate: DateTime(2024));
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != date) {
       date = pickedDate;
       formattedDate!.value = DateFormat.yMMMd().format(date);

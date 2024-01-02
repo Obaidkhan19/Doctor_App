@@ -68,7 +68,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
 
     return GetBuilder<ProfileController>(
       builder: (cont) => DefaultTabController(
-        length: 10,
+        length: 9, //10
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -77,12 +77,14 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
               color: ColorManager.kPrimaryColor,
               onPressed: () {
                 if (profile.isEdit == false) {
+                  ProfileController.i.updateselectedPage(0);
                   Get.offAll(() => const DrawerScreen());
                 } else if (ProfileController.i.editval == true ||
                     ProfileController.i.addval == true) {
                   ProfileController.i.updateval(false);
                   ProfileController.i.updateaddval(false);
                 } else {
+                  ProfileController.i.updateselectedPage(0);
                   Get.offAll(() => const DrawerScreen());
                 }
               },
@@ -360,21 +362,21 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                     ),
                                   ),
                                 ),
-                                Tab(
-                                  child: SizedBox(
-                                    width: Get.width * 0.3,
-                                    child: Center(
-                                      child: Text(
-                                        'workLocations'.tr,
-                                        style: GoogleFonts.poppins(
-                                            color: cont.tabindex == 9
-                                                ? ColorManager.kWhiteColor
-                                                : ColorManager.kWhiteColor,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                // Tab(
+                                //   child: SizedBox(
+                                //     width: Get.width * 0.3,
+                                //     child: Center(
+                                //       child: Text(
+                                //         'workLocations'.tr,
+                                //         style: GoogleFonts.poppins(
+                                //             color: cont.tabindex == 9
+                                //                 ? ColorManager.kWhiteColor
+                                //                 : ColorManager.kWhiteColor,
+                                //             fontSize: 12),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ],
@@ -394,7 +396,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                   AwardsDetail(),
                                   BankDetail(),
                                   PrescriptionConfiguration(),
-                                  WorkLocation(),
+                                  //  WorkLocation(),
                                 ]),
                           ),
                         ),

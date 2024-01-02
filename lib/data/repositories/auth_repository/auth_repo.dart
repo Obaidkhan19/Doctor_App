@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/registration_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -27,6 +25,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:device_info_plus/device_info_plus.dart';
 
 class AuthRepo {
   Future<String> uploadPicture(File file) async {
@@ -455,12 +455,28 @@ class AuthRepo {
   static login({String? cnic, String? password}) async {
     //TODO : Values should be dynamics
     AuthController.i.updateIsloading(true);
+
     String? DeviceToken = await LocalDb().getDeviceToken();
-    String? Manufacturer = "Browser";
-    String? Model = "Infinix-X680B Infinix X680B";
-    String? AppVersion = "Web";
-    String? DeviceVersion =
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36";
+    String? Manufacturer = "";
+    String? Model = "";
+    String? AppVersion = "";
+    String? DeviceVersionIos;
+    String? DeviceVersion;
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      Model = androidInfo.model;
+      Manufacturer = androidInfo.manufacturer;
+      AppVersion = "";
+      DeviceVersion = androidInfo.version.baseOS;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      Model = iosInfo.model;
+      Manufacturer = iosInfo.identifierForVendor;
+      AppVersion = "";
+      DeviceVersionIos = iosInfo.systemVersion;
+    }
+
     var body = {
       "UserName": "$cnic",
       "Password": "$password",
@@ -468,9 +484,8 @@ class AuthRepo {
       "Manufacturer": Manufacturer,
       "Model": Model,
       "AppVersion": AppVersion,
-      "DeviceVersion": DeviceVersion
+      "DeviceVersion": Platform.isAndroid ? DeviceVersion : DeviceVersionIos,
     };
-    log(jsonEncode(body));
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.login),
@@ -600,9 +615,8 @@ class AuthRepo {
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         if (result['Status'] == 1) {
-         // Get.offAll(() => const LoginScreen());
+          // Get.offAll(() => const LoginScreen());
           LocalDb().saveLoginStatus(false);
-          LocalDb().removeUserData();
         } else {
           Fluttertoast.showToast(
               msg: result['ErrorMessage'],

@@ -9,6 +9,13 @@ class AddBankController extends GetxController implements GetxService {
   late TextEditingController accountTitle;
   late TextEditingController accountNo;
 
+  bool isloading = false;
+
+  updateisloading(value) {
+    isloading = value;
+    update();
+  }
+
   @override
   void onInit() {
     accountNo = TextEditingController();

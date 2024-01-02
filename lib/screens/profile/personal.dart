@@ -5,6 +5,7 @@ import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
+import 'package:doctormobileapplication/data/controller/preference_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
@@ -17,6 +18,7 @@ import 'package:doctormobileapplication/models/person_title.dart';
 import 'package:doctormobileapplication/models/relation.dart';
 import 'package:doctormobileapplication/models/religion.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -258,39 +260,45 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                     : edit.selectedmaritalStatus?.name
                                         .toString(),
                               ),
-                              EditProfileCustomTextField(
-                                validator: (p0) {
-                                  if (p0!.isEmpty) {
-                                    return 'EnterIDNumber'.tr;
-                                  }
-                                  return null;
-                                },
-                                keyboardTypenew: TextInputType.number,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(15)
-                                ],
-                                controller: edit.idnumber,
-                                hintText: 'idnumber'.tr,
+                              GetBuilder<PreferenceController>(
+                                builder: (cont) => EditProfileCustomTextField(
+                                  validator: (p0) {
+                                    if (p0!.isEmpty) {
+                                      return "${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}";
+                                    }
+                                    return null;
+                                  },
+                                  keyboardTypenew: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(15)
+                                  ],
+                                  controller: edit.idnumber,
+                                  hintText:
+                                      '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}',
+                                ),
                               ),
                               EditProfileCustomTextField(
-                                validator: (p0) {
-                                  if (p0!.isEmpty) {
-                                    return 'EnterPassportNumber'.tr;
-                                  }
-                                  return null;
-                                },
+                                // validator: (p0) {
+                                //   if (p0!.isEmpty) {
+                                //     return 'EnterPassportNumber'.tr;
+                                //   }
+                                //   return null;
+                                // },
                                 controller: edit.passportno,
                                 hintText: 'passportNumber'.tr,
                               ),
-                              EditProfileCustomTextField(
-                                validator: (p0) {
-                                  if (p0!.isEmpty) {
-                                    return 'enteryourimcno'.tr;
-                                  }
-                                  return null;
-                                },
-                                controller: edit.imcno,
-                                hintText: 'imcno'.tr,
+                              GetBuilder<PreferenceController>(
+                                builder: (cont) => EditProfileCustomTextField(
+                                  validator: (p0) {
+                                    if (p0!.isEmpty) {
+                                      return '${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}';
+                                    }
+                                    return null;
+                                  },
+                                  controller: edit.imcno,
+                                  hintText:
+                                      '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}',
+                                ),
                               ),
                               EditLMPCCustomTextField(
                                 readonly: true,
@@ -329,10 +337,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                               //   ),
                               // ),
                               SizedBox(height: Get.height * 0.02),
-                              EditProfileCustomTextField(
-                                controller: edit.ntnnumber,
-                                hintText: 'NTNNumber'.tr,
-                                keyboardTypenew: TextInputType.number,
+                              GetBuilder<PreferenceController>(
+                                builder: (cont) => EditProfileCustomTextField(
+                                  controller: edit.ntnnumber,
+                                  hintText:
+                                      '${PreferenceController.i.preferenceObject.taxNoDynamicLabel == null || PreferenceController.i.preferenceObject.taxNoDynamicLabel == "null" ? TaxLabel : PreferenceController.i.preferenceObject.taxNoDynamicLabel}',
+                                  keyboardTypenew: TextInputType.number,
+                                ),
                               ),
                               EditProfileCustomTextField(
                                 keyboardTypenew:
@@ -414,6 +425,8 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                   visible:
                                       edit.selecteddesignationList.isNotEmpty,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Wrap(
                                         direction: Axis
@@ -431,9 +444,10 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                                     .selecteddesignationList[
                                                         index]
                                                     .id!;
-                                                deleteSelected(
+                                                deleteSelectedDesignation(
                                                     context,
                                                     edit.selecteddesignationList,
+                                                    // edit.selecteddesignationIdList,
                                                     cid,
                                                     "designation");
                                               },
@@ -495,10 +509,6 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                         edit.formatearrival);
                                   },
                                   readonly: true,
-                                  // hintText: DateFormat('MM-dd-y').format(
-                                  //     DateTime.parse(edit.formattedArrival
-                                  //         .toString()
-                                  //         .split("T")[0])),
                                   hintText: edit.formatearrival.toString()),
                               EditProfileCustomTextField(
                                 hintText: 'guardianName'.tr,
@@ -526,57 +536,93 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                     : edit.selectedrelation?.name.toString(),
                               ),
                               SizedBox(height: Get.height * 0.03),
-                              PrimaryButton(
-                                  fontSize: 15,
-                                  title: 'update'.tr,
-                                  onPressed: () async {
-                                    String? filepath;
-                                    if (edit.pmcfile != null) {
-                                      AuthRepo ar = AuthRepo();
-                                      filepath =
-                                          await ar.uploadFile(edit.pmcfile!);
-                                    }
 
-                                    ProfileRepo pr = ProfileRepo();
+                              InkWell(
+                                onTap: () async {
+                                  edit.updateiseditloading(true);
+                                  String? filepath;
+                                  if (edit.pmcfile != null) {
+                                    AuthRepo ar = AuthRepo();
+                                    filepath =
+                                        await ar.uploadFile(edit.pmcfile!);
+                                  }
 
-                                    if (_formKey.currentState!.validate()) {
-                                      String res =
-                                          await pr.updatePersonalInfoCNIC(
-                                        edit.customprefixtitle.text,
-                                        edit.selectedpersonalTitle?.id ?? "",
-                                        edit.firstname.text,
-                                        edit.middlename.text,
-                                        edit.lastname.text,
-                                        edit.formattedArrival,
-                                        edit.selectedmaritalStatus?.id ?? "",
-                                        edit.guardianname.text,
-                                        edit.selectedrelation?.id ?? "",
-                                        edit.selectedgender?.id ?? "",
-                                        edit.idnumber.text,
-                                        edit.imcno.text,
-                                        filepath ??
-                                            profile.selectedbasicInfo
-                                                ?.pMDCCertificateAttachment,
-                                        edit.ntnnumber.text,
-                                        edit.consultancyfee.text,
-                                        edit.followupfee.text,
-                                        edit.selectedbloodgroup?.id ?? "",
-                                        edit.selectedreligion?.id ?? "",
-                                        edit.selecteddesignationIdList,
-                                        edit.passportno.text,
-                                      );
-                                      if (res == "true") {
-                                        //  Get.back(result: true);
-                                        edit.selecteddesignationIdList.clear();
-                                        edit.selecteddesignationList.clear();
-                                        ProfileController.i.updateval(false);
-                                        _getDoctorBasicInfo();
-                                        setState(() {});
-                                      }
+                                  ProfileRepo pr = ProfileRepo();
+                                  if (edit.ntnnumber.text == "null") {
+                                    edit.ntnnumber.text = "";
+                                  }
+                                  if (edit.passportno.text == "null") {
+                                    edit.passportno.text = "";
+                                  }
+                                  if (edit.consultancyfee.text == "null") {
+                                    edit.consultancyfee.text = "";
+                                  }
+                                  if (edit.followupfee.text == "null") {
+                                    edit.followupfee.text = "";
+                                  }
+                                  if (_formKey.currentState!.validate()) {
+                                    String res =
+                                        await pr.updatePersonalInfoCNIC(
+                                      edit.customprefixtitle.text,
+                                      edit.selectedpersonalTitle?.id ?? "",
+                                      edit.firstname.text,
+                                      edit.middlename.text,
+                                      edit.lastname.text,
+                                      edit.formattedArrival,
+                                      edit.selectedmaritalStatus?.id ?? "",
+                                      edit.guardianname.text,
+                                      edit.selectedrelation?.id ?? "",
+                                      edit.selectedgender?.id ?? "",
+                                      edit.idnumber.text,
+                                      edit.imcno.text,
+                                      filepath ??
+                                          profile.selectedbasicInfo
+                                              ?.pMDCCertificateAttachment,
+                                      edit.ntnnumber.text,
+                                      edit.consultancyfee.text,
+                                      edit.followupfee.text,
+                                      edit.selectedbloodgroup?.id ?? "",
+                                      edit.selectedreligion?.id ?? "",
+                                      edit.selecteddesignationList,
+                                      edit.passportno.text,
+                                    );
+                                    edit.updateiseditloading(true);
+                                    if (res == "true") {
+                                      //  Get.back(result: true);
+                                      // edit.selecteddesignationIdList.clear();
+                                      edit.selecteddesignationList.clear();
+                                      ProfileController.i.updateval(false);
+                                      _getDoctorBasicInfo();
+                                      setState(() {});
+                                      edit.updateiseditloading(false);
                                     }
-                                  },
-                                  color: Colors.white.withOpacity(0.7),
-                                  textcolor: ColorManager.kWhiteColor),
+                                    edit.updateiseditloading(false);
+                                  }
+                                  edit.updateiseditloading(false);
+                                },
+                                child: Container(
+                                  height: Get.height * 0.07,
+                                  width: Get.width * 1,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                      child: edit.iseditloading == false
+                                          ? Text(
+                                              'update'.tr,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      ColorManager.kWhiteColor),
+                                            )
+                                          : const CircularProgressIndicator(
+                                              color: ColorManager.kWhiteColor,
+                                            )),
+                                ),
+                              ),
+
                               SizedBox(height: Get.height * 0.03),
                             ],
                           ),
@@ -655,14 +701,17 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         SizedBox(
                           height: Get.height * 0.01,
                         ),
-                        ProfileRecordWidget(
-                          title: "idnumber".tr,
-                          name: profile.selectedbasicInfo?.cNICNumber == ""
-                              ? "-"
-                              : profile.selectedbasicInfo?.cNICNumber == null
-                                  ? "-"
-                                  : profile.selectedbasicInfo?.cNICNumber ??
-                                      "-",
+                        GetBuilder<ProfileController>(
+                          builder: (cont) => ProfileRecordWidget(
+                            title:
+                                '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel} ',
+                            name: profile.selectedbasicInfo?.cNICNumber == ""
+                                ? "-"
+                                : profile.selectedbasicInfo?.cNICNumber == null
+                                    ? "-"
+                                    : profile.selectedbasicInfo?.cNICNumber ??
+                                        "-",
+                          ),
                         ),
                         SizedBox(
                           height: Get.height * 0.01,
@@ -680,25 +729,31 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         SizedBox(
                           height: Get.height * 0.01,
                         ),
-                        ProfileRecordWidget(
-                          title: "DHANO".tr,
-                          name: profile.selectedbasicInfo?.pMDCNumber == ""
-                              ? "-"
-                              : profile.selectedbasicInfo?.pMDCNumber == null
-                                  ? "-"
-                                  : profile.selectedbasicInfo?.pMDCNumber ??
-                                      "-",
+                        GetBuilder<PreferenceController>(
+                          builder: (cont) => ProfileRecordWidget(
+                            title:
+                                '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}',
+                            name: profile.selectedbasicInfo?.pMDCNumber == ""
+                                ? "-"
+                                : profile.selectedbasicInfo?.pMDCNumber == null
+                                    ? "-"
+                                    : profile.selectedbasicInfo?.pMDCNumber ??
+                                        "-",
+                          ),
                         ),
                         SizedBox(
                           height: Get.height * 0.01,
                         ),
-                        ProfileRecordWidget(
-                          title: "NTNNumber".tr,
-                          name: profile.selectedbasicInfo?.nTNNo == ""
-                              ? "-"
-                              : profile.selectedbasicInfo?.nTNNo == null
-                                  ? "-"
-                                  : profile.selectedbasicInfo?.nTNNo ?? "-",
+                        GetBuilder<PreferenceController>(
+                          builder: (cont) => ProfileRecordWidget(
+                            title:
+                                '${PreferenceController.i.preferenceObject.taxNoDynamicLabel == null || PreferenceController.i.preferenceObject.taxNoDynamicLabel == "null" ? TaxLabel : PreferenceController.i.preferenceObject.taxNoDynamicLabel}',
+                            name: profile.selectedbasicInfo?.nTNNo == ""
+                                ? "-"
+                                : profile.selectedbasicInfo?.nTNNo == null
+                                    ? "-"
+                                    : profile.selectedbasicInfo?.nTNNo ?? "-",
+                          ),
                         ),
                         SizedBox(
                           height: Get.height * 0.01,
@@ -731,8 +786,14 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         ProfileRecordWidget(
                           title: "consultancyFee".tr,
                           name: profile.selectedbasicInfo?.consultationFee
-                                      .toString() ==
-                                  ""
+                                          .toString() ==
+                                      "" ||
+                                  profile.selectedbasicInfo?.consultationFee
+                                          .toString() ==
+                                      "null" ||
+                                  profile.selectedbasicInfo?.consultationFee
+                                          .toString() ==
+                                      null
                               ? "-"
                               : profile.selectedbasicInfo?.consultationFee
                                   .toString(),
@@ -743,8 +804,14 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         ProfileRecordWidget(
                           title: "followupfee".tr,
                           name: profile.selectedbasicInfo?.followUpFee
-                                      .toString() ==
-                                  ""
+                                          .toString() ==
+                                      "" ||
+                                  profile.selectedbasicInfo?.followUpFee
+                                          .toString() ==
+                                      "null" ||
+                                  profile.selectedbasicInfo?.followUpFee
+                                          .toString() ==
+                                      null
                               ? "-"
                               : profile.selectedbasicInfo?.followUpFee
                                   .toString(),

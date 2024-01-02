@@ -1,8 +1,10 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
+import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/notification_controller.dart';
 import 'package:doctormobileapplication/data/repositories/notification_repo/notifications_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -115,126 +117,140 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 color: Color(0xfff1272d3),
                 size: 60,
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.backgroundimage),
-                      alignment: Alignment.centerLeft),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Get.width * 0.03,
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                          child: NotificationController
-                                  .i.notificationlist.isNotEmpty
-                              ? ListView.builder(
-                                  controller: _scrollController,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: NotificationController
-                                      .i.notificationlist.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final data = NotificationController
-                                        .i.notificationlist[index];
-                                    if (datetime ==
-                                        data.dateTime?.split('T')[0]) {
-                                      if (NotificationController.i.today == 1) {
-                                        NotificationController.i.today += 1;
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: Get.height * 0.02),
-                                              child: Text(
-                                                "Today".tr,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
+              child: Stack(
+                children: [
+                  const BackgroundLogoimage1(),
+                  Container(
+                    // decoration: const BoxDecoration(
+                    //   image: DecorationImage(
+                    //       image: AssetImage(Images.logoBackground),
+                    //       alignment: Alignment.centerLeft),
+                    // ),
+
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Get.width * 0.03,
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: NotificationController
+                                      .i.notificationlist.isNotEmpty
+                                  ? ListView.builder(
+                                      controller: _scrollController,
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: NotificationController
+                                          .i.notificationlist.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final data = NotificationController
+                                            .i.notificationlist[index];
+                                        if (datetime ==
+                                            data.dateTime?.split('T')[0]) {
+                                          if (NotificationController.i.today ==
+                                              1) {
+                                            NotificationController.i.today += 1;
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical:
+                                                          Get.height * 0.02),
+                                                  child: Text(
+                                                    "Today".tr,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ),
+                                                datetimecheck(data),
+                                              ],
+                                            );
+                                          } else {
+                                            return datetimecheck(data);
+                                          }
+                                        } else if (yesterdaydate ==
+                                            data.dateTime?.split('T')[0]) {
+                                          if (NotificationController
+                                                  .i.yesterday ==
+                                              1) {
+                                            NotificationController
+                                                .i.yesterday += 1;
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical:
+                                                          Get.height * 0.02),
+                                                  child: Text(
+                                                    "Yesterday".tr,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ),
+                                                datetimecheck(data),
+                                              ],
+                                            );
+                                          } else {
+                                            return datetimecheck(data);
+                                          }
+                                        } else if (NotificationController
+                                                .i.previous ==
+                                            1) {
+                                          NotificationController.i.previous +=
+                                              1;
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical:
+                                                        Get.height * 0.02),
+                                                child: Text(
+                                                  "Previous".tr,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
                                               ),
-                                            ),
-                                            datetimecheck(data),
-                                          ],
-                                        );
-                                      } else {
-                                        return datetimecheck(data);
-                                      }
-                                    } else if (yesterdaydate ==
-                                        data.dateTime?.split('T')[0]) {
-                                      if (NotificationController.i.yesterday ==
-                                          1) {
-                                        NotificationController.i.yesterday += 1;
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: Get.height * 0.02),
-                                              child: Text(
-                                                "Yesterday".tr,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ),
-                                            datetimecheck(data),
-                                          ],
-                                        );
-                                      } else {
-                                        return datetimecheck(data);
-                                      }
-                                    } else if (NotificationController
-                                            .i.previous ==
-                                        1) {
-                                      NotificationController.i.previous += 1;
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: Get.height * 0.02),
+                                              datetimecheck(data),
+                                            ],
+                                          );
+                                        } else {
+                                          return datetimecheck(data);
+                                        }
+                                      })
+                                  : MyCustomRefreshIndicator(
+                                      onRefresh: callback,
+                                      child: Stack(
+                                        children: <Widget>[
+                                          ListView(),
+                                          Center(
                                             child: Text(
-                                              "Previous".tr,
+                                              "NoRecordFound".tr,
                                               style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500),
+                                                  fontSize: 16),
                                             ),
                                           ),
-                                          datetimecheck(data),
                                         ],
-                                      );
-                                    } else {
-                                      return datetimecheck(data);
-                                    }
-                                  })
-                              : MyCustomRefreshIndicator(
-                                  onRefresh: callback,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      ListView(),
-                                      Center(
-                                        child: Text(
-                                          "NoRecordFound".tr,
-                                          style:
-                                              GoogleFonts.poppins(fontSize: 16),
-                                        ),
                                       ),
-                                    ],
-                                  ),
-                                )),
-                    ],
+                                    )),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           )),
