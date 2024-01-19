@@ -14,7 +14,6 @@ import 'package:doctormobileapplication/screens/profile/membership.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
 import 'package:doctormobileapplication/screens/profile/prescription_configuration_detail.dart';
 import 'package:doctormobileapplication/screens/profile/specilization.dart';
-import 'package:doctormobileapplication/screens/profile/worklocation_detail.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +144,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                           image: edit.file != null
                               ? DecorationImage(
                                   image: FileImage(File(edit.newiamgepath!)),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                 )
                               : cont.selectedbasicInfo?.picturePath != null
                                   ? DecorationImage(
@@ -161,7 +160,7 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                         child: Align(
                             alignment: Alignment.bottomRight,
                             child: CircleAvatar(
-                              radius: 15,
+                              radius: Get.height * 0.02, //15,
                               backgroundColor: Colors.green,
                               child: IconButton(
                                   onPressed: () async {
@@ -176,10 +175,10 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                                           cont.selectedbasicInfo!.picturePath);
                                     }
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.camera_alt_outlined,
                                     color: ColorManager.kWhiteColor,
-                                    size: 15,
+                                    size: Get.height * 0.02,
                                   )),
                             )),
                       ),
@@ -195,10 +194,10 @@ class _ProfileDetailMainState extends State<ProfileDetailMain> {
                     alignment: Alignment.bottomCenter,
                     height: Get.height * 0.6,
                     width: Get.width * 1,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(Get.width * 0.04),
+                          topRight: Radius.circular(Get.width * 0.04),
                           // bottomLeft: Radius.circular(10),
                           // bottomRight: Radius.circular(10),
                         ),

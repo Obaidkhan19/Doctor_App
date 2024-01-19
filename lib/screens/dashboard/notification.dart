@@ -1,15 +1,12 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
-import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/notification_controller.dart';
 import 'package:doctormobileapplication/data/repositories/notification_repo/notifications_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 

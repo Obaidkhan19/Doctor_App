@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,31 +12,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-// Widget monthCellBuilder(BuildContext context, MonthCellDetails details) {
-//   return Column(
-//     children: [
-//       Container(
-//         child: Text(details.date.day.toString()),
-//       ),
-//       Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Container(
-//             height: 15,
-//             width: 13,
-//             color: ColorManager.kRedColor,
-//           ),
-//           Container(
-//             height: 15,
-//             width: 13,
-//             color: ColorManager.kblackColor,
-//           ),
-//         ],
-//       )
-//     ],
-//   );
-// }
 
 List<Meeting> _getDataSource() {
   final List<Meeting> meetings = <Meeting>[];
@@ -129,14 +105,6 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
   String monthyearDate = DateFormat('MM-yyyy').format(DateTime.now());
   String monthyearDate2 = DateFormat('MM-yyyy').format(DateTime.now());
 
-  // call() async {
-  //   log("${monthyearDate.split(' ')[0].split('-')[1]}-${monthyearDate.split(' ')[0].split('-')[0]} ${int.parse(monthyearDate.split(' ')[0].split('-')[1]) < 12 ? int.parse(monthyearDate.split(' ')[0].split('-')[1]) + 1 : 01}-${monthyearDate.split(' ')[0].split('-')[0]}");
-  //   ManageAppointmentController.i.getmonthlyoctorAppointment(
-  //       "${monthyearDate.split(' ')[0].split('-')[1]}-${monthyearDate.split(' ')[0].split('-')[0]} ${int.parse(monthyearDate.split(' ')[0].split('-')[1]) < 12 ? int.parse(monthyearDate.split(' ')[0].split('-')[1]) + 1 : 01}-${monthyearDate.split(' ')[0].split('-')[0]}",
-  //       widget.worklocationid,
-  //       widget.isonline);
-  // }
-
   bool chk = false;
 
   int? previousdate;
@@ -155,167 +123,117 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      height: Get.height * 0.03,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                  SfCalendar(
+                    cellBorderColor: Colors.transparent,
+                    view: CalendarView.month,
+                    dataSource: MeetingDataSource(_getDataSource()),
+                    firstDayOfWeek: 1,
+                    showNavigationArrow: true,
+                    showDatePickerButton: false,
+                    todayHighlightColor: ColorManager.kPrimaryColor,
+                    backgroundColor: Colors.transparent,
+                    selectionDecoration: null,
+                    headerStyle: const CalendarHeaderStyle(
+                      textAlign: TextAlign.center,
                     ),
-                    SfCalendar(
-                      cellBorderColor: Colors.transparent,
-                      view: CalendarView.month,
-                      dataSource: MeetingDataSource(_getDataSource()),
-                      firstDayOfWeek: 1,
-                      showNavigationArrow: true,
-                      showDatePickerButton: false,
-                      todayHighlightColor: ColorManager.kPrimaryColor,
-                      backgroundColor: Colors.transparent,
-                      selectionDecoration: null,
-                      headerStyle: const CalendarHeaderStyle(
-                        textAlign: TextAlign.center,
-                      ),
-                      monthViewSettings: const MonthViewSettings(
-                        numberOfWeeksInView: 4,
-                        appointmentDisplayCount: 2,
-                        showTrailingAndLeadingDates: false,
-                        appointmentDisplayMode:
-                            MonthAppointmentDisplayMode.appointment,
-                        showAgenda: false,
-                        navigationDirection:
-                            MonthNavigationDirection.horizontal,
-                      ),
-                      onViewChanged: (viewChangedDetails) {
-                        // ManageAppointmentController.i
-                        //     .getmonthlyoctorAppointment(monthyearDate,
-                        //         widget.worklocationid, widget.isonline);
-                        // if (chk) {
-                        //   previousdate = int.parse(viewChangedDetails
-                        //       .visibleDates.first
-                        //       .toString()
-                        //       .split(' ')[0]
-                        //       .split('-')[1]);
-                        //   String date = viewChangedDetails.visibleDates.last
-                        //       .toString()
-                        //       .split(' ')[0];
-                        //   int current = int.parse(viewChangedDetails
-                        //       .visibleDates.last
-                        //       .toString()
-                        //       .split(' ')[0]
-                        //       .split('-')[1]);
-                        //   if (previousdate != current) {
-                        //     date =
-                        //         "${date.split('-')[1]}-${date.split('-')[0]}";
-                        //   } else {
-                        //     date = "${date.split('-')[0]}-${current + 1}";
-                        //   }
-                        //   ManageAppointmentController.i
-                        //       .getmonthlyoctorAppointment(
-                        //           date, widget.worklocationid, widget.isonline);
+                    monthViewSettings: const MonthViewSettings(
+                      numberOfWeeksInView: 4,
+                      appointmentDisplayCount: 2,
+                      showTrailingAndLeadingDates: false,
+                      appointmentDisplayMode:
+                          MonthAppointmentDisplayMode.appointment,
+                      showAgenda: false,
+                      navigationDirection: MonthNavigationDirection.horizontal,
+                    ),
+                    onViewChanged: (viewChangedDetails) {
+                      ManageAppointmentController.i.getmonthlydoctorAppointment(
+                          "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
+                          widget.worklocationid,
+                          widget.isonline,
+                          "${viewChangedDetails.visibleDates.first} ${viewChangedDetails.visibleDates.last}");
+                    },
+                    onTap: (CalendarTapDetails details) async {
+                      ManageAppointmentController.i
+                          .selectedmonthlyspecificdate(details.date);
 
-                        //   log(viewChangedDetails.visibleDates.length
-                        //       .toString());
-                        // }
-                        // ManageAppointmentController.i
-                        //     .getmonthlyoctorAppointment(monthyearDate,
-                        //         widget.worklocationid, widget.isonline);
-                        // if (int.parse(monthyearDate.toString().split('-')[0]) ==
-                        //     int.parse(viewChangedDetails.visibleDates.last.month
-                        //   ManageAppointmentController.i.getmonthlyoctorAppointment(
-                        //       "${viewChangedDetails.visibleDates.last.month + 1}-${viewChangedDetails.visibleDates.last.year}",
-                        //       widget.worklocationid,
-                        //       widget.isonline);
-                        // } else {
+                      String dt = DateFormat('yyyy-MM-dd')
+                          .format(ManageAppointmentController.i.date!)
+                          .toString();
 
-                        ManageAppointmentController.i.getmonthlydoctorAppointment(
-                            "${viewChangedDetails.visibleDates.first.month}-${viewChangedDetails.visibleDates.first.year} ${viewChangedDetails.visibleDates.last.month}-${viewChangedDetails.visibleDates.last.year}",
-                            widget.worklocationid,
-                            widget.isonline,
-                            "${viewChangedDetails.visibleDates.first} ${viewChangedDetails.visibleDates.last}");
-                        // }
-                      },
-                      // monthCellBuilder: monthCellBuilder,
-                      // onViewChanged: (viewChangedDetails) {
-                      //   // in first parameter add month and year
-                      //   Manageappointmentcontroller.i
-                      //       .getmonthlyoctorAppointment(monthyearDate,
-                      //           widget.worklocationid, widget.isonline);
-                      // },
-                      onTap: (CalendarTapDetails details) async {
+                      if (widget.worklocationid == '') {
                         ManageAppointmentController.i
-                            .selectedmonthlyspecificdate(details.date);
-
-                        String dt = DateFormat('yyyy-MM-dd')
-                            .format(ManageAppointmentController.i.date!)
-                            .toString();
-
-                        if (widget.worklocationid == '') {
-                          ManageAppointmentController.i
-                              .getDailyDoctorAppointmentSlots(
-                                  dt.toString(), "true", "");
-                        } else {
-                          ManageAppointmentController.i
-                              .getDailyDoctorAppointmentSlots(dt.toString(),
-                                  "false", widget.worklocationid);
-                        }
-
+                            .getDailyDoctorAppointmentSlots(
+                                dt.toString(), "true", "");
+                      } else {
                         ManageAppointmentController.i
-                            .setPageIndexofDayViewAppointment(0);
+                            .getDailyDoctorAppointmentSlots(
+                                dt.toString(), "false", widget.worklocationid);
+                      }
 
-                        // print(details.date.toString().split(' ')[0]);
-                        // Manageappointmentcontroller.i.getmonthlyoctorAppointment(details.date.toString().split(' ')[0]);
-                      },
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.04,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: Get.width * 0.08,
-                          height: Get.height * 0.04,
-                          color: ColorManager.kPrimaryColor,
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.03,
-                        ),
-                        GetBuilder<ManageAppointmentController>(
-                            builder: (context) {
-                          return Text(
-                            '${'BookedAppointments'.tr} |  ${ManageAppointmentController.i.paid}'
-                            '',
-                            style: GoogleFonts.poppins(
-                              fontSize: 9,
-                            ),
-                          );
-                        }),
-                        SizedBox(
-                          width: Get.width * 0.09,
-                        ),
-                        Container(
-                          width: Get.width * 0.08,
-                          height: Get.height * 0.04,
-                          color: ColorManager.KgreenColor,
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.03,
-                        ),
-                        GetBuilder<ManageAppointmentController>(
-                            builder: (context) {
-                          return Text(
-                            '${'consulted'.tr} |  ${ManageAppointmentController.i.unpaid}'
-                            '',
-                            style: GoogleFonts.poppins(
-                              fontSize: 9,
-                            ),
-                          );
-                        })
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                      ManageAppointmentController.i
+                          .setPageIndexofDayViewAppointment(0);
+                    },
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width:
+                            boolisMobile! ? Get.width * 0.08 : Get.width * 0.04,
+                        height: Get.height * 0.04,
+                        color: ColorManager.kPrimaryColor,
+                      ),
+                      SizedBox(
+                        width: Get.width * 0.03,
+                      ),
+                      GetBuilder<ManageAppointmentController>(
+                          builder: (context) {
+                        return Text(
+                          '${'BookedAppointments'.tr} |  ${ManageAppointmentController.i.paid}'
+                          '',
+                          style: GoogleFonts.poppins(
+                            fontSize: 9,
+                          ),
+                        );
+                      }),
+                      SizedBox(
+                        width: Get.width * 0.09,
+                      ),
+                      Container(
+                        width:
+                            boolisMobile! ? Get.width * 0.08 : Get.width * 0.04,
+                        height: Get.height * 0.04,
+                        color: ColorManager.KgreenColor,
+                      ),
+                      SizedBox(
+                        width: Get.width * 0.03,
+                      ),
+                      GetBuilder<ManageAppointmentController>(
+                          builder: (context) {
+                        return Text(
+                          '${'consulted'.tr} |  ${ManageAppointmentController.i.unpaid}'
+                          '',
+                          style: GoogleFonts.poppins(
+                            fontSize: 9,
+                          ),
+                        );
+                      })
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.03,
+                  ),
+                ],
+              ),
             ),
           ),
         );

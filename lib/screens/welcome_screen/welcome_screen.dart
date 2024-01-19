@@ -23,42 +23,44 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.only(bottom: AppPadding.p20),
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: Get.height * 0.02,
-            ),
-            Image.asset(
-              Images.welcome,
-              height: Get.height * 0.53,
-              width: Get.width * 1,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(
-              height: Get.height * 0.06,
-            ),
-            Center(
-              child: Text('Welcome to ',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.raleway(
-                    fontSize: 30,
-                    color: ColorManager.kblackColor,
-                  )),
-            ),
-            Center(
-              child: Text('$appName.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      fontSize: 32,
-                      color: ColorManager.kPrimaryColor,
-                      fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(
-              height: Get.height * 0.04,
-            ),
-            const GetStartedButton()
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Image.asset(
+                Images.welcome,
+                height: Get.height * 0.53,
+                width: Get.width,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(
+                height: Get.height * 0.06,
+              ),
+              Center(
+                child: Text('Welcome to ',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.raleway(
+                      fontSize: 30,
+                      color: ColorManager.kblackColor,
+                    )),
+              ),
+              Center(
+                child: Text('$appName.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        fontSize: 32,
+                        color: ColorManager.kPrimaryColor,
+                        fontWeight: FontWeight.bold)),
+              ),
+              SizedBox(
+                height: Get.height * 0.04,
+              ),
+              const GetStartedButton()
+            ],
+          ),
         ),
       ),
     );
@@ -77,7 +79,6 @@ class GetStartedButton extends StatelessWidget {
       onTap: () {
         LocalDb().saveIsFirstTime(false);
         Get.offAll(() => const LoginScreen());
-        // Get.to(()=>const Introduction());
       },
       child: const CircleAvatar(
         radius: 35,

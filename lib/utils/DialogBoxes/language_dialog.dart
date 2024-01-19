@@ -15,10 +15,10 @@ Future<String?> languageSelector(
         StatefulBuilder(builder: (context, newState) {
       LanguageController.i.updateSelected(LanguageController.i.selected);
       return AlertDialog(
-        backgroundColor: Theme.of(context).primaryColorDark,
+        backgroundColor: ColorManager.kPrimaryColor,
         title: Text(
           'selectLanguage'.tr,
-          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+          style: const TextStyle(color: ColorManager.kWhiteColor),
         ),
         content: SingleChildScrollView(
             child: SizedBox(
@@ -40,7 +40,6 @@ Future<String?> languageSelector(
                       if (lang != null) {
                         newState(
                           () {
-                            // log(lang.name.toString());
                             cont.updateSelectedIndex(index);
                             cont.updateSelected(lang);
                           },

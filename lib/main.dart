@@ -21,8 +21,6 @@ Future<void> main() async {
   await NotificationsRepo().setupInteractMessage();
   await NotificationsRepo().initNotifications();
   await NotificationsRepo().firebaseInit();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   DependencyInjection.init();
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
@@ -69,6 +67,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile(BuildContext context) =>
+        MediaQuery.of(context).size.width < 460;
+    bool isTablet(BuildContext context) =>
+        MediaQuery.of(context).size.width < 1100 &&
+        MediaQuery.of(context).size.width >= 460;
+
+    boolisMobile = isMobile(context);
+    boolisTablet = isTablet(context);
+
+    if (boolisMobile!) {
+      SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    }
+
     return GetMaterialApp(
       textDirection: TextDirection.ltr,
       translations: Localization(),

@@ -174,12 +174,12 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                             ColorManager
                                                                 .kWhiteColor,
                                                         shape:
-                                                            const RoundedRectangleBorder(
+                                                            RoundedRectangleBorder(
                                                           borderRadius:
                                                               BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10.0)),
+                                                                  Radius.circular(
+                                                                      Get.width *
+                                                                          0.04)),
                                                         ),
                                                         child: Padding(
                                                           padding: EdgeInsets.only(
@@ -276,12 +276,13 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                                     ),
                                                                                   );
                                                                                 },
-                                                                                child: Image.asset(
-                                                                                  Images.erx,
-                                                                                  fit: BoxFit.fill,
-                                                                                  color: ColorManager.kPrimaryColor,
-                                                                                  width: Get.width * 0.09,
-                                                                                  height: Get.height * 0.05,
+                                                                                child: SizedBox(
+                                                                                  height: Get.width * 0.09,
+                                                                                  child: Image.asset(
+                                                                                    Images.erx,
+                                                                                    fit: BoxFit.fill,
+                                                                                    color: ColorManager.kPrimaryColor,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                               SizedBox(
@@ -303,27 +304,16 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                                           setState(() {});
                                                                                         }
                                                                                       },
-                                                                                      child: Image.asset(
-                                                                                        Images.rxedit,
-                                                                                        color: ColorManager.kPrimaryColor,
-                                                                                        width: Get.width * 0.09,
-                                                                                        height: Get.height * 0.05,
+                                                                                      child: SizedBox(
+                                                                                        height: Get.width * 0.09,
+                                                                                        child: Image.asset(
+                                                                                          Images.rxedit,
+                                                                                          color: ColorManager.kPrimaryColor,
+                                                                                        ),
                                                                                       ),
                                                                                     )
                                                                                   : InkWell(
                                                                                       onTap: () async {
-                                                                                        // await Get.to(() =>
-                                                                                        //     Callwatingscreen(
-                                                                                        //       data: manageAppointment,
-                                                                                        //     ));
-                                                                                        // Get.to(() =>
-                                                                                        //     PrescribeMedicineScreen(
-                                                                                        //       checkfirst: "0",
-                                                                                        //       patientstatusvalue: manageAppointment.patientStatusValue.toString(),
-                                                                                        //       patientid: manageAppointment.patientId,
-                                                                                        //       visitno: manageAppointment.visitNo,
-                                                                                        //       prescribedvalue: manageAppointment.prescribedInValue,
-                                                                                        //     ));
                                                                                         Get.to(() => MyHomePage(
                                                                                               data: manageAppointment,
                                                                                               checkfirst: "1",
@@ -334,10 +324,11 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                                               title: manageAppointment.chatURL,
                                                                                             ));
                                                                                       },
-                                                                                      child: Image.asset(
-                                                                                        Images.videocall,
-                                                                                        width: Get.width * 0.09,
-                                                                                        height: Get.height * 0.05,
+                                                                                      child: SizedBox(
+                                                                                        height: Get.width * 0.09,
+                                                                                        child: Image.asset(
+                                                                                          Images.videocall,
+                                                                                        ),
                                                                                       ),
                                                                                     ),
                                                                             ],

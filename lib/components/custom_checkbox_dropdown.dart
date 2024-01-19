@@ -7,6 +7,7 @@ import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -195,7 +196,7 @@ Future<dynamic> searchableDropdownCheckBox(
             builder: (context, setState) {
               return SizedBox(
                 width: Get.width,
-                height: MediaQuery.of(context).size.height * 0.7,
+                height: MediaQuery.of(context).size.height * 0.9,
                 child: AlertDialog(
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15.0))),
@@ -204,11 +205,11 @@ Future<dynamic> searchableDropdownCheckBox(
                     child: Column(
                       children: [
                         SizedBox(
-                          height: Get.height * 0.07,
+                          height: Get.height * 0.09,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                                  const EdgeInsets.symmetric(horizontal: 5),
                               hintStyle: GoogleFonts.poppins(
                                   color: ColorManager.kPrimaryColor),
                               hintText: 'Search',
@@ -361,17 +362,14 @@ Future<dynamic> searchableDropdownCheckBox(
                                 }
                               }
                             },
-                            // onChanged: (val) {
-                            //   title = val;
-                            //   setState(() {
-                            //     title = val;
-                            //   });
-                            // },
                           ),
                         ),
                         if (list.isNotEmpty)
                           SizedBox(
-                            height: Get.height * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            height: boolisMobile!
+                                ? MediaQuery.of(context).size.height * 0.6
+                                : MediaQuery.of(context).size.height * 0.4,
                             child: ListView.builder(
                               shrinkWrap: true,
                               itemCount: list.length,
@@ -379,17 +377,12 @@ Future<dynamic> searchableDropdownCheckBox(
                                 bool isSelected = dataList.any((selectedItem) =>
                                     selectedItem.id == list[index].id);
 
-                                // if (search.text.isEmpty ||
-                                //     list[index]
-                                //         .name!
-                                //         .toLowerCase()
-                                //         .contains(title.toLowerCase())) {
                                 return ListTile(
                                   dense: true,
                                   minVerticalPadding: 0,
                                   contentPadding: EdgeInsets.zero,
                                   visualDensity: const VisualDensity(
-                                      horizontal: 0, vertical: -4),
+                                      horizontal: 0, vertical: 0),
                                   title: Row(
                                     children: [
                                       Checkbox(
@@ -485,12 +478,12 @@ Future<dynamic> searchableDropdownCheckBox(
                         if (list.isEmpty)
                           Center(child: Text('NoRecordFound'.tr)),
                         SizedBox(
-                          height: Get.height * 0.02,
+                          height: Get.height * 0.04,
                         ),
                         PrimaryButton(
                           title: 'Save',
                           fontSize: 12,
-                          height: Get.height * 0.05,
+                          height: Get.height * 0.07,
                           width: Get.width * 0.55,
                           onPressed: () async {
                             if (listname == "primary") {
@@ -1202,15 +1195,16 @@ addMedicine(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             content: SingleChildScrollView(
               child: SizedBox(
-                height: Get.height * 0.54,
+                height: Get.height * 0.9,
                 width: Get.width * 1,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
+                    if (!boolisMobile!)
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding:
@@ -1273,7 +1267,9 @@ addMedicine(
                     ),
                     GetBuilder<ERXController>(builder: (context) {
                       return SizedBox(
-                        height: Get.height * 0.15,
+                        height: boolisMobile!
+                            ? Get.height * 0.45
+                            : Get.height * 0.3,
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: controller.medicineList.length,
@@ -1324,10 +1320,6 @@ addMedicine(
                                 ),
                               ),
                             );
-                            //  }
-                            // else {
-                            //   return Container();
-                            // }
                           },
                         ),
                       );
@@ -1551,67 +1543,56 @@ addMedicine(
                       ),
                     ]),
                     SizedBox(height: Get.height * 0.04),
-                    Center(
-                      child: PrimaryButton(
-                        title: 'save'.tr,
-                        fontSize: 14,
-                        height: Get.height * 0.06,
-                        onPressed: () async {
-                          if (controller.selectedmedicineList.isNotEmpty) {
-                            if (controller.medicineRoutes != null) {
-                              if (controller.medicineFrequencies != null) {
-                                if (controller.dateList != null &&
-                                    controller.dayList != null) {
-                                  if (controller.medicineDosages != null) {
-                                    ERXController.i.selectedlst.dateList!
-                                        .add(controller.dateList!);
-                                    ERXController.i.selectedlst.dayList!
-                                        .add(controller.dayList!);
-                                    ERXController.i.selectedlst.medicineDosages!
-                                        .add(controller.medicineDosages!);
-                                    ERXController
-                                        .i.selectedlst.medicineFrequencies!
-                                        .add(controller.medicineFrequencies!);
-                                    ERXController.i.selectedlst.medicineRoutes!
-                                        .add(controller.medicineRoutes!);
+                    PrimaryButton(
+                      title: 'save'.tr,
+                      fontSize: 14,
+                      height: Get.height * 0.06,
+                      onPressed: () async {
+                        if (controller.selectedmedicineList.isNotEmpty) {
+                          if (controller.medicineRoutes != null) {
+                            if (controller.medicineFrequencies != null) {
+                              if (controller.dateList != null &&
+                                  controller.dayList != null) {
+                                if (controller.medicineDosages != null) {
+                                  ERXController.i.selectedlst.dateList!
+                                      .add(controller.dateList!);
+                                  ERXController.i.selectedlst.dayList!
+                                      .add(controller.dayList!);
+                                  ERXController.i.selectedlst.medicineDosages!
+                                      .add(controller.medicineDosages!);
+                                  ERXController
+                                      .i.selectedlst.medicineFrequencies!
+                                      .add(controller.medicineFrequencies!);
+                                  ERXController.i.selectedlst.medicineRoutes!
+                                      .add(controller.medicineRoutes!);
 
-                                    ERXController.i.updateselectedlst(
-                                      medicinematric(
-                                          dateList: ERXController
-                                              .i.selectedlst.dateList!,
-                                          dayList: ERXController
-                                              .i.selectedlst.dayList!,
-                                          medicineDosages: ERXController
-                                              .i.selectedlst.medicineDosages!,
-                                          medicineFrequencies: ERXController.i
-                                              .selectedlst.medicineFrequencies!,
-                                          medicineRoutes: ERXController
-                                              .i.selectedlst.medicineRoutes!),
-                                    );
-                                    controller.updatefinalmed(
-                                        selectedMedicineList[0]);
-                                    // Medicine
+                                  ERXController.i.updateselectedlst(
+                                    medicinematric(
+                                        dateList: ERXController
+                                            .i.selectedlst.dateList!,
+                                        dayList: ERXController
+                                            .i.selectedlst.dayList!,
+                                        medicineDosages: ERXController
+                                            .i.selectedlst.medicineDosages!,
+                                        medicineFrequencies: ERXController
+                                            .i.selectedlst.medicineFrequencies!,
+                                        medicineRoutes: ERXController
+                                            .i.selectedlst.medicineRoutes!),
+                                  );
+                                  controller
+                                      .updatefinalmed(selectedMedicineList[0]);
+                                  // Medicine
 
-                                    completer.complete(selectedMedicine);
-                                    PrescribeMedicinRepo pmr =
-                                        PrescribeMedicinRepo();
-                                    Get.back();
-                                    controller.updateMedicinelist(
-                                      await pmr.getMedicines(""),
-                                    );
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: 'SelectDosagesFirst'.tr,
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: ColorManager.kRedColor,
-                                        textColor: ColorManager.kWhiteColor,
-                                        fontSize: 14.0);
-                                  }
+                                  completer.complete(selectedMedicine);
+                                  PrescribeMedicinRepo pmr =
+                                      PrescribeMedicinRepo();
+                                  Get.back();
+                                  controller.updateMedicinelist(
+                                    await pmr.getMedicines(""),
+                                  );
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: 'SelectDuarationFirst'.tr,
+                                      msg: 'SelectDosagesFirst'.tr,
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1,
@@ -1621,7 +1602,7 @@ addMedicine(
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: 'SelectFrequencyFirst'.tr,
+                                    msg: 'SelectDuarationFirst'.tr,
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.BOTTOM,
                                     timeInSecForIosWeb: 1,
@@ -1631,7 +1612,7 @@ addMedicine(
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: 'SelectRouteFirst'.tr,
+                                  msg: 'SelectFrequencyFirst'.tr,
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
@@ -1641,7 +1622,7 @@ addMedicine(
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: 'SelectMedicineFirst'.tr,
+                                msg: 'SelectRouteFirst'.tr,
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,
@@ -1649,10 +1630,19 @@ addMedicine(
                                 textColor: ColorManager.kWhiteColor,
                                 fontSize: 14.0);
                           }
-                        },
-                        color: ColorManager.kPrimaryColor,
-                        textcolor: ColorManager.kWhiteColor,
-                      ),
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: 'SelectMedicineFirst'.tr,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: ColorManager.kRedColor,
+                              textColor: ColorManager.kWhiteColor,
+                              fontSize: 14.0);
+                        }
+                      },
+                      color: ColorManager.kPrimaryColor,
+                      textcolor: ColorManager.kWhiteColor,
                     ),
                   ],
                 ),

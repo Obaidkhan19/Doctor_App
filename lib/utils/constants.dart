@@ -12,15 +12,12 @@ String IDLabel = "National ID";
 String MedicalCertificateLabel = "LMPC";
 String MedicalNumberLabel = "DHA";
 String appName = 'Helpful';
+String Language = 'Arabic';
+
+bool? boolisMobile;
+bool? boolisTablet;
 
 class AppConstants {
-  // Base Url
-  static const String testing = 'http://192.168.88.254:324'; // for testing QA
-
-  // static const String baseURL = 'https://patient.helpful.ihealthcure.com';
-
-  // Branch ID
-  //static  String branchID = "D8340ED5-AF5D-4F68-895B-0350114AAB09";
   // API Endpoints
 
   static String updateimage = '$baseURL/api/doctor/UpdateImage';

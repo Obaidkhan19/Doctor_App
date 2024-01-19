@@ -179,11 +179,11 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                               ColorManager
                                                                   .kWhiteColor,
                                                           shape:
-                                                              const RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.all(
-                                                                    Radius.circular(
-                                                                        10.0)),
+                                                              RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.all(
+                                                                Radius.circular(
+                                                                    Get.width *
+                                                                        0.04)),
                                                           ),
                                                           child: Padding(
                                                             padding: EdgeInsets.only(
@@ -287,28 +287,17 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                               }
                                                                             },
                                                                             child:
-                                                                                Image.asset(
-                                                                              Images.rxedit,
-                                                                              color: ColorManager.kPrimaryColor,
-                                                                              width: Get.width * 0.09,
-                                                                              height: Get.height * 0.05,
+                                                                                SizedBox(
+                                                                              height: Get.width * 0.09,
+                                                                              child: Image.asset(
+                                                                                Images.rxedit,
+                                                                                color: ColorManager.kPrimaryColor,
+                                                                              ),
                                                                             ),
                                                                           )
                                                                         : InkWell(
                                                                             onTap:
                                                                                 () async {
-                                                                              // await Get.to(() =>
-                                                                              //     Callwatingscreen(
-                                                                              //       data: manageAppointment,
-                                                                              //     ));
-                                                                              // Get.to(() =>
-                                                                              //     PrescribeMedicineScreen(
-                                                                              //       checkfirst: "0",
-                                                                              //       patientstatusvalue: manageAppointment.patientStatusValue.toString(),
-                                                                              //       patientid: manageAppointment.patientId,
-                                                                              //       visitno: manageAppointment.visitNo,
-                                                                              //       prescribedvalue: manageAppointment.prescribedInValue,
-                                                                              //     ));
                                                                               Get.to(() => MyHomePage(
                                                                                     data: manageAppointment,
                                                                                     checkfirst: "1",
@@ -320,10 +309,11 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                                   ));
                                                                             },
                                                                             child:
-                                                                                Image.asset(
-                                                                              Images.videocall,
-                                                                              width: Get.width * 0.09,
-                                                                              height: Get.height * 0.09,
+                                                                                SizedBox(
+                                                                              height: Get.width * 0.09,
+                                                                              child: Image.asset(
+                                                                                Images.videocall,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                   ),

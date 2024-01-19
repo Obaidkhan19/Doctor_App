@@ -11,6 +11,7 @@ import 'package:doctormobileapplication/models/hospital_clinic.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/pdfview.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -705,7 +706,9 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                         },
                         child: Container(
                           width: Get.width * 1,
-                          height: Get.height * 0.05,
+                          height: boolisMobile!
+                              ? Get.height * 0.05
+                              : Get.height * 0.1,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: ColorManager.kPrimaryColor,
@@ -763,7 +766,9 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                         },
                         child: Container(
                           width: Get.width * 1,
-                          height: Get.height * 0.05,
+                          height: boolisMobile!
+                              ? Get.height * 0.05
+                              : Get.height * 0.1,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: ColorManager.kPrimaryColor,

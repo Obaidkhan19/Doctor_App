@@ -179,11 +179,12 @@ class _ClinicalPracticeQueueDataListState
                                                         ColorManager
                                                             .kWhiteColor,
                                                     shape:
-                                                        const RoundedRectangleBorder(
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.all(
                                                               Radius.circular(
-                                                                  10.0)),
+                                                                  Get.width *
+                                                                      0.04)),
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsets.only(
@@ -305,14 +306,14 @@ class _ClinicalPracticeQueueDataListState
                                                                             }
                                                                           },
                                                                           child:
-                                                                              Image.asset(
-                                                                            Images.rxedit,
-                                                                            color:
-                                                                                ColorManager.kPrimaryColor,
-                                                                            width:
-                                                                                Get.width * 0.09,
+                                                                              SizedBox(
                                                                             height:
-                                                                                Get.height * 0.05,
+                                                                                Get.width * 0.09,
+                                                                            child:
+                                                                                Image.asset(
+                                                                              Images.rxedit,
+                                                                              color: ColorManager.kPrimaryColor,
+                                                                            ),
                                                                           ),
                                                                         )
                                                                       : InkWell(
@@ -330,12 +331,13 @@ class _ClinicalPracticeQueueDataListState
                                                                                 ));
                                                                           },
                                                                           child:
-                                                                              Image.asset(
-                                                                            Images.videocall,
-                                                                            width:
-                                                                                Get.width * 0.09,
+                                                                              SizedBox(
                                                                             height:
-                                                                                Get.height * 0.09,
+                                                                                Get.width * 0.09,
+                                                                            child:
+                                                                                Image.asset(
+                                                                              Images.videocall,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                             ),
@@ -375,7 +377,6 @@ class _ClinicalPracticeQueueDataListState
                                                               children: [
                                                                 Expanded(
                                                                   child: Text(
-                                                                    // 'Waiting Since ${manageAppointment.waitingTime ?? ""}',
                                                                     '${'waitingSince'.tr} ${contr.startTimeswait[index] ?? ""}',
                                                                     style: GoogleFonts
                                                                         .poppins(

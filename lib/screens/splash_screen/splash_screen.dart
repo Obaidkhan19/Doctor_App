@@ -18,53 +18,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // instance() async {
-  //   final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-  //   await remoteConfig.setConfigSettings(
-  //     RemoteConfigSettings(
-  //       fetchTimeout: const Duration(seconds: 10),
-  //       minimumFetchInterval: const Duration(minutes: 2),
-  //     ),
-  //   );
-  //   await remoteConfig.fetchAndActivate().then((value) {
-  //     if (value == true) {
-  //       baseURL = remoteConfig.getString('URLQA');
-  //       // baseURL = remoteConfig.getString('URL');
-  //     } else {
-  //       baseURL = 'http://192.168.88.254:324/';
-  //       // baseURL = 'https://patient.helpful.ihealthcure.com/';
-  //     }
-  //   }).onError((error, stackTrace) {
-  //     baseURL = 'http://192.168.88.254:324/';
-  //     // baseURL = 'https://patient.helpful.ihealthcure.com/';
-  //   });
-  //   String? doctorid = await LocalDb().getDoctorId();
-  //   log(doctorid ?? "");
-  // }
-
   instance() async {
     final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
         minimumFetchInterval: const Duration(seconds: 10),
       ),
     );
-    // .then((value) async {
+
     await remoteConfig.fetchAndActivate().then((value) {
-      // if (value == true) {
+      // baseURL = remoteConfig.getString('URLQA');
       baseURL = remoteConfig.getString('URL');
       contactnumber = remoteConfig.getString('Phone');
-      // baseURL = remoteConfig.getString('URL');
+
       if (baseURL == "") {
-        // baseURL = 'http://192.168.88.254:324/';
+        // baseURL = '.';
         baseURL = 'https://patient.helpful.ihealthcure.com/';
       }
-      // } else {
-      //   // baseURL = 'http://192.168.88.254:324/';
-      //   baseURL = 'https://patient.helpful.ihealthcure.com/';
-      // }
+
       callPreferenece();
     }).onError((error, stackTrace) {
       log(error.toString());
@@ -73,22 +45,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
       baseURL = 'https://patient.helpful.ihealthcure.com/';
     });
-    // }).onError((error, stackTrace) {
-    //   baseURL = 'https://patient.helpful.ihealthcure.com/';
-    // });
 
     bool? isFirstStatus;
     LocalDb().getIsFirstTime()?.then((value) => isFirstStatus = value);
     bool? loginStatus;
     LocalDb().getLoginStatus()?.then((value) => loginStatus = value);
     Future.delayed(const Duration(milliseconds: 2000)).then((value) async {
-      if (isFirstStatus != null &&
-          // isFirstStatus != '' &&
-          isFirstStatus == false) {
-        //Goto Login Screen or dashboard screen
+      if (isFirstStatus != null && isFirstStatus == false) {
         if (loginStatus == true) {
           Get.offAll(() => const DrawerScreen());
-          //    Get.to(() => const DrawerScreen());
         } else {
           Get.offAll(() => const LoginScreen());
         }
@@ -96,32 +61,6 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offAll(() => const WelcomeScreen());
       }
     });
-
-    // String? savedBaseURL = await LocalDb().getBaseURL();
-    // if (savedBaseURL != baseURL) {
-    //   LocalDb().saveLoginStatus(false);
-    //   LocalDb().saveDoctorId(null);
-    //   LocalDb().saveToken(null);
-    //   // await AuthRepo.logout();
-
-    //   ProfileController.i.updatedDoctorInfo(BasicInfo());
-    //   AuthController.i.emailController.clear();
-    //   AuthController.i.passwordController.clear();
-
-    //   String? id = await LocalDb().getDoctorId();
-    //   String? token = await LocalDb().getToken();
-    //   bool? loginStatus = await LocalDb().getLoginStatus();
-    //   String? DeviceToken = await LocalDb().getDeviceToken();
-    //   if (loginStatus ?? true) {
-    //     AuthRepo.logout(
-    //         DoctorId: id,
-    //         token: token,
-    //         DeviceToken: DeviceToken,
-    //         IsLogOffAllDevice: 'false');
-    //   }
-    //   Get.offAll(() => const LoginScreen());
-    // }
-    // LocalDb().setBaseURL(baseURL);
   }
 
   callPreferenece() async {
@@ -132,8 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     instance();
-
-    // Timer(const Duration(milliseconds: 3500), () async {});
     super.initState();
   }
 
@@ -142,19 +79,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         body: Stack(
       children: [
-        // Positioned(
-        //   top: 100,
-        //   right: 0,
-        //   child: Container(
-        //     height: Get.height * 0.8,
-        //     width: Get.width,
-        //     alignment: Alignment.centerLeft,
-        //     child: Image.asset(
-        //       Images.logoBackground,
-        //       fit: BoxFit.cover,
-        //     ),
-        //   ),
-        // ),
         const BackgroundLogoimage(),
         SlideTransitions(
           image: Center(child: Image.asset(Images.logo)),

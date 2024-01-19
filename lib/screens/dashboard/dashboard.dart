@@ -67,14 +67,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
     if (index == 1) {
       bool? isLoggedin = await LocalDb().getLoginStatus();
       if ((isLoggedin ?? false) == false) {
-        // Get.off(() => const LoginScreen(
-        //       isHerefromSchedule: true,
-        //     ));
-      } else {
-        // ScheduleController.i.clearData();
-        // ScheduleController.i.ApplyFilterForAppointments(0);
-        // ScheduleController.i.getAppointmentsSummery();
-      }
+      } else {}
     } else if (index == 2) {
       bool? isLoggedin = await LocalDb().getLoginStatus();
       if ((isLoggedin ?? false) == false) {
@@ -87,13 +80,10 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
       } else if (index == 0) {
         await _getDoctorBasicInfo();
       }
-      // Call the method to launch WhatsApp
     }
     setState(() {
       ProfileController.i.updateselectedPage(index);
     });
-    // await listToLoad();
-    // lengthOfList();
   }
 
   int tap = 0;
@@ -145,12 +135,12 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
             )
           ],
           color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(Get.width * 0.08),
+            topRight: Radius.circular(Get.width * 0.08),
           ),
         ),
-        height: Get.height * 0.11,
+        height: boolisMobile! ? Get.height * 0.11 : Get.height * 0.15,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.max,
@@ -164,31 +154,6 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
       ),
     );
   }
-
-  // buildMenuItem(IconData icon, String label, {Function()? onPressed}) {
-  //   return Material(
-  //     borderRadius: BorderRadius.circular(20),
-  //     color: Colors.white,
-  //     child: InkWell(
-  //       onTap: onPressed,
-  //       child: Container(
-  //         // padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-  //         // height: 60,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(20),
-  //         ),
-  //         child: Row(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             Icon(icon),
-  //             //   const SizedBox(width: 10),
-  //             Text(label),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   buildBottomNavItem(String imagePath, String label, int index,
       {bool? isSvg = false}) {
@@ -208,7 +173,9 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
               ? const SizedBox()
               : isSvg == false
                   ? Container(
-                      padding: EdgeInsets.all(Get.width * 0.022),
+                      padding: EdgeInsets.all(boolisMobile!
+                          ? Get.width * 0.022
+                          : Get.width * 0.008),
                       decoration: BoxDecoration(
                           boxShadow: const [
                             BoxShadow(
@@ -228,7 +195,9 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
                               : ColorManager.kWhiteColor),
                       child: Image.asset(
                         imagePath,
-                        height: Get.height * 0.03,
+                        height: boolisMobile!
+                            ? Get.height * 0.03
+                            : Get.height * 0.06,
                         color: isSelected
                             ? ColorManager.kWhiteColor
                             : ColorManager.kPrimaryDark,
@@ -245,7 +214,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
                               blurStyle: BlurStyle.normal,
                               offset: Offset(
                                 1,
-                                2,
+                                3,
                               ),
                             )
                           ],

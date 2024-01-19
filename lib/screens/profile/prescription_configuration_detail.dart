@@ -8,6 +8,7 @@ import 'package:doctormobileapplication/data/controller/profile_controller.dart'
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/profile/personal.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -184,9 +185,21 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                                   builder: (cont) => Text(
                                     PreferenceController.i.preferenceObject
                                                 .customLanguageKeyBoardType ==
-                                            0
-                                        ? "urdu".tr
-                                        : 'arabic'.tr,
+                                            null
+                                        ? Language
+                                        : PreferenceController
+                                                    .i
+                                                    .preferenceObject
+                                                    .customLanguageKeyBoardType ==
+                                                "null"
+                                            ? Language
+                                            : PreferenceController
+                                                        .i
+                                                        .preferenceObject
+                                                        .customLanguageKeyBoardType ==
+                                                    0
+                                                ? "urdu".tr
+                                                : 'arabic'.tr,
                                     style: GoogleFonts.poppins(
                                       textStyle: GoogleFonts.poppins(
                                           fontSize: 12,
@@ -474,9 +487,17 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                             builder: (cont) => Text(
                               PreferenceController.i.preferenceObject
                                           .customLanguageKeyBoardType ==
-                                      0
-                                  ? "urdu".tr
-                                  : 'arabic'.tr,
+                                      null
+                                  ? Language
+                                  : PreferenceController.i.preferenceObject
+                                              .customLanguageKeyBoardType ==
+                                          "null"
+                                      ? Language
+                                      : PreferenceController.i.preferenceObject
+                                                  .customLanguageKeyBoardType ==
+                                              0
+                                          ? "urdu".tr
+                                          : 'arabic'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 12,

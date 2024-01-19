@@ -1,4 +1,4 @@
- // ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
 import 'dart:developer';
@@ -11,6 +11,7 @@ import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/image_container.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
+import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -28,6 +29,7 @@ import 'package:doctormobileapplication/models/primary_diagnosis.dart';
 import 'package:doctormobileapplication/models/procedures.dart';
 import 'package:doctormobileapplication/models/secondart_diagnosis.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -345,11 +347,14 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                 setState(() {});
                               },
                               child: SizedBox(
-                                height: Get.height * 0.045,
-                                width: Get.width * 0.1,
+                                width: boolisMobile!
+                                    ? Get.width * 0.1
+                                    : Get.width * 0.05,
+                                height: boolisMobile!
+                                    ? Get.height * 0.05
+                                    : Get.height * 0.1,
                                 child: ImageContainer(
                                   imagePath: AppImages.recycle,
-                                  imageheight: Get.height * 0.04,
                                   isSvg: false,
                                   color: ColorManager.kWhiteColor,
                                   backgroundColor: ColorManager.kPrimaryColor,
@@ -1606,15 +1611,6 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                   child: CustomTextField(
                                     readonly: true,
                                     onTap: () async {
-                                      // Investigations1 generic =
-                                      //     await searchabledropdown(
-                                      //         context,
-                                      //         controller.investigationList ??
-                                      //             []);
-                                      // await controller.addInvestigation(
-                                      //     generic, BuildContext);
-                                      // setState(() {});
-
                                       List<Investigations1> result =
                                           await searchableDropdownCheckBox(
                                               context,
@@ -1946,9 +1942,6 @@ class _PrescribeMedicineScreenState extends State<PrescribeMedicineScreen> {
                                         child: CustomTextField(
                                           readonly: true,
                                           onTap: () async {
-                                            // ERXController.i.updatemedicinelist(
-                                            //     await PrescribeMedicinRepo
-                                            //         .getMedicinesMatrix());
                                             String result = await addMedicine(
                                               context,
                                               controller.medicineList,

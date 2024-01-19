@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
 import '../../helpers/values_manager.dart';
-import '../../utils/AppImages.dart';
 import 'ClinicalPracticeQueueDataList.dart';
 import 'ConsultedQueueDataList.dart';
 import 'HoldQueueDataList.dart';

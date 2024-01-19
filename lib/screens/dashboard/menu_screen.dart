@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -67,510 +66,331 @@ class _MenuScreenState extends State<MenuScreen> {
   bool isBiometric = false;
   @override
   Widget build(BuildContext context) {
-    var profile = Get.put<ProfileController>(ProfileController());
     return Scaffold(
       backgroundColor: ColorManager.kPrimaryColor,
       body: GetBuilder<ProfileController>(builder: (cntS) {
         return SafeArea(
-          minimum: EdgeInsets.only(left: Get.width * 0.06),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: Get.height * 0.01,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  color: ColorManager.kWhiteColor,
-                  onPressed: () {
-                    ZoomDrawer.of(context)!.close();
-                  },
-                ),
-
-                SizedBox(
-                  height: Get.height * 0.04,
-                ),
-                GetBuilder<ProfileController>(builder: (context) {
-                  return ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: CircleAvatar(
-                          backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                          radius: 30,
-                          child: CachedNetworkImage(
-                            imageUrl: ProfileController
-                                        .i.selectedbasicInfo?.picturePath !=
-                                    null
-                                ? baseURL +
-                                    ProfileController
-                                        .i.selectedbasicInfo?.picturePath
-                                : "",
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover, // Adjust the fit property
+            child: Padding(
+              padding: EdgeInsets.only(left: Get.width * 0.03),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    color: ColorManager.kWhiteColor,
+                    onPressed: () {
+                      ZoomDrawer.of(context)!.close();
+                    },
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.04,
+                  ),
+                  GetBuilder<ProfileController>(builder: (context) {
+                    return ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: CircleAvatar(
+                            backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
+                            radius: 30,
+                            child: CachedNetworkImage(
+                              imageUrl: ProfileController
+                                          .i.selectedbasicInfo?.picturePath !=
+                                      null
+                                  ? baseURL +
+                                      ProfileController
+                                          .i.selectedbasicInfo?.picturePath
+                                  : "",
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit:
+                                        BoxFit.cover, // Adjust the fit property
+                                  ),
                                 ),
                               ),
-                            ),
-                            //  fit: BoxFit.fitHeight,
-                            errorWidget: (context, url, error) =>
-                                Image.asset(AppImages.doctorlogo),
-                          )));
-                  // CircleAvatar(
-                  //     backgroundColor: const Color.fromRGBO(0, 0, 0, 0),
-                  //     radius: 30,
-                  //     child: ClipRRect(
-                  //         borderRadius: BorderRadius.circular(30),
-                  //         child: CachedNetworkImage(
-                  //           height: Get.width * 0.16,
-                  //           imageUrl: ProfileController
-                  //                       .i.selectedbasicInfo?.picturePath !=
-                  //                   null
-                  //               ? baseURL +
-                  //                   ProfileController
-                  //                       .i.selectedbasicInfo?.picturePath
-                  //               : "",
-                  //           fit: BoxFit.fill,
-                  //           errorWidget: (context, url, error) =>
-                  //               Image.asset(AppImages.doctorlogo),
-                  //         )));
-                }),
-
-                SizedBox(
-                  height: Get.height * 0.01,
-                ),
-                SizedBox(
-                  width: Get.width * 0.65,
-                  child: Text(
-                    ProfileController.i.selectedbasicInfo?.fullName ?? "",
-                    // style: GoogleFonts.poppins(
-                    //   textStyle: GoogleFonts.poppins(
-                    //       fontSize: 15, color: ColorManager.kWhiteColor),
-                    // ),
-                    style: GoogleFonts.poppins(
-                        color: ColorManager.kWhiteColor,
-                        fontWeight: FontWeight.bold),
-
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                              //  fit: BoxFit.fitHeight,
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(AppImages.doctorlogo),
+                            )));
+                  }),
+                  SizedBox(
+                    height: Get.height * 0.01,
                   ),
-                  //  TextFormField(
-                  //   decoration: InputDecoration(
-                  //     enabled: false,
-                  //     hintText: ProfileController.i.selectedbasicInfo?.fullName,
-                  //     hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  //         fontSize: 15,
-                  //         color: ColorManager.kWhiteColor,
-                  //         fontWeight: FontWeight.bold),
-                  //   ),
-                  // ),
-                ),
-                // Row(
-                //   children: [
-                //     SizedBox(
-                //       width: Get.width * 0.55,
-                //       child: TextFormField(
-                //         decoration: InputDecoration(
-                //           // suffixIcon: InkWell(
-                //           //   onTap: () {
-                //           //     Get.to(const EditProfile());
-                //           //   },
-                //           //   child: Image.asset(
-                //           //     Images.edit,
-                //           //     color: ColorManager.kWhiteColor,
-                //           //   ),
-                //           // ),
-                //           // disabledBorder: const UnderlineInputBorder(
-                //           //   borderSide: BorderSide(
-                //           //       color: ColorManager.kWhiteColor, width: 3.0),
-                //           // ),
-                //           enabled: false,
-                //           // hintText: UserName,
-                //           hintText:
-                //               ProfileController.i.selectedbasicInfo?.fullName,
-                //           hintStyle: Theme.of(context)
-                //               .textTheme
-                //               .bodyMedium!
-                //               .copyWith(
-                //                   fontSize: 15,
-                //                   color: ColorManager.kWhiteColor,
-                //                   fontWeight: FontWeight.bold),
-                //         ),
-                //       ),
-                //     ),
-                // InkWell(
-                //   onTap: () {
-
-                //     Get.to(() => const ProfileDetailMain());
-                //   },
-                //   child: Image.asset(
-                //     Images.edit,
-                //     height: Get.height * 0.035,
-                //     color: ColorManager.kWhiteColor,
-                //   ),
-                // ),
-                //   ],
-                // ),
-
-                Divider(
-                  thickness: Get.height * 0.002,
-                  color: ColorManager.kWhiteColor,
-                ),
-
-                // customListTile(context, onTap: () {
-                //   Get.to(() => const NoDataFound());
-                // }, imagePath: Images.family, title: 'Family Members'),
-                // customListTile(context, onTap: () {
-                //   Get.to(() => const NoDataFound());
-                // }, imagePath: Images.location, title: 'Location'),
-                // customListTile(context, onTap: () {
-                //   Get.to(() => const NoDataFound());
-                // }, imagePath: Images.wallet, title: 'Wallet'),
-                // customListTile(context, onTap: () {
-                //   Get.to(() => const NoDataFound());
-                // }, imagePath: Images.wifi, title: 'Forgot Password'),
-
-                // customListTile(context, onTap: () {
-                //   Get.to(() => const NoDataFound());
-                // },
-                //     imagePath: Images.fingerprint,
-                //     title: 'Finger Print',
-                //     togglebutton: true),
-
-                // const Divider(
-                //   height: 1,
-                //   thickness: 3,
-                //   color: ColorManager.kWhiteColor,
-                // ),
-                // customListTile(context,
-                // onTap: () {
-                //   Get.to(()=> const  RegisterScreen());
-                // },
-                //     imagePath: Images.family, title: 'Sign Up'),
-
-                SizedBox(
-                  height: Get.height * 0.01,
-                ),
-                // ListTile(
-                //   visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                //   contentPadding:
-                //       const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                //   leading: Image.asset(AppImages.vector),
-                //   title: Text(
-                //     'patienthistory'.tr,
-                //     style: GoogleFonts.poppins(
-                //       textStyle: GoogleFonts.poppins(
-                //           fontSize: 15, color: ColorManager.kWhiteColor),
-                //     ),
-                //   ),
-                //   onTap: () {
-                //     //Navigator.pop(context);
-                //     Get.to(() => const PatientHistory());
-                //   },
-                // ),
-                ListTile(
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  leading: Image.asset(
-                    AppImages.walletimg,
-                    height: Get.height * 0.03,
-                    width: Get.width * 0.06,
-                  ),
-                  title: Text(
-                    'wallet'.tr,
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      color: ColorManager.kWhiteColor,
-                      // fontWeight: FontWeight.w600,
+                  SizedBox(
+                    width: Get.width * 0.65,
+                    child: Text(
+                      ProfileController.i.selectedbasicInfo?.fullName ?? "",
+                      style: GoogleFonts.poppins(
+                          color: ColorManager.kWhiteColor,
+                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    // ),
-                    // style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    //     color: ColorManager.kWhiteColor,
-                    //     fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {
-                    // COMING SOON
-                    Fluttertoast.showToast(
-                        msg: "ComingSoon".tr,
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: ColorManager.kPrimaryLightColor,
-                        textColor: ColorManager.kPrimaryColor,
-                        fontSize: 14.0);
-                    // Get.to(() => WalletScreen(
-                    //       index: 1,
-                    //     ));
-                  },
-                ),
-                ListTile(
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  leading: Image.asset(
-                    AppImages.forgetpassword,
-                    height: Get.height * 0.035,
+                  Divider(
+                    thickness: Get.height * 0.002,
+                    color: ColorManager.kWhiteColor,
                   ),
-                  title: Text(
-                    'changePassword'.tr,
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
+                  ListTile(
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    leading: Image.asset(
+                      AppImages.walletimg,
+                      height: Get.height * 0.026,
+                    ),
+                    title: Text(
+                      'wallet'.tr,
+                      style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: ColorManager.kWhiteColor,
-                        //  fontWeight: FontWeight.w600,
                       ),
                     ),
+                    onTap: () {
+                      // COMING SOON
+                      Fluttertoast.showToast(
+                          msg: "ComingSoon".tr,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: ColorManager.kPrimaryLightColor,
+                          textColor: ColorManager.kPrimaryColor,
+                          fontSize: 14.0);
+                      // Get.to(() => WalletScreen(
+                      //       index: 1,
+                      //     ));
+                    },
                   ),
-                  onTap: () {
-                    Get.to(() => const ChangePasswordScreen());
-                  },
-                ),
-                ListTile(
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  leading: Image.asset(
-                    AppImages.biometric,
-                    height: Get.height * 0.035,
+                  ListTile(
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    leading: Image.asset(
+                      AppImages.forgetpassword,
+                      height: Get.height * 0.035,
+                    ),
+                    title: Text(
+                      'changePassword'.tr,
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: ColorManager.kWhiteColor,
+                          //  fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      Get.to(() => const ChangePasswordScreen());
+                    },
                   ),
-                  trailing: Transform.scale(
-                    scale: 0.55,
-                    child: Switch.adaptive(
-                        trackOutlineColor: MaterialStateProperty.resolveWith(
-                          (final Set<MaterialState> states) {
+                  ListTile(
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    leading: Image.asset(
+                      AppImages.biometric,
+                      height: Get.height * 0.035,
+                    ),
+                    trailing: Transform.scale(
+                      scale: 0.55,
+                      child: Switch.adaptive(
+                          trackOutlineColor: MaterialStateProperty.resolveWith(
+                            (final Set<MaterialState> states) {
+                              if (states.contains(MaterialState.selected)) {
+                                return ColorManager.kWhiteColor;
+                              }
+
+                              return ColorManager.kWhiteColor;
+                            },
+                          ),
+                          thumbColor: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
                             if (states.contains(MaterialState.selected)) {
                               return ColorManager.kWhiteColor;
                             }
-
                             return ColorManager.kWhiteColor;
-                          },
-                        ),
-                        thumbColor: MaterialStateProperty.resolveWith<Color?>(
-                            (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.selected)) {
-                            return ColorManager.kWhiteColor;
-                          }
-                          return ColorManager.kWhiteColor;
-                        }),
-                        activeTrackColor:
-                            ColorManager.kWhiteColor.withOpacity(0),
-                        inactiveTrackColor:
-                            ColorManager.kWhiteColor.withOpacity(0),
-                        value: ProfileController.i.fingerprint,
-                        onChanged: (val) async {
-                          bool auth = await Authentication.authentication();
-                          if (val == true) {
-                            if (auth) {
-                              // authentication = await _authenticate();
+                          }),
+                          activeTrackColor:
+                              ColorManager.kWhiteColor.withOpacity(0),
+                          inactiveTrackColor:
+                              ColorManager.kWhiteColor.withOpacity(0),
+                          value: ProfileController.i.fingerprint,
+                          onChanged: (val) async {
+                            bool auth = await Authentication.authentication();
+                            if (val == true) {
                               if (auth) {
-                                if (ProfileController.i.selectedbasicInfo?.id ==
-                                    null) {
-                                  ProfileController.i.fingerprint = auth;
-                                } else {
-                                  LocalDb.savefingerprint(true);
-                                  // Utils().toastmessage(“You are already Logged in”);
-                                  ProfileController.i.fingerprint = true;
-                                }
-                                setState(() {});
-                              } else {}
-                              if (ProfileController.i.fingerprint) {
+                                // authentication = await _authenticate();
                                 if (auth) {
                                   if (ProfileController
-                                          .i.selectedbasicInfo?.id !=
+                                          .i.selectedbasicInfo?.id ==
                                       null) {
+                                    ProfileController.i.fingerprint = auth;
+                                  } else {
                                     LocalDb.savefingerprint(true);
+                                    // Utils().toastmessage(“You are already Logged in”);
+                                    ProfileController.i.fingerprint = true;
+                                  }
+                                  setState(() {});
+                                } else {}
+                                if (ProfileController.i.fingerprint) {
+                                  if (auth) {
+                                    if (ProfileController
+                                            .i.selectedbasicInfo?.id !=
+                                        null) {
+                                      LocalDb.savefingerprint(true);
+                                      setState(() {
+                                        ProfileController.i.fingerprint = true;
+                                      });
+                                    }
                                     setState(() {
+                                      ProfileController.i.selectedbasicInfo;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      LocalDb.savefingerprint(true);
                                       ProfileController.i.fingerprint = true;
                                     });
                                   }
-                                  setState(() {
-                                    ProfileController.i.selectedbasicInfo;
-                                  });
-                                } else {
-                                  setState(() {
-                                    LocalDb.savefingerprint(true);
-                                    ProfileController.i.fingerprint = true;
-                                  });
                                 }
+                              } else {
+                                setState(() {
+                                  LocalDb.savefingerprint(false);
+                                  ProfileController.i.fingerprint = false;
+                                });
                               }
                             } else {
-                              setState(() {
+                              if (auth) {
                                 LocalDb.savefingerprint(false);
-                                ProfileController.i.fingerprint = false;
-                              });
+                                ProfileController.i.fingerprint = val;
+                              }
+                              setState(() {});
                             }
-                          } else {
-                            if (auth) {
-                              LocalDb.savefingerprint(false);
-                              ProfileController.i.fingerprint = val;
-                            }
-                            setState(() {});
-                          }
-                        }),
-                  ),
-                  title: Text(
-                    'biometric'.tr,
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: ColorManager.kWhiteColor,
+                          }),
+                    ),
+                    title: Text(
+                      'biometric'.tr,
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: ColorManager.kWhiteColor,
+                        ),
                       ),
                     ),
                   ),
-                  onTap: () {
-                    //Navigator.pop(context);
-                  },
-                ),
-
-                ListTile(
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  leading: Image.asset(
-                    AppImages.language,
-                    height: Get.height * 0.035,
-                  ),
-                  title: Text(
-                    'languages'.tr,
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: ColorManager.kWhiteColor,
-                        //  fontWeight: FontWeight.w600,
+                  ListTile(
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    leading: Image.asset(
+                      AppImages.language,
+                      height: Get.height * 0.035,
+                    ),
+                    title: Text(
+                      'languages'.tr,
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: ColorManager.kWhiteColor,
+                          //  fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+                    onTap: () async {
+                      await languageSelector(context, AppConstants.languages);
+                    },
                   ),
-                  onTap: () async {
-                    await languageSelector(context, AppConstants.languages);
-                  },
-                ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                Divider(
-                  thickness: Get.height * 0.002,
-                  color: ColorManager.kWhiteColor,
-                ),
-
-                SizedBox(
-                  height: Get.height * 0.22,
-                ),
-                ListTile(
-                  leading: Image.asset(
-                    AppImages.bin,
-                    height: Get.height * 0.03,
+                  SizedBox(
+                    height: Get.height * 0.02,
                   ),
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  title: Text(
-                    'deleteAccount'.tr,
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: ColorManager.kWhiteColor,
-                        //   fontWeight: FontWeight.w600,
+                  Divider(
+                    thickness: Get.height * 0.002,
+                    color: ColorManager.kWhiteColor,
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.22,
+                  ),
+                  // ListTile(
+                  //   leading: Image.asset(
+                  //     AppImages.bin,
+                  //     height: Get.height * 0.03,
+                  //   ),
+                  //   visualDensity:
+                  //       const VisualDensity(horizontal: 0, vertical: -4),
+                  //   contentPadding:
+                  //       const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  //   title: Text(
+                  //     'deleteAccount'.tr,
+                  //     style: GoogleFonts.poppins(
+                  //       textStyle: GoogleFonts.poppins(
+                  //         fontSize: 15,
+                  //         color: ColorManager.kWhiteColor,
+                  //         //   fontWeight: FontWeight.w600,
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   onTap: () async {
+                  //     await deleteAccount(context);
+                  //   },
+                  // ),
+                  ListTile(
+                    leading: Image.asset(
+                      AppImages.logout,
+                      height: Get.height * 0.035,
+                    ),
+                    visualDensity:
+                        const VisualDensity(horizontal: 0, vertical: -4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    title: Text(
+                      'logout'.tr,
+                      style: GoogleFonts.poppins(
+                        textStyle: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: ColorManager.kWhiteColor,
+                          //  fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+                    onTap: () async {
+                      ProfileController.i.updatedDoctorInfo(BasicInfo());
+                      AuthController.i.emailController.clear();
+                      AuthController.i.passwordController.clear();
+                      String? id = await LocalDb().getDoctorId();
+                      String? token = await LocalDb().getToken();
+                      bool? loginStatus = await LocalDb().getLoginStatus();
+                      String? DeviceToken = await LocalDb().getDeviceToken();
+                      if (loginStatus ?? true) {
+                        AuthRepo.logout(
+                            DoctorId: id,
+                            token: token,
+                            DeviceToken: DeviceToken,
+                            IsLogOffAllDevice: 'false');
+                      }
+                      LocalDb().saveLoginStatus(false);
+                      Get.offAll(() => const LoginScreen());
+                    },
                   ),
-                  onTap: () async {
-                    await deleteAccount(context);
-                  },
-                ),
-
-                ListTile(
-                  leading: Image.asset(
-                    AppImages.logout,
-                    height: Get.height * 0.035,
-                  ),
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  title: Text(
-                    'logout'.tr,
-                    style: GoogleFonts.poppins(
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: ColorManager.kWhiteColor,
-                        //  fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  onTap: () async {
-                    ProfileController.i.updatedDoctorInfo(BasicInfo());
-                    AuthController.i.emailController.clear();
-                    AuthController.i.passwordController.clear();
-                    String? id = await LocalDb().getDoctorId();
-                    String? token = await LocalDb().getToken();
-                    bool? loginStatus = await LocalDb().getLoginStatus();
-                    String? DeviceToken = await LocalDb().getDeviceToken();
-                    if (loginStatus ?? true) {
-                      AuthRepo.logout(
-                          DoctorId: id,
-                          token: token,
-                          DeviceToken: DeviceToken,
-                          IsLogOffAllDevice: 'false');
-                    }
-                    LocalDb().saveLoginStatus(false);
-                    Get.offAll(() => const LoginScreen());
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
       }),
     );
   }
-
-  // final LocalAuthentication auth = LocalAuthentication();
-  // List<BiometricType>? _availableBiometrics;
-  // String _authorized = 'Not Authorized';
-  // bool _isAuthenticating = false;
-  // bool authentication = false;
-
-  // Future<bool> _authenticate() async {
-  //   bool authenticated = false;
-  //   try {
-  //     setState(() {
-  //       _isAuthenticating = true;
-  //       _authorized = 'Authenticating';
-  //     });
-  //     authenticated = await auth.authenticate(
-  //       localizedReason: 'Let OS determine authentication method',
-  //       options: const AuthenticationOptions(
-  //           stickyAuth: true, biometricOnly: true, useErrorDialogs: true),
-  //     );
-  //     setState(() {
-  //       _isAuthenticating = false;
-  //     });
-  //   } on PlatformException catch (e) {
-  //     setState(() {
-  //       _isAuthenticating = false;
-  //       _authorized = 'Error - ${e.message}';
-  //       print(e.message.toString());
-  //     });
-  //     return authenticated;
-  //   }
-  //   if (!mounted) {
-  //     return authenticated;
-  //   }
-
-  //   setState(
-  //       () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
-  //   return authenticated;
-  // }
-
-  // bool fingerprint = false;
 
   customListTile(BuildContext context,
       {String? title,

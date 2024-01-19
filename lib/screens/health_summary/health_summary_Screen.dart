@@ -101,28 +101,6 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
                               ),
                               Row(
                                 children: [
-                                  if (isConnected)
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: Get.height * 0.04,
-                                        width: Get.width * 0.43,
-                                        decoration: BoxDecoration(
-                                          color: ColorManager.KgreenColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'deviceconnected'.tr,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 10,
-                                                color:
-                                                    ColorManager.kWhiteColor),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   if (!isConnected)
                                     InkWell(
                                       onTap: () {},
@@ -200,9 +178,6 @@ class _HealthSummaryScreenState extends State<HealthSummaryScreen> {
                     ],
                   );
                 }),
-            // SizedBox(
-            //   height: Get.height * 0.05,
-            // ),
           ],
         ),
       ),

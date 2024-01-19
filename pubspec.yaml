@@ -88,6 +88,12 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   easy_loading_button: ^0.3.2
   connectivity_plus: ^5.0.2 
+  flutter_file_downloader: ^1.2.1
+  dio: ^5.4.0
+  device_preview: ^1.1.0
+  share_plus: ^7.2.1
+  flutter_animated_icons: ^1.0.1
+  animated_icon: ^0.0.4
   # webview_flutter: ^4.4.2
   # flutter_webview_pro: ^3.0.1+4
 

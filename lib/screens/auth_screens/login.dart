@@ -48,33 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool isfingerprintEnable = false;
-  // bool isBiometric = false;
   final LocalAuthentication auth = LocalAuthentication();
-
-  //List<BiometricType>? _availableBiometrics;
-  // String _authorized = "Not Authorized";
-  // bool _isAuthenticating = false;
-  // bool authentication = false;
-  // Future<bool> _authenticate() async {
-  //   bool authenticated = false;
-  //   try {
-  //     _isAuthenticating = true;
-  //     _authorized = "Authenticating";
-  //     authenticated = await auth.authenticate(
-  //       localizedReason: "Let OS determine authentication method",
-  //       options: const AuthenticationOptions(
-  //           stickyAuth: true, biometricOnly: true, useErrorDialogs: true),
-  //     );
-  //     _isAuthenticating = false;
-  //   } on PlatformException catch (e) {
-  //     _isAuthenticating = false;
-  //     _authorized = "Error - ${e.message}";
-
-  //     return authenticated;
-  //   }
-  //   () => _authorized = authenticated ? "Authorized" : "Not Authorized";
-  //   return authenticated;
-  // }
 
   call() async {
     String? username = await LocalDb().getUsername();
@@ -82,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     bool fingerprint = await LocalDb.getfingerprint();
     if (username != null && userpassword != null && fingerprint) {
-      // bool auth = await _authenticate();
       bool auth = await Authentication.authentication();
 
       if (auth) {
@@ -131,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
           inAsyncCall: AuthController.i.isLoading,
           blurEffectIntensity: 4,
           progressIndicator: const SpinKitSpinningLines(
-            color: Color(0xfff1272d3),
+            color: ColorManager.kPrimaryColor,
             size: 60,
           ),
           dismissible: false,
@@ -174,150 +147,154 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(
                                     height: Get.height * 0.64,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'welcometo'.tr,
-                                          style: GoogleFonts.raleway(
-                                            textStyle: GoogleFonts.poppins(
-                                                fontSize: 40,
-                                                color:
-                                                    ColorManager.kPrimaryColor,
-                                                fontWeight: FontWeight.w900),
-                                          ),
-                                        ),
-                                        Text(
-                                          '$appName.',
-                                          style: GoogleFonts.raleway(
-                                            textStyle: GoogleFonts.poppins(
-                                                fontSize: 25,
-                                                color:
-                                                    ColorManager.kPrimaryColor,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.04,
-                                        ),
-                                        AuthTextField(
-                                          validator: (p0) {
-                                            if (p0!.isEmpty) {
-                                              return 'EnterUsername'.tr;
-                                            }
-                                            return null;
-                                          },
-                                          controller: login.emailController,
-                                          hintText: 'username'.tr,
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        AuthTextField(
-                                          validator: (p0) {
-                                            if (p0!.isEmpty) {
-                                              return 'enteryourpassword'.tr;
-                                            }
-                                            return null;
-                                          },
-                                          obscureText: login.obsecure,
-                                          suffixIcon: InkWell(
-                                              onTap: () {
-                                                login.updateobsecurepassword(
-                                                    !login.obsecure);
-                                              },
-                                              child: login.obsecure
-                                                  ? const Icon(
-                                                      CupertinoIcons.eye_slash)
-                                                  : const Icon(
-                                                      CupertinoIcons.eye)),
-                                          controller: login.passwordController,
-                                          hintText: 'password'.tr,
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Get.to(() =>
-                                                    const ForgetPassword());
-                                              },
-                                              child: Text(
-                                                'forgotPassword'.tr,
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    color: ColorManager
-                                                        .kPrimaryColor,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'welcometo'.tr,
+                                            style: GoogleFonts.raleway(
+                                              textStyle: GoogleFonts.poppins(
+                                                  fontSize: 40,
+                                                  color: ColorManager
+                                                      .kPrimaryColor,
+                                                  fontWeight: FontWeight.w900),
                                             ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.02,
-                                        ),
-                                        PrimaryButton(
-                                            title: 'login'.tr,
-                                            fontSize: 15,
-                                            fontweight: FontWeight.bold,
-                                            onPressed: () async {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                FocusScope.of(context)
-                                                    .unfocus();
-
-                                                try {
-                                                  await AuthRepo.login(
-                                                      cnic: login
-                                                          .emailController.text,
-                                                      password: login
-                                                          .passwordController
-                                                          .text);
-                                                } catch (e) {}
-                                              }
-                                            },
-                                            color: ColorManager.kPrimaryColor,
-                                            textcolor:
-                                                ColorManager.kWhiteColor),
-                                        SizedBox(
-                                          height: Get.height * 0.05,
-                                        ),
-                                        Visibility(
-                                          visible: isfingerprintEnable,
-                                          child: SizedBox(
-                                            height: Get.height * 0.08,
-                                            child: Center(
-                                                child: InkWell(
-                                              onTap: () {
-                                                call();
-                                              },
-                                              child: Image.asset(
-                                                  Images.fingerprint_icon),
-                                            )),
                                           ),
-                                        ),
-                                        // Visibility(
-                                        //   visible: !isfingerprintEnable,
-                                        //   child: SizedBox(
-                                        //     height: Get.height * 0.08,
-                                        //     child: Center(
-                                        //         child: InkWell(
-                                        //       onTap: () {
-                                        //         // callQRScanner();
-                                        //         Get.to(const MyHomePage());
-                                        //       },
-                                        //       child: Image.asset(
-                                        //           Images.qrscan_icon),
-                                        //     )),
-                                        //   ),
-                                        // ),
-                                      ],
+                                          Text(
+                                            '$appName.',
+                                            style: GoogleFonts.raleway(
+                                              textStyle: GoogleFonts.poppins(
+                                                  fontSize: 25,
+                                                  color: ColorManager
+                                                      .kPrimaryColor,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.04,
+                                          ),
+                                          AuthTextField(
+                                            validator: (p0) {
+                                              if (p0!.isEmpty) {
+                                                return 'EnterUsername'.tr;
+                                              }
+                                              return null;
+                                            },
+                                            controller: login.emailController,
+                                            hintText: 'username'.tr,
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.02,
+                                          ),
+                                          AuthTextField(
+                                            validator: (p0) {
+                                              if (p0!.isEmpty) {
+                                                return 'enteryourpassword'.tr;
+                                              }
+                                              return null;
+                                            },
+                                            obscureText: login.obsecure,
+                                            suffixIcon: InkWell(
+                                                onTap: () {
+                                                  login.updateobsecurepassword(
+                                                      !login.obsecure);
+                                                },
+                                                child: login.obsecure
+                                                    ? const Icon(CupertinoIcons
+                                                        .eye_slash)
+                                                    : const Icon(
+                                                        CupertinoIcons.eye)),
+                                            controller:
+                                                login.passwordController,
+                                            hintText: 'password'.tr,
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.02,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  Get.to(() =>
+                                                      const ForgetPassword());
+                                                },
+                                                child: Text(
+                                                  'forgotPassword'.tr,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 12,
+                                                      color: ColorManager
+                                                          .kPrimaryColor,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.02,
+                                          ),
+                                          PrimaryButton(
+                                              title: 'login'.tr,
+                                              fontSize: 15,
+                                              fontweight: FontWeight.bold,
+                                              onPressed: () async {
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+
+                                                  try {
+                                                    await AuthRepo.login(
+                                                        cnic: login
+                                                            .emailController
+                                                            .text,
+                                                        password: login
+                                                            .passwordController
+                                                            .text);
+                                                  } catch (e) {}
+                                                }
+                                              },
+                                              color: ColorManager.kPrimaryColor,
+                                              textcolor:
+                                                  ColorManager.kWhiteColor),
+                                          SizedBox(
+                                            height: Get.height * 0.05,
+                                          ),
+                                          Visibility(
+                                            visible: isfingerprintEnable,
+                                            child: SizedBox(
+                                              height: Get.height * 0.08,
+                                              child: Center(
+                                                  child: InkWell(
+                                                onTap: () {
+                                                  call();
+                                                },
+                                                child: Image.asset(
+                                                    Images.fingerprint_icon),
+                                              )),
+                                            ),
+                                          ),
+                                          // Visibility(
+                                          //   visible: !isfingerprintEnable,
+                                          //   child: SizedBox(
+                                          //     height: Get.height * 0.08,
+                                          //     child: Center(
+                                          //         child: InkWell(
+                                          //       onTap: () {
+                                          //         // callQRScanner();
+                                          //         Get.to(const MyHomePage());
+                                          //       },
+                                          //       child: Image.asset(
+                                          //           Images.qrscan_icon),
+                                          //     )),
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   SizedBox(

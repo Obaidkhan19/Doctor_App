@@ -1,62 +1,23 @@
+import 'dart:developer';
 import 'dart:io';
+import 'dart:math' as math;
 
+import 'package:animated_icon/animate_icon.dart';
+import 'package:animated_icon/animate_icons.dart';
 import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
+import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:path_provider/path_provider.dart';
-
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
-// class pdfviewconsulted extends StatefulWidget {
-//   final String url;
-//   final String name;
-//   const pdfviewconsulted({super.key, required this.url, required this.name});
-
-//   @override
-//   State<pdfviewconsulted> createState() => _pdfviewconsultedState();
-// }
-
-// class _pdfviewconsultedState extends State<pdfviewconsulted> {
-//   Future<void> refresh() async {
-//     setState(() {});
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         leading: IconButton(
-//           icon: const Icon(Icons.arrow_back_ios),
-//           color: ColorManager.kPrimaryColor,
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//         ),
-//       ),
-//       body: RefreshIndicator(
-//         onRefresh: refresh,
-//         child: Stack(
-//           children: <Widget>[
-//             ListView(),
-//             Center(
-//               child: SizedBox(
-//                 height: Get.height * 0.8,
-//                 width: Get.width * 1,
-//                 child: SfPdfViewer.network(baseURL + widget.url),
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
 
 class pdfviewconsulted extends StatefulWidget {
   final String url;
@@ -66,13 +27,11 @@ class pdfviewconsulted extends StatefulWidget {
   _pdfviewconsultedState createState() => _pdfviewconsultedState();
 }
 
-class _pdfviewconsultedState extends State<pdfviewconsulted> {
+class _pdfviewconsultedState extends State<pdfviewconsulted>
+    with TickerProviderStateMixin {
   String urlPDFPath = "";
   bool exists = true;
-  final int _totalPages = 0;
-  final int _currentPage = 0;
   bool pdfReady = false;
-  PDFViewController? _pdfViewController;
   bool loaded = false;
   Future<File> getFileFromUrl(String url, {name}) async {
     var fileName = '$name';
@@ -116,6 +75,7 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
         })
       },
     );
+
     super.initState();
   }
 
@@ -123,29 +83,76 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
     setState(() {});
   }
 
+  bool isDownloaded = false;
+  bool isdownloading = false;
+  File? filePath;
+  Future<File> downloadFile() async {
+    log(widget.url.toString());
+    var httpClient = HttpClient();
+    try {
+      var request =
+          await httpClient.getUrl(Uri.parse('$baseURL/${widget.url}'));
+      var response = await request.close();
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      Directory? dir;
+      if (Platform.isAndroid) {
+        dir = await getDownloadsDirectory();
+      }
+      if (Platform.isIOS) {
+        dir = await getApplicationDocumentsDirectory();
+      }
+      log(dir!.path.toString());
+      File file = File('${dir.path}/${widget.url.split('/').last}.pdf');
+      await file.writeAsBytes(bytes);
+      filePath = file;
+
+      isDownloaded = true;
+      Fluttertoast.showToast(
+          msg: "File Downlaoded".tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+      setState(() {});
+      return file;
+    } catch (error) {
+      isDownloaded = false;
+      Fluttertoast.showToast(
+          msg: "Error Downloading File".tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kRedColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+
+      return File('');
+    }
+  }
+
+  shareFile() async {
+    final result = await Share.shareXFiles(
+      [XFile(filePath!.path)],
+    );
+
+    if (result.status == ShareResultStatus.success) {
+      Fluttertoast.showToast(
+          msg: "Thank you for sharing the picture!".tr,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: ColorManager.kPrimaryColor,
+          textColor: ColorManager.kWhiteColor,
+          fontSize: 14.0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (loaded) {
       return Scaffold(
-        // appBar: AppBar(
-        //   title: Text(
-        //     widget.name,
-        //     style: GoogleFonts.poppins(
-        //       textStyle: GoogleFonts.poppins(
-        //           fontSize: 17,
-        //           fontWeight: FontWeight.w600,
-        //           color: ColorManager.kPrimaryColor),
-        //     ),
-        //   ),
-        //   leading: IconButton(
-        //     icon: const Icon(Icons.arrow_back_ios),
-        //     color: ColorManager.kPrimaryColor,
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //   ),
-        // ),
-
         body: MyCustomRefreshIndicator(
             onRefresh: refreshscreen,
             child: Stack(
@@ -156,28 +163,47 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
                     SizedBox(
                       height: Get.height * 0.08,
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios),
-                          color: ColorManager.kPrimaryColor,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        // SizedBox(
-                        //   width: Get.width * 0.17,
-                        // ),
-                        // Text(
-                        //   widget.name,
-                        //   style: GoogleFonts.poppins(
-                        //     textStyle: GoogleFonts.poppins(
-                        //         fontSize: 17,
-                        //         fontWeight: FontWeight.w600,
-                        //         color: ColorManager.kPrimaryColor),
-                        //   ),
-                        // ),
-                      ],
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back_ios),
+                            color: ColorManager.kPrimaryColor,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          isDownloaded == false
+                              ? AnimateIcon(
+                                  key: UniqueKey(),
+                                  onTap: () async {
+                                    isdownloading = true;
+
+                                    await downloadFile();
+
+                                    isdownloading = false;
+                                    setState(() {});
+                                  },
+                                  iconType: isdownloading
+                                      ? IconType.continueAnimation
+                                      : IconType.toggleIcon,
+                                  height: 50,
+                                  width: 50,
+                                  color: ColorManager.kPrimaryColor,
+                                  animateIcon: AnimateIcons.cloud,
+                                )
+                              : IconButton(
+                                  icon: const Icon(Icons.share),
+                                  color: ColorManager.kPrimaryColor,
+                                  onPressed: () {
+                                    shareFile();
+                                  },
+                                ),
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: SfPdfViewer.network(baseURL + widget.url),
@@ -186,41 +212,6 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
                 ),
               ],
             )),
-        // floatingActionButton: Row(
-        //   mainAxisAlignment: MainAxisAlignment.end,
-        //   children: <Widget>[
-        //     IconButton(
-        //       icon: const Icon(Icons.chevron_left),
-        //       iconSize: 50,
-        //       color: Colors.black,
-        //       onPressed: () {
-        //         setState(() {
-        //           if (_currentPage > 0) {
-        //             _currentPage--;
-        //             _pdfViewController?.setPage(_currentPage);
-        //           }
-        //         });
-        //       },
-        //     ),
-        //     Text(
-        //       "${_currentPage + 1}/$_totalPages",
-        //       style: const TextStyle(color: Colors.black, fontSize: 20),
-        //     ),
-        //     IconButton(
-        //       icon: const Icon(Icons.chevron_right),
-        //       iconSize: 50,
-        //       color: Colors.black,
-        //       onPressed: () {
-        //         setState(() {
-        //           if (_currentPage < _totalPages - 1) {
-        //             _currentPage++;
-        //             _pdfViewController?.setPage(_currentPage);
-        //           }
-        //         });
-        //       },
-        //     ),
-        //   ],
-        // ),
       );
     } else {
       if (exists) {
@@ -248,7 +239,6 @@ class _pdfviewconsultedState extends State<pdfviewconsulted> {
           ),
         );
       } else {
-        //Replace Error UI
         return Scaffold(
           appBar: AppBar(
             title: Text(
