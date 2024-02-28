@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/notification_model.dart';
 import 'package:doctormobileapplication/utils/constants.dart';

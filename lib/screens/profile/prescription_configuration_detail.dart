@@ -183,23 +183,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                               Center(
                                 child: GetBuilder<PreferenceController>(
                                   builder: (cont) => Text(
-                                    PreferenceController.i.preferenceObject
-                                                .customLanguageKeyBoardType ==
-                                            null
-                                        ? Language
-                                        : PreferenceController
-                                                    .i
-                                                    .preferenceObject
-                                                    .customLanguageKeyBoardType ==
-                                                "null"
-                                            ? Language
-                                            : PreferenceController
-                                                        .i
-                                                        .preferenceObject
-                                                        .customLanguageKeyBoardType ==
-                                                    0
-                                                ? "urdu".tr
-                                                : 'arabic'.tr,
+                                    'arabic'.tr,
                                     style: GoogleFonts.poppins(
                                       textStyle: GoogleFonts.poppins(
                                           fontSize: 12,
@@ -485,19 +469,7 @@ class _PrescriptionConfigurationState extends State<PrescriptionConfiguration> {
                         Center(
                           child: GetBuilder<PreferenceController>(
                             builder: (cont) => Text(
-                              PreferenceController.i.preferenceObject
-                                          .customLanguageKeyBoardType ==
-                                      null
-                                  ? Language
-                                  : PreferenceController.i.preferenceObject
-                                              .customLanguageKeyBoardType ==
-                                          "null"
-                                      ? Language
-                                      : PreferenceController.i.preferenceObject
-                                                  .customLanguageKeyBoardType ==
-                                              0
-                                          ? "urdu".tr
-                                          : 'arabic'.tr,
+                              'arabic'.tr,
                               style: GoogleFonts.poppins(
                                 textStyle: GoogleFonts.poppins(
                                     fontSize: 12,

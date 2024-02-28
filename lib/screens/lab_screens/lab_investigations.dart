@@ -100,8 +100,6 @@ class _LabInvestigationsState extends State<LabInvestigations> {
       ),
     ];
 
-    var cont =
-        Get.put<LabInvestigationController>(LabInvestigationController());
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),

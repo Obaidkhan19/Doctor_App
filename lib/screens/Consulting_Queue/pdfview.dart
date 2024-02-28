@@ -1,11 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:math' as math;
 
 import 'package:animated_icon/animate_icon.dart';
 import 'package:animated_icon/animate_icons.dart';
 import 'package:doctormobileapplication/components/custom_refresh_indicator.dart';
-import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/foundation.dart';

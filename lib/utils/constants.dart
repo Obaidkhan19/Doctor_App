@@ -4,18 +4,7 @@ import 'package:doctormobileapplication/models/language_model.dart';
 import 'package:get/get.dart';
 
 String baseURL = '';
-
-//helpfull
-String contactnumber = '';
-String TaxLabel = "NTN";
-String IDLabel = "National ID";
-String MedicalCertificateLabel = "LMPC";
-String MedicalNumberLabel = "DHA";
 String appName = 'Helpful';
-String Language = 'Arabic';
-
-bool? boolisMobile;
-bool? boolisTablet;
 
 class AppConstants {
   // API Endpoints
@@ -33,42 +22,30 @@ class AppConstants {
   static String login = '$baseURL/api/doctor/Signin';
   static String getGenders = '$baseURL/api/ddl/GetGenders';
   static String getMaritalStatus = '$baseURL/api/ddl/GetMaritalStatuses';
-
   static String uploadimage = '$baseURL/api/doctor/UploadFile';
-
   static String getbloodgroup = '$baseURL/api/ddl/GetBloodGroups';
   static String getdesignation = '$baseURL/api/ddl/GetDesignations';
   static String getreligion = '$baseURL/api/ddl/GetReligion';
   static String getrelation = '$baseURL/api/ddl/GetRelationshipTypes';
   static String getnokrelation = '$baseURL/api/ddl/GetNOKRelations';
-
   static String getTitle = '$baseURL/api/ddl/GetPersonTitle';
   static String getCountries = '$baseURL/api/ddl/GetCountries';
-
   static String getDegree = '$baseURL/api/ddl/GetDegrees';
   static String getLocations = '$baseURL/api/ddl/Location';
   static String getOrganization = '$baseURL/api/ddl/Organization';
-
   static String getBank = '$baseURL/api/ddl/GetBanks';
   static String getfieldofstudy = '$baseURL/api/ddl/GetFieldOfStudies';
-
   static String getinstitution = '$baseURL/api/ddl/GetInstitutions';
   static String getStatesOrProvince = '$baseURL/api/ddl/GetStateOrProvinces';
   static String getCities = '$baseURL/api/ddl/GetCities';
   static String deleteAccountURI = '$baseURL/api/account/DeletePatientAccount';
-
   static String getDoctorBasicInfo = "$baseURL/api/account/GetDoctorDetail";
   static String updatedoctorpersonalinfo =
       "$baseURL/api/doctor/UpdatePersonalInfo";
-
   static String addBankAccount = "$baseURL/api/doctor/BankDetail";
-
   static String editBankAccount = "$baseURL/api/doctor/UpdateBankDetail";
-
   static String addworklocation = "$baseURL/api/doctor/HosiptalORClinic";
-
   static String addeducation = "$baseURL/api/doctor/EducationalDetail";
-
   static String editeducation = "$baseURL/api/doctor/UpdateEducation";
 
   static String addexperience = "$baseURL/api/doctor/ExpereinceDetail";

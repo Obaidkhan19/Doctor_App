@@ -172,41 +172,41 @@ class ProfileController extends GetxController implements GetxService {
     // }
 
     EditProfileController.i.idnumber.text =
-        selectedbasicInfo?.cNICNumber.toString() ?? "";
+        selectedbasicInfo?.cNICNumber?.toString() ?? "";
     EditProfileController.i.passportno.text =
-        selectedbasicInfo?.passportNumber.toString() ?? "";
+        selectedbasicInfo?.passportNumber?.toString() ?? "";
 
     EditProfileController.i.imcno.text =
-        selectedbasicInfo?.pMDCNumber.toString() ?? "";
+        selectedbasicInfo?.pMDCNumber?.toString() ?? "";
     EditProfileController.i.ntnnumber.text =
-        selectedbasicInfo?.nTNNo.toString() ?? "";
+        selectedbasicInfo?.nTNNo?.toString() ?? "";
     EditProfileController.i.consultancyfee.text =
-        selectedbasicInfo?.consultationFee.toString() ?? "";
+        selectedbasicInfo?.consultationFee?.toString() ?? "";
 
     EditProfileController.i.followupfee.text =
-        selectedbasicInfo?.followUpFee.toString() ?? "";
+        selectedbasicInfo?.followUpFee?.toString() ?? "";
     EditProfileController.i.guardianname.text =
         selectedbasicInfo?.guardianName ?? "";
     EditProfileController.i.addressController.text =
         selectedbasicInfo?.address ?? "";
     EditProfileController.i.publicmobileno.text =
-        selectedbasicInfo?.contactPublic.toString() ?? "";
+        selectedbasicInfo?.contactPublic?.toString() ?? "";
     EditProfileController.i.privatemobileno.text =
-        selectedbasicInfo?.cellNumber.toString() ?? "";
+        selectedbasicInfo?.cellNumber?.toString() ?? "";
     EditProfileController.i.telephone.text =
-        selectedbasicInfo?.telephoneNumber.toString() ?? "";
+        selectedbasicInfo?.telephoneNumber?.toString() ?? "";
     EditProfileController.i.emailController.text =
-        selectedbasicInfo?.email.toString() ?? "";
+        selectedbasicInfo?.email?.toString() ?? "";
 
     EditProfileController.i.nokfirstname.text =
         selectedbasicInfo?.nOKFirstName ?? "";
     EditProfileController.i.noklastname.text =
         selectedbasicInfo?.nOKLastName ?? "";
     EditProfileController.i.nokidno.text =
-        selectedbasicInfo?.nOKCNICNumber.toString() ?? "";
+        selectedbasicInfo?.nOKCNICNumber?.toString() ?? "";
 
     EditProfileController.i.nokmobileno.text =
-        selectedbasicInfo?.nOKCellNumber.toString() ?? "";
+        selectedbasicInfo?.nOKCellNumber?.toString() ?? "";
 
     if (selectedbasicInfo?.personTitleId != null) {
       EditProfileController.i.selectedpersonalTitle?.name =
@@ -279,9 +279,9 @@ class ProfileController extends GetxController implements GetxService {
     EditProfileController.i.professionalsummary.text =
         selectedbasicInfo?.professionalSummary ?? "";
     EditProfileController.i.topmargin.text =
-        selectedbasicInfo?.marginTop.toString() ?? "";
+        selectedbasicInfo?.marginTop?.toString() ?? "";
     EditProfileController.i.bottommargin.text =
-        selectedbasicInfo?.marginBottom.toString() ?? "";
+        selectedbasicInfo?.marginBottom?.toString() ?? "";
     EditProfileController.i.displayenglisheducation.text =
         selectedbasicInfo?.educationEnglish ?? "";
     EditProfileController.i.displayenglishdesignation.text =

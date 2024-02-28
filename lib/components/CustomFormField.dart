@@ -1,6 +1,4 @@
 // ignore_for_file: must_be_immutable
-
-import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -248,8 +246,6 @@ class CustomFormField1 extends StatefulWidget {
 
 class _CustomFormField1State extends State<CustomFormField1> {
   @override
-  final ERXController controller = Get.put(ERXController());
-
   @override
   Widget build(BuildContext context) {
     //  String focuse = widget.focus1!;
@@ -320,8 +316,6 @@ class CustomFormFieldqueue extends StatefulWidget {
 
 class _CustomFormFieldqueueState extends State<CustomFormFieldqueue> {
   @override
-  final ERXController controller = Get.put(ERXController());
-
   @override
   Widget build(BuildContext context) {
     //  String focuse = widget.focus1!;

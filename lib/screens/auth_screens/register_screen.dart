@@ -14,7 +14,6 @@ import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/genders_model.dart';
 import 'package:doctormobileapplication/models/provinces_model.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:doctormobileapplication/utils/textfield_masks/masks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';

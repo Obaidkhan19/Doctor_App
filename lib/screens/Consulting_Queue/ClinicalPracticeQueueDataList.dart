@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
@@ -19,8 +21,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../components/images.dart';
 import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
-import '../../helpers/values_manager.dart';
-import '../../utils/AppImages.dart';
 
 class ClinicalPracticeQueueDataList extends StatefulWidget {
   String? Status;
@@ -103,7 +103,7 @@ class _ClinicalPracticeQueueDataListState
           inAsyncCall: ConsultingQueueController.i.isclinicLoading,
           blurEffectIntensity: 4,
           progressIndicator: const SpinKitSpinningLines(
-            color: Color(0xfff1272d3),
+            color: ColorManager.kPrimaryColor,
             size: 60,
           ),
           dismissible: false,
@@ -115,15 +115,7 @@ class _ClinicalPracticeQueueDataListState
               children: [
                 const BackgroundLogoimage1(),
                 Container(
-                  // decoration: const BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: AssetImage(Images.logoBackground),
-                  //     alignment: Alignment.centerLeft,
-                  //   ),
-                  // ),
                   child: SafeArea(
-                    // minimum: const EdgeInsets.all(AppPadding.p14)
-                    //     .copyWith(top: 0, bottom: -10),
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
@@ -184,111 +176,125 @@ class _ClinicalPracticeQueueDataListState
                                                           BorderRadius.all(
                                                               Radius.circular(
                                                                   Get.width *
-                                                                      0.04)),
+                                                                      0.02)),
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsets.only(
-                                                          top:
-                                                              Get.height * 0.01,
-                                                          bottom: Get.height *
-                                                              0.02),
+                                                        top: Get.height * 0.02,
+                                                        bottom:
+                                                            Get.height * 0.02,
+                                                        left: Get.height * 0.01,
+                                                        right:
+                                                            Get.height * 0.01,
+                                                      ),
                                                       child: Column(
                                                         children: [
-                                                          Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        Get.width *
-                                                                            0.0),
-                                                            child: ListTile(
-                                                              leading:
-                                                                  CircleAvatar(
-                                                                backgroundColor:
-                                                                    const Color
-                                                                        .fromARGB(
-                                                                        0,
-                                                                        207,
-                                                                        166,
-                                                                        166),
-                                                                radius: 30,
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              30),
-                                                                  child: manageAppointment
-                                                                              .patientImagePath !=
-                                                                          null
-                                                                      ? CachedNetworkImage(
-                                                                          height:
-                                                                              Get.width * 0.16,
-                                                                          imageUrl:
-                                                                              baseURL + manageAppointment.patientImagePath,
-                                                                          fit: BoxFit
-                                                                              .fill,
-                                                                          errorWidget: (context, url, error) =>
-                                                                              Image.asset(Images.avator),
-                                                                        )
-                                                                      : Image.asset(
-                                                                          Images
-                                                                              .avator),
-                                                                ),
+                                                          ListTile(
+                                                            leading:
+                                                                CircleAvatar(
+                                                              backgroundColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                      0,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                              radius: 30,
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            27),
+                                                                child: manageAppointment
+                                                                            .patientImagePath !=
+                                                                        null
+                                                                    ? CachedNetworkImage(
+                                                                        imageUrl:
+                                                                            baseURL +
+                                                                                manageAppointment.patientImagePath,
+                                                                        imageBuilder:
+                                                                            (context, imageProvider) =>
+                                                                                Container(
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            image:
+                                                                                DecorationImage(
+                                                                              image: imageProvider,
+                                                                              fit: BoxFit.fill,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        errorWidget: (context,
+                                                                                url,
+                                                                                error) =>
+                                                                            Image.asset(Images.avator),
+                                                                      )
+                                                                    : Image.asset(
+                                                                        Images
+                                                                            .avator),
                                                               ),
-                                                              title: Transform
-                                                                  .translate(
-                                                                offset:
-                                                                    const Offset(
-                                                                        -0, 0),
-                                                                child: Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      manageAppointment
-                                                                              .patientName ??
-                                                                          "",
-                                                                      style: GoogleFonts
-                                                                          .poppins(
-                                                                        fontSize:
-                                                                            13,
-                                                                        color: ColorManager
-                                                                            .kPrimaryColor,
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
+                                                            ),
+                                                            title: Transform
+                                                                .translate(
+                                                              offset:
+                                                                  const Offset(
+                                                                      -0, 0),
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    manageAppointment
+                                                                            .patientName ??
+                                                                        "",
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: ColorManager
+                                                                          .kPrimaryColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
                                                                     ),
-                                                                    Text(
-                                                                      manageAppointment
-                                                                              .mRNO ??
-                                                                          "",
-                                                                      style: GoogleFonts
-                                                                          .poppins(
-                                                                        fontSize:
-                                                                            10,
-                                                                        color: ColorManager
-                                                                            .kPrimaryColor,
-                                                                      ),
+                                                                  ),
+                                                                  Text(
+                                                                    manageAppointment
+                                                                            .mRNO ??
+                                                                        "",
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      fontSize:
+                                                                          10,
+                                                                      color: ColorManager
+                                                                          .kPrimaryColor,
                                                                     ),
-                                                                    Text(
-                                                                      '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
-                                                                      style: GoogleFonts
-                                                                          .poppins(
-                                                                        fontSize:
-                                                                            10,
-                                                                        color: ColorManager
-                                                                            .kblackColor,
-                                                                      ),
+                                                                  ),
+                                                                  Text(
+                                                                    '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      fontSize:
+                                                                          10,
+                                                                      color: ColorManager
+                                                                          .kblackColor,
                                                                     ),
-                                                                  ],
-                                                                ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              trailing:
-                                                                  manageAppointment
-                                                                              .chatURL ==
-                                                                          null
-                                                                      ? InkWell(
+                                                            ),
+                                                            trailing:
+                                                                manageAppointment
+                                                                            .chatURL ==
+                                                                        null
+                                                                    ? Padding(
+                                                                        padding:
+                                                                            EdgeInsets.only(right: Get.width * 0.01),
+                                                                        child:
+                                                                            InkWell(
                                                                           onTap:
                                                                               () async {
                                                                             bool res = await Get.to(() =>
@@ -298,6 +304,7 @@ class _ClinicalPracticeQueueDataListState
                                                                                   patientid: manageAppointment.patientId,
                                                                                   visitno: manageAppointment.visitNo,
                                                                                   prescribedvalue: manageAppointment.prescribedInValue,
+                                                                                  chaturl: manageAppointment.chatURL,
                                                                                 ));
                                                                             if (res ==
                                                                                 true) {
@@ -308,15 +315,20 @@ class _ClinicalPracticeQueueDataListState
                                                                           child:
                                                                               SizedBox(
                                                                             height:
-                                                                                Get.width * 0.09,
+                                                                                Get.width * 0.05,
                                                                             child:
                                                                                 Image.asset(
                                                                               Images.rxedit,
                                                                               color: ColorManager.kPrimaryColor,
                                                                             ),
                                                                           ),
-                                                                        )
-                                                                      : InkWell(
+                                                                        ),
+                                                                      )
+                                                                    : Padding(
+                                                                        padding:
+                                                                            EdgeInsets.only(right: Get.width * 0.01),
+                                                                        child:
+                                                                            InkWell(
                                                                           onTap:
                                                                               () async {
                                                                             Get.to(() =>
@@ -328,19 +340,20 @@ class _ClinicalPracticeQueueDataListState
                                                                                   visitno: manageAppointment.visitNo,
                                                                                   prescribedvalue: manageAppointment.prescribedInValue.toString(),
                                                                                   title: manageAppointment.chatURL,
+                                                                                  url: manageAppointment.chatURL,
                                                                                 ));
                                                                           },
                                                                           child:
                                                                               SizedBox(
                                                                             height:
-                                                                                Get.width * 0.09,
+                                                                                Get.width * 0.05,
                                                                             child:
                                                                                 Image.asset(
                                                                               Images.videocall,
                                                                             ),
                                                                           ),
                                                                         ),
-                                                            ),
+                                                                      ),
                                                           ),
                                                           SizedBox(
                                                             height: Get.height *
@@ -351,7 +364,7 @@ class _ClinicalPracticeQueueDataListState
                                                                 .symmetric(
                                                               horizontal:
                                                                   Get.width *
-                                                                      0.065,
+                                                                      0.035,
                                                             ),
                                                             child:
                                                                 const MySeparator(
@@ -368,7 +381,7 @@ class _ClinicalPracticeQueueDataListState
                                                                 .symmetric(
                                                               horizontal:
                                                                   Get.width *
-                                                                      0.065,
+                                                                      0.035,
                                                             ),
                                                             child: Row(
                                                               mainAxisAlignment:
@@ -377,7 +390,7 @@ class _ClinicalPracticeQueueDataListState
                                                               children: [
                                                                 Expanded(
                                                                   child: Text(
-                                                                    '${'waitingSince'.tr} ${contr.startTimeswait[index] ?? ""}',
+                                                                    '${'waitingSince'.tr} ${contr.startTimeswait[index]}',
                                                                     style: GoogleFonts
                                                                         .poppins(
                                                                       fontSize:
@@ -412,14 +425,11 @@ class _ClinicalPracticeQueueDataListState
                                           }
                                         }),
                                   )
-                                : (((ConsultingQueueController.i
-                                                        .ClinicalPracticeDataList !=
-                                                    null) &&
-                                                (ConsultingQueueController
-                                                        .i
-                                                        .ClinicalPracticeDataList
-                                                        .queue !=
-                                                    null))
+                                : (((ConsultingQueueController
+                                                    .i
+                                                    .ClinicalPracticeDataList
+                                                    .queue !=
+                                                null))
                                             ? ConsultingQueueController
                                                 .i
                                                 .ClinicalPracticeDataList

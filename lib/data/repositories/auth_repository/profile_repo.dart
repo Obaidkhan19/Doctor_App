@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:doctormobileapplication/data/controller/add_specialization_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';

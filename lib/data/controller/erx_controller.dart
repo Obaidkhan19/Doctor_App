@@ -22,6 +22,9 @@ import 'package:doctormobileapplication/models/medicincematrix.dart' as med;
 class ERXController extends GetxController implements GetxService {
   static ERXController get i => Get.put(ERXController());
 
+  bool callinit = true;
+  // updatecallinit() {}
+
   List<dynamic> deletedidlist = [];
 
   bool _isLoading = false;

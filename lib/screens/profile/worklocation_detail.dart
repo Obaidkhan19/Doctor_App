@@ -5,7 +5,6 @@ import 'package:doctormobileapplication/data/controller/add_worklocation_control
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
 import 'package:doctormobileapplication/data/repositories/ConfigureAppointment_repo/configure_appointment_repo.dart';
-import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
@@ -30,6 +29,8 @@ class WorkLocation extends StatefulWidget {
 }
 
 class _WorkLocationState extends State<WorkLocation> {
+  get boolisMobile => null;
+
   _getDoctorBasicInfo() async {
     ProfileRepo pr = ProfileRepo();
     await pr.getDoctorBasicInfo();
@@ -121,7 +122,6 @@ class _WorkLocationState extends State<WorkLocation> {
   var edit = Get.put<EditProfileController>(EditProfileController());
 
   final GlobalKey<FormState> _addformKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _editformKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
@@ -129,7 +129,7 @@ class _WorkLocationState extends State<WorkLocation> {
         inAsyncCall: profile.isLoading,
         blurEffectIntensity: 4,
         progressIndicator: const SpinKitSpinningLines(
-          color: Color(0xfff1272d3),
+          color: ColorManager.kPrimaryColor,
           size: 60,
         ),
         child: GetBuilder<ProfileController>(
@@ -620,7 +620,9 @@ class _WorkLocationState extends State<WorkLocation> {
                                         backgroundColor:
                                             ColorManager.kWhiteColor,
                                         boxheight: Get.height * 0.04,
-                                        boxwidth: Get.width * 0.08,
+                                        boxwidth: boolisMobile!
+                                            ? Get.width * 0.08
+                                            : Get.width * 0.04,
                                       )
                                     ],
                                   ),

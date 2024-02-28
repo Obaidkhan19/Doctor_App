@@ -1,5 +1,4 @@
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
@@ -21,7 +20,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController oldpasswordController = TextEditingController();
-  @override
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {

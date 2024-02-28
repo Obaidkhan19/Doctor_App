@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocalDb {
   setBaseURL(String? url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var result = prefs.setString('baseurl', '$url');
+    prefs.setString('baseurl', '$url');
   }
 
   Future<String?>? getBaseURL() async {
@@ -18,7 +18,7 @@ class LocalDb {
 
   saveUsername(String? username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var result = prefs.setString('Username', '$username');
+    prefs.setString('Username', '$username');
   }
 
   Future<String?>? getUsername() async {
@@ -29,7 +29,7 @@ class LocalDb {
 
   savePassword(String? password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var result = prefs.setString('Password', '$password');
+    prefs.setString('Password', '$password');
   }
 
   Future<String?>? getPassword() async {
@@ -189,7 +189,7 @@ class LocalDb {
 
   saveDeviceToken(String? token) async {
     SharedPreferences s = await SharedPreferences.getInstance();
-    var string = s.setString('devicetoken', token.toString());
+    s.setString('devicetoken', token.toString());
     log('saved in pref $token');
   }
 

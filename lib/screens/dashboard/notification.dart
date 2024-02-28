@@ -118,12 +118,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   const BackgroundLogoimage1(),
                   Container(
-                    // decoration: const BoxDecoration(
-                    //   image: DecorationImage(
-                    //       image: AssetImage(Images.logoBackground),
-                    //       alignment: Alignment.centerLeft),
-                    // ),
-
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: Get.width * 0.03,

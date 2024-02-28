@@ -24,7 +24,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RegisterScreens extends StatefulWidget {
   const RegisterScreens({super.key});
@@ -34,7 +33,6 @@ class RegisterScreens extends StatefulWidget {
 }
 
 class _RegisterScreensState extends State<RegisterScreens> {
-  @override
   int selectedIndex = 0;
 
   void selectScreen(int index) {
@@ -180,7 +178,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           ? 'title'.tr
                           : controller.selectedpersonalTitle!.name.toString(),
                     ),
-
                     AuthTextField(
                       validator: (p0) {
                         if (p0!.isEmpty) {
@@ -191,7 +188,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                       controller: controller.firstname,
                       hintText: 'firstname'.tr,
                     ),
-
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
@@ -295,14 +291,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                           : controller.selectedmaritalStatus!.name.toString(),
                       isSizedBoxAvailable: false,
                     ),
-
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomRadioTile(
-                            title:
-                                '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}',
+                            title: 'National Id',
                             value: 'idno',
                             groupValue: controller.selectedRadioValue,
                             onChanged: (value) {
@@ -326,20 +320,12 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         ],
                       ),
                     ),
-
                     Visibility(
                       visible: controller.selectedRadioValue == "idno",
                       child: GetBuilder<PreferenceController>(
                         builder: (cont) => IdNoAuthTextField(
-                          validator: (p0) {
-                            if (p0!.isEmpty) {
-                              return "${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}";
-                            }
-                            return null;
-                          },
                           controller: controller.idnumber,
-                          hintText:
-                              '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}',
+                          hintText: 'National Id',
                         ),
                       ),
                     ),
@@ -357,151 +343,28 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         hintText: 'passportNumber'.tr,
                       ),
                     ),
-
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
                     GetBuilder<PreferenceController>(
                       builder: (cont) => AuthTextField(
-                        onChangedwidget: (value) {
-                          AuthRepo ar = AuthRepo();
-                          ar.pmdcAvaibility(controller.imcno.text);
-                        },
-                        validator: (p0) {
-                          if (p0!.isEmpty) {
-                            return '${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}';
-                          }
-                          return null;
-                        },
                         controller: controller.imcno,
-                        hintText:
-                            '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}',
+                        hintText: 'NTN Number'.tr,
                       ),
                     ),
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
-
                     GetBuilder<PreferenceController>(
                       builder: (cont) => RegisterLMPCCustomTextField(
                         readonly: true,
                         onTap: () {
                           controller.picksinglefile();
                         },
-                        validator: (p0) {
-                          if (controller.pmcfile == null) {
-                            return '${'Pleaseaddyour'.tr} ${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalCertificateLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr}';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                     SizedBox(
                       height: Get.height * 0.02,
-                    ),
-                    RegisterCustomTextField(
-                      validator: (p0) {
-                        if (controller.selectedspecialities == null) {
-                          return 'SelectSpeciality'.tr;
-                        }
-                        return null;
-                      },
-                      onTap: () async {
-                        controller.selectedspecialities = null;
-                        Specialities1 generic = await searchabledropdown(
-                            context, controller.specialitiesList);
-                        controller.selectedspecialities = null;
-                        controller.updateselectedspeciality(generic);
-
-                        if (generic.id != null) {
-                          controller.selectedspecialities = generic;
-                          controller.selectedspecialities = (generic.id == null)
-                              ? null
-                              : controller.selectedspecialities;
-                        }
-
-                        setState(() {
-                          _getSubSpeciality(generic.id);
-                        });
-                      },
-                      readonly: true,
-                      suffixIcon: IconButton(
-                          onPressed: () async {
-                            controller.selectedspecialities = null;
-                            Specialities1 generic = await searchabledropdown(
-                                context, controller.specialitiesList);
-                            controller.selectedspecialities = null;
-                            controller.updateselectedspeciality(generic);
-
-                            if (generic.id != null) {
-                              controller.selectedspecialities = generic;
-                              controller.selectedspecialities =
-                                  (generic.id == null)
-                                      ? null
-                                      : controller.selectedspecialities;
-                            }
-
-                            setState(() {
-                              _getSubSpeciality(generic.id);
-                            });
-                          },
-                          icon: Image.asset(Images.dropdown)),
-                      hintText: controller.selectedspecialities == null
-                          ? 'speciality'.tr
-                          : controller.selectedspecialities!.name.toString(),
-                    ),
-                    // SizedBox(
-                    //   height: Get.height * 0.02,
-                    // ),
-
-                    // SUB
-                    RegisterCustomTextField(
-                      validator: (p0) {
-                        if (controller.selectedsubspecialities == null) {
-                          return 'SelectSubSpeciality'.tr;
-                        }
-                        return null;
-                      },
-                      onTap: () async {
-                        if (controller.selectedspecialities != null) {
-                          controller.selectedsubspecialities = null;
-                          Specialities1 generic = await searchabledropdown(
-                              context, controller.subspecialitiesList);
-                          controller.selectedsubspecialities = null;
-                          controller.updateselectedspeciality(generic);
-
-                          if (generic.id != null) {
-                            controller.selectedsubspecialities = generic;
-                            controller.selectedsubspecialities =
-                                (generic.id == null)
-                                    ? null
-                                    : controller.selectedsubspecialities;
-                          }
-                        }
-                      },
-                      readonly: true,
-                      suffixIcon: IconButton(
-                          onPressed: () async {
-                            if (controller.selectedspecialities != null) {
-                              controller.selectedsubspecialities = null;
-                              Specialities1 generic = await searchabledropdown(
-                                  context, controller.subspecialitiesList);
-                              controller.selectedsubspecialities = null;
-                              controller.updateselectedspeciality(generic);
-
-                              if (generic.id != null) {
-                                controller.selectedsubspecialities = generic;
-                                controller.selectedsubspecialities =
-                                    (generic.id == null)
-                                        ? null
-                                        : controller.selectedsubspecialities;
-                              }
-                            }
-                          },
-                          icon: Image.asset(Images.dropdown)),
-                      hintText: controller.selectedsubspecialities == null
-                          ? 'subspeciality'.tr
-                          : controller.selectedsubspecialities!.name.toString(),
                     ),
                     RegisterDOBCustomTextField(
                       readonly: true,
@@ -535,7 +398,6 @@ class _RegisterScreensState extends State<RegisterScreens> {
                         ),
                       ),
                     ),
-
                     CustomIntlPhoneField(
                       errorColor: ColorManager.kRedColor,
                       style: GoogleFonts.poppins(

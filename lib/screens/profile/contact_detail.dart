@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
-import 'package:doctormobileapplication/components/code_picker.dart';
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/doted_line.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';

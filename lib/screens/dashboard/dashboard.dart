@@ -25,16 +25,15 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
   _launchWhatsApp() async {
-    // const contact = "";
-    String androidUrl =
-        "whatsapp://send?phone=$contactnumber&text=Hi, I need some help";
-    String iosUrl =
-        "https://wa.me/$contactnumber?text=Hi,%20I%20need%20some%20help";
+    String androidUrl = "whatsapp://send?phone=" "&text=Hi, I need some help";
+    String iosUrl = "https://wa.me/" "?text=Hi,%20I%20need%20some%20help";
     try {
       if (Platform.isIOS) {
-        await launchUrl(Uri.parse(iosUrl));
+        await launchUrl(Uri.parse(iosUrl),
+            mode: LaunchMode.externalApplication);
       } else {
-        await launchUrl(Uri.parse(androidUrl));
+        await launchUrl(Uri.parse(androidUrl),
+            mode: LaunchMode.externalApplication);
       }
     } on Exception {
       Fluttertoast.showToast(
@@ -140,7 +139,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
             topRight: Radius.circular(Get.width * 0.08),
           ),
         ),
-        height: boolisMobile! ? Get.height * 0.11 : Get.height * 0.15,
+        height: Get.height * 0.11,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.max,
@@ -173,9 +172,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
               ? const SizedBox()
               : isSvg == false
                   ? Container(
-                      padding: EdgeInsets.all(boolisMobile!
-                          ? Get.width * 0.022
-                          : Get.width * 0.008),
+                      padding: EdgeInsets.all(Get.width * 0.022),
                       decoration: BoxDecoration(
                           boxShadow: const [
                             BoxShadow(
@@ -195,9 +192,7 @@ class _DashBoardState extends State<DashBoard> with WidgetsBindingObserver {
                               : ColorManager.kWhiteColor),
                       child: Image.asset(
                         imagePath,
-                        height: boolisMobile!
-                            ? Get.height * 0.03
-                            : Get.height * 0.06,
+                        height: Get.height * 0.03,
                         color: isSelected
                             ? ColorManager.kWhiteColor
                             : ColorManager.kPrimaryDark,

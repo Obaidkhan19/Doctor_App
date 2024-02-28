@@ -1,7 +1,6 @@
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
-import 'package:doctormobileapplication/screens/Consulting_Queue/Prescribe_Medicine.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -169,8 +168,8 @@ class _UpcomingConsultingQueueScreenState
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              Get.to(() =>
-                                                  PrescribeMedicineScreen());
+                                              // Get.to(() =>
+                                              //     PrescribeMedicineScreen());
                                             },
                                             child: Container(
                                               width: 47,

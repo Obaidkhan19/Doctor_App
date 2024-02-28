@@ -1,5 +1,4 @@
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -172,7 +171,7 @@ class _ConsultingQueueState extends State<ConsultingQueue>
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               ClinicalPracticeQueueDataList(Status: "1"),
-                              HoldQueueDataList(Status: "2"),
+                              const HoldQueueDataList(Status: "2"),
                               ConsultedQueueDataList(status: "3"),
                             ]),
                       ),

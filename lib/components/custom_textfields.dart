@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
@@ -166,7 +167,7 @@ class RegisterLMPCCustomTextField extends StatelessWidget {
                   fontWeight: FontWeight.bold),
               hintText:
                   // '${'Add'} ${'${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? "" : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'}'}',
-                  '${'add'.tr} (${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalCertificateLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr})',
+                  '${'Add Certificate'.tr} ',
               filled: true,
               disabledBorder:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -264,7 +265,7 @@ class EditLMPCCustomTextField extends StatelessWidget {
                   fontWeight: FontWeight.bold),
               hintText:
                   // '${'add'.tr} ${'${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? "" : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr}'}',
-                  '${'add'.tr} (${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalCertificateLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'Certificate'.tr})',
+                  '${'Add Certificate'.tr} ',
               filled: true,
               disabledBorder:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -495,6 +496,7 @@ class RegisterCustomTextField extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class EditProfileCustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;

@@ -18,8 +18,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../components/images.dart';
 import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
-import '../../utils/AppImages.dart';
 
+// ignore: must_be_immutable
 class ConsultedQueueDataList extends StatefulWidget {
   String? status;
   ConsultedQueueDataList({super.key, this.status});
@@ -94,7 +94,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
         inAsyncCall: ConsultingQueueController.i.isclinicLoading,
         blurEffectIntensity: 4,
         progressIndicator: const SpinKitSpinningLines(
-          color: Color(0xfff1272d3),
+          color: ColorManager.kPrimaryColor,
           size: 60,
         ),
         dismissible: false,
@@ -179,89 +179,114 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                               BorderRadius.all(
                                                                   Radius.circular(
                                                                       Get.width *
-                                                                          0.04)),
+                                                                          0.02)),
                                                         ),
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(
-                                                              top: Get.height *
-                                                                  0.01,
-                                                              bottom:
-                                                                  Get.height *
-                                                                      0.02),
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            top: Get.height *
+                                                                0.02,
+                                                            bottom: Get.height *
+                                                                0.02,
+                                                            left: Get.height *
+                                                                0.01,
+                                                            right: Get.height *
+                                                                0.01,
+                                                          ),
                                                           child: Column(
                                                             children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.symmetric(
-                                                                    horizontal:
-                                                                        Get.width *
-                                                                            0.0),
-                                                                child: ListTile(
-                                                                  leading:
-                                                                      CircleAvatar(
-                                                                    backgroundColor:
-                                                                        const Color
-                                                                            .fromRGBO(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                    radius: 30,
-                                                                    child:
-                                                                        ClipOval(
-                                                                      child: manageAppointment.patientImagePath !=
-                                                                              null
-                                                                          ? CachedNetworkImage(
-                                                                              height: Get.width * 0.16,
-                                                                              imageUrl: baseURL + manageAppointment.patientImagePath,
-                                                                              fit: BoxFit.cover,
-                                                                              errorWidget: (context, url, error) => Image.asset(Images.avator),
-                                                                            )
-                                                                          : Image.asset(
-                                                                              Images.avator),
-                                                                    ),
-                                                                  ),
-                                                                  title: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          SizedBox(
-                                                                            width:
-                                                                                Get.width * 0.34,
-                                                                            child:
-                                                                                Text(
-                                                                              manageAppointment.patientName ?? "",
-                                                                              style: GoogleFonts.poppins(
-                                                                                fontSize: 13,
-                                                                                color: ColorManager.kPrimaryColor,
-                                                                                fontWeight: FontWeight.bold,
+                                                              ListTile(
+                                                                leading:
+                                                                    CircleAvatar(
+                                                                  backgroundColor:
+                                                                      const Color
+                                                                          .fromARGB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  radius: 30,
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            27),
+                                                                    child: manageAppointment.patientImagePath !=
+                                                                            null
+                                                                        ? CachedNetworkImage(
+                                                                            imageUrl:
+                                                                                baseURL + manageAppointment.patientImagePath,
+                                                                            imageBuilder: (context, imageProvider) =>
+                                                                                Container(
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
+                                                                                image: DecorationImage(
+                                                                                  image: imageProvider,
+                                                                                  fit: BoxFit.fill,
+                                                                                ),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                          Text(
-                                                                            manageAppointment.mRNO ??
+                                                                            errorWidget: (context, url, error) =>
+                                                                                Image.asset(Images.avator),
+                                                                          )
+                                                                        : Image.asset(
+                                                                            Images.avator),
+                                                                  ),
+                                                                ),
+                                                                title: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          width:
+                                                                              Get.width * 0.34,
+                                                                          child:
+                                                                              Text(
+                                                                            manageAppointment.patientName ??
                                                                                 "",
                                                                             style:
                                                                                 GoogleFonts.poppins(
-                                                                              fontSize: 10,
+                                                                              fontSize: 13,
                                                                               color: ColorManager.kPrimaryColor,
+                                                                              fontWeight: FontWeight.bold,
                                                                             ),
                                                                           ),
-                                                                          Text(
-                                                                            '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
-                                                                            style:
-                                                                                GoogleFonts.poppins(
-                                                                              fontSize: 10,
-                                                                              color: ColorManager.kblackColor,
-                                                                            ),
+                                                                        ),
+                                                                        Text(
+                                                                          manageAppointment.mRNO ??
+                                                                              "",
+                                                                          style:
+                                                                              GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                10,
+                                                                            color:
+                                                                                ColorManager.kPrimaryColor,
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                      Column(
+                                                                        ),
+                                                                        Text(
+                                                                          '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
+                                                                          style:
+                                                                              GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                10,
+                                                                            color:
+                                                                                ColorManager.kblackColor,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          right:
+                                                                              Get.width * 0.01),
+                                                                      child:
+                                                                          Column(
                                                                         children: [
                                                                           Row(
                                                                             mainAxisAlignment:
@@ -297,6 +322,7 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                                               patientid: manageAppointment.patientId,
                                                                                               visitno: manageAppointment.visitNo,
                                                                                               prescribedvalue: manageAppointment.prescribedInValue,
+                                                                                              chaturl: manageAppointment.chatURL,
                                                                                             ));
 
                                                                                         if (res == true) {
@@ -322,10 +348,11 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                                               visitno: manageAppointment.visitNo,
                                                                                               prescribedvalue: manageAppointment.prescribedInValue.toString(),
                                                                                               title: manageAppointment.chatURL,
+                                                                                              url: manageAppointment.chatURL,
                                                                                             ));
                                                                                       },
                                                                                       child: SizedBox(
-                                                                                        height: Get.width * 0.09,
+                                                                                        height: Get.width * 0.08,
                                                                                         child: Image.asset(
                                                                                           Images.videocall,
                                                                                         ),
@@ -335,8 +362,8 @@ class _ConsultedQueueDataListState extends State<ConsultedQueueDataList> {
                                                                           ),
                                                                         ],
                                                                       ),
-                                                                    ],
-                                                                  ),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
                                                               SizedBox(

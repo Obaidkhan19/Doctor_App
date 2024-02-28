@@ -279,7 +279,7 @@ class AuthRepo {
         var status = responseData['Status'];
         var errormsg = responseData['ErrorMessage'];
 
-        var doctorid = responseData['DoctorId'];
+        // var doctorid = responseData['DoctorId'];
 
         if (status == 1) {
           if (errormsg == 'Successfully Created ') {
@@ -356,8 +356,6 @@ class AuthRepo {
         var responseData = jsonDecode(response.body);
         var status = responseData['Status'];
         var errormsg = responseData['ErrorMessage'];
-
-        var doctorid = responseData['DoctorId'];
 
         if (status == 1) {
           if (errormsg == 'Successfully Created ') {
@@ -485,6 +483,14 @@ class AuthRepo {
       "Model": Model,
       "AppVersion": AppVersion,
       "DeviceVersion": Platform.isAndroid ? DeviceVersion : DeviceVersionIos,
+      // "UserName": "generalpractitioner ",
+      // "Password": "123123",
+      // "DeviceToken":
+      //     "fels3Jf1QjuclS4WnqxvlZ:APA91bGUJsLeW75_KSyGifJHl4H70AtNFJNbBDf3j5UVeLI5qnNetQV45ZCPZKGKCRVhw9ev1akGkzBeuLrVyFyoax_Fz33_d28PG6plNzEmDSWLzBUmvo8m_YMwlHROQBvtNiPg0l9W",
+      // "Manufacturer": "SHARP",
+      // "Model": "706SH",
+      // "AppVersion": "",
+      // "DeviceVersion": "",
     };
     var headers = {'Content-Type': 'application/json'};
     try {

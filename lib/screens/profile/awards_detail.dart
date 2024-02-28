@@ -9,6 +9,7 @@ import 'package:doctormobileapplication/data/controller/edit_profile_controller.
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -472,7 +473,7 @@ class _AwardsDetailState extends State<AwardsDetail> {
                                     color: ColorManager.kPrimaryColor,
                                     backgroundColor: ColorManager.kWhiteColor,
                                     boxheight: Get.height * 0.04,
-                                    boxwidth: Get.width * 0.08,
+                                    boxwidth: Get.width * 0.04,
                                   )
                                 ],
                               ),

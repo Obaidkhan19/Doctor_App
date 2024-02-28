@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/data/controller/ManageAppointments_Controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,11 +12,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 List<Meeting> _getDataSource() {
   final List<Meeting> meetings = <Meeting>[];
-  final List<Meeting> meetings1 = <Meeting>[];
-  final DateTime today = DateTime.now();
-  final DateTime startTime =
-      DateTime(today.year, today.month, today.day, 9, 0, 0);
-  final DateTime endTime = startTime.add(const Duration(hours: 2));
   for (int i = 0;
       i < ManageAppointmentController.i.monthlyappintment.length;
       i++) {
@@ -80,6 +72,7 @@ class Meeting {
   bool isAllDay;
 }
 
+// ignore: must_be_immutable
 class DetailMonthlyAppointment extends StatefulWidget {
   String worklocationid;
   String isonline;
@@ -187,8 +180,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width:
-                            boolisMobile! ? Get.width * 0.08 : Get.width * 0.04,
+                        width: Get.width * 0.08,
                         height: Get.height * 0.04,
                         color: ColorManager.kPrimaryColor,
                       ),
@@ -209,8 +201,7 @@ class _DetailMonthlyAppointmentState extends State<DetailMonthlyAppointment> {
                         width: Get.width * 0.09,
                       ),
                       Container(
-                        width:
-                            boolisMobile! ? Get.width * 0.08 : Get.width * 0.04,
+                        width: Get.width * 0.08,
                         height: Get.height * 0.04,
                         color: ColorManager.KgreenColor,
                       ),

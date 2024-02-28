@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'dart:io';
+
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
@@ -35,8 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    // call();
     getfingerprint();
+    getauth();
     super.initState();
   }
 
@@ -85,6 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     }
+  }
+
+  List<BiometricType> _availableBiometrics = [];
+  getauth() async {
+    _availableBiometrics = await auth.getAvailableBiometrics();
+    setState(() {});
   }
 
   callQRScanner() async {
@@ -274,25 +282,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   call();
                                                 },
                                                 child: Image.asset(
-                                                    Images.fingerprint_icon),
+                                                  Images.fingerprint_icon,
+                                                  height: Get.height * 0.07,
+                                                ),
                                               )),
                                             ),
                                           ),
-                                          // Visibility(
-                                          //   visible: !isfingerprintEnable,
-                                          //   child: SizedBox(
-                                          //     height: Get.height * 0.08,
-                                          //     child: Center(
-                                          //         child: InkWell(
-                                          //       onTap: () {
-                                          //         // callQRScanner();
-                                          //         Get.to(const MyHomePage());
-                                          //       },
-                                          //       child: Image.asset(
-                                          //           Images.qrscan_icon),
-                                          //     )),
-                                          //   ),
-                                          // ),
                                         ],
                                       ),
                                     ),
@@ -469,18 +464,6 @@ class AuthTextField extends StatelessWidget {
   }
 }
 
-class Masks {
-  var maskFormatter = MaskTextInputFormatter(
-      mask: PreferenceController
-          .i.preferenceObject.dynamicMaskingForIdentityNumber,
-      filter: {"9": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
-}
-
-class Masks1 {
-  var maskFormatter = MaskTextInputFormatter();
-}
-
 class IdNoAuthTextField extends StatefulWidget {
   final bool? obscureText;
   final List<TextInputFormatter>? formatters;
@@ -520,27 +503,7 @@ class _IdNoAuthTextFieldState extends State<IdNoAuthTextField> {
         onChanged: widget.onChangedwidget,
         obscureText: widget.obscureText ?? false,
         // inputFormatters: const [],
-        inputFormatters: [
-          PreferenceController
-                          .i.preferenceObject.dynamicMaskingForIdentityNumber !=
-                      null ||
-                  PreferenceController
-                          .i.preferenceObject.dynamicMaskingForIdentityNumber !=
-                      "null"
-              ? Masks().maskFormatter
-              : Masks1().maskFormatter
-          // LengthLimitingTextInputFormatter(PreferenceController
-          //                 .i
-          //                 .preferenceObject
-          //                 .dynamicNumberOfDigitsForIdentityNumber ==
-          //             null ||
-          //         PreferenceController.i.preferenceObject
-          //                 .dynamicNumberOfDigitsForIdentityNumber ==
-          //             "null"
-          //     ? 11
-          //     : PreferenceController
-          //         .i.preferenceObject.dynamicNumberOfDigitsForIdentityNumber)
-        ],
+
         readOnly: widget.readOnly ?? false,
         validator: widget.validator,
         controller: widget.controller,
@@ -568,141 +531,3 @@ class _IdNoAuthTextFieldState extends State<IdNoAuthTextField> {
     );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   MobileScannerController cameraController = MobileScannerController();
-//   bool _screenOpened = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Mobile Scanner"),
-//         actions: [
-//           IconButton(
-//             color: Colors.white,
-//             icon: ValueListenableBuilder(
-//               valueListenable: cameraController.torchState,
-//               builder: (context, state, child) {
-//                 switch (state) {
-//                   case TorchState.off:
-//                     return const Icon(Icons.flash_off, color: Colors.grey);
-//                   case TorchState.on:
-//                     return const Icon(Icons.flash_on, color: Colors.yellow);
-//                 }
-//               },
-//             ),
-//             iconSize: 32.0,
-//             onPressed: () => cameraController.toggleTorch(),
-//           ),
-//           IconButton(
-//             color: Colors.white,
-//             icon: ValueListenableBuilder(
-//               valueListenable: cameraController.cameraFacingState,
-//               builder: (context, state, child) {
-//                 switch (state) {
-//                   case CameraFacing.front:
-//                     return const Icon(Icons.camera_front);
-//                   case CameraFacing.back:
-//                     return const Icon(Icons.camera_rear);
-//                 }
-//               },
-//             ),
-//             iconSize: 32.0,
-//             onPressed: () => cameraController.switchCamera(),
-//           ),
-//         ],
-//       ),
-//       body: MobileScanner(
-//         // allowDuplicates: true,
-//         controller: cameraController,
-//         onDetect: _foundBarcode,
-//       ),
-//     );
-//   }
-
-//   void _foundBarcode(BarcodeCapture barcode) {
-//     /// open screen
-//     if (!_screenOpened) {
-//       final String code = barcode.raw ?? "---";
-//       debugPrint('Barcode found! $code');
-//       _screenOpened = true;
-//       Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//             builder: (context) =>
-//                 FoundCodeScreen(screenClosed: _screenWasClosed, value: code),
-//           ));
-//     }
-//   }
-
-//   void _screenWasClosed() {
-//     _screenOpened = false;
-//   }
-// }
-
-// class FoundCodeScreen extends StatefulWidget {
-//   final String value;
-//   final Function() screenClosed;
-//   const FoundCodeScreen({
-//     Key? key,
-//     required this.value,
-//     required this.screenClosed,
-//   }) : super(key: key);
-
-//   @override
-//   State<FoundCodeScreen> createState() => _FoundCodeScreenState();
-// }
-
-// class _FoundCodeScreenState extends State<FoundCodeScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Found Code"),
-//         centerTitle: true,
-//         leading: IconButton(
-//           onPressed: () {
-//             widget.screenClosed();
-//             Navigator.pop(context);
-//           },
-//           icon: const Icon(
-//             Icons.arrow_back_outlined,
-//           ),
-//         ),
-//       ),
-//       body: Center(
-//         child: Padding(
-//           padding: const EdgeInsets.all(20),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               const Text(
-//                 "Scanned Code:",
-//                 style: TextStyle(
-//                   fontSize: 20,
-//                 ),
-//               ),
-//               const SizedBox(
-//                 height: 20,
-//               ),
-//               Text(
-//                 widget.value,
-//                 style: const TextStyle(
-//                   fontSize: 16,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

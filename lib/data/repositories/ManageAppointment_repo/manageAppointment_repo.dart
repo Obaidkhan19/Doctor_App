@@ -7,11 +7,9 @@ import 'package:doctormobileapplication/models/monthlyappointmentresponse.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-import '../../../components/snackbar.dart';
 import '../../../models/DayViewAppointmentModel.dart';
 import '../../../models/ReschedualAppointment.dart';
 import '../../../models/TodayAppointmentModel.dart';
@@ -20,9 +18,14 @@ import '../../localDB/local_db.dart';
 class Manageappointmentrepo {
   static getDailyDoctorAppointment() async {
     DateTime now = DateTime.now();
+
     String? Date = DateFormat('yyyy-MM-dd').format(now);
 
+    // DateTime previousDay = now.subtract(const Duration(days: 1));
+    // String? Date = DateFormat('yyyy-MM-dd').format(previousDay);
+
     String? userId = await LocalDb().getDoctorId();
+
     var body = {"Date": Date, "DoctorId": "$userId"};
     var headers = {'Content-Type': 'application/json'};
 

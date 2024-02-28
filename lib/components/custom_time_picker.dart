@@ -121,7 +121,7 @@ class _TimePickerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final ThemeData themeData = Theme.of(context);
+    // final ThemeData themeData = Theme.of(context);
     final TimeOfDayFormat timeOfDayFormat =
         MaterialLocalizations.of(context).timeOfDayFormat(
       // alwaysUse24HourFormat: MediaQuery.of(context).alwaysUse24HourFormat,
@@ -248,8 +248,6 @@ class _TimePickerHeader extends StatelessWidget {
             child: Text(
               helpText ??
                   MaterialLocalizations.of(context).timePickerDialHelpText,
-              // style: TimePickerTheme.of(context).helpTextStyle ??
-              //     themeData.textTheme.labelSmall,
               style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -267,13 +265,13 @@ class _HourMinuteControl extends StatelessWidget {
   const _HourMinuteControl({
     required this.text,
     required this.onTap,
-    required this.onDoubleTap,
+    // required this.onDoubleTap,
     required this.isSelected,
   });
 
   final String text;
   final GestureTapCallback onTap;
-  final GestureTapCallback onDoubleTap;
+  // final GestureTapCallback onDoubleTap;
   final bool isSelected;
 
   @override
@@ -308,7 +306,7 @@ class _HourMinuteControl extends StatelessWidget {
         shape: shape,
         child: InkWell(
           onTap: onTap,
-          onDoubleTap: isSelected ? onDoubleTap : null,
+          // onDoubleTap: isSelected ? onDoubleTap : null,
           child: Center(
             child: Text(
               text,
@@ -390,7 +388,7 @@ class _HourControl extends StatelessWidget {
         text: formattedHour,
         onTap: Feedback.wrapForTap(
             () => fragmentContext.onModeChange(_TimePickerMode.hour), context)!,
-        onDoubleTap: fragmentContext.onHourDoubleTapped,
+        // onDoubleTap: fragmentContext.onHourDoubleTapped,
       ),
     );
   }
@@ -490,7 +488,7 @@ class _MinuteControl extends StatelessWidget {
         onTap: Feedback.wrapForTap(
             () => fragmentContext.onModeChange(_TimePickerMode.minute),
             context)!,
-        onDoubleTap: fragmentContext.onMinuteDoubleTapped,
+        // onDoubleTap: fragmentContext.onMinuteDoubleTapped,
       ),
     );
   }
@@ -1445,15 +1443,6 @@ class _TimePickerInputState extends State<_TimePickerInput>
       if (newHour >= 0 && newHour < 24) {
         return newHour;
       }
-    } else {
-      if (newHour > 0 && newHour < 13) {
-        if ((_selectedTime.value.period == DayPeriod.pm && newHour != 12) ||
-            (_selectedTime.value.period == DayPeriod.am && newHour == 12)) {
-          newHour =
-              (newHour + TimeOfDay.hoursPerPeriod) % TimeOfDay.hoursPerDay;
-        }
-        return newHour;
-      }
     }
     return null;
   }
@@ -1530,7 +1519,7 @@ class _TimePickerInputState extends State<_TimePickerInput>
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final MediaQueryData media = MediaQuery.of(context);
+    // final MediaQueryData media = MediaQuery.of(context);
     final TimeOfDayFormat timeOfDayFormat = MaterialLocalizations.of(context)
         .timeOfDayFormat(alwaysUse24HourFormat: true);
     final bool use24HourDials = hourFormat(of: timeOfDayFormat) != HourFormat.h;
@@ -2255,7 +2244,7 @@ class _IntervalTimePickerDialogState extends State<IntervalTimePickerDialog>
       return;
     }
 
-    final MediaQueryData media = MediaQuery.of(context);
+    // final MediaQueryData media = MediaQuery.of(context);
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     _announceToAccessibility(
@@ -2365,6 +2354,7 @@ class _IntervalTimePickerDialogState extends State<IntervalTimePickerDialog>
         const SizedBox(width: 10.0),
         if (_entryMode.value == TimePickerEntryMode.dial ||
             _entryMode.value == TimePickerEntryMode.input)
+          // from
           // IconButton(
           //   color: TimePickerTheme.of(context).entryModeIconColor ??
           //       theme.colorScheme.onSurface.withOpacity(
@@ -2378,6 +2368,8 @@ class _IntervalTimePickerDialogState extends State<IntervalTimePickerDialog>
           //       ? MaterialLocalizations.of(context).inputTimeModeButtonLabel
           //       : MaterialLocalizations.of(context).dialModeButtonLabel,
           // ),
+
+          // to
           Expanded(
             child: Container(
               alignment: AlignmentDirectional.centerEnd,

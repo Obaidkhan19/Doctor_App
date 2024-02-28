@@ -117,10 +117,10 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: controller.indexp == 0
-                                        ? const Color(0xfff1272d3)
+                                        ? ColorManager.kPrimaryColor
                                         : ColorManager.kWhiteColor,
                                     border: Border.all(
-                                      color: const Color(0xfff1272d3),
+                                      color: ColorManager.kPrimaryColor,
                                       width: 2, // 2px border width
                                     ), // Set the background color of the container
                                     borderRadius: const BorderRadius.only(
@@ -135,7 +135,7 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                     'personal'.tr,
                                     style: GoogleFonts.poppins(
                                         color: controller.indexp == 1
-                                            ? const Color(0xfff1272d3)
+                                            ? ColorManager.kPrimaryColor
                                             : ColorManager.kWhiteColor,
                                         //     color: ColorManager.kWhiteColor,
                                         fontWeight: FontWeight.w600),
@@ -159,7 +159,7 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: controller.indexp == 1
-                                        ? const Color(0xfff1272d3)
+                                        ? ColorManager.kPrimaryColor
                                         : ColorManager.kWhiteColor,
                                     // color: Color(
                                     //     0xfff1272D3), // Set the background color of the container
@@ -168,7 +168,7 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                       topRight: Radius.circular(15),
                                     ),
                                     border: Border.all(
-                                      color: const Color(0xfff1272d3),
+                                      color: ColorManager.kPrimaryColor,
                                       width: 2, // 2px border width
                                     ),
                                   ),
@@ -179,7 +179,7 @@ class _MainRegistrationScreenState extends State<MainRegistrationScreen> {
                                     'security'.tr,
                                     style: GoogleFonts.poppins(
                                         color: controller.indexp == 0
-                                            ? const Color(0xfff1272d3)
+                                            ? ColorManager.kPrimaryColor
                                             : ColorManager.kWhiteColor,
                                         fontWeight: FontWeight.w600),
                                     // style: Theme.of(context)

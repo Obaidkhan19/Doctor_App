@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class WalletScreen extends StatefulWidget {
   int? index = 0;
   WalletScreen({super.key, this.index});
@@ -370,7 +371,6 @@ Future<dynamic> creditAlert(
     barrierDismissible: false,
     context: context,
     builder: (context) {
-      var contr = Get.put<WalletController>(WalletController());
       return GetBuilder<WalletController>(
         builder: (cont) {
           return SizedBox(

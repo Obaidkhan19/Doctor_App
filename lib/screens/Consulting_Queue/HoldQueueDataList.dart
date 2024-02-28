@@ -19,8 +19,8 @@ import '../../data/controller/ConsultingQueue_Controller.dart';
 import '../../helpers/color_manager.dart';
 
 class HoldQueueDataList extends StatefulWidget {
-  String? Status;
-  HoldQueueDataList({super.key, this.Status});
+  final String? Status;
+  const HoldQueueDataList({super.key, this.Status});
 
   @override
   State<HoldQueueDataList> createState() => _HoldQueueDataListState();
@@ -91,7 +91,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
           inAsyncCall: ConsultingQueueController.i.isclinicLoading,
           blurEffectIntensity: 4,
           progressIndicator: const SpinKitSpinningLines(
-            color: Color(0xfff1272d3),
+            color: ColorManager.kPrimaryColor,
             size: 60,
           ),
           dismissible: false,
@@ -186,92 +186,113 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                         0.04)),
                                                           ),
                                                           child: Padding(
-                                                            padding: EdgeInsets.only(
-                                                                top:
-                                                                    Get.height *
-                                                                        0.01,
-                                                                bottom:
-                                                                    Get.height *
-                                                                        0.02),
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                              top: Get.height *
+                                                                  0.02,
+                                                              bottom:
+                                                                  Get.height *
+                                                                      0.02,
+                                                              left: Get.height *
+                                                                  0.01,
+                                                              right:
+                                                                  Get.height *
+                                                                      0.01,
+                                                            ),
                                                             child: Column(
                                                               children: [
-                                                                Padding(
-                                                                  padding: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          Get.width *
-                                                                              0.0),
-                                                                  child:
-                                                                      ListTile(
-                                                                    leading:
-                                                                        CircleAvatar(
-                                                                      backgroundColor:
-                                                                          const Color
-                                                                              .fromRGBO(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      radius:
-                                                                          30,
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(30),
-                                                                        child: manageAppointment.patientImagePath !=
-                                                                                null
-                                                                            ? CachedNetworkImage(
-                                                                                height: Get.width * 0.16,
-                                                                                imageUrl: baseURL + manageAppointment.patientImagePath,
-                                                                                fit: BoxFit.fill,
-                                                                                errorWidget: (context, url, error) => Image.asset(Images.avator),
-                                                                              )
-                                                                            : Image.asset(Images.avator),
-                                                                      ),
+                                                                ListTile(
+                                                                  leading:
+                                                                      CircleAvatar(
+                                                                    backgroundColor:
+                                                                        const Color
+                                                                            .fromARGB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    radius: 30,
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              27),
+                                                                      child: manageAppointment.patientImagePath !=
+                                                                              null
+                                                                          ? CachedNetworkImage(
+                                                                              imageUrl: baseURL + manageAppointment.patientImagePath,
+                                                                              imageBuilder: (context, imageProvider) => Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  shape: BoxShape.circle,
+                                                                                  image: DecorationImage(
+                                                                                    image: imageProvider,
+                                                                                    fit: BoxFit.fill,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              errorWidget: (context, url, error) => Image.asset(Images.avator),
+                                                                            )
+                                                                          : Image.asset(
+                                                                              Images.avator),
                                                                     ),
-                                                                    title: Transform
-                                                                        .translate(
-                                                                      offset:
-                                                                          const Offset(
-                                                                              -0,
-                                                                              0),
-                                                                      child:
-                                                                          Column(
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Text(
-                                                                            manageAppointment.patientName ??
-                                                                                "",
-                                                                            style:
-                                                                                GoogleFonts.poppins(
-                                                                              fontSize: 13,
-                                                                              color: ColorManager.kPrimaryColor,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
+                                                                  ),
+                                                                  title: Transform
+                                                                      .translate(
+                                                                    offset:
+                                                                        const Offset(
+                                                                            -0,
+                                                                            0),
+                                                                    child:
+                                                                        Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Text(
+                                                                          manageAppointment.patientName ??
+                                                                              "",
+                                                                          style:
+                                                                              GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                13,
+                                                                            color:
+                                                                                ColorManager.kPrimaryColor,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
                                                                           ),
-                                                                          Text(
-                                                                            manageAppointment.mRNO ??
-                                                                                "",
-                                                                            style:
-                                                                                GoogleFonts.poppins(
-                                                                              fontSize: 10,
-                                                                              color: ColorManager.kPrimaryColor,
-                                                                            ),
+                                                                        ),
+                                                                        Text(
+                                                                          manageAppointment.mRNO ??
+                                                                              "",
+                                                                          style:
+                                                                              GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                10,
+                                                                            color:
+                                                                                ColorManager.kPrimaryColor,
                                                                           ),
-                                                                          Text(
-                                                                            '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
-                                                                            style:
-                                                                                GoogleFonts.poppins(
-                                                                              fontSize: 10,
-                                                                              color: ColorManager.kblackColor,
-                                                                            ),
+                                                                        ),
+                                                                        Text(
+                                                                          '${'visitNumber'.tr} ${manageAppointment.visitNo ?? ""}',
+                                                                          style:
+                                                                              GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                10,
+                                                                            color:
+                                                                                ColorManager.kblackColor,
                                                                           ),
-                                                                        ],
-                                                                      ),
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                    trailing: manageAppointment.chatURL ==
-                                                                            null
-                                                                        ? InkWell(
+                                                                  ),
+                                                                  trailing: manageAppointment
+                                                                              .chatURL ==
+                                                                          null
+                                                                      ? Padding(
+                                                                          padding:
+                                                                              EdgeInsets.only(right: Get.width * 0.01),
+                                                                          child:
+                                                                              InkWell(
                                                                             onTap:
                                                                                 () async {
                                                                               bool res = await Get.to(() => PrescribeMedicineScreen(
@@ -280,6 +301,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                                     patientid: manageAppointment.patientId,
                                                                                     visitno: manageAppointment.visitNo,
                                                                                     prescribedvalue: manageAppointment.prescribedInValue,
+                                                                                    chaturl: manageAppointment.chatURL,
                                                                                   ));
                                                                               if (res == true) {
                                                                                 callback();
@@ -294,8 +316,13 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                                 color: ColorManager.kPrimaryColor,
                                                                               ),
                                                                             ),
-                                                                          )
-                                                                        : InkWell(
+                                                                          ),
+                                                                        )
+                                                                      : Padding(
+                                                                          padding:
+                                                                              EdgeInsets.only(right: Get.width * 0.01),
+                                                                          child:
+                                                                              InkWell(
                                                                             onTap:
                                                                                 () async {
                                                                               Get.to(() => MyHomePage(
@@ -306,6 +333,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                                     visitno: manageAppointment.visitNo,
                                                                                     prescribedvalue: manageAppointment.prescribedInValue.toString(),
                                                                                     title: manageAppointment.chatURL,
+                                                                                    url: manageAppointment.chatURL,
                                                                                   ));
                                                                             },
                                                                             child:
@@ -316,7 +344,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                  ),
+                                                                        ),
                                                                 ),
                                                                 SizedBox(
                                                                   height:
@@ -359,7 +387,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                                         child:
                                                                             Text(
                                                                           //   'Waiting Since ${manageAppointment.waitingTime ?? ""}',
-                                                                          '${'waitingSince'.tr} ${contr.startTimeshold[index] ?? ""}',
+                                                                          '${'waitingSince'.tr} ${contr.startTimeshold[index]}',
                                                                           style:
                                                                               GoogleFonts.poppins(
                                                                             fontSize:
@@ -390,204 +418,13 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                             ),
                                                           ),
                                                         )
-                                                      // Padding(
-                                                      //     padding: const EdgeInsets.symmetric(
-                                                      //         vertical: 5),
-                                                      //     child: Container(
-                                                      //       decoration: BoxDecoration(
-                                                      //         color: Colors
-                                                      //             .white, // Set the background color of the container
-                                                      //         borderRadius:
-                                                      //             BorderRadius.circular(15),
-                                                      //         boxShadow: [
-                                                      //           BoxShadow(
-                                                      //             color: Colors.grey
-                                                      //                 .withOpacity(
-                                                      //                     0.2), // Shadow color
-                                                      //             spreadRadius:
-                                                      //                 2, // Spread radius of the shadow
-                                                      //             blurRadius:
-                                                      //                 2, // Blur radius of the shadow
-                                                      //             offset: const Offset(0,
-                                                      //                 0), // Offset of the shadow
-                                                      //           ),
-                                                      //         ],
-                                                      //       ),
-                                                      //       child: ListTile(
-                                                      //         // onTap: () {},
-                                                      //         shape: RoundedRectangleBorder(
-                                                      //             borderRadius:
-                                                      //                 BorderRadius.circular(
-                                                      //                     15)),
-                                                      //         leading: Image.asset(
-                                                      //           Images.avator,
-                                                      //           alignment:
-                                                      //               Alignment.centerLeft,
-                                                      //         ),
-                                                      //         title: Text(
-                                                      //           manageAppointment
-                                                      //                   .patientName ??
-                                                      //               "",
-                                                      //           style: Theme.of(context)
-                                                      //               .textTheme
-                                                      //               .bodyMedium!
-                                                      //               .copyWith(
-                                                      //                   color: const Color(
-                                                      //                       0xfff1272d3),
-                                                      //                   fontWeight:
-                                                      //                       FontWeightManager
-                                                      //                           .bold),
-                                                      //         ),
-                                                      //         subtitle: Column(
-                                                      //           crossAxisAlignment:
-                                                      //               CrossAxisAlignment.start,
-                                                      //           children: [
-                                                      //             Text(
-                                                      //               manageAppointment.mRNO ??
-                                                      //                   "",
-                                                      //               style: Theme.of(context)
-                                                      //                   .textTheme
-                                                      //                   .bodyMedium!
-                                                      //                   .copyWith(
-                                                      //                       color: const Color(
-                                                      //                           0xfff1272d3),
-                                                      //                       fontWeight:
-                                                      //                           FontWeightManager
-                                                      //                               .light,
-                                                      //                       fontSize: 12),
-                                                      //             ),
-                                                      //             Text(
-                                                      //               'Visit No: ${manageAppointment.visitNo ?? ""}',
-                                                      //               style: Theme.of(context)
-                                                      //                   .textTheme
-                                                      //                   .bodyMedium!
-                                                      //                   .copyWith(
-                                                      //                       color: const Color(
-                                                      //                           0xfff1272d3),
-                                                      //                       fontWeight:
-                                                      //                           FontWeightManager
-                                                      //                               .light,
-                                                      //                       fontSize: 12),
-                                                      //             ),
-                                                      //             SizedBox(
-                                                      //               height:
-                                                      //                   MediaQuery.of(context)
-                                                      //                           .size
-                                                      //                           .height *
-                                                      //                       0.035,
-                                                      //             ),
-                                                      //             const Divider(
-                                                      //               thickness: 1,
-                                                      //               color: Colors.grey,
-                                                      //             ),
-                                                      //             Row(
-                                                      //               mainAxisAlignment:
-                                                      //                   MainAxisAlignment
-                                                      //                       .spaceBetween,
-                                                      //               children: [
-                                                      //                 Flexible(
-                                                      //                   child: Text(
-                                                      //                     'Waiting Since   ${manageAppointment.waitingTime ?? ""}',
-                                                      //                     style: Theme.of(
-                                                      //                             context)
-                                                      //                         .textTheme
-                                                      //                         .bodyMedium!
-                                                      //                         .copyWith(
-                                                      //                             color: const Color(
-                                                      //                                 0xfff1272d3),
-                                                      //                             fontWeight:
-                                                      //                                 FontWeightManager
-                                                      //                                     .light,
-                                                      //                             fontSize:
-                                                      //                                 12),
-                                                      //                   ),
-                                                      //                 ),
-                                                      //                 Flexible(
-                                                      //                   child: Text(
-                                                      //                     manageAppointment
-                                                      //                             .status ??
-                                                      //                         "",
-                                                      //                     style: Theme.of(
-                                                      //                             context)
-                                                      //                         .textTheme
-                                                      //                         .bodyMedium!
-                                                      //                         .copyWith(
-                                                      //                             color: const Color(
-                                                      //                                 0xfff1272d3),
-                                                      //                             fontWeight:
-                                                      //                                 FontWeightManager
-                                                      //                                     .light,
-                                                      //                             fontSize:
-                                                      //                                 12),
-                                                      //                   ),
-                                                      //                 ),
-                                                      //               ],
-                                                      //             ),
-                                                      //           ],
-                                                      //         ),
-                                                      //         trailing: Column(
-                                                      //           crossAxisAlignment:
-                                                      //               CrossAxisAlignment.end,
-                                                      //           mainAxisAlignment:
-                                                      //               MainAxisAlignment.end,
-                                                      //           children: [
-                                                      //             Visibility(
-                                                      //               visible: true,
-                                                      //               child: InkWell(
-                                                      //                 onTap: () {
-                                                      //                   Get.to(
-                                                      //                     () =>
-                                                      //                         const PrescribeMedicineScreen(),
-                                                      //                     // HistoryeRXConsultingQueue(
-                                                      //                     //   patientId:
-                                                      //                     //       manageAppointment
-                                                      //                     //               .patientId ??
-                                                      //                     //           "",
-                                                      //                     //   doctorId:
-                                                      //                     //       manageAppointment
-                                                      //                     //               .doctorId ??
-                                                      //                     //           "",
-                                                      //                     //   visitNo:
-                                                      //                     //       manageAppointment
-                                                      //                     //               .visitNo ??
-                                                      //                     //           "",
-                                                      //                     //   branchId:
-                                                      //                     //       manageAppointment
-                                                      //                     //               .branchId ??
-                                                      //                     //           "",
-                                                      //                     // ),
-                                                      //                   );
-                                                      //                 },
-                                                      //                 child: Image.asset(
-                                                      //                   AppImages
-                                                      //                       .editPrescription_logo,
-                                                      //                   width: MediaQuery.of(
-                                                      //                               context)
-                                                      //                           .size
-                                                      //                           .width *
-                                                      //                       0.1,
-                                                      //                 ),
-                                                      //               ),
-                                                      //             ),
-                                                      //           ],
-                                                      //         ),
-                                                      //       ),
-                                                      //     ),
-                                                      //   )
                                                       : Container());
-                                                  return null;
                                                 }
-                                                return null;
                                               }),
                                         )
-                                      : (((ConsultingQueueController
-                                                              .i.HoldDataList !=
-                                                          null) &&
-                                                      (ConsultingQueueController
-                                                              .i
-                                                              .HoldDataList
-                                                              .queue !=
-                                                          null))
+                                      : (((ConsultingQueueController.i
+                                                          .HoldDataList.queue !=
+                                                      null))
                                                   ? ConsultingQueueController
                                                       .i
                                                       .HoldDataList
@@ -606,11 +443,7 @@ class _HoldQueueDataListState extends State<HoldQueueDataList> {
                                                 ],
                                               ),
                                             )
-                                          : Container()
-                              //     ],
-                              //   ),
-                              // ),
-                              ),
+                                          : Container()),
                         ],
                       ),
                     ),

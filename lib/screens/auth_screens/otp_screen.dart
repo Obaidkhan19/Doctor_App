@@ -1,5 +1,4 @@
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/create_new_password.dart';

@@ -7,7 +7,6 @@ import 'package:doctormobileapplication/data/repositories/Consulting_Queue_repo/
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/medicincematrix.dart';
 import 'package:doctormobileapplication/models/medicines.dart';
-import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,6 @@ Future<String?> searchableDropdownRadioButton(
     BuildContext context, String selectedoption, List<dynamic> list) async {
   TextEditingController search = TextEditingController();
   String title = "";
-  //String selectedValuename = "";
   String selectedvalueid = "";
 
   Completer<String?> completer = Completer();
@@ -112,7 +110,6 @@ Future<String?> searchableDropdownRadioButton(
                         shrinkWrap: true,
                         itemCount: list.length,
                         itemBuilder: ((context, index) {
-                          //    final isChecked = controller.selectedfollowup;
                           if (search.text.isEmpty ||
                               list[index]
                                   .name!
@@ -128,7 +125,6 @@ Future<String?> searchableDropdownRadioButton(
                                 style: GoogleFonts.poppins(fontSize: 10),
                               ),
                               value: list[index].name.toString(),
-                              //value: isChecked,
                               groupValue: selectedvalueid,
                               onChanged: (value) {
                                 setState(() {
@@ -180,7 +176,7 @@ Future<dynamic> searchableDropdownCheckBox(
   String listname,
 ) async {
   TextEditingController search = TextEditingController();
-  String title = "";
+
   Completer<List<dynamic>> completer = Completer<List<dynamic>>();
   List dataList = checkboxselectedItems;
 
@@ -367,9 +363,7 @@ Future<dynamic> searchableDropdownCheckBox(
                         if (list.isNotEmpty)
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
-                            height: boolisMobile!
-                                ? MediaQuery.of(context).size.height * 0.6
-                                : MediaQuery.of(context).size.height * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.6,
                             child: ListView.builder(
                               shrinkWrap: true,
                               itemCount: list.length,
@@ -1178,7 +1172,7 @@ addMedicine(
       .updatemedicineDosages(ERXController.i.medicinelst.medicineDosages![0]);
   ERXController.i
       .updatemedfrequency(ERXController.i.medicinelst.medicineFrequencies![0]);
-  String medtitle = "";
+
   TextEditingController medController = TextEditingController();
   Completer<dynamic> completer = Completer<dynamic>();
   controller.medicineList.sort((a, b) => a.name!.compareTo(b.name!));
@@ -1201,10 +1195,6 @@ addMedicine(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (!boolisMobile!)
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding:
@@ -1267,9 +1257,7 @@ addMedicine(
                     ),
                     GetBuilder<ERXController>(builder: (context) {
                       return SizedBox(
-                        height: boolisMobile!
-                            ? Get.height * 0.45
-                            : Get.height * 0.3,
+                        height: Get.height * 0.45,
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: controller.medicineList.length,

@@ -29,7 +29,6 @@ class AppointmentHistoryscreen extends StatefulWidget {
 }
 
 class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
-  @override
   String status = "";
   final dateFormat = DateFormat('yyyy-MM-dd');
   DateTime dateTime = DateTime.now().subtract(const Duration(days: 30));
@@ -150,7 +149,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                 inAsyncCall: ConsultingQueueController.i.isLoading,
                 blurEffectIntensity: 4,
                 progressIndicator: const SpinKitSpinningLines(
-                  color: Color(0xfff1272d3),
+                  color: ColorManager.kPrimaryColor,
                   size: 60,
                 ),
                 child: Stack(
@@ -692,7 +691,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                         onTap: () async {
                           controller.selectedbranch = null;
                           BranchData generic = await searchabledropdown(
-                              context, controller.branchList ?? []);
+                              context, controller.branchList);
                           controller.selectedbranch = null;
                           controller.updatebranch(generic);
 
@@ -706,9 +705,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                         },
                         child: Container(
                           width: Get.width * 1,
-                          height: boolisMobile!
-                              ? Get.height * 0.05
-                              : Get.height * 0.1,
+                          height: Get.height * 0.05,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: ColorManager.kPrimaryColor,
@@ -752,7 +749,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                         onTap: () async {
                           controller.selectedhospital = null;
                           HospitalORClinics generic = await searchabledropdown(
-                              context, controller.hospitalList ?? []);
+                              context, controller.hospitalList);
                           controller.selectedhospital = null;
                           controller.updatehospital(generic);
 
@@ -766,9 +763,7 @@ class _AppointmentHistoryscreenState extends State<AppointmentHistoryscreen> {
                         },
                         child: Container(
                           width: Get.width * 1,
-                          height: boolisMobile!
-                              ? Get.height * 0.05
-                              : Get.height * 0.1,
+                          height: Get.height * 0.05,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: ColorManager.kPrimaryColor,

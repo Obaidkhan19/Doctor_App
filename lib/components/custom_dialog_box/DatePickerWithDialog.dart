@@ -7,6 +7,7 @@ import '../../helpers/color_manager.dart';
 import '../../helpers/font_manager.dart';
 import '../../utils/AppImages.dart';
 
+// ignore: must_be_immutable
 class CustomDialog_DatePicker extends StatefulWidget {
   DateTime dateTime;
   TextEditingController controller;
@@ -145,8 +146,8 @@ class _CustomDialogState extends State<CustomDialog_DatePicker> {
                       width: MediaQuery.of(context).size.width * 0.45,
                       height: MediaQuery.of(context).size.height * 0.045,
                       decoration: BoxDecoration(
-                        color: const Color(
-                            0xfff1272d3), // Set the background color of the container
+                        color: ColorManager
+                            .kPrimaryColor, // Set the background color of the container
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(

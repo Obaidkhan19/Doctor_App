@@ -25,7 +25,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         minimum: const EdgeInsets.only(bottom: AppPadding.p20),
         child: SingleChildScrollView(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: Get.height * 0.02,
@@ -34,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Images.welcome,
                 height: Get.height * 0.53,
                 width: Get.width,
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
               ),
               SizedBox(
                 height: Get.height * 0.06,

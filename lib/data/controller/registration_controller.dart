@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/models/cities_model.dart';
 import 'package:doctormobileapplication/models/countries_model.dart';
 import 'package:doctormobileapplication/models/genders_model.dart';

@@ -3,7 +3,6 @@ import 'package:doctormobileapplication/components/custom_checkbox_dropdown.dart
 import 'package:doctormobileapplication/components/custom_textfields.dart';
 import 'package:doctormobileapplication/components/primary_button.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
-import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/preference_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
@@ -264,7 +263,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                 builder: (cont) => EditProfileCustomTextField(
                                   validator: (p0) {
                                     if (p0!.isEmpty) {
-                                      return "${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}";
+                                      return "${'Enteryour'.tr} ";
                                     }
                                     return null;
                                   },
@@ -273,8 +272,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                     LengthLimitingTextInputFormatter(15)
                                   ],
                                   controller: edit.idnumber,
-                                  hintText:
-                                      '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel}',
+                                  hintText: '',
                                 ),
                               ),
                               EditProfileCustomTextField(
@@ -291,13 +289,12 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                 builder: (cont) => EditProfileCustomTextField(
                                   validator: (p0) {
                                     if (p0!.isEmpty) {
-                                      return '${'Enteryour'.tr} ${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}';
+                                      return '${'Enteryour'.tr} ';
                                     }
                                     return null;
                                   },
                                   controller: edit.imcno,
-                                  hintText:
-                                      '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}',
+                                  hintText: '',
                                 ),
                               ),
                               EditLMPCCustomTextField(
@@ -305,43 +302,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                 onTap: () {
                                   edit.picksinglefile();
                                 },
-                                // validator: (p0) {
-                                //   if (edit.pmcfile == null) {
-                                //     return 'pleaseaddLMPC'.tr;
-                                //   }
-                                //   return null;
                                 // },
                               ),
-                              // InkWell(
-                              //   onTap: () {
-                              //     edit.picksinglefile();
-                              //   },
-                              //   child: Container(
-                              //     width:
-                              //         Get.width * 1, // Adjust the width as needed
-                              //     height: Get.height * 0.07,
-                              //     decoration: BoxDecoration(
-                              //       color: Colors.white.withOpacity(0.7),
-                              //       borderRadius: BorderRadius.circular(10.0),
-                              //     ),
-                              //     child: Center(
-                              //       child: Text(
-                              //         'addLMPC'.tr,
-                              //         style: GoogleFonts.poppins(
-                              //           color: ColorManager.kWhiteColor,
-                              //           fontWeight: FontWeight.bold,
-                              //           fontSize: 15,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                               SizedBox(height: Get.height * 0.02),
                               GetBuilder<PreferenceController>(
                                 builder: (cont) => EditProfileCustomTextField(
                                   controller: edit.ntnnumber,
-                                  hintText:
-                                      '${PreferenceController.i.preferenceObject.taxNoDynamicLabel == null || PreferenceController.i.preferenceObject.taxNoDynamicLabel == "null" ? TaxLabel : PreferenceController.i.preferenceObject.taxNoDynamicLabel}',
+                                  hintText: '',
                                   keyboardTypenew: TextInputType.number,
                                 ),
                               ),
@@ -536,7 +503,6 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                     : edit.selectedrelation?.name.toString(),
                               ),
                               SizedBox(height: Get.height * 0.03),
-
                               InkWell(
                                 onTap: () async {
                                   edit.updateiseditloading(true);
@@ -622,7 +588,6 @@ class _PersonalDetailState extends State<PersonalDetail> {
                                             )),
                                 ),
                               ),
-
                               SizedBox(height: Get.height * 0.03),
                             ],
                           ),
@@ -703,8 +668,7 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         ),
                         GetBuilder<ProfileController>(
                           builder: (cont) => ProfileRecordWidget(
-                            title:
-                                '${PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == null || PreferenceController.i.preferenceObject.dynamicIdentityNoLabel == "null" ? IDLabel : PreferenceController.i.preferenceObject.dynamicIdentityNoLabel} ',
+                            title: ' National ID',
                             name: profile.selectedbasicInfo?.cNICNumber == ""
                                 ? "-"
                                 : profile.selectedbasicInfo?.cNICNumber == null
@@ -731,14 +695,12 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         ),
                         GetBuilder<PreferenceController>(
                           builder: (cont) => ProfileRecordWidget(
-                            title:
-                                '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}',
-                            name: profile.selectedbasicInfo?.pMDCNumber == ""
+                            title: '',
+                            name: profile.selectedbasicInfo?.nTNNo == ""
                                 ? "-"
-                                : profile.selectedbasicInfo?.pMDCNumber == null
+                                : profile.selectedbasicInfo?.nTNNo == null
                                     ? "-"
-                                    : profile.selectedbasicInfo?.pMDCNumber ??
-                                        "-",
+                                    : profile.selectedbasicInfo?.nTNNo ?? "-",
                           ),
                         ),
                         SizedBox(
@@ -746,13 +708,13 @@ class _PersonalDetailState extends State<PersonalDetail> {
                         ),
                         GetBuilder<PreferenceController>(
                           builder: (cont) => ProfileRecordWidget(
-                            title:
-                                '${PreferenceController.i.preferenceObject.taxNoDynamicLabel == null || PreferenceController.i.preferenceObject.taxNoDynamicLabel == "null" ? TaxLabel : PreferenceController.i.preferenceObject.taxNoDynamicLabel}',
-                            name: profile.selectedbasicInfo?.nTNNo == ""
+                            title: '',
+                            name: profile.selectedbasicInfo?.pMDCNumber == ""
                                 ? "-"
-                                : profile.selectedbasicInfo?.nTNNo == null
+                                : profile.selectedbasicInfo?.pMDCNumber == null
                                     ? "-"
-                                    : profile.selectedbasicInfo?.nTNNo ?? "-",
+                                    : profile.selectedbasicInfo?.pMDCNumber ??
+                                        "-",
                           ),
                         ),
                         SizedBox(
@@ -857,49 +819,73 @@ class _PersonalDetailState extends State<PersonalDetail> {
 }
 
 class ProfileRecordWidget extends StatelessWidget {
+  final bool? isDoctorConsultationScreen;
   final String? title;
   final String? name;
-
-  const ProfileRecordWidget({Key? key, this.title, this.name})
+  final Color? color;
+  const ProfileRecordWidget(
+      {Key? key,
+      this.title,
+      this.name,
+      this.color,
+      this.isDoctorConsultationScreen = false})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
       child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            Expanded(
-              child: Text(
-                '$title',
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: isDoctorConsultationScreen == false
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    '${title?.trimLeft()}',
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: color ?? Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                  ),
                 ),
-              ),
-            ),
-            Text(
-              ':',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-              ),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Text(
+                      ':',
+                      style: TextStyle(
+                        color: color ?? Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Text(
+                    '${name?.trim()}',
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: color ?? Colors.white,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                        ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
-              width: Get.width * 0.03,
-            ),
-            Expanded(
-              child: Text(
-                '$name',
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
-              ),
+              height: Get.height * 0.01,
             ),
           ],
         ),
@@ -907,3 +893,55 @@ class ProfileRecordWidget extends StatelessWidget {
     );
   }
 }
+
+// class ProfileRecordWidget extends StatelessWidget {
+//   final String? title;
+//   final String? name;
+
+//   const ProfileRecordWidget({Key? key, this.title, this.name})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.symmetric(horizontal: Get.width * 0.04),
+//       child: Center(
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Expanded(
+//               child: Text(
+//                 '$title',
+//                 style: GoogleFonts.poppins(
+//                   fontSize: 12,
+//                   color: Colors.white,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ),
+//             Text(
+//               ':',
+//               style: GoogleFonts.poppins(
+//                 color: Colors.white,
+//                 fontWeight: FontWeight.w900,
+//               ),
+//             ),
+//             SizedBox(
+//               width: Get.width * 0.03,
+//             ),
+//             Expanded(
+//               child: Text(
+//                 '$name',
+//                 style: GoogleFonts.poppins(
+//                   fontSize: 12,
+//                   color: Colors.white,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

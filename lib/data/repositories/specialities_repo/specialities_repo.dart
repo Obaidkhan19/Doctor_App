@@ -69,10 +69,6 @@ class SpecialitiesRepo {
   }
 
   static getStatuses(OnlineStatusRequest object) async {
-    // String dit = await LocalDb().getDoctorId() ?? "";
-    //  String it = await LocalDb().getDoctorId() ?? "";
-    //   String dit = await LocalDb().getDoctorId() ?? "";
-    var body = {};
     var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(Uri.parse(AppConstants.onlineStatus),

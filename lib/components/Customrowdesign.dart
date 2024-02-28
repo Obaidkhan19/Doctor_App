@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:interval_time_picker/interval_time_picker.dart';
 
+// ignore: must_be_immutable
 class configureappointrow extends StatefulWidget {
   BuildContext ctx;
   int dayindex;

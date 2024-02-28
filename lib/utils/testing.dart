@@ -1,8 +1,8 @@
 import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctormobileapplication/components/images.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
+import 'package:doctormobileapplication/data/controller/erx_controller.dart';
 import 'package:doctormobileapplication/data/repositories/callrepo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
@@ -11,8 +11,10 @@ import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+// ignore: must_be_immutable
 class MyHomePage extends StatefulWidget {
   MyHomePage(
       {super.key,
@@ -33,7 +35,7 @@ class MyHomePage extends StatefulWidget {
   dynamic visitno;
   dynamic prescribedvalue;
 
-  final String? url; 
+  final String? url;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -51,8 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
     opencall();
     controller = WebViewController(
       onPermissionRequest: (ctx) async {
-        // await Permission.camera.request();
-        // await Permission.microphone.request();
+        await Permission.camera.request();
+        await Permission.microphone.request();
         ctx.grant();
       },
     )
@@ -101,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
   back() {
     controller = WebViewController(
       onPermissionRequest: (ctx) async {
-        // await Permission.camera.request();
-        // await Permission.microphone.request();
+        await Permission.camera.request();
+        await Permission.microphone.request();
         ctx.deny();
       },
     )
@@ -275,8 +277,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               )
-            : WebViewWidget(
-                controller: controller!,
+            : Stack(
+                children: [
+                  WebViewWidget(
+                    controller: controller!,
+                  ),
+                ],
               ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton:
@@ -300,6 +306,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   patientstatusvalue: widget.patientstatusvalue,
                                   prescribedvalue: widget.patientstatusvalue,
                                   visitno: widget.visitno,
+                                  chaturl: widget.url,
                                 ),
                               ),
                             );

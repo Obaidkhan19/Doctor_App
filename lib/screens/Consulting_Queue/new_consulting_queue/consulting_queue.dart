@@ -5,7 +5,7 @@ import 'package:doctormobileapplication/helpers/font_manager.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/all_consulting_queue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/reschedule_consulting_queue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/upcoming_consulting_queue.dart';
-import 'package:doctormobileapplication/screens/dashboard/home.dart';
+
 import 'package:doctormobileapplication/screens/dashboard/menu_drawer.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +125,7 @@ class _ConsultingQueueScreenState extends State<ConsultingQueueScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: contr.index == 0
-                                  ? const Color(0xfff1272d3)
+                                  ? ColorManager.kPrimaryColor
                                   : ColorManager.kWhiteColor,
                               // border: Border.all(
                               //   color: const Color(0xfff1272d3),
@@ -160,7 +160,7 @@ class _ConsultingQueueScreenState extends State<ConsultingQueueScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: contr.index == 1
-                                  ? const Color(0xfff1272d3)
+                                  ? ColorManager.kPrimaryColor
                                   : ColorManager.kWhiteColor,
 
                               borderRadius: BorderRadius.circular(5),
@@ -196,7 +196,7 @@ class _ConsultingQueueScreenState extends State<ConsultingQueueScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: contr.index == 2
-                                  ? const Color(0xfff1272d3)
+                                  ? ColorManager.kPrimaryColor
                                   : ColorManager.kWhiteColor,
                               // color: Color(
                               //     0xfff1272D3), // Set the background color of the container

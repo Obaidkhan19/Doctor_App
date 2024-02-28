@@ -12,6 +12,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/degree.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -88,7 +89,7 @@ class _MemberShipState extends State<MemberShip> {
         inAsyncCall: profile.isLoading,
         blurEffectIntensity: 4,
         progressIndicator: const SpinKitSpinningLines(
-          color: Color(0xfff1272d3),
+          color: ColorManager.kPrimaryColor,
           size: 60,
         ),
         child: GetBuilder<ProfileController>(
@@ -537,7 +538,7 @@ class _MemberShipState extends State<MemberShip> {
                                     color: ColorManager.kPrimaryColor,
                                     backgroundColor: ColorManager.kWhiteColor,
                                     boxheight: Get.height * 0.04,
-                                    boxwidth: Get.width * 0.08,
+                                    boxwidth: Get.width * 0.04,
                                   )
                                 ],
                               ),

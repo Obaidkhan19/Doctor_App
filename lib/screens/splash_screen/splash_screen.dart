@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/data/repositories/preferences_repo.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
 import 'package:doctormobileapplication/screens/welcome_screen/welcome_screen.dart';
 import 'package:doctormobileapplication/utils/constants.dart';
@@ -30,17 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
     await remoteConfig.fetchAndActivate().then((value) {
       // baseURL = remoteConfig.getString('URLQA');
       baseURL = remoteConfig.getString('URL');
-      contactnumber = remoteConfig.getString('Phone');
-
       if (baseURL == "") {
         // baseURL = '.';
         baseURL = 'https://patient.helpful.ihealthcure.com/';
       }
-
-      callPreferenece();
     }).onError((error, stackTrace) {
       log(error.toString());
-      callPreferenece();
       // baseURL = 'http://192.168.88.254:324/';
 
       baseURL = 'https://patient.helpful.ihealthcure.com/';
@@ -61,11 +55,6 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offAll(() => const WelcomeScreen());
       }
     });
-  }
-
-  callPreferenece() async {
-    PreferenceRepo pr = PreferenceRepo();
-    await pr.getPreference();
   }
 
   @override

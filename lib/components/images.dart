@@ -67,4 +67,5 @@ class Images {
   static const String paypal = "$path/paypal.png";
   static const String feedbacksubmit = '$path/submit_feedback.png';
   static const String payoneer = '$path/payoneer.png';
+  static const String facelogin = '$path/facelogin.png';
 }

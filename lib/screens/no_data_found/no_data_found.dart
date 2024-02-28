@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NoDataFound extends StatelessWidget {
-  String? Title;
-  NoDataFound({super.key, this.Title});
+  final String? Title;
+  const NoDataFound({super.key, this.Title});
 
   @override
   Widget build(BuildContext context) {

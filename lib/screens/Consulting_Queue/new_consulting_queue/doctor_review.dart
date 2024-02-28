@@ -1,4 +1,3 @@
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/consulting_queue.dart';
 import 'package:doctormobileapplication/screens/Consulting_Queue/new_consulting_queue/feedback_submit.dart';

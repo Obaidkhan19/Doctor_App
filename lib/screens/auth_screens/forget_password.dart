@@ -1,14 +1,9 @@
-import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/images.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/auth_controller.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/screens/auth_screens/login.dart';
-import 'package:doctormobileapplication/screens/auth_screens/otp_screen.dart';
-import 'package:doctormobileapplication/utils/AppImages.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,49 +45,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Row(
-                //   children: [
-                //     IconButton(
-                //       icon: const Icon(Icons.arrow_back_ios),
-                //       color: ColorManager.kPrimaryColor,
-                //       onPressed: () {
-                //         Navigator.pop(context);
-                //       },
-                //     ),
-                //     SizedBox(
-                //       child: Center(
-                //         child: Image.asset(
-                //           Images.logo,
-                //           height: Get.height * 0.07,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // Row(
-                //   children: [
-                //     InkWell(
-                //       onTap: () {
-                //         Get.to(() => const LoginScreen());
-                //       },
-                //       child: Image.asset(
-                //         AppImages.arrowback,
-                //         color: ColorManager.kblackColor,
-                //         width: Get.width * 0.1,
-                //       ),
-                //     ),
-                //     SizedBox(
-                //       width: Get.width * 0.02,
-                //     ),
-                //     Text(
-                //       'forgottenpassword'.tr,
-                //       style: GoogleFonts.poppins(
-                //           fontSize: 25,
-                //           color: ColorManager.kblackColor,
-                //           fontWeight: FontWeight.w500),
-                //     ),
-                //   ],
-                // ),
                 Text(
                   'forgottenpassword'.tr,
                   style: GoogleFonts.poppins(

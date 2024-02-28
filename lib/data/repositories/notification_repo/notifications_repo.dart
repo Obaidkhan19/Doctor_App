@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as dm;
 
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/ConsultingQueue_Controller.dart';
 import 'package:doctormobileapplication/data/controller/notification_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
@@ -27,7 +26,7 @@ class NotificationsRepo {
   Future<void> initNotifications() async {
     try {
       await _fcm.requestPermission();
-      final fcm = await _fcm.getToken().then((value) {
+      await _fcm.getToken().then((value) {
         // _fcm.subscribeToTopic('all');
         log('saved token is $value');
         LocalDb().saveDeviceToken(value);

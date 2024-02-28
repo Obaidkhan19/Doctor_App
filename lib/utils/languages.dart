@@ -543,8 +543,6 @@ class Localization extends Translations {
           'PublicPhoneNumber': 'Public Phone Number',
           'PrivatePhoneNumber': 'Private Phone Number',
           'TelephoneNumber': 'Telephone Number',
-          'NOKRelation': 'NOK Relation',
-          'NOKMobileNumber': 'NOK Mobile Number',
           'SelectDosagesFirst': 'Select Dosages First',
           'SelectDuarationFirst': 'Select Duaration First',
           'SelectFrequencyFirst': 'Select Frequency First',
@@ -618,8 +616,10 @@ class Localization extends Translations {
           'Certificate': 'Certificate',
           'Pleaseaddyour': 'Please add your ',
           'urdu': 'Urdu',
+          'RiskFactor': 'Risk Factors',
         },
         "ar_SA": {
+          'RiskFactor': 'عوامل الخطر',
           'urdu': 'الأردية',
           'Enteryour': 'ادخل',
           'Certificate': 'شهادة',
@@ -771,8 +771,6 @@ class Localization extends Translations {
           'nextofKin': 'التالي من القربى',
           'NOKName': 'اسم نوك',
           'NOKIDNumber': 'رقم معرف NOK',
-          'NOKRelation': 'علاقة NOK',
-          'NOKMobileNumber': 'رقم الجوال نوك',
           'name': 'اسم',
           'maritalStatus': 'الحالة الاجتماعية',
           'passportNumber': 'رقم جواز السفر',
@@ -1769,8 +1767,6 @@ class Localization extends Translations {
           'PublicPhoneNumber': 'عوامی فون نمبر',
           'PrivatePhoneNumber': 'پرائیویٹ فون نمبر',
           'TelephoneNumber': 'ٹیلی فون نمبر',
-          'NOKMobileNumber': 'NOK موبائل نمبر',
-          'NOKRelation': 'NOK رشتہ',
           'SelectMedicineFirst': 'پہلے دوا کا انتخاب کریں۔',
           'SelectRouteFirst': 'پہلے روٹ کو منتخب کریں۔',
           'SelectDosagesFirst': 'پہلے خوراکیں منتخب کریں۔',
@@ -1844,6 +1840,7 @@ class Localization extends Translations {
           'Pleaseaddyour': 'براہ کرم اپنا شامل کریں۔',
           'Enteryour': 'اپنا داخل کرے',
           'urdu': 'اردو',
+          'RiskFactor': 'خطرے کے عوامل',
         }
       };
 }

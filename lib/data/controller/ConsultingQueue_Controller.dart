@@ -1,18 +1,20 @@
 import 'dart:async';
-import 'dart:ui';
-
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/consultingqueueresponse.dart';
 import 'package:doctormobileapplication/models/consultingqueuewaithold.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
-import '../../components/snackbar.dart';
 import '../../models/ConsultingQueue.dart';
 import '../../utils/constants.dart';
 import '../repositories/Consulting_Queue_repo/consultingQueue_repo.dart';
 
 class ConsultingQueueController extends GetxController implements GetxService {
+//
+  bool showPrescriptionScreen = false;
+  updateshowprescription() {
+    showPrescriptionScreen = !showPrescriptionScreen;
+  }
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   int tabindex = 0;

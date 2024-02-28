@@ -1,12 +1,14 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:doctormobileapplication/components/custom_time_picker.dart';
 import 'package:doctormobileapplication/components/searchable_dropdown.dart';
-import 'package:doctormobileapplication/components/snackbar.dart';
 import 'package:doctormobileapplication/data/controller/edit_configure_appointment_controller.dart';
 import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/ConfigureAppointment_repo/configure_appointment_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/doctor_details.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +16,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:interval_time_picker/interval_time_picker.dart';
 
 class UpdateAppointmentConfiguration extends StatefulWidget {
   AppointmentConfigurations configureAppointment;
@@ -205,7 +206,7 @@ class _UpdateAppointmentConfigurationState
             inAsyncCall: EditConfigureAppointmentController.i.isLoading,
             blurEffectIntensity: 4,
             progressIndicator: const SpinKitSpinningLines(
-              color: Color(0xfff1272d3),
+              color: ColorManager.kPrimaryColor,
               size: 60,
             ),
             child: SizedBox(
@@ -465,307 +466,517 @@ class _UpdateAppointmentConfigurationState
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 5, right: 5, bottom: 10, top: 10),
-                        child: Row(children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "consultancyfee".tr,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: ColorManager.kPrimaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Container(
-                                    height: Get.height * 0.065,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(
-                                        color: ColorManager.kPrimaryColor,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        // SizedBox(
-                                        //   width: Get.width * 0.03,
-                                        // ),
-                                        // Container(
-                                        //   decoration: BoxDecoration(
-                                        //     border: Border.all(
-                                        //       color: Colors.black,
-                                        //       width: 1.0,
-                                        //     ),
-                                        //     borderRadius:
-                                        //         BorderRadius.circular(7),
-                                        //   ),
-                                        //   height: 25,
-                                        //   width: 40,
-                                        //   child: Center(
-                                        //     child: Text(
-                                        //       "aed".tr,
-                                        //       style: GoogleFonts.poppins(
-                                        //         fontSize: 12,
-                                        //         color: ColorManager.kblackColor,
-                                        //         fontWeight: FontWeight.bold,
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: Get.width * 0.02,
-                                                right: Get.width * 0.02,
-                                                bottom: Get.height * 0.015),
-                                            child: TextField(
-                                              keyboardType: const TextInputType
-                                                  .numberWithOptions(
-                                                  decimal: true),
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter
-                                                    .allow(RegExp(
-                                                        r'^\d*\.?\d{0,2}')),
-                                              ],
-                                              controller: contr
-                                                  .consultancyfeeController,
-                                              // keyboardType:
-                                              //     TextInputType.number,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Get.width * 0.02,
+                            vertical: Get.height * 0.02),
 
-                                              decoration: const InputDecoration(
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Text(
-                                    "followupfee".tr,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: ColorManager.kPrimaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Container(
-                                    height: Get.height * 0.065,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'consultancyfee'.tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
                                         color: ColorManager.kPrimaryColor,
                                       ),
                                     ),
-                                    child: Row(
-                                      children: [
-                                        // SizedBox(
-                                        //   width: Get.width * 0.03,
-                                        // ),
-                                        // Container(
-                                        //   decoration: BoxDecoration(
-                                        //     border: Border.all(
-                                        //       color: Colors.black,
-                                        //       width: 1.0,
-                                        //     ),
-                                        //     borderRadius:
-                                        //         BorderRadius.circular(7),
-                                        //   ),
-                                        //   height: 25,
-                                        //   width: 40,
-                                        //   child: Center(
-                                        //     child: Text(
-                                        //       "aed".tr,
-                                        //       style: GoogleFonts.poppins(
-                                        //         fontSize: 12,
-                                        //         color: ColorManager.kblackColor,
-                                        //         fontWeight: FontWeight.bold,
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: Get.width * 0.02,
-                                                right: Get.width * 0.02,
-                                                bottom: Get.height * 0.015),
-                                            child: TextField(
-                                              controller:
-                                                  contr.followupfeeController,
-                                              keyboardType: const TextInputType
-                                                  .numberWithOptions(
-                                                  decimal: true),
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter
-                                                    .allow(RegExp(
-                                                        r'^\d*\.?\d{0,2}')),
-                                              ],
-                                              decoration: const InputDecoration(
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                    SizedBox(
+                                      height: Get.height * 0.005,
+                                    ),
+                                    Container(
+                                      width: Get.width * 0.39,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: ColorManager.kPrimaryColor,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "slotduration".tr,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: ColorManager.kPrimaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      _selectTime();
-                                    },
-                                    child: TextField(
-                                      enabled: false,
-                                      cursorColor: ColorManager.kPrimaryColor,
-                                      decoration: InputDecoration(
-                                        prefixIcon: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, right: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const Icon(CupertinoIcons.clock),
-                                              Text(
-                                                "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    color: ColorManager
-                                                        .kblackColor,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              )
+                                      ),
+                                      child: Transform.translate(
+                                        offset: const Offset(0, -10),
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: Get.width * 0.04,
+                                              right: Get.width * 0.04),
+                                          child: TextField(
+                                            textAlign: TextAlign.right,
+                                            keyboardType: const TextInputType
+                                                .numberWithOptions(
+                                                decimal: true),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'^\d*\.?\d{0,2}')),
                                             ],
-                                          ),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          borderSide: const BorderSide(
-                                            color: ColorManager.kPrimaryColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Text(
-                                    "followupdays".tr,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: ColorManager.kPrimaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Container(
-                                    height: Get.height * 0.065,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(
-                                        color: ColorManager.kPrimaryColor,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: Get.width * 0.06,
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: Get.width * 0.02,
-                                                right: Get.width * 0.02,
-                                                bottom: Get.height * 0.015),
-                                            child: TextField(
-                                              maxLength: 4,
-                                              controller:
-                                                  contr.followupdayController,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              decoration: const InputDecoration(
-                                                counterText: "",
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.black,
-                                                  ),
+                                            controller:
+                                                contr.consultancyfeeController,
+                                            decoration: const InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 20),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.black,
                                                 ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Colors.black,
-                                                  ),
+                                              ),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.black,
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'slotduration'.tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: ColorManager.kPrimaryColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.005,
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.39,
+                                      child: InkWell(
+                                        onTap: () {
+                                          _selectTime();
+                                        },
+                                        child: TextField(
+                                          enabled: false,
+                                          cursorColor:
+                                              ColorManager.kPrimaryColor,
+                                          decoration: InputDecoration(
+                                            prefixIcon: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Icon(
+                                                      CupertinoIcons.clock),
+                                                  Text(
+                                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 12,
+                                                        color: ColorManager
+                                                            .kblackColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            disabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              borderSide: const BorderSide(
+                                                color:
+                                                    ColorManager.kPrimaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                        ]),
+
+                            //2 row
+                            SizedBox(height: Get.height * 0.02),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'followupfee'.tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: ColorManager.kPrimaryColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.005,
+                                    ),
+                                    Container(
+                                      width: Get.width * 0.39,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: ColorManager.kPrimaryColor,
+                                        ),
+                                      ),
+                                      child: Transform.translate(
+                                        offset: const Offset(0, -10),
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: Get.width * 0.04,
+                                              right: Get.width * 0.04),
+                                          child: TextField(
+                                            textAlign: TextAlign.right,
+                                            keyboardType: const TextInputType
+                                                .numberWithOptions(
+                                                decimal: true),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'^\d*\.?\d{0,2}')),
+                                            ],
+                                            controller:
+                                                contr.followupfeeController,
+                                            decoration: const InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 20),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'followupdays'.tr,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: ColorManager.kPrimaryColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.005,
+                                    ),
+                                    Container(
+                                      width: Get.width * 0.39,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: ColorManager.kPrimaryColor,
+                                        ),
+                                      ),
+                                      child: Transform.translate(
+                                        offset: const Offset(0, -10),
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: Get.width * 0.04,
+                                              right: Get.width * 0.04),
+                                          child: TextField(
+                                            textAlign: TextAlign.right,
+                                            keyboardType: const TextInputType
+                                                .numberWithOptions(
+                                                decimal: true),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'^\d*\.?\d{0,2}')),
+                                            ],
+                                            controller:
+                                                contr.followupdayController,
+                                            decoration: const InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.only(top: 20),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        // child: Row(children: [
+                        //   Expanded(
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.only(left: 5, right: 5),
+                        //       child: Column(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         children: [
+                        //           Text(
+                        //             "consultancyfee".tr,
+                        //             style: GoogleFonts.poppins(
+                        //               fontSize: 12,
+                        //               color: ColorManager.kPrimaryColor,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Get.height * 0.01,
+                        //           ),
+                        //           Container(
+                        //             height: Get.height * 0.065,
+                        //             decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(15),
+                        //               border: Border.all(
+                        //                 color: ColorManager.kPrimaryColor,
+                        //               ),
+                        //             ),
+                        //             child: Row(
+                        //               children: [
+                        //                 Expanded(
+                        //                   child: Padding(
+                        //                     padding: EdgeInsets.only(
+                        //                         left: Get.width * 0.02,
+                        //                         right: Get.width * 0.02,
+                        //                         bottom: Get.height * 0.015),
+                        //                     child: TextField(
+                        //                       keyboardType: const TextInputType
+                        //                           .numberWithOptions(
+                        //                           decimal: true),
+                        //                       inputFormatters: [
+                        //                         FilteringTextInputFormatter
+                        //                             .allow(RegExp(
+                        //                                 r'^\d*\.?\d{0,2}')),
+                        //                       ],
+                        //                       controller: contr
+                        //                           .consultancyfeeController,
+                        //                       // keyboardType:
+                        //                       //     TextInputType.number,
+
+                        //                       decoration: const InputDecoration(
+                        //                         focusedBorder:
+                        //                             UnderlineInputBorder(
+                        //                           borderSide: BorderSide(
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                         enabledBorder:
+                        //                             UnderlineInputBorder(
+                        //                           borderSide: BorderSide(
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Get.height * 0.01,
+                        //           ),
+                        //           Text(
+                        //             "followupfee".tr,
+                        //             style: GoogleFonts.poppins(
+                        //               fontSize: 12,
+                        //               color: ColorManager.kPrimaryColor,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Get.height * 0.01,
+                        //           ),
+                        //           Container(
+                        //             height: Get.height * 0.065,
+                        //             decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(15),
+                        //               border: Border.all(
+                        //                 color: ColorManager.kPrimaryColor,
+                        //               ),
+                        //             ),
+                        //             child: Row(
+                        //               children: [
+                        //                 Expanded(
+                        //                   child: Padding(
+                        //                     padding: EdgeInsets.only(
+                        //                         left: Get.width * 0.02,
+                        //                         right: Get.width * 0.02,
+                        //                         bottom: Get.height * 0.015),
+                        //                     child: TextField(
+                        //                       controller:
+                        //                           contr.followupfeeController,
+                        //                       keyboardType: const TextInputType
+                        //                           .numberWithOptions(
+                        //                           decimal: true),
+                        //                       inputFormatters: [
+                        //                         FilteringTextInputFormatter
+                        //                             .allow(RegExp(
+                        //                                 r'^\d*\.?\d{0,2}')),
+                        //                       ],
+                        //                       decoration: const InputDecoration(
+                        //                         focusedBorder:
+                        //                             UnderlineInputBorder(
+                        //                           borderSide: BorderSide(
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                         enabledBorder:
+                        //                             UnderlineInputBorder(
+                        //                           borderSide: BorderSide(
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   Expanded(
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.only(left: 5, right: 5),
+                        //       child: Column(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         children: [
+                        //           Text(
+                        //             "slotduration".tr,
+                        //             style: GoogleFonts.poppins(
+                        //               fontSize: 12,
+                        //               color: ColorManager.kPrimaryColor,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Get.height * 0.01,
+                        //           ),
+                        //           InkWell(
+                        //             onTap: () {
+                        //               _selectTime();
+                        //             },
+                        //             child: TextField(
+                        //               enabled: false,
+                        //               cursorColor: ColorManager.kPrimaryColor,
+                        //               decoration: InputDecoration(
+                        //                 prefixIcon: Padding(
+                        //                   padding: const EdgeInsets.only(
+                        //                       left: 10, right: 10),
+                        //                   child: Row(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment.spaceBetween,
+                        //                     children: [
+                        //                       const Icon(CupertinoIcons.clock),
+                        //                       Text(
+                        //                         "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')}",
+                        //                         style: GoogleFonts.poppins(
+                        //                             fontSize: 12,
+                        //                             color: ColorManager
+                        //                                 .kblackColor,
+                        //                             fontWeight:
+                        //                                 FontWeight.w500),
+                        //                       )
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //                 disabledBorder: OutlineInputBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(15),
+                        //                   borderSide: const BorderSide(
+                        //                     color: ColorManager.kPrimaryColor,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Get.height * 0.01,
+                        //           ),
+                        //           Text(
+                        //             "followupdays".tr,
+                        //             style: GoogleFonts.poppins(
+                        //               fontSize: 12,
+                        //               color: ColorManager.kPrimaryColor,
+                        //             ),
+                        //           ),
+                        //           SizedBox(
+                        //             height: Get.height * 0.01,
+                        //           ),
+                        //           Container(
+                        //             height: Get.height * 0.065,
+                        //             decoration: BoxDecoration(
+                        //               borderRadius: BorderRadius.circular(15),
+                        //               border: Border.all(
+                        //                 color: ColorManager.kPrimaryColor,
+                        //               ),
+                        //             ),
+                        //             child: Row(
+                        //               children: [
+                        //                 SizedBox(
+                        //                   width: Get.width * 0.06,
+                        //                 ),
+                        //                 Expanded(
+                        //                   child: Padding(
+                        //                     padding: EdgeInsets.only(
+                        //                         left: Get.width * 0.02,
+                        //                         right: Get.width * 0.02,
+                        //                         bottom: Get.height * 0.015),
+                        //                     child: TextField(
+                        //                       maxLength: 4,
+                        //                       controller:
+                        //                           contr.followupdayController,
+                        //                       keyboardType:
+                        //                           TextInputType.number,
+                        //                       decoration: const InputDecoration(
+                        //                         counterText: "",
+                        //                         focusedBorder:
+                        //                             UnderlineInputBorder(
+                        //                           borderSide: BorderSide(
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                         enabledBorder:
+                        //                             UnderlineInputBorder(
+                        //                           borderSide: BorderSide(
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ]),
                       ),
                     ),
                     SizedBox(
@@ -784,31 +995,38 @@ class _UpdateAppointmentConfigurationState
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text.rich(
-                                TextSpan(
-                                  text: "nonpaidappointmentapproval".tr,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 14,
-                                      color: ColorManager.kPrimaryColor,
-                                      fontWeight: FontWeight.bold),
-                                  children: [
-                                    TextSpan(
-                                        text: "approvalcriteria".tr,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 12,
-                                            color: ColorManager.kblackColor,
-                                            fontWeight: FontWeight.normal)),
-                                  ],
-                                ),
+                              Text(
+                                "approvalcriteria".tr,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: ColorManager.kPrimaryColor,
+                                    fontWeight: FontWeight.bold),
                               ),
+                              // Text.rich(
+                              //   TextSpan(
+                              //     text: "nonpaidappointmentapproval".tr,
+                              //     style: GoogleFonts.poppins(
+                              //         fontSize: 14,
+                              //         color: ColorManager.kPrimaryColor,
+                              //         fontWeight: FontWeight.bold),
+                              //     children: [
+                              //       TextSpan(
+                              //           text: "approvalcriteria".tr,
+                              //           style: GoogleFonts.poppins(
+                              //               fontSize: 12,
+                              //               color: ColorManager.kblackColor,
+                              //               fontWeight: FontWeight.normal)),
+                              //     ],
+                              //   ),
+                              // ),
                               SizedBox(
                                 height: Get.height * 0.01,
                               ),
                               InkWell(
                                 onTap: () async {
                                   EditApprovalCriteria generic =
-                                      await searchabledropdown(context,
-                                          contr.approvalCriteriaList ?? []);
+                                      await searchabledropdown(
+                                          context, contr.approvalCriteriaList);
                                   contr.updateApprovalCriteria(generic);
 
                                   if (generic != '') {
@@ -821,7 +1039,6 @@ class _UpdateAppointmentConfigurationState
                                   setState(() {});
                                 },
                                 child: Container(
-                                  width: Get.width * 1,
                                   height: Get.height * 0.06,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -870,21 +1087,10 @@ class _UpdateAppointmentConfigurationState
                     InkWell(
                       onTap: () async {
                         if (contr.daylst.isNotEmpty) {
-                          EditConfigureAppointmentController.i
-                              .updateIsSavingloading(true);
                           String? dit = await LocalDb().getDoctorId();
                           ConfigureAppointmentRepo car =
                               ConfigureAppointmentRepo();
-                          if (_time == const TimeOfDay(hour: 0, minute: 0)) {
-                            Fluttertoast.showToast(
-                                msg: "PleaseselectSlotDuration".tr,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: ColorManager.kRedColor,
-                                textColor: ColorManager.kWhiteColor,
-                                fontSize: 14.0);
-                          }
+
                           String mainId = widget.configureAppointment.id;
                           if (_time != const TimeOfDay(hour: 0, minute: 0)) {
                             if (checkSlotDuration(
@@ -914,56 +1120,26 @@ class _UpdateAppointmentConfigurationState
                                     .updateIsSavingloading(false);
                                 Get.back(result: true);
                               }
-                            } else {
-                              EditConfigureAppointmentController.i
-                                  .updateIsSavingloading(false);
-                              Fluttertoast.showToast(
-                                  msg: "SlotDurationisincorrect".tr,
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: ColorManager.kRedColor,
-                                  textColor: ColorManager.kWhiteColor,
-                                  fontSize: 14.0);
                             }
                           }
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "SelectatleastOneDay".tr,
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: ColorManager.kRedColor,
-                              textColor: ColorManager.kWhiteColor,
-                              fontSize: 14.0);
-                          EditConfigureAppointmentController.i
-                              .updateIsSavingloading(false);
                         }
                         EditConfigureAppointmentController.i
                             .updateIsSavingloading(false);
                       },
                       child: Container(
-                        height: Get.height * 0.07,
-                        width: Get.width * 0.7,
-                        decoration: BoxDecoration(
-                          color: ColorManager.kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                            child: EditConfigureAppointmentController
-                                        .i.isSavingLoading ==
-                                    false
-                                ? Text(
-                                    'update'.tr,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: ColorManager.kWhiteColor),
-                                  )
-                                : const CircularProgressIndicator(
-                                    color: ColorManager.kWhiteColor,
-                                  )),
-                      ),
+                          height: Get.height * 0.07,
+                          width: Get.width * 0.7,
+                          decoration: BoxDecoration(
+                            color: ColorManager.kPrimaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            'update'.tr,
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: ColorManager.kWhiteColor),
+                          )),
                     ),
                     SizedBox(
                       height: Get.height * 0.03,

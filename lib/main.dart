@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'dart:io';
 import 'package:doctormobileapplication/data/controller/dependency_injection.dart';
 import 'package:doctormobileapplication/data/controller/language_controller.dart';
@@ -67,19 +68,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile(BuildContext context) =>
-        MediaQuery.of(context).size.width < 460;
-    bool isTablet(BuildContext context) =>
-        MediaQuery.of(context).size.width < 1100 &&
-        MediaQuery.of(context).size.width >= 460;
-
-    boolisMobile = isMobile(context);
-    boolisTablet = isTablet(context);
-
-    if (boolisMobile!) {
-      SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    }
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return GetMaterialApp(
       textDirection: TextDirection.ltr,

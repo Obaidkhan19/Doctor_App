@@ -266,7 +266,7 @@ class MyCustomRefreshIndicatorState extends State<MyCustomRefreshIndicator>
   late AnimationController _scaleController;
   late Animation<double> _positionFactor;
   late Animation<double> _scaleFactor;
-  late Animation<double> _value;
+  // late Animation<double> _value;
   late Animation<Color?> _valueColor;
 
   _MyCustomRefreshIndicatorMode? _mode;
@@ -274,8 +274,8 @@ class MyCustomRefreshIndicatorState extends State<MyCustomRefreshIndicator>
   bool? _isIndicatorAtTop;
   double? _dragOffset;
 
-  static final Animatable<double> _threeQuarterTween =
-      Tween<double>(begin: 0.0, end: 0.75);
+  // static final Animatable<double> _threeQuarterTween =
+  // Tween<double>(begin: 0.0, end: 0.75);
   static final Animatable<double> _kDragSizeFactorLimitTween =
       Tween<double>(begin: 0.0, end: _kDragSizeFactorLimit);
   static final Animatable<double> _oneToZeroTween =
@@ -286,8 +286,8 @@ class MyCustomRefreshIndicatorState extends State<MyCustomRefreshIndicator>
     super.initState();
     _positionController = AnimationController(vsync: this);
     _positionFactor = _positionController.drive(_kDragSizeFactorLimitTween);
-    _value = _positionController.drive(
-        _threeQuarterTween); // The "value" of the circular progress indicator during a drag.
+    // _value = _positionController.drive(
+    //     _threeQuarterTween); // The "value" of the circular progress indicator during a drag.
 
     _scaleController = AnimationController(vsync: this);
     _scaleFactor = _scaleController.drive(_oneToZeroTween);
@@ -586,9 +586,9 @@ class MyCustomRefreshIndicatorState extends State<MyCustomRefreshIndicator>
       return true;
     }());
 
-    final bool showIndeterminateIndicator =
-        _mode == _MyCustomRefreshIndicatorMode.refresh ||
-            _mode == _MyCustomRefreshIndicatorMode.done;
+    // final bool showIndeterminateIndicator =
+    //     _mode == _MyCustomRefreshIndicatorMode.refresh ||
+    //         _mode == _MyCustomRefreshIndicatorMode.done;
 
     return Stack(
       children: <Widget>[

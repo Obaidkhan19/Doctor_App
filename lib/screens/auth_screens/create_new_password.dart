@@ -19,7 +19,7 @@ class CreateNewPasswordScreen extends StatefulWidget {
 class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  @override
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {

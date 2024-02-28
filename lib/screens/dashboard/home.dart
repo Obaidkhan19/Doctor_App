@@ -160,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  // fit: BoxFit.fitHeight,
                                   errorWidget: (context, url, error) =>
                                       Image.asset(AppImages.doctorlogo),
                                 )));
@@ -174,9 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: boolisMobile!
-                                  ? Get.width * 0.5
-                                  : Get.width * 1,
+                              width: Get.width * 1,
                               child: Text(
                                 ProfileController
                                         .i.selectedbasicInfo?.fullName ??
@@ -192,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             GetBuilder<PreferenceController>(
                               builder: (cont) => Text(
-                                '${PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == null || PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel == "null" ? MedicalNumberLabel : PreferenceController.i.preferenceObject.doctorRegistrationNoDynamicLabel} ${''}${'no'.tr}${' '}${ProfileController.i.selectedbasicInfo?.pMDCNumber ?? ""}',
+                                ' DHA 3563476 ',
                                 style: GoogleFonts.poppins(
                                   color: ColorManager.kWhiteColor,
                                   fontSize: 10,
@@ -208,640 +205,307 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
-                if (boolisMobile!)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: Get.height * 0.08,
-                        width: Get.width * 0.45,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Get.width * 0.03),
-                            gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Color(0xff1272D3),
-                                  Color(0xff001D86),
-                                ])),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent),
-                          onPressed: () {
-                            Get.to(() => const ConsultingQueue());
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: Get.height * 0.015,
-                                bottom: Get.height * 0.015),
-                            child: Text('consultingqueue'.tr,
-                                //textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor)),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: Get.height * 0.08,
-                        width: Get.width * 0.43,
-                        decoration: BoxDecoration(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: Get.height * 0.08,
+                      width: Get.width * 0.45,
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Get.width * 0.03),
-                          color: (profileContr.value == 1)
-                              ? const Color(0xff00BE4C)
-                              : const Color(0xffcd0000),
-                        ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent),
-                          onPressed: () async {
-                            var doctorId = await LocalDb().getDoctorId();
-                            var branchId = await LocalDb().getBranchId();
-                            var token = await LocalDb().getToken();
-                            OnlineStatusRequest call = OnlineStatusRequest(
-                                branchId: "$branchId",
-                                doctorId: "$doctorId",
-                                token: "$token",
-                                isOnline:
-                                    (profileContr.value == 0 ? true : false)
-                                        .toString());
-                            log(call.toJson().toString());
-                            profileContr.value =
-                                await SpecialitiesRepo.getStatuses(call);
-                            setState(() {
-                              if (profileContr.value == 1) {
-                                LocalDb().saveOnlineStatus(profileContr.value);
-                                profileContr.status = "iamonline".tr;
-                              } else {
-                                LocalDb().saveOnlineStatus(0);
-                                profileContr.status = "iamoffline".tr;
-                              }
-                            });
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: Get.height * 0.015,
-                                bottom: Get.height * 0.015),
-                            child: Text(
-                                profileContr.value == 1
-                                    ? "iamonline".tr
-                                    : "iamoffline".tr,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    color: ColorManager.kWhiteColor)),
-                          ),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xff1272D3),
+                                Color(0xff001D86),
+                              ])),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () {
+                          Get.to(() => const ConsultingQueue());
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: Get.height * 0.015,
+                              bottom: Get.height * 0.015),
+                          child: Text('consultingqueue'.tr,
+                              //textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: ColorManager.kWhiteColor)),
                         ),
                       ),
-                    ],
-                  ),
-                if (!boolisMobile!)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: Get.height * 0.15,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Get.width * 0.03),
-                              gradient: const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color(0xff1272D3),
-                                    Color(0xff001D86),
-                                  ])),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent),
-                            onPressed: () {
-                              Get.to(() => const ConsultingQueue());
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: Get.height * 0.015,
-                                  bottom: Get.height * 0.015),
-                              child: Text('consultingqueue'.tr,
-                                  //textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: ColorManager.kWhiteColor)),
-                            ),
-                          ),
+                    ),
+                    Container(
+                      height: Get.height * 0.08,
+                      width: Get.width * 0.43,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Get.width * 0.03),
+                        color: (profileContr.value == 1)
+                            ? const Color(0xff00BE4C)
+                            : const Color(0xffcd0000),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () async {
+                          var doctorId = await LocalDb().getDoctorId();
+                          var branchId = await LocalDb().getBranchId();
+                          var token = await LocalDb().getToken();
+                          OnlineStatusRequest call = OnlineStatusRequest(
+                              branchId: "$branchId",
+                              doctorId: "$doctorId",
+                              token: "$token",
+                              isOnline: (profileContr.value == 0 ? true : false)
+                                  .toString());
+                          log(call.toJson().toString());
+                          profileContr.value =
+                              await SpecialitiesRepo.getStatuses(call);
+                          setState(() {
+                            if (profileContr.value == 1) {
+                              LocalDb().saveOnlineStatus(profileContr.value);
+                              profileContr.status = "iamonline".tr;
+                            } else {
+                              LocalDb().saveOnlineStatus(0);
+                              profileContr.status = "iamoffline".tr;
+                            }
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: Get.height * 0.015,
+                              bottom: Get.height * 0.015),
+                          child: Text(
+                              profileContr.value == 1
+                                  ? "iamonline".tr
+                                  : "iamoffline".tr,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: ColorManager.kWhiteColor)),
                         ),
                       ),
-                      SizedBox(
-                        width: Get.width * 0.01,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: Get.height * 0.15,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Get.width * 0.03),
-                            color: (profileContr.value == 1)
-                                ? const Color(0xff00BE4C)
-                                : const Color(0xffcd0000),
-                          ),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent),
-                            onPressed: () async {
-                              var doctorId = await LocalDb().getDoctorId();
-                              var branchId = await LocalDb().getBranchId();
-                              var token = await LocalDb().getToken();
-                              OnlineStatusRequest call = OnlineStatusRequest(
-                                  branchId: "$branchId",
-                                  doctorId: "$doctorId",
-                                  token: "$token",
-                                  isOnline:
-                                      (profileContr.value == 0 ? true : false)
-                                          .toString());
-                              log(call.toJson().toString());
-                              profileContr.value =
-                                  await SpecialitiesRepo.getStatuses(call);
-                              setState(() {
-                                if (profileContr.value == 1) {
-                                  LocalDb()
-                                      .saveOnlineStatus(profileContr.value);
-                                  profileContr.status = "iamonline".tr;
-                                } else {
-                                  LocalDb().saveOnlineStatus(0);
-                                  profileContr.status = "iamoffline".tr;
-                                }
-                              });
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: Get.height * 0.015,
-                                  bottom: Get.height * 0.015),
-                              child: Text(
-                                  profileContr.value == 1
-                                      ? "iamonline".tr
-                                      : "iamoffline".tr,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: ColorManager.kWhiteColor)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
-                if (boolisMobile!)
-                  Wrap(
-                    runSpacing: 10,
-                    spacing: 7,
-                    children: [
-                      Container(
-                        width: Get.width * 0.45,
-                        height: Get.height * 0.25,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Get.width * 0.03),
-                            color: ColorManager.kPrimaryColor),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent),
-                          onPressed: () {
-                            Get.to(() => const ConfigureAppointmentScreen());
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Images.configuationAppointment,
-                                height: Get.height * 0.1,
-                                width: Get.width * 0.3,
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              Text('configureappointments'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: ColorManager.kWhiteColor)),
-                              SizedBox(
-                                height: Get.height * 0.005,
-                              ),
-                              Text('adjustyourschedule'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 10,
-                                      color: ColorManager.kWhiteColor))
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: Get.width * 0.43,
-                        height: Get.height * 0.25,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Get.width * 0.03),
-                            gradient: const LinearGradient(
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color(0xffFDD504),
-                                  Color(0xffFCB006),
-                                ])),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent),
-                          onPressed: () {
-                            Get.to(() => const TodayAppointments());
-                            //Get.to(() => DailyViewAppointments());
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: Get.height * 0.015,
-                                bottom: Get.height * 0.015),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Images.managementAppointment,
-                                  height: Get.height * 0.1,
-                                  width: Get.width * 0.3,
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.005,
-                                ),
-                                Text('manageappointments'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor)),
-                                SizedBox(
-                                  height: Get.height * 0.005,
-                                ),
-                                Text('approve/aisapproveappointments'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 10,
-                                        color: ColorManager.kWhiteColor))
-                              ],
+                Wrap(
+                  runSpacing: 10,
+                  spacing: 7,
+                  children: [
+                    Container(
+                      width: Get.width * 0.45,
+                      height: Get.height * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Get.width * 0.03),
+                          color: ColorManager.kPrimaryColor),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () {
+                          Get.to(() => const ConfigureAppointmentScreen());
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              Images.configuationAppointment,
+                              height: Get.height * 0.1,
+                              width: Get.width * 0.3,
                             ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: Get.width * 0.45,
-                        height: Get.height * 0.25,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Get.width * 0.03),
-                            color: ColorManager.kPrimaryColor),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent),
-                          onPressed: () {
-                            Get.to(const AppointmentHistoryscreen());
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Images.consultedVault,
-                                height: Get.height * 0.1,
-                                width: Get.width * 0.3,
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
-                              Text('consultedvault'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: ColorManager.kWhiteColor)),
-                              SizedBox(
-                                height: Get.height * 0.005,
-                              ),
-                              Text('viewconsultations'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 10,
-                                      color: ColorManager.kWhiteColor))
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: Get.width * 0.43,
-                        height: Get.height * 0.25,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Get.width * 0.03),
-                            gradient: const LinearGradient(colors: [
-                              Color(0xffFF4D4D),
-                              Color(0xffFF7B7B),
-                            ])),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent),
-                          onPressed: () {
-                            Fluttertoast.showToast(
-                                msg: "ComingSoon".tr,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor:
-                                    ColorManager.kPrimaryLightColor,
-                                textColor: ColorManager.kPrimaryColor,
-                                fontSize: 14.0);
-                            //  Get.to(const HealthSummaryScreen());
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: Get.height * 0.015,
-                                bottom: Get.height * 0.015),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Images.healthSummry,
-                                  height: Get.height * 0.1,
-                                  width: Get.width * 0.3,
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.01,
-                                ),
-                                Text('healthsummary'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor)),
-                                SizedBox(
-                                  height: Get.height * 0.005,
-                                ),
-                                Text('patientmonitoring'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 10,
-                                        color: ColorManager.kWhiteColor))
-                              ],
+                            SizedBox(
+                              height: Get.height * 0.01,
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                if (!boolisMobile!)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: Get.height * 0.35,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Get.width * 0.03),
-                              color: ColorManager.kPrimaryColor),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent),
-                            onPressed: () {
-                              Get.to(() => const ConfigureAppointmentScreen());
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Images.configuationAppointment,
-                                  height: Get.height * 0.1,
-                                  width: Get.width * 0.3,
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.01,
-                                ),
-                                Text('configureappointments'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor)),
-                                SizedBox(
-                                  height: Get.height * 0.005,
-                                ),
-                                Text('adjustyourschedule'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 10,
-                                        color: ColorManager.kWhiteColor))
-                              ],
+                            Text('configureappointments'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    color: ColorManager.kWhiteColor)),
+                            SizedBox(
+                              height: Get.height * 0.005,
                             ),
-                          ),
+                            Text('adjustyourschedule'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    color: ColorManager.kWhiteColor))
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        width: Get.width * 0.01,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: Get.height * 0.35,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Get.width * 0.03),
-                              gradient: const LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xffFDD504),
-                                    Color(0xffFCB006),
-                                  ])),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent),
-                            onPressed: () {
-                              Get.to(() => const TodayAppointments());
-                              //Get.to(() => DailyViewAppointments());
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: Get.height * 0.015,
-                                  bottom: Get.height * 0.015),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    Images.managementAppointment,
-                                    height: Get.height * 0.1,
-                                    width: Get.width * 0.3,
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.005,
-                                  ),
-                                  Text('manageappointments'.tr,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                          color: ColorManager.kWhiteColor)),
-                                  SizedBox(
-                                    height: Get.height * 0.005,
-                                  ),
-                                  Text('approve/aisapproveappointments'.tr,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 10,
-                                          color: ColorManager.kWhiteColor))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.01,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: Get.height * 0.35,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Get.width * 0.03),
-                              color: ColorManager.kPrimaryColor),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent),
-                            onPressed: () {
-                              Get.to(const AppointmentHistoryscreen());
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Images.consultedVault,
-                                  height: Get.height * 0.1,
-                                  width: Get.width * 0.3,
-                                ),
-                                SizedBox(
-                                  height: Get.height * 0.01,
-                                ),
-                                Text('consultedvault'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: ColorManager.kWhiteColor)),
-                                SizedBox(
-                                  height: Get.height * 0.005,
-                                ),
-                                Text('viewconsultations'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 10,
-                                        color: ColorManager.kWhiteColor))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.01,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: Get.height * 0.35,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(Get.width * 0.03),
-                              gradient: const LinearGradient(colors: [
-                                Color(0xffFF4D4D),
-                                Color(0xffFF7B7B),
+                    ),
+                    Container(
+                      width: Get.width * 0.43,
+                      height: Get.height * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Get.width * 0.03),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xffFDD504),
+                                Color(0xffFCB006),
                               ])),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent),
-                            onPressed: () {
-                              Fluttertoast.showToast(
-                                  msg: "ComingSoon".tr,
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor:
-                                      ColorManager.kPrimaryLightColor,
-                                  textColor: ColorManager.kPrimaryColor,
-                                  fontSize: 14.0);
-                              //  Get.to(const HealthSummaryScreen());
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: Get.height * 0.015,
-                                  bottom: Get.height * 0.015),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    Images.healthSummry,
-                                    height: Get.height * 0.1,
-                                    width: Get.width * 0.3,
-                                  ),
-                                  SizedBox(
-                                    height: Get.height * 0.01,
-                                  ),
-                                  Text('healthsummary'.tr,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                          color: ColorManager.kWhiteColor)),
-                                  SizedBox(
-                                    height: Get.height * 0.005,
-                                  ),
-                                  Text('patientmonitoring'.tr,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 10,
-                                          color: ColorManager.kWhiteColor))
-                                ],
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () {
+                          Get.to(() => const TodayAppointments());
+                          //Get.to(() => DailyViewAppointments());
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: Get.height * 0.015,
+                              bottom: Get.height * 0.015),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Images.managementAppointment,
+                                height: Get.height * 0.1,
+                                width: Get.width * 0.3,
                               ),
-                            ),
+                              SizedBox(
+                                height: Get.height * 0.005,
+                              ),
+                              Text('manageappointments'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color: ColorManager.kWhiteColor)),
+                              SizedBox(
+                                height: Get.height * 0.005,
+                              ),
+                              Text('approve/aisapproveappointments'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 10,
+                                      color: ColorManager.kWhiteColor))
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      width: Get.width * 0.45,
+                      height: Get.height * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Get.width * 0.03),
+                          color: ColorManager.kPrimaryColor),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () {
+                          Get.to(const AppointmentHistoryscreen());
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              Images.consultedVault,
+                              height: Get.height * 0.1,
+                              width: Get.width * 0.3,
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Text('consultedvault'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    color: ColorManager.kWhiteColor)),
+                            SizedBox(
+                              height: Get.height * 0.005,
+                            ),
+                            Text('viewconsultations'.tr,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 10,
+                                    color: ColorManager.kWhiteColor))
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: Get.width * 0.43,
+                      height: Get.height * 0.25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Get.width * 0.03),
+                          gradient: const LinearGradient(colors: [
+                            Color(0xffFF4D4D),
+                            Color(0xffFF7B7B),
+                          ])),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent),
+                        onPressed: () {
+                          Fluttertoast.showToast(
+                              msg: "ComingSoon".tr,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: ColorManager.kPrimaryLightColor,
+                              textColor: ColorManager.kPrimaryColor,
+                              fontSize: 14.0);
+                          //  Get.to(const HealthSummaryScreen());
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: Get.height * 0.015,
+                              bottom: Get.height * 0.015),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Images.healthSummry,
+                                height: Get.height * 0.1,
+                                width: Get.width * 0.3,
+                              ),
+                              SizedBox(
+                                height: Get.height * 0.01,
+                              ),
+                              Text('healthsummary'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                      color: ColorManager.kWhiteColor)),
+                              SizedBox(
+                                height: Get.height * 0.005,
+                              ),
+                              Text('patientmonitoring'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 10,
+                                      color: ColorManager.kWhiteColor))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: Get.height * 0.01,
                 ),

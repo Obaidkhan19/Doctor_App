@@ -3,6 +3,7 @@ import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class ConsultingQueueDropDownWidget extends StatefulWidget {
   List<String> list;
   String selected;

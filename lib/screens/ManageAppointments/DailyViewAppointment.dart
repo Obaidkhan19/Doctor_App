@@ -9,6 +9,7 @@ import '../../helpers/color_manager.dart';
 import '_DailyDetailAppointment.dart';
 import '_DetailMonthlyAppointment.dart';
 
+// ignore: must_be_immutable
 class Dailyviewappointments extends StatefulWidget {
   String? dateTime;
   String? IsOnline;

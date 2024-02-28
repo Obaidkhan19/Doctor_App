@@ -7,12 +7,12 @@ import 'package:doctormobileapplication/components/searchable_dropdown.dart';
 import 'package:doctormobileapplication/data/controller/add_specialization_controller.dart';
 import 'package:doctormobileapplication/data/controller/edit_profile_controller.dart';
 import 'package:doctormobileapplication/data/controller/profile_controller.dart';
-import 'package:doctormobileapplication/data/localDB/local_db.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/auth_repo.dart';
 import 'package:doctormobileapplication/data/repositories/auth_repository/profile_repo.dart';
 import 'package:doctormobileapplication/helpers/color_manager.dart';
 import 'package:doctormobileapplication/models/speciality.dart';
 import 'package:doctormobileapplication/utils/AppImages.dart';
+import 'package:doctormobileapplication/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -446,7 +446,7 @@ class _SpecilizationDetailState extends State<SpecilizationDetail> {
                                         backgroundColor:
                                             ColorManager.kWhiteColor,
                                         boxheight: Get.height * 0.04,
-                                        boxwidth: Get.width * 0.08,
+                                        boxwidth: Get.width * 0.04,
                                       )
                                     ],
                                   ),

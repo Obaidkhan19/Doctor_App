@@ -109,12 +109,10 @@ class _MenuScreenState extends State<MenuScreen> {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: imageProvider,
-                                    fit:
-                                        BoxFit.cover, // Adjust the fit property
+                                    fit: BoxFit.fill, // Adjust the fit property
                                   ),
                                 ),
                               ),
-                              //  fit: BoxFit.fitHeight,
                               errorWidget: (context, url, error) =>
                                   Image.asset(AppImages.doctorlogo),
                             )));

@@ -16,6 +16,7 @@ import '../../helpers/color_manager.dart';
 import '../../helpers/font_manager.dart';
 import '../../models/DayViewAppointmentModel.dart';
 
+// ignore:must_be_immutable
 class Dailydetailappointment extends StatefulWidget {
   String? dateTime;
   String? IsOnline;
@@ -321,40 +322,20 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                   size: 60,
                 ),
                 child: SizedBox(
-                  height: boolisMobile! ? Get.height * 0.54 : Get.height * 0.4,
+                  height: Get.height * 0.54,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: (((ManageAppointmentController
-                                      .i.dayViewAppointmentSlotModel !=
-                                  null) &&
-                              (ManageAppointmentController
-                                      .i
-                                      .dayViewAppointmentSlotModel
-                                      .appointments !=
-                                  null))
-                          ? ManageAppointmentController.i
-                              .dayViewAppointmentSlotModel.appointments?.length
-                          : 1),
+                      itemCount: ManageAppointmentController
+                          .i.dayViewAppointmentSlotModel.appointments?.length,
                       itemBuilder: (context, index) {
                         final manageAppointmentSlots =
-                            ((ManageAppointmentController
-                                            .i.dayViewAppointmentSlotModel !=
-                                        null) &&
-                                    (ManageAppointmentController
-                                            .i
-                                            .dayViewAppointmentSlotModel
-                                            .appointments !=
-                                        null))
-                                ? ManageAppointmentController
-                                    .i
-                                    .dayViewAppointmentSlotModel
-                                    .appointments![index]
-                                : null;
+                            ManageAppointmentController
+                                .i
+                                .dayViewAppointmentSlotModel
+                                .appointments?[index];
 
                         return ((manageAppointmentSlots != null)
                             ? Row(
-                                // mainAxisAlignment:
-                                //     MainAxisAlignment.end,
                                 children: [
                                   SizedBox(
                                     width: Get.width * 0.15,
@@ -520,8 +501,7 @@ class DailydetailappointmentState extends State<Dailydetailappointment> {
                         : 0) ==
                     0
                 ? SizedBox(
-                    height:
-                        boolisMobile! ? Get.height * 0.54 : Get.height * 0.26,
+                    height: Get.height * 0.54,
                     child: Center(
                       child: Text('NoRecordFound'.tr),
                     ),
